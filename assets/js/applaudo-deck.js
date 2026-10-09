@@ -73,7 +73,7 @@
         var doc = fr.contentDocument;
         var win = fr.contentWindow;
         if (!doc || !win) return;
-        var marginX = 40;
+        var marginX = 48;
         var marginY = 12;
         fr.style.width = '1500px';
         if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
@@ -82,7 +82,7 @@
         var contentW = 1360;
         var contentH = 520;
         if (canvas) {
-          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360) + 24;
+          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360) + 56;
           contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + 8;
           var foot = doc.querySelector('.footnote');
           if (foot) contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 8);
