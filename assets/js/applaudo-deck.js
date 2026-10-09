@@ -73,30 +73,19 @@
         var doc = fr.contentDocument;
         var win = fr.contentWindow;
         if (!doc || !win) return;
-        var marginX = 24;
+        var marginX = 40;
         var marginY = 12;
         fr.style.width = '1500px';
         if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
         win.dispatchEvent(new Event('resize'));
         var canvas = doc.getElementById('canvas');
-        var impl = doc.getElementById('n-implementation');
         var contentW = 1360;
         var contentH = 520;
         if (canvas) {
-          var cRect = canvas.getBoundingClientRect();
-          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360);
-          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight);
-          if (impl) {
-            var iRect = impl.getBoundingClientRect();
-            contentW = Math.max(contentW, Math.ceil(iRect.right - cRect.left + 28));
-          }
+          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360) + 24;
+          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + 8;
           var foot = doc.querySelector('.footnote');
-          if (foot) {
-            var fRect = foot.getBoundingClientRect();
-            contentH = Math.max(contentH, Math.ceil(fRect.bottom - cRect.top + 12));
-          } else {
-            contentH += 32;
-          }
+          if (foot) contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 8);
         } else {
           contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, 520);
         }
@@ -111,30 +100,9 @@
         var availH = stage.clientHeight - marginY;
         var scale = Math.min(availW / contentW, availH / contentH);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
-
-        function applyScale(s) {
-          wrap.style.transform = 'scale(' + s + ')';
-          host.style.width = Math.ceil(contentW * s) + 'px';
-          host.style.height = Math.ceil(contentH * s) + 'px';
-        }
-        applyScale(scale);
-
-        var req = doc.getElementById('n-request');
-        for (var pass = 0; pass < 8 && impl; pass++) {
-          var sr = stage.getBoundingClientRect();
-          var ir = impl.getBoundingClientRect();
-          var leftEdge = req ? req.getBoundingClientRect().left : ir.left;
-          var padL = leftEdge - sr.left;
-          var padR = sr.right - ir.right;
-          if (padR >= marginX && padL >= marginX) break;
-          if (padR < marginX) scale *= (sr.right - marginX - ir.left) / (ir.right - ir.left);
-          if (req && padL < marginX) {
-            var s2 = scale * (ir.right - sr.left - marginX) / (ir.right - ir.left);
-            scale = Math.min(scale, s2);
-          }
-          if (!isFinite(scale) || scale <= 0.2) scale = 0.2;
-          applyScale(scale);
-        }
+        wrap.style.transform = 'scale(' + scale + ')';
+        host.style.width = Math.ceil(contentW * scale) + 'px';
+        host.style.height = Math.ceil(contentH * scale) + 'px';
       } catch (e) {}
     }
 
