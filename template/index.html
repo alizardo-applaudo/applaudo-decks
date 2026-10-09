@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plantilla de deck — Applaudo</title>
+<link rel="stylesheet" href="../assets/css/applaudo-deck.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+<!-- Portada (modo oscuro) -->
+<section class="slide slide-dark active" aria-label="Portada">
+  <div class="glow-bg" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner center">
+    <p class="eyebrow">Design Team · Applaudo Studios</p>
+    <h1 class="big" style="max-width:12ch">Título del <em>deck</em></h1>
+    <p style="margin-top:28px;font-size:clamp(1.15rem,2vw,1.5rem);max-width:36ch;color:rgba(255,255,255,.82)">Subtítulo en una o dos líneas.</p>
+    <div style="display:flex;gap:10px;margin-top:32px;flex-wrap:wrap">
+      <span class="tag">Etiqueta</span>
+    </div>
+  </div>
+  <div class="foot">Applaudo</div>
+</section>
+
+<!-- Contenido (modo claro) -->
+<section class="slide" aria-label="Contenido">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner">
+    <p class="eyebrow">Sección</p>
+    <h2 class="hl">Encabezado de <em>slide</em></h2>
+    <p style="margin-top:14px">Texto del cuerpo. Duplica bloques <code>&lt;section class="slide"&gt;</code> para más diapositivas.</p>
+    <div class="card" style="margin-top:24px">
+      <span class="lab">Componente</span>
+      <h3>Tarjeta de ejemplo</h3>
+      <p style="max-width:none;margin-top:8px">Usa clases del CSS compartido: <code>.card</code>, <code>.tbl</code>, <code>.hero-band</code>, etc.</p>
+    </div>
+  </div>
+  <div class="foot">Pie de slide</div>
+</section>
+
+</div>
+
+<nav class="nav" aria-label="Navegación de diapositivas">
+  <button class="nav-btn" id="prev" aria-label="Anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">1 / 2</span>
+  <button class="nav-btn" id="next" aria-label="Siguiente">›</button>
+</nav>
+
+<script src="../assets/js/applaudo-deck.js"></script>
+</body>
+</html>

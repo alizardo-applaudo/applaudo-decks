@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applaudo Decks</title>
+<style>
+  :root{
+    --red:#ff4040;--ink:#121212;--gray:#535862;--linen:#f7f7f7;
+    --radius:32px;--pill:999px;
+    --font:'Avenir Next LT Pro','Avenir Next',Avenir,'Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);background:var(--linen);color:var(--ink);line-height:1.5;min-height:100vh}
+  .wrap{max-width:880px;margin:0 auto;padding:56px 24px 80px}
+  header{margin-bottom:40px}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.9rem;color:var(--gray);margin-bottom:12px}
+  .eyebrow::before{content:'';width:9px;height:9px;background:var(--red)}
+  h1{font-size:clamp(2rem,4vw,2.8rem);letter-spacing:-.02em;font-weight:600}
+  p.lead{color:var(--gray);margin-top:12px;font-size:1.05rem;max-width:52ch}
+  ul{list-style:none;margin-top:28px;display:flex;flex-direction:column;gap:14px}
+  a.deck{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;background:#fff;border-radius:var(--radius);text-decoration:none;color:inherit;border:1px solid rgba(18,18,18,.08);transition:border-color .2s,transform .2s}
+  a.deck:hover{border-color:var(--red);transform:translateX(4px)}
+  a.deck strong{font-size:1.15rem;display:block}
+  a.deck span{color:var(--gray);font-size:.9375rem}
+  a.deck em{font-style:normal;color:var(--red);font-weight:600}
+  footer{margin-top:48px;font-size:.8125rem;color:var(--gray)}
+  code{font-family:'SF Mono',Menlo,monospace;font-size:.85em;background:#fff;padding:2px 8px;border-radius:8px;border:1px solid rgba(18,18,18,.08)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Applaudo Studios · Presentaciones internas</p>
+    <h1>Applaudo Decks</h1>
+    <p class="lead">Decks HTML listos para GitHub Pages. Misma línea visual que los decks de Diseño (modo claro/oscuro, navegación con teclado y pill inferior).</p>
+  </header>
+  <ul>
+    <li>
+      <a class="deck" href="volaris-poc-flex/">
+        <div>
+          <strong>Volaris PoC Flex</strong>
+          <span>7 slides · PoC handoff sellado · Oct ’26</span>
+        </div>
+        <em>Abrir →</em>
+      </a>
+    </li>
+    <li>
+      <a class="deck" href="template/">
+        <div>
+          <strong>Plantilla vacía</strong>
+          <span>Copia esta carpeta para un deck nuevo</span>
+        </div>
+        <em>Ver →</em>
+      </a>
+    </li>
+  </ul>
+  <footer>Repo: <code>alizardo-applaudo/applaudo-decks</code> · Sin build step</footer>
+</div>
+</body>
+</html>

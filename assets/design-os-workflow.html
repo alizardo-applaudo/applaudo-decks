@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design OS — Workflow</title>
+
+<style>
+  :root{
+    --bg:#141413;
+    /* lavado radial casi imperceptible; 'fixed' lo ancla al viewport
+       para que el parche de las etiquetas calce exacto con la página */
+    --grad:radial-gradient(1100px 760px at 50% -6%, #1D1D1A 0%, #161615 48%, #121211 100%) fixed;
+    --card:#1D1D1B;
+    --card-grad:linear-gradient(180deg,#272723 0%,#1E1E1C 100%);
+    --card-grad-hi:linear-gradient(180deg,#2E2E29 0%,#232321 100%);
+    --ink:#F1EFEB;
+    --muted:#8C8880;
+    --cap:#A9A49B;
+    --line:rgba(255,255,255,.11);
+    --dash:rgba(255,255,255,.34);
+    --wire:rgba(255,255,255,.46);
+    --red:#F4626B;
+    --red-line:rgba(244,98,107,.5);
+    --red-tint:linear-gradient(180deg,rgba(244,98,107,.085) 0%,rgba(244,98,107,.03) 100%);
+    --lift:0 1px 2px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.035);
+    --lift-hi:0 10px 28px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
+    --radius:12px;
+    --font:"Poppins","Avenir Next","Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  /* el fondo va en <html> para que cubra todo el canvas, no solo la caja del body */
+  /* fondo transparente: el diagrama se compone sobre lo que pongas detrás.
+     Para recuperar el fondo oscuro propio: html{background:var(--grad) var(--bg)} */
+  html{background:transparent}
+  body{
+    background:transparent;
+    color:var(--ink);
+    font-family:var(--font);
+    -webkit-font-smoothing:antialiased;
+    padding:40px 0;
+    /* centrado vertical y horizontal; 'safe' evita que se recorte
+       por arriba cuando el contenido es más alto que la ventana */
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    align-items:center;
+    align-items:safe center;
+    justify-content:center;
+    justify-content:safe center;
+  }
+
+  .page{width:90%;flex:none;margin:auto}
+
+  /* ---------- canvas ---------- */
+  .scroller{overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
+  .canvas{position:relative;min-width:1360px}
+
+  svg#links{position:absolute;inset:0;pointer-events:none;z-index:3;overflow:visible}
+  svg#links path{stroke:var(--wire);stroke-width:1.4;fill:none;transition:stroke .18s,opacity .18s}
+  svg#links polygon{fill:var(--wire);transition:fill .18s,opacity .18s}
+  svg#links g{opacity:1;transition:opacity .18s}
+  svg#links g.on path{stroke:var(--red)}
+  svg#links g.on polygon{fill:var(--red)}
+  .dimmed svg#links g:not(.on){opacity:.18}
+
+  /* ---------- flow row ---------- */
+  .flow{
+    display:flex;align-items:center;justify-content:space-between;gap:0;
+    padding:46px 0 30px;position:relative;z-index:1;
+  }
+
+  /* boxes */
+  .nodewrap{position:relative;flex:1 1 auto;min-width:0}
+  .box{
+    width:100%;background:var(--card-grad);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 12px;text-align:center;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);
+    cursor:pointer;transition:.18s;box-shadow:var(--lift);display:block;
+  }
+  .box:hover{background:var(--card-grad-hi);border-color:rgba(255,255,255,.18);transform:translateY(-2px);box-shadow:var(--lift-hi)}
+  .box:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+  .box.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.16), inset 0 1px 0 rgba(255,255,255,.05)}
+  .dimmed .box:not(.on){opacity:.3}
+  .dimmed .frame-label:not(.on){opacity:.3}
+
+  .cap{
+    position:absolute;top:calc(100% + 11px);left:-24px;right:-24px;text-align:center;
+    font-size:11px;color:var(--cap);line-height:1.35;transition:opacity .18s;
+  }
+  .dimmed .cap:not(.on){opacity:.3}
+  .cap.on{color:var(--red);font-weight:600}
+  .cap .nb{white-space:nowrap}
+  .cap[data-for="engineering"]{left:-12px;right:-12px}
+
+  /* stacked card (two stacked sections + dotted divider) */
+  .stack{
+    width:100%;background:var(--card-grad);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--lift);overflow:hidden;transition:.18s;
+  }
+  .stack .seg{
+    display:block;width:100%;background:transparent;border:0;border-radius:0;box-shadow:none;
+    padding:16px 14px;text-align:center;font-family:inherit;cursor:pointer;transition:.18s;
+  }
+  .stack .seg + .seg{border-top:1px dotted rgba(255,255,255,.15)}
+  .stack .seg:hover{background:rgba(255,255,255,.04)}
+  .stack .seg:focus-visible{outline:2px solid var(--red);outline-offset:-3px}
+  .stack .seg .t{font-size:14px;font-weight:700;display:block}
+  .stack .seg .s{display:block;font-size:11px;color:var(--cap);margin-top:5px;line-height:1.35}
+  .stack.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.16), inset 0 1px 0 rgba(255,255,255,.05)}
+  .stack .seg.on{background:rgba(244,98,107,.09)}
+  .dimmed .stack .seg:not(.on){opacity:.3}
+
+  /* arrows */
+  .arrow{display:flex;align-items:center;justify-content:center;flex:0 0 30px;width:30px;height:12px;margin:0 2px}
+  .arrow i{display:block;flex:1;height:1.4px;background:var(--wire)}
+  .arrow b{
+    display:block;width:0;height:0;flex:0 0 auto;
+    border-left:7px solid var(--wire);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;
+  }
+
+  /* dashed frames */
+  .frame{
+    position:relative;flex:1 1 auto;min-width:0;
+    display:flex;align-items:center;gap:0;
+    border-radius:14px;
+    padding:30px 22px 40px;
+  }
+
+  /* El borde punteado vive en un ::before enmascarado. La etiqueta abre un
+     hueco REAL en la línea (mask-composite), en vez de taparla con un parche
+     opaco del color de la página — que es lo que rompería sobre otro fondo.
+     Las medidas del hueco las calcula punchLabels() en cada relayout. */
+  .frame::before,.integrity::before,#fluencyFrame::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    border:1.4px dashed var(--dash);border-radius:inherit;
+    -webkit-mask-image:linear-gradient(#000,#000),linear-gradient(#000,#000);
+            mask-image:linear-gradient(#000,#000),linear-gradient(#000,#000);
+    -webkit-mask-size:100% 100%,var(--hw,0px) var(--hh,0px);
+            mask-size:100% 100%,var(--hw,0px) var(--hh,0px);
+    -webkit-mask-position:0 0,var(--hx,0px) var(--hy,0px);
+            mask-position:0 0,var(--hx,0px) var(--hy,0px);
+    -webkit-mask-repeat:no-repeat,no-repeat;
+            mask-repeat:no-repeat,no-repeat;
+    -webkit-mask-composite:xor;
+            mask-composite:exclude;
+  }
+  .frame.leverage{flex:1 1 182px}
+  .frame.fluency{flex:1.6 1 360px;background:none}
+  .frame.fluency::before{border-color:transparent;background:none}
+  .frame.translation{flex:1.8 1 440px;margin:-22px 0;padding:36px 22px 46px;z-index:2;background:none}
+  .frame-label{
+    position:absolute;top:-8px;left:26px;background:transparent;padding:0 9px;
+    font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
+    display:flex;align-items:center;gap:7px;z-index:4;transition:opacity .18s;
+  }
+  .frame-label::before{content:"";width:5px;height:5px;background:currentColor;transform:rotate(45deg)}
+
+  /* red overlay frame (FLUENCY spans into the handoff card) */
+  #fluencyFrame{
+    position:absolute;border-radius:14px;pointer-events:none;z-index:0;
+  }
+  #fluencyFrame::before{border-color:var(--red-line);background:var(--red-tint)}
+  #fluencyFrame .frame-label{color:var(--red);top:-8px;left:26px;pointer-events:auto}
+
+  /* ---------- integrity band ---------- */
+  .integrity{
+    position:relative;border-radius:14px;
+    padding:34px 26px 30px;margin-top:64px;
+  }
+  .osbar{
+    display:block;background:linear-gradient(180deg,#272723 0%,#1E1E1C 100%);
+    border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:19px 14px;text-align:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+    font-family:inherit;font-size:15px;font-weight:700;width:100%;cursor:pointer;transition:.18s;color:var(--ink);
+  }
+  .osbar:hover{background:linear-gradient(180deg,#2D2D28 0%,#232320 100%)}
+  .osbar:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+  .osbar.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.14), inset 0 1px 0 rgba(255,255,255,.05)}
+  .skills{display:flex;gap:24px;margin-top:22px}
+  .skills .box{font-size:12.5px;font-weight:600;padding:16px 12px}
+
+  .footnote{
+    text-align:center;margin:38px 0 0;font-size:12px;font-weight:600;color:var(--ink);padding:6px;
+  }
+  .footnote span{color:var(--muted);margin-right:6px}
+
+  /* ---------- tooltip ---------- */
+  .tip{
+    position:fixed;z-index:50;top:0;left:0;
+    width:max-content;max-width:min(280px, calc(100vw - 24px));
+    background:linear-gradient(180deg,#302F2C 0%,#232220 100%);
+    border:1px solid rgba(255,255,255,.10);color:#F3F1ED;border-radius:8px;
+    padding:9px 12px;font-size:12px;line-height:1.45;font-family:var(--font);
+    box-shadow:0 12px 34px rgba(0,0,0,.55);
+    opacity:0;visibility:hidden;transform:translateY(3px);
+    transition:opacity .13s ease,transform .13s ease,visibility .13s;
+    pointer-events:none;
+  }
+  .tip.show{opacity:1;visibility:visible;transform:translateY(0)}
+  .tip::after{
+    content:"";position:absolute;left:var(--ax,50%);margin-left:-5px;
+    border:5px solid transparent;
+  }
+  .tip[data-side="top"]::after{top:100%;border-top-color:#232220}
+  .tip[data-side="bottom"]::after{bottom:100%;border-bottom-color:#302F2C}
+  @media (prefers-reduced-motion:reduce){ .tip{transition:none} }
+
+  /* ---------- mobile: real vertical reflow ---------- */
+  @media (max-width:899px){
+    body{padding:26px 0 48px}
+    .scroller{overflow:visible}
+    .canvas{min-width:0}
+    svg#links{display:none}
+
+    .flow{flex-direction:column;align-items:stretch;padding:8px 0 0;gap:0}
+    .frame{flex:none;flex-direction:column;align-items:stretch;padding:30px 16px 22px;margin:0}
+    .frame.fluency{flex:none;background:none}
+    .frame.fluency::before{border-color:var(--red-line);background:var(--red-tint)}
+    .frame.translation{flex:none;margin:0;padding:30px 16px 22px}
+    .frame.leverage{flex:none}
+    .nodewrap{flex:none !important}
+    .cap{position:static;display:block;margin-top:8px;text-align:center}
+    .box{padding:16px 14px}
+
+    .arrow{flex-direction:column;width:12px;height:26px;margin:10px auto}
+    .arrow i{width:1.4px;height:auto;flex:1}
+    .arrow b{border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-top:7px solid var(--wire);border-bottom:0}
+    .arrow.up{transform:rotate(180deg)}
+
+    .integrity{margin-top:10px;padding:30px 16px 22px}
+    .skills{flex-direction:column;gap:14px;margin-top:0}
+    .feeds{margin-top:14px;font-size:11px;color:var(--cap);text-align:center;line-height:1.5}
+    .detail{flex-direction:column;gap:12px}
+    .facet{flex-direction:column;gap:3px}
+    .facet dt{flex:none}
+  }
+  @media (min-width:900px){
+    .feeds{display:none}
+    .arrow.mobile-only{display:none}
+    /* en desktop la etiqueta FLUENCY la pone el marco rojo superpuesto */
+    .frame.fluency > .frame-label{display:none}
+  }
+</style>
+<style>.page{width:97%}body{padding:20px 0}.stack .seg,.box,.osbar{color:var(--ink)}</style></head>
+<body>
+<div class="page">
+
+  <div class="scroller">
+  <div class="canvas" id="canvas">
+    <svg id="links" aria-hidden="true"></svg>
+
+    <!-- ============ main flow ============ -->
+    <div class="flow" id="flow">
+
+      <div class="nodewrap" style="flex:1 1 95px">
+        <button class="box" id="n-request" data-node="request" data-tip="Business need with no product shape yet">Request</button>
+      </div>
+
+      <div class="arrow"><i></i><b></b></div>
+
+      <div class="frame leverage" id="f-leverage">
+        <span class="frame-label" data-label="leverage" data-tip="UNDERSTANDING — structured context before the first sprint">Understanding</span>
+        <div class="nodewrap">
+          <div class="stack" id="n-leverage-card">
+            <button class="seg" data-node="ux-definition" data-tip="Problem, flows, states and success criteria — before any pixel"><span class="t">UX Definition</span></button>
+            <button class="seg" data-node="ai-explorations" data-tip="Fast AI concepts to open the solution space — not the final screen"><span class="t">AI Explorations</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow"><i></i><b></b></div>
+
+      <div class="frame fluency" id="f-fluency">
+        <span class="frame-label mobile-label" data-label="fluency" data-tip="EXECUTION — generate from the product’s own visual language" style="color:var(--red)">Execution</span>
+        <div class="nodewrap" style="flex:1 1 140px">
+          <button class="box" id="n-ui-generation" data-node="ui-generation" data-tip="Interface generated from the UX definition, on real design tokens">UI Generation</button>
+          <span class="cap" data-for="ui-generation">Claude + Figma</span>
+        </div>
+        <div class="arrow"><i></i><b></b></div>
+        <div class="nodewrap" style="flex:1 1 140px">
+          <button class="box" id="n-validation" data-node="validation" data-tip="Holistic spar review, product QA and human sign-off">Validation</button>
+          <span class="cap" data-for="validation">design-spar: VALIDATION</span>
+        </div>
+      </div>
+
+      <div class="arrow"><i></i><b></b></div>
+
+      <div class="frame translation" id="f-translation">
+        <span class="frame-label" data-label="translation" data-tip="TRANSLATION — structured outputs the pipeline can execute">Translation</span>
+        <div class="nodewrap" style="flex:1.3 1 210px">
+          <div class="stack" id="n-handoff-card">
+            <button class="seg" data-node="design-handoff" data-tip="Figma files and interactive HTML you can walk through">
+              <span class="t">Design Handoff</span>
+              <span class="s">Figma + Interactive HTML</span>
+            </button>
+            <button class="seg" data-node="functional-code" data-tip="Code + Storybook: living documentation and implementation base">
+              <span class="t">AI-Boosted Deliverables</span>
+              <span class="s">Code + Storybook + functional layout</span>
+            </button>
+          </div>
+        </div>
+        <div class="arrow"><i></i><b></b></div>
+        <div class="nodewrap" style="flex:1 1 150px">
+          <button class="box" id="n-engineering" data-node="engineering" data-tip="Integrates the output instead of reinterpreting it">Engineering</button>
+          <span class="cap" data-for="engineering">design input + AI markdown files</span>
+        </div>
+      </div>
+
+      <div class="arrow"><i></i><b></b></div>
+
+      <div class="nodewrap" style="flex:1 1 138px">
+        <button class="box" id="n-implementation" data-node="implementation" data-tip="Ships to production and feeds the next loop">Implementation</button>
+      </div>
+    </div>
+
+    <!-- ============ integrity band ============ -->
+    <section class="integrity" id="f-integrity">
+      <span class="frame-label" data-label="integrity" data-tip="INTEGRITY — a validation layer before anything reaches a stakeholder">Integrity</span>
+      <button class="osbar" id="designOS" data-node="design-os" data-tip="Shared tokens, components and rules feeding every stage">Design OS</button>
+      <p class="feeds">Feeds: UX Definition · UI Generation · Validation · Design Handoff</p>
+      <div class="arrow up mobile-only"><i></i><b></b></div>
+      <div class="skills">
+        <button class="box" id="n-spar" data-node="spar" data-tip="Design partner behind the critical review">Claude Skill: Design SPAR</button>
+        <button class="box" id="n-wright" data-node="wright" data-tip="Sets up the project context and drives the export">Claude Skill: Design WRIGHT</button>
+      </div>
+    </section>
+  </div>
+  </div>
+
+  <p class="footnote"><span>&#8635;</span>Continuous iteration back into UX Definition</p>
+</div>
+
+<div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+
+<script>
+(function(){
+  // verticales desde el Design OS: x = centro del nodo, punta = borde inferior de su marco
+  const UP_LINKS = [
+    {node:"n-leverage-card",  stop:"f-leverage"},
+    {node:"n-ui-generation",  stop:"fluencyFrame"},
+    {node:"n-validation",     stop:"fluencyFrame"},
+    {node:"n-handoff-card",   stop:"f-translation"}
+  ];
+  const SKILL_LINKS = ["n-spar","n-wright"];
+
+  const canvas   = document.getElementById('canvas');
+  const svg      = document.getElementById('links');
+  const fluencyG = document.getElementById('f-fluency');
+  const isWide   = () => window.matchMedia('(min-width:900px)').matches;
+
+  /* ---------- overlay rojo: FLUENCY abarca hasta el handoff card ---------- */
+  let overlay = document.createElement('div');
+  overlay.id = 'fluencyFrame';
+  overlay.innerHTML = '<span class="frame-label" data-label="fluency" data-tip="EXECUTION — generate from the product’s own visual language">Execution</span>';
+  canvas.appendChild(overlay);
+
+  function layoutOverlay(){
+    if(!isWide()){ overlay.style.display='none'; return; }
+    overlay.style.display='block';
+    const base = canvas.getBoundingClientRect();
+    const a = fluencyG.getBoundingClientRect();
+    const b = document.getElementById('n-handoff-card').getBoundingClientRect();
+    const padX = 22, padY = 18;
+    const left   = a.left - base.left;
+    const right  = (b.right - base.left) + padX;
+    // el marco envuelve verticalmente también a la tarjeta de handoff
+    const top    = Math.min(a.top - base.top, (b.top - base.top) - padY);
+    const bottom = Math.max(a.bottom - base.top, (b.bottom - base.top) + padY);
+    overlay.style.left   = left + 'px';
+    overlay.style.width  = (right - left) + 'px';
+    overlay.style.top    = top + 'px';
+    overlay.style.height = (bottom - top) + 'px';
+  }
+
+  /* ---------- conectores verticales en SVG ---------- */
+  function seg(x, yFrom, yTo, key){
+    const dir = yTo < yFrom ? -1 : 1;   // -1 = la flecha sube
+    const tip = yTo;                    // punta de la flecha
+    const bx  = tip - dir * 7;          // base del triángulo, del lado del origen
+    return `<g data-link="${key}">`
+      + `<path d="M ${x} ${yFrom} L ${x} ${bx}"/>`
+      + `<polygon points="${x},${tip} ${x-4.5},${bx} ${x+4.5},${bx}"/>`
+      + `</g>`;
+  }
+
+  function drawLinks(){
+    if(!isWide()){ svg.innerHTML=''; return; }
+    const base = canvas.getBoundingClientRect();
+    const W = canvas.clientWidth, H = canvas.clientHeight;
+    svg.setAttribute('width', W); svg.setAttribute('height', H);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const R = el => { const r = el.getBoundingClientRect(); return {x:r.left-base.left, y:r.top-base.top, w:r.width, h:r.height}; };
+    const os = R(document.getElementById('designOS'));
+    let out = '';
+    UP_LINKS.forEach(l=>{
+      const t = R(document.getElementById(l.node));
+      const s = R(document.getElementById(l.stop));
+      const x = Math.round(t.x + t.w/2) + .5;
+      out += seg(x, os.y, s.y + s.h + 4, l.node);
+    });
+    SKILL_LINKS.forEach(id=>{
+      const t = R(document.getElementById(id));
+      const x = Math.round(t.x + t.w/2) + .5;
+      out += seg(x, t.y, os.y + os.h + 5, id);
+    });
+    svg.innerHTML = out;
+  }
+
+  /* ---------- la banda INTEGRITY se alinea con LEVERAGE ↔ handoff card ---------- */
+  const integrity = document.getElementById('f-integrity');
+  function layoutIntegrity(){
+    if(!isWide()){ integrity.style.marginLeft = integrity.style.marginRight = ''; return; }
+    const base = canvas.getBoundingClientRect();
+    const l = document.getElementById('f-leverage').getBoundingClientRect();
+    const r = document.getElementById('n-handoff-card').getBoundingClientRect();
+    integrity.style.marginLeft  = Math.round(l.left - base.left) + 'px';
+    integrity.style.marginRight = Math.round(base.right - r.right - 26) + 'px';
+  }
+
+  /* ---------- hueco en el punteado, a la medida de cada etiqueta ---------- */
+  function punchLabels(){
+    document.querySelectorAll('.frame, .integrity, #fluencyFrame').forEach(f=>{
+      const lb = f.querySelector(':scope > .frame-label');
+      const lr = lb && lb.getBoundingClientRect();
+      if(!lr || !lr.width){ f.style.setProperty('--hw','0px'); return; }  // etiqueta oculta
+      const fr = f.getBoundingClientRect();
+      f.style.setProperty('--hx', (lr.left - fr.left) + 'px');
+      f.style.setProperty('--hy', (lr.top  - fr.top ) + 'px');
+      f.style.setProperty('--hw', lr.width  + 'px');
+      f.style.setProperty('--hh', lr.height + 'px');
+    });
+  }
+
+  function relayout(){ layoutOverlay(); layoutIntegrity(); drawLinks(); punchLabels(); }
+  window.addEventListener('resize', relayout);
+  window.addEventListener('load', relayout);
+  if(window.ResizeObserver) new ResizeObserver(relayout).observe(canvas);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  relayout();
+
+  /* ---------- tooltip ---------- */
+  const tip = document.getElementById('tip');
+  const linkOwner = {
+    "ux-definition":"n-leverage-card", "ai-explorations":"n-leverage-card",
+    "ui-generation":"n-ui-generation", "validation":"n-validation",
+    "design-handoff":"n-handoff-card", "functional-code":"n-handoff-card",
+    "spar":"n-spar", "wright":"n-wright"
+  };
+  let current = null;
+
+  function highlight(el, on){
+    const key = el.dataset.node;
+    const box = el.classList.contains('seg') ? el.closest('.stack') : el;
+    box.classList.toggle('on', on);
+    const g = key && linkOwner[key] && svg.querySelector(`g[data-link="${linkOwner[key]}"]`);
+    if(g) g.classList.toggle('on', on);
+    if(key === 'design-os') svg.querySelectorAll('g').forEach(x=>x.classList.toggle('on', on));
+  }
+
+  function place(el){
+    // medir desde el origen: así el ancho no depende de la posición anterior
+    tip.style.left = '0px'; tip.style.top = '0px';
+    const r = el.getBoundingClientRect();
+    const t = tip.getBoundingClientRect();
+    const gap = 10, pad = 8;
+    let side = 'top';
+    let top = r.top - t.height - gap;
+    if(top < pad){ side = 'bottom'; top = r.bottom + gap; }
+    top = Math.max(pad, Math.min(top, window.innerHeight - t.height - pad));
+    let left = r.left + r.width/2 - t.width/2;
+    left = Math.max(pad, Math.min(left, window.innerWidth - t.width - pad));
+    tip.style.top  = Math.round(top) + 'px';
+    tip.style.left = Math.round(left) + 'px';
+    tip.dataset.side = side;
+    // la flecha sigue al centro del elemento aunque el tooltip se recorte contra el borde
+    tip.style.setProperty('--ax', Math.round(r.left + r.width/2 - left) + 'px');
+  }
+
+  function show(el){
+    const text = el.dataset.tip;
+    if(!text) return;
+    current = el;
+    tip.textContent = text;
+    tip.classList.add('show');
+    tip.setAttribute('aria-hidden','false');
+    place(el);
+    if(el.dataset.node) highlight(el, true);
+  }
+
+  function hide(){
+    if(current && current.dataset.node) highlight(current, false);
+    current = null;
+    tip.classList.remove('show');
+    tip.setAttribute('aria-hidden','true');
+  }
+
+  const targets = () => document.querySelectorAll('[data-tip]');
+  function bind(){
+    targets().forEach(el=>{
+      if(el.dataset.tipBound) return;
+      el.dataset.tipBound = '1';
+      el.addEventListener('mouseenter', ()=>show(el));
+      el.addEventListener('mouseleave', hide);
+      el.addEventListener('focus', ()=>show(el));
+      el.addEventListener('blur', hide);
+    });
+  }
+  bind();                                   // incluye la etiqueta FLUENCY del overlay
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') hide(); });
+  window.addEventListener('scroll', hide, true);
+  window.addEventListener('resize', hide);
+
+})();
+</script>
+</body>
+</html>
