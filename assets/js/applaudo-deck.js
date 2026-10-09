@@ -72,19 +72,44 @@
         var doc = fr.contentDocument;
         var win = fr.contentWindow;
         if (!doc || !win) return;
-        fr.style.width = '1360px';
+        var marginX = 24;
+        var marginY = 12;
+        fr.style.width = '1500px';
         if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
         win.dispatchEvent(new Event('resize'));
         var canvas = doc.getElementById('canvas');
+        var impl = doc.getElementById('n-implementation');
         var contentW = 1360;
-        var contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, 520);
-        if (canvas) contentH = Math.max(contentH, canvas.offsetHeight + 32);
+        var contentH = 520;
+        if (canvas) {
+          var cRect = canvas.getBoundingClientRect();
+          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360);
+          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight);
+          if (impl) {
+            var iRect = impl.getBoundingClientRect();
+            contentW = Math.max(contentW, Math.ceil(iRect.right - cRect.left + 28));
+          }
+          var foot = doc.querySelector('.footnote');
+          if (foot) {
+            var fRect = foot.getBoundingClientRect();
+            contentH = Math.max(contentH, Math.ceil(fRect.bottom - cRect.top + 12));
+          } else {
+            contentH += 32;
+          }
+        } else {
+          contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, 520);
+        }
+        contentW = Math.ceil(contentW);
+        contentH = Math.ceil(contentH);
+        fr.style.width = contentW + 'px';
         fr.style.height = contentH + 'px';
+        if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
-        var availW = stage.clientWidth;
-        var availH = stage.clientHeight;
-        var scale = Math.min(availW / contentW, availH / contentH, 1);
+        var availW = stage.clientWidth - marginX * 2;
+        var availH = stage.clientHeight - marginY;
+        var scale = Math.min(availW / contentW, availH / contentH);
+        if (!isFinite(scale) || scale <= 0) scale = 0.5;
         wrap.style.transform = 'scale(' + scale + ')';
       } catch (e) {}
     }

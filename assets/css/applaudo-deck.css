@@ -189,7 +189,7 @@ button{font-family:inherit}
 .dos-slide .dos-stage{
   grid-area:dos-stage;
   min-height:0;
-  padding:2px 0 calc(var(--nav-safe) + 4px);
+  padding:2px 32px calc(var(--nav-safe) + 4px);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -208,8 +208,7 @@ button{font-family:inherit}
   width:1360px;
   height:640px;
   border:0;
-  background:#141413;
-  color-scheme:dark;
+  background:transparent;
   overflow:hidden;
 }
 
