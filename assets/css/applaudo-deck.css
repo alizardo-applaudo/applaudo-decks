@@ -64,11 +64,12 @@ button{font-family:inherit}
 .slide-probamos.inner-viewport{height:auto;max-height:100%;justify-content:flex-start}
 .slide-probamos .slide-body{flex:0 0 auto;overflow:visible}
 .slide-probamos .probamos-grid{flex:none;min-height:auto;height:auto}
-.probamos-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:14px;align-items:start;margin-top:8px}
-.probamos-main{display:flex;flex-direction:column;gap:8px;align-self:start}
+.probamos-grid{display:flex;gap:14px;align-items:flex-start;margin-top:8px}
+.probamos-main{flex:1.55 1 0;min-width:0;display:flex;flex-direction:column;gap:8px}
+.probamos-side{flex:1 1 0;min-width:0}
 .probamos-main .tbl{flex:none;overflow:visible;height:auto;align-self:start}
 .probamos-main .tbl table{height:auto}
-.probamos-side{display:flex;flex-direction:column;gap:10px;justify-content:center;align-self:center}
+.probamos-side{display:flex;flex-direction:column;gap:10px;justify-content:flex-start}
 
 .roadmap-slide .section-card.compact{padding:16px 18px;margin-top:0}
 .roadmap-slide .section-card.compact h3{font-size:1.05rem;margin-bottom:4px}
@@ -159,6 +160,8 @@ button{font-family:inherit}
 
 /* Design OS diagram slide */
 .dos-slide{background:var(--bg-dark)}
+.dos-slide .glow-bg{z-index:0}
+.dos-slide .dos-header,.dos-slide .dos-stage{position:relative;z-index:1}
 .dos-slide::after{display:none}
 .dos-slide.active{
   display:grid!important;
@@ -205,7 +208,7 @@ button{font-family:inherit}
   width:1360px;
   height:640px;
   border:0;
-  background:transparent;
+  background:#141413;
   color-scheme:dark;
   overflow:hidden;
 }
