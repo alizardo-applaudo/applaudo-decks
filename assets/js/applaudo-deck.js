@@ -111,9 +111,30 @@
         var availH = stage.clientHeight - marginY;
         var scale = Math.min(availW / contentW, availH / contentH);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
-        wrap.style.transform = 'scale(' + scale + ')';
-        host.style.width = Math.ceil(contentW * scale) + 'px';
-        host.style.height = Math.ceil(contentH * scale) + 'px';
+
+        function applyScale(s) {
+          wrap.style.transform = 'scale(' + s + ')';
+          host.style.width = Math.ceil(contentW * s) + 'px';
+          host.style.height = Math.ceil(contentH * s) + 'px';
+        }
+        applyScale(scale);
+
+        var req = doc.getElementById('n-request');
+        for (var pass = 0; pass < 8 && impl; pass++) {
+          var sr = stage.getBoundingClientRect();
+          var ir = impl.getBoundingClientRect();
+          var leftEdge = req ? req.getBoundingClientRect().left : ir.left;
+          var padL = leftEdge - sr.left;
+          var padR = sr.right - ir.right;
+          if (padR >= marginX && padL >= marginX) break;
+          if (padR < marginX) scale *= (sr.right - marginX - ir.left) / (ir.right - ir.left);
+          if (req && padL < marginX) {
+            var s2 = scale * (ir.right - sr.left - marginX) / (ir.right - ir.left);
+            scale = Math.min(scale, s2);
+          }
+          if (!isFinite(scale) || scale <= 0.2) scale = 0.2;
+          applyScale(scale);
+        }
       } catch (e) {}
     }
 
