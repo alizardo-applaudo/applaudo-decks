@@ -64,8 +64,9 @@
     function fitDosDiagram() {
       var fr = document.getElementById('dosFrame');
       var wrap = document.getElementById('dosScaleWrap');
+      var host = document.getElementById('dosScaleHost');
       var stage = document.querySelector('.dos-slide .dos-stage');
-      if (!fr || !wrap || !stage) return;
+      if (!fr || !wrap || !host || !stage) return;
       var slide = fr.closest('.slide');
       if (!slide || !slide.classList.contains('active')) return;
       try {
@@ -111,6 +112,8 @@
         var scale = Math.min(availW / contentW, availH / contentH);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         wrap.style.transform = 'scale(' + scale + ')';
+        host.style.width = Math.ceil(contentW * scale) + 'px';
+        host.style.height = Math.ceil(contentH * scale) + 'px';
       } catch (e) {}
     }
 

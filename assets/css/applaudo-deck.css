@@ -197,9 +197,15 @@ button{font-family:inherit}
   overflow:hidden;
   background:transparent;
 }
+.dos-scale-host{
+  flex:none;
+  overflow:hidden;
+  margin:0 auto;
+  background:transparent;
+}
 .dos-scale-wrap{
   flex:none;
-  transform-origin:top center;
+  transform-origin:top left;
   background:transparent;
   will-change:transform;
 }
