@@ -243,7 +243,17 @@
     .frame.fluency > .frame-label{display:none}
   }
 </style>
-<style>.page{width:97%}body{padding:20px 0}.stack .seg,.box,.osbar{color:var(--ink)}</style></head>
+<style>.page{width:97%}body{padding:20px 0}.stack .seg,.box,.osbar{color:var(--ink)}</style>
+<style>
+  html.is-embed body{padding:0;min-height:0;display:block;overflow:hidden}
+  html.is-embed .page{width:100%;margin:0 auto;transform:scale(var(--embed-scale,.82));transform-origin:top center}
+  html.is-embed .flow{padding:24px 0 16px}
+  html.is-embed .integrity{margin-top:36px;padding:22px 18px 18px}
+  html.is-embed .footnote{display:none}
+  html.is-embed .scroller{overflow:visible;padding-bottom:0}
+  @media (max-height:740px){html.is-embed{--embed-scale:.68}}
+  @media (min-width:900px) and (max-height:920px){html.is-embed{--embed-scale:.74}}
+</style></head>
 <body>
 <div class="page">
 
@@ -336,6 +346,7 @@
 
 <script>
 (function(){
+  if(window.self !== window.top){document.documentElement.classList.add('is-embed');}
   // verticales desde el Design OS: x = centro del nodo, punta = borde inferior de su marco
   const UP_LINKS = [
     {node:"n-leverage-card",  stop:"f-leverage"},
