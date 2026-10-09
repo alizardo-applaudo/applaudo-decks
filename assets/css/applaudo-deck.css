@@ -71,34 +71,50 @@ button{font-family:inherit}
 .probamos-main .tbl table{height:auto}
 .probamos-side{display:flex;flex-direction:column;gap:10px;justify-content:flex-start}
 
-.roadmap-slide .section-card.compact{padding:16px 18px;margin-top:0}
-.roadmap-slide .section-card.compact h3{font-size:1.05rem;margin-bottom:4px}
-.roadmap-slide .section-card.compact>.sub{font-size:.8125rem;margin-bottom:8px;line-height:1.35}
-.roadmap-slide .roadmap-steps{margin-top:8px;gap:6px}
-.roadmap-slide .step-card{padding:10px 12px;min-width:0;flex:1 1 0}
-.roadmap-slide .step-card .num{font-size:1.35rem}
-.roadmap-slide .step-card h4{font-size:.8125rem;margin:4px 0 2px}
-.roadmap-slide .step-card p{font-size:.7rem;line-height:1.25}
-.roadmap-slide .road-arrow{font-size:1rem}
-.roadmap-slide .slide-body{gap:12px}
-.roadmap-slide .grid-2.bottom-cards{margin-top:0;gap:12px}
-.roadmap-slide .card-soft-green.compact p{font-size:.75rem;margin-top:8px;line-height:1.35}
+/* Spacious slides (4–8): full type scale + vertical distribution; not slide-fit compact */
+.slide.slide-spacious.active{height:100vh;max-height:100vh;overflow:hidden}
+.slide-spacious .inner-spacious{
+  display:flex;flex-direction:column;min-height:0;height:100%;max-height:100%;
+  padding:72px 56px calc(var(--nav-safe) + var(--foot-safe));
+  overflow:hidden;justify-content:flex-start;
+}
+.slide-spacious .slide-head{flex:none}
+.slide-spacious .slide-head .eyebrow{margin-bottom:18px;font-size:.9rem}
+.slide-spacious .slide-head h2.hl{font-size:clamp(2.4rem,5.6vw,4.6rem);letter-spacing:-.015em;line-height:1.02}
+.slide-spacious .slide-head .lead{margin-top:14px;font-size:1.0625rem;line-height:1.55;color:var(--gray);max-width:68ch}
+.slide-spacious .slide-body{
+  flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-evenly;gap:clamp(16px,2.8vh,28px);margin-top:clamp(8px,1.5vh,18px);
+}
+.slide-spacious .slide-body .tbl{margin-top:0}
+.slide-spacious .slide-body .hero-band{margin-top:0}
+.slide-spacious .slide-body .note{margin-top:0}
+.slide-spacious .slide-body .section-card{margin-top:0}
 
-.metrics-slide .slide-body{gap:10px}
-.metrics-slide .hero-band.compact p{font-size:.8125rem}
+.roadmap-handoff-slide .section-card{padding:clamp(26px,3.5vh,36px) clamp(28px,3vw,34px);display:flex;flex-direction:column;justify-content:center;flex:1;max-height:100%}
+.roadmap-handoff-slide .roadmap-steps{margin-top:clamp(16px,2.5vh,28px);gap:12px;align-items:stretch}
+.roadmap-handoff-slide .step-card{flex:1 1 180px;padding:clamp(18px,2.8vh,26px) 18px}
 
-.contracts-slide .slide-head h2.hl{font-size:clamp(1.5rem,2.5vw,2.1rem)}
-.contracts-slide .pipe-flow{margin:10px 0;gap:6px}
-.contracts-slide .pipe-flow .node{padding:6px 12px;font-size:.75rem}
-.contracts-slide .analogy{margin-top:10px;gap:14px}
-.contracts-slide .analogy .card{padding:16px 18px}
-.contracts-slide .analogy h3{font-size:1.05rem}
-.contracts-slide .analogy li{font-size:.8125rem;margin-bottom:5px}
+.roadmap-ask-slide .slide-body{justify-content:space-evenly;padding-bottom:0}
+.roadmap-ask-slide .section-card.green{
+  padding:clamp(24px,3.2vh,32px) clamp(26px,3vw,30px);flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;
+}
+.roadmap-ask-slide .grid-2.bottom-cards{margin-top:14px;gap:18px}
+.roadmap-ask-slide .slide-body .hero-band{flex:none;margin-top:auto}
 
-.deliverable-slide .deliverable{margin-top:10px;gap:16px}
-.deliverable-slide .figma-mock{padding:16px}
-.deliverable-slide .codebox{padding:14px 16px;font-size:.72rem;max-height:280px}
-.deliverable-slide .ui-btn{padding:10px 20px;font-size:.8125rem;margin-top:12px}
+.metrics-slide .tbl{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.metrics-slide .tbl table{height:auto}
+.metrics-slide .tbl td{padding:clamp(12px,1.9vh,17px) 18px}
+.metrics-slide .tbl th{padding:clamp(12px,1.6vh,16px) 18px}
+.metrics-slide .hero-band{flex:none;padding:clamp(20px,3.2vh,28px) 28px}
+
+.contracts-slide .slide-body{gap:20px}
+.contracts-slide .pipe-flow{margin:0;flex:none}
+.contracts-slide .analogy{margin-top:0;flex:1;align-items:stretch;min-height:0}
+.contracts-slide .analogy .card{display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,4vh,36px) 28px}
+
+.deliverable-slide .deliverable{margin-top:0;flex:1;align-items:stretch;min-height:0}
+.deliverable-slide .codebox{max-height:none;flex:1}
+.deliverable-slide .figma-mock{display:flex;flex-direction:column;justify-content:flex-start}
 .inner h2.hl em{font-style:normal;color:var(--red)}
 .slide:not(.slide-dark)::after{content:'';position:absolute;top:36px;right:40px;width:14px;height:14px;background:var(--red);pointer-events:none}
 
@@ -262,9 +278,9 @@ button{font-family:inherit}
 
 @media (max-width:900px){
   .slide{overflow-y:auto;-webkit-overflow-scrolling:touch}
-  .slide.slide-fit.active{overflow-y:auto}
-  .slide-fit .inner-viewport{height:auto;max-height:none;overflow:visible}
-  .slide-fit .slide-body{overflow:visible}
+  .slide.slide-fit.active,.slide.slide-spacious.active{overflow-y:auto}
+  .slide-fit .inner-viewport,.slide-spacious .inner-spacious{height:auto;max-height:none;overflow:visible}
+  .slide-fit .slide-body,.slide-spacious .slide-body{overflow:visible}
   .probamos-grid{grid-template-columns:1fr}
   .inner{padding:88px 24px calc(var(--nav-safe) + 24px)}
   .grid-2,.analogy,.deliverable,.roadmap-steps{grid-template-columns:1fr;flex-direction:column}
@@ -275,17 +291,19 @@ button{font-family:inherit}
   .dos-slide.active{display:flex!important;flex-direction:column}
 }
 @media (max-height:920px){
-  .inner h2.hl{font-size:clamp(1.55rem,2.6vw,2.15rem)}
+  .slide:not(.slide-spacious) .inner h2.hl{font-size:clamp(1.55rem,2.6vw,2.15rem)}
+  .slide-spacious .slide-head h2.hl{font-size:clamp(2.05rem,4.2vw,3.5rem)}
   .big{font-size:clamp(2.6rem,7vw,5.2rem)}
-  .inner{padding-top:58px}
+  .inner:not(.inner-spacious){padding-top:58px}
+  .slide-spacious .inner-spacious{padding-top:58px;padding-bottom:calc(var(--nav-safe) + 28px)}
   .logo-sm{top:24px;left:32px}
   .foot{bottom:28px}
 }
 @media (max-height:740px){
   .slide-fit .slide-head h2.hl{font-size:1.45rem}
+  .slide-spacious .slide-head h2.hl{font-size:clamp(1.85rem,3.6vw,2.85rem)}
   .tbl.compact td{font-size:.72rem;padding:5px 10px}
   .tbl.compact th{padding:6px 10px}
-  .roadmap-slide .step-card p{font-size:.65rem}
   .dos-slide .dos-header{padding-top:48px;padding-bottom:4px}
   .dos-slide .dos-header h2{font-size:.9rem}
 }
