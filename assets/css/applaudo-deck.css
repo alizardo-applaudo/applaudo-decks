@@ -61,10 +61,14 @@ button{font-family:inherit}
 .card-soft-pink.compact p,.card-soft-green.compact li{font-size:.8125rem}
 .card-soft-green.compact li{margin-bottom:4px}
 
-.probamos-grid{flex:1;min-height:0;display:grid;grid-template-columns:1.55fr 1fr;gap:14px;align-items:stretch;margin-top:8px}
-.probamos-main{display:flex;flex-direction:column;gap:8px;min-height:0;overflow:hidden}
-.probamos-main .tbl{flex:1;min-height:0;overflow:auto}
-.probamos-side{display:flex;flex-direction:column;gap:10px;justify-content:flex-start}
+.slide-probamos.inner-viewport{height:auto;max-height:100%;justify-content:flex-start}
+.slide-probamos .slide-body{flex:0 0 auto;overflow:visible}
+.slide-probamos .probamos-grid{flex:none;min-height:auto;height:auto}
+.probamos-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:14px;align-items:start;margin-top:8px}
+.probamos-main{display:flex;flex-direction:column;gap:8px;align-self:start}
+.probamos-main .tbl{flex:none;overflow:visible;height:auto;align-self:start}
+.probamos-main .tbl table{height:auto}
+.probamos-side{display:flex;flex-direction:column;gap:10px;justify-content:center;align-self:center}
 
 .roadmap-slide .section-card.compact{padding:16px 18px;margin-top:0}
 .roadmap-slide .section-card.compact h3{font-size:1.05rem;margin-bottom:4px}
@@ -182,19 +186,28 @@ button{font-family:inherit}
 .dos-slide .dos-stage{
   grid-area:dos-stage;
   min-height:0;
-  padding:4px 8px calc(var(--nav-safe) + 6px);
+  padding:2px 0 calc(var(--nav-safe) + 4px);
   display:flex;
   flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
   overflow:hidden;
+  background:transparent;
+}
+.dos-scale-wrap{
+  flex:none;
+  transform-origin:top center;
+  background:transparent;
+  will-change:transform;
 }
 .dos-frame{
-  position:relative;
-  flex:1;
-  width:100%;
-  min-height:0;
-  height:100%;
+  display:block;
+  width:1360px;
+  height:640px;
   border:0;
-  background:var(--bg-dark);
+  background:transparent;
+  color-scheme:dark;
+  overflow:hidden;
 }
 
 /* Contracts / pipeline visuals */

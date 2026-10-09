@@ -61,6 +61,42 @@
       });
     }
 
+    function fitDosDiagram() {
+      var fr = document.getElementById('dosFrame');
+      var wrap = document.getElementById('dosScaleWrap');
+      var stage = document.querySelector('.dos-slide .dos-stage');
+      if (!fr || !wrap || !stage) return;
+      var slide = fr.closest('.slide');
+      if (!slide || !slide.classList.contains('active')) return;
+      try {
+        var doc = fr.contentDocument;
+        var win = fr.contentWindow;
+        if (!doc || !win) return;
+        fr.style.width = '1360px';
+        if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
+        win.dispatchEvent(new Event('resize'));
+        var canvas = doc.getElementById('canvas');
+        var contentW = 1360;
+        var contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, 520);
+        if (canvas) contentH = Math.max(contentH, canvas.offsetHeight + 32);
+        fr.style.height = contentH + 'px';
+        wrap.style.width = contentW + 'px';
+        wrap.style.height = contentH + 'px';
+        var availW = stage.clientWidth;
+        var availH = stage.clientHeight;
+        var scale = Math.min(availW / contentW, availH / contentH, 1);
+        wrap.style.transform = 'scale(' + scale + ')';
+      } catch (e) {}
+    }
+
+    function scheduleDosFit() {
+      fitDosDiagram();
+      requestAnimationFrame(fitDosDiagram);
+      setTimeout(fitDosDiagram, 120);
+      setTimeout(fitDosDiagram, 450);
+      setTimeout(fitDosDiagram, 900);
+    }
+
     function goTo(n) {
       n = Math.max(0, Math.min(n, N - 1));
       slides[cur].classList.remove('active');
@@ -76,6 +112,7 @@
       try {
         history.replaceState(null, '', '#' + (cur + 1));
       } catch (e) {}
+      if (slides[cur].classList.contains('dos-slide')) scheduleDosFit();
       if (options.onSlideChange) options.onSlideChange(cur, slides[cur]);
     }
 
@@ -111,8 +148,14 @@
           });
         } catch (x) {}
       }
-      fr.addEventListener('load', bindKeys);
+      fr.addEventListener('load', function () {
+        bindKeys();
+        scheduleDosFit();
+      });
       bindKeys();
+      window.addEventListener('resize', function () {
+        if (slides[cur] && slides[cur].classList.contains('dos-slide')) scheduleDosFit();
+      });
     }
 
     global.ApplaudoDeck = { goTo: goTo, getCurrent: function () { return cur; } };
