@@ -67,24 +67,26 @@ button{font-family:inherit}
 .slide-probamos .slide-head h2.hl{font-size:clamp(1.65rem,2.8vw,2.35rem);line-height:1.06}
 .slide-probamos .slide-head .lead-tight{font-size:.9375rem;line-height:1.4}
 .slide-probamos .slide-body{
-  flex:1;min-height:0;overflow:visible;
-  gap:clamp(10px,1.8vh,18px);justify-content:space-evenly;
+  flex:1;min-height:0;overflow:visible;display:flex;flex-direction:column;
+  gap:0;justify-content:flex-start;
 }
 .probamos-stack{
-  display:flex;flex-direction:column;gap:clamp(10px,1.6vh,16px);width:100%;flex:1;min-height:0;
-  justify-content:space-evenly;overflow:visible;
+  display:flex;flex-direction:column;gap:clamp(12px,2vh,20px);width:100%;flex:1;min-height:0;
+  justify-content:flex-start;overflow:visible;
 }
+.probamos-banners{margin-top:clamp(8px,1.5vh,14px)}
 .callout-e2e{
   border:none;border-left:none;background:linear-gradient(145deg,#E5F6EB,#f4fbf6);
   padding:clamp(12px,1.8vh,18px) clamp(16px,2vw,22px);border-radius:var(--radius-item);margin:0;flex:none;
 }
 .callout-e2e p{color:#1A6B42;font-weight:600;font-size:clamp(.875rem,1.2vw,1rem);line-height:1.4;max-width:none}
 .slide-probamos .probamos-tbl{
-  width:100%;flex:none;margin-top:0;overflow:visible;height:auto;align-self:stretch;
+  width:100%;flex:1 1 auto;margin-top:0;overflow:visible;height:auto;align-self:stretch;
+  display:flex;flex-direction:column;justify-content:center;min-height:0;
 }
 .slide-probamos .probamos-tbl table{height:auto}
 .slide-probamos .probamos-tbl th{padding:clamp(11px,1.5vh,14px) 18px;font-size:.6875rem}
-.slide-probamos .probamos-tbl td{padding:clamp(12px,1.85vh,17px) 18px;font-size:.875rem;line-height:1.45}
+.slide-probamos .probamos-tbl td{padding:clamp(13px,2.2vh,20px) 18px;font-size:.875rem;line-height:1.45}
 .slide-probamos .probamos-tbl.tbl{overflow:visible;background:transparent;border:none;border-radius:0}
 .slide-probamos .probamos-tbl table{border:1px solid var(--line);border-radius:var(--radius);background:var(--page);width:100%;border-collapse:collapse}
 .slide-probamos .probamos-read{margin:0;font-size:clamp(.8125rem,1.1vw,.875rem);line-height:1.35;flex:none}
