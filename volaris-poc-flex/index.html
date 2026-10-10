@@ -98,14 +98,15 @@
   <div class="logo-sm" data-logo="light"></div>
   <header class="dos-header">
     <p class="eyebrow">Marco Applaudo</p>
-    <h2>El PoC Flex corre sobre este proceso — de la petición al handoff que eng puede consumir.</h2>
+    <h2>El PoC Flex corre sobre este proceso: de la petición al handoff que engineering puede consumir.</h2>
   </header>
   <div class="dos-stage">
     <div class="dos-scale-host" id="dosScaleHost">
       <div class="dos-scale-wrap" id="dosScaleWrap">
-        <iframe class="dos-frame" id="dosFrame" title="Design OS workflow diagram" src="../assets/design-os-workflow.html" allowtransparency="true"></iframe>
+        <iframe class="dos-frame" id="dosFrame" title="Design OS workflow diagram" src="design-os-workflow-poc-flex.html" allowtransparency="true"></iframe>
       </div>
     </div>
+    <p class="dos-credit">Basado en AI Design Process (Fernando Martir), adaptado al PoC Flex</p>
   </div>
   <div class="foot">AI Design Process</div>
 </section>
@@ -197,16 +198,33 @@
 <pre>{
   <span class="st">"id"</span>: <span class="st">"volaris.button"</span>,
   <span class="st">"props"</span>: [
-    { <span class="st">"name"</span>: <span class="st">"type"</span>, <span class="st">"type"</span>: { <span class="st">"enum"</span>: [<span class="st">"PRIMARY"</span>,<span class="st">"SECONDARY"</span>,<span class="st">"TERTIARY"</span>,<span class="st">"QUATERNARY"</span>] }, <span class="st">"default"</span>: <span class="st">"PRIMARY"</span>,
-      <span class="st">"bindings"</span>: { <span class="st">"code"</span>: { <span class="st">"prop"</span>: <span class="map-hl map-code">"buttonType"</span>, <span class="st">"composable"</span>: <span class="st">"VolarisButton"</span> }, <span class="st">"figma"</span>: { <span class="st">"kind"</span>: <span class="st">"VARIANT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Type"</span>, <span class="st">"set"</span>: <span class="st">"Button"</span> } } },
-    { <span class="st">"name"</span>: <span class="st">"size"</span>, <span class="st">"type"</span>: { <span class="st">"enum"</span>: [<span class="st">"SMALL"</span>,<span class="st">"MEDIUM"</span>,<span class="st">"LARGE"</span>] }, <span class="st">"default"</span>: <span class="st">"MEDIUM"</span>,
-      <span class="st">"bindings"</span>: { <span class="st">"code"</span>: { <span class="st">"prop"</span>: <span class="map-hl map-code">"buttonSize"</span> }, <span class="st">"figma"</span>: { <span class="st">"kind"</span>: <span class="st">"VARIANT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Size"</span> } } },
-    { <span class="st">"name"</span>: <span class="st">"label"</span>, <span class="st">"type"</span>: <span class="st">"string"</span>,
-      <span class="st">"bindings"</span>: { <span class="st">"code"</span>: { <span class="st">"prop"</span>: <span class="map-hl map-code">"labelText"</span> }, <span class="st">"figma"</span>: { <span class="st">"kind"</span>: <span class="st">"TEXT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Label#371:0"</span> } } }
+    {<span class="st">"name"</span>: <span class="st">"type"</span>,
+     <span class="st">"type"</span>: {<span class="st">"enum"</span>: [<span class="st">"PRIMARY"</span>,<span class="st">"SECONDARY"</span>,<span class="st">"TERTIARY"</span>,<span class="st">"QUATERNARY"</span>]},
+     <span class="st">"default"</span>: <span class="st">"PRIMARY"</span>,
+     <span class="st">"bindings"</span>: {
+       <span class="st">"code"</span>: {<span class="st">"prop"</span>: <span class="map-hl map-code">"buttonType"</span>, <span class="st">"composable"</span>: <span class="st">"VolarisButton"</span>},
+       <span class="st">"figma"</span>: {<span class="st">"kind"</span>: <span class="st">"VARIANT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Type"</span>, <span class="st">"set"</span>: <span class="st">"Button"</span>}
+     }},
+    {<span class="st">"name"</span>: <span class="st">"size"</span>,
+     <span class="st">"type"</span>: {<span class="st">"enum"</span>: [<span class="st">"SMALL"</span>,<span class="st">"MEDIUM"</span>,<span class="st">"LARGE"</span>]},
+     <span class="st">"default"</span>: <span class="st">"MEDIUM"</span>,
+     <span class="st">"bindings"</span>: {
+       <span class="st">"code"</span>: {<span class="st">"prop"</span>: <span class="map-hl map-code">"buttonSize"</span>},
+       <span class="st">"figma"</span>: {<span class="st">"kind"</span>: <span class="st">"VARIANT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Size"</span>}
+     }},
+    {<span class="st">"name"</span>: <span class="st">"label"</span>, <span class="st">"type"</span>: <span class="st">"string"</span>,
+     <span class="st">"bindings"</span>: {
+       <span class="st">"code"</span>: {<span class="st">"prop"</span>: <span class="map-hl map-code">"labelText"</span>},
+       <span class="st">"figma"</span>: {<span class="st">"kind"</span>: <span class="st">"TEXT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Label#371:0"</span>}
+     }}
   ],
-  <span class="st">"anatomy"</span>: { <span class="st">"root"</span>: { <span class="st">"tokens"</span>: { <span class="st">"background-color"</span>: <span class="st">"{action.primary.default}"</span>, <span class="st">"color"</span>: <span class="st">"{content.neutral.inverted}"</span>, <span class="st">"height-medium"</span>: <span class="st">"44"</span> } } },
+  <span class="st">"anatomy"</span>: {<span class="st">"root"</span>: {<span class="st">"tokens"</span>: {
+    <span class="st">"background-color"</span>: <span class="st">"{action.primary.default}"</span>,
+    <span class="st">"color"</span>: <span class="st">"{content.neutral.inverted}"</span>,
+    <span class="st">"height-medium"</span>: <span class="st">"44"</span>
+  }}},
   <span class="st">"status"</span>: <span class="st">"sealed"</span>,
-  <span class="st">"sot"</span>: { <span class="st">"sealedAt"</span>: <span class="st">"2026-10-01"</span>, <span class="st">"sealedBy"</span>: <span class="st">"Adonay"</span> }
+  <span class="st">"sot"</span>: {<span class="st">"sealedAt"</span>: <span class="st">"2026-10-01"</span>, <span class="st">"sealedBy"</span>: <span class="st">"Adonay"</span>}
 }</pre>
         </div>
       </div>

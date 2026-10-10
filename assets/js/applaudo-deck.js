@@ -97,7 +97,9 @@
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
         var availW = stage.clientWidth - marginX * 2;
-        var availH = stage.clientHeight - marginY;
+        var creditEl = slide.querySelector('.dos-credit');
+        var creditBand = creditEl ? creditEl.offsetHeight + 10 : 0;
+        var availH = stage.clientHeight - marginY - creditBand;
         var scale = Math.min(availW / contentW, availH / contentH);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         wrap.style.transform = 'scale(' + scale + ')';
