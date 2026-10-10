@@ -436,10 +436,14 @@ button{font-family:inherit}
   .metrics-slide .lead-one-line{font-size:.78rem}
   .tbl.compact td{font-size:.72rem;padding:5px 10px}
   .tbl.compact th{padding:6px 10px}
-  .slide-probamos .probamos-tbl td{padding:clamp(8px,1.25vh,11px) 14px;font-size:.8125rem;line-height:1.38}
-  .slide-probamos .probamos-tbl th{padding:8px 14px}
-  .slide-probamos .inner-viewport{padding-bottom:calc(var(--nav-safe) + 18px)}
-  .probamos-banners .hero-band,.probamos-banners .card-soft-pink.compact{min-height:60px;padding:14px 16px}
+  .slide-probamos .probamos-tbl td{padding:clamp(7px,1.05vh,9px) 12px;font-size:.8125rem;line-height:1.35}
+  .slide-probamos .probamos-tbl th{padding:7px 12px}
+  .slide-probamos .inner-viewport{padding-top:48px;padding-bottom:calc(var(--nav-safe) + 12px)}
+  .slide-probamos .callout-e2e{padding:10px 14px}
+  .slide-probamos .probamos-stack{gap:10px}
+  .probamos-banners .hero-band,.probamos-banners .card-soft-pink.compact{min-height:52px;padding:12px 14px}
+  .probamos-banners .hero-band p{font-size:.8125rem}
+  .probamos-banners .card-soft-pink.compact p{font-size:.8125rem}
   .roadmap-combined-slide .section-card.plain{padding:8px 10px}
   .roadmap-combined-slide .section-card.plain>.sub{font-size:.75rem;margin-bottom:4px}
   .roadmap-combined-slide .roadmap-proponemos-head h2.hl{font-size:clamp(1.45rem,2.5vw,1.85rem)}
