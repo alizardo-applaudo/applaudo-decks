@@ -52,7 +52,8 @@ for (const { suffix, width, height } of sizes) {
   const page = await context.newPage();
   await page.goto(base, { waitUntil: 'networkidle' });
 
-  for (let i = 0; i < 8; i++) {
+  const slideCount = await page.evaluate(() => document.querySelectorAll('#deck .slide').length);
+  for (let i = 0; i < slideCount; i++) {
     await page.evaluate((idx) => {
       if (window.ApplaudoDeck?.goTo) window.ApplaudoDeck.goTo(idx);
     }, i);

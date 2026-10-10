@@ -35,14 +35,12 @@
       <h2 class="hl">Cómo lo <em>probamos</em></h2>
       <p class="lead-tight">Mapa de pruebas 0→4 en feature real — automatización asistida + entrega sellada.</p>
     </div>
-    <div class="slide-body">
-    <div class="probamos-grid">
-    <div class="probamos-main">
-    <div class="callout callout-green compact">
+    <div class="slide-body probamos-stack">
+    <div class="callout callout-e2e compact">
       <p><strong>Método E2E en feature real</strong><br>Figma organizado → higiene → verify vs Android + JSON → sello humano → eng consume solo lo sellado.</p>
     </div>
 
-    <div class="tbl compact">
+    <div class="tbl compact probamos-tbl">
       <table>
         <thead>
           <tr><th>Prueba</th><th>Qué respondía</th><th>Resultado</th></tr>
@@ -76,9 +74,9 @@
         </tbody>
       </table>
     </div>
-    </div>
-    <div class="probamos-side">
-    <p class="note compact">Lectura: pruebas 1–3 = automatización asistida; prueba 4 = entrega real.</p>
+
+    <p class="note compact probamos-read">Lectura: pruebas 1–3 = automatización asistida; prueba 4 = entrega real.</p>
+    <div class="probamos-banners">
       <div class="hero-band compact">
         <span class="lab">SEÑAL DE TIEMPO (PILOTO)</span>
         <p>Flujo completo  ~1–2 días  →  ~1.5–2.5 h  /  ~40–60 min activos</p>
@@ -87,7 +85,6 @@
         <h4>Sello humano (fijo)</h4>
         <p style="max-width:none;font-weight:600;color:var(--ink);font-size:.8125rem">El sello (~10–15 min) no se automatiza.</p>
       </div>
-    </div>
     </div>
     </div>
   </div>
@@ -119,7 +116,7 @@
   <div class="inner inner-spacious">
     <div class="slide-head">
     <p class="eyebrow">Pipeline · Contratos JSON</p>
-    <h2 class="hl">Contratos, <em>con manzanas</em></h2>
+    <h2 class="hl">Contratos, <em>nueva source of truth</em></h2>
     <p class="lead">Piensa en un contrato JSON como la <strong>ficha de una receta</strong> en la cocina: no es el plato (Figma), sino la etiqueta que dice exactamente qué ingrediente es cada componente, sus estados y tokens — para que dev no adivine.</p>
     </div>
     <div class="slide-body">
@@ -136,16 +133,29 @@
     <div class="analogy">
       <div class="card">
         <h3>En el PoC probamos…</h3>
-        <ul>
-          <li><strong>Prueba 3:</strong> ¿sale un draft usable para el portero? — Sí, draft; no es el handoff eng.</li>
-          <li><strong>Verify:</strong> gaps honestos Figma↔spec↔código, sin inventar.</li>
-          <li><strong>Sello:</strong> el portero / Lead Designer valida en ~10–15 min — no se automatiza.</li>
-        </ul>
+        <ol class="poc-list">
+          <li>Probamos la verificación de gaps entre Figma, spec y código sin inventar.</li>
+          <li>Probamos hacerlo de forma manual y automatizada.</li>
+          <li>Mapeamos métricas de cada cosa.</li>
+          <li>Al final: ¿sale un draft usable por el portero, que pueda calificarlo listo para handoff a ingeniería?</li>
+        </ol>
       </div>
       <div class="card card-tint">
-        <span class="lab" style="color:rgba(255,255,255,.85)">Analogía</span>
-        <h3>Receta + etiqueta</h3>
-        <p style="color:rgba(255,255,255,.9);max-width:none;margin-top:8px">Figma = plato presentado. Contrato JSON = etiqueta con nombre del componente, props/estados y tokens. El sello = chef jefe que aprueba la etiqueta antes de que cocina (eng) la use.</p>
+        <h3 class="analogy-heading">ANALOGÍA · Receta + etiqueta</h3>
+        <ul class="analogy-lines">
+          <li>
+            <svg class="analogy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M5 11V7a2 2 0 0 1 2-2h3v6"/><path d="M12 11V5h4a2 2 0 0 1 2 2v4"/><path d="M7 15h10v2H7z"/></svg>
+            Figma = plato presentado.
+          </li>
+          <li>
+            <svg class="analogy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13h4"/><path d="M10 17h4"/></svg>
+            Contrato = etiqueta.
+          </li>
+          <li>
+            <svg class="analogy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            Sello = chef.
+          </li>
+        </ul>
       </div>
     </div>
     </div>
@@ -211,8 +221,8 @@
   <div class="inner inner-spacious">
     <div class="slide-head">
     <p class="eyebrow">Volaris Design · PoC Flex</p>
-    <h2 class="hl">Señal de tiempo — <em>métricas piloto</em></h2>
-    <p class="lead">Comparativo por etapa: manual vs skills (reloj / activo). Señal ≈ 80–90% menos tiempo donde aplica.</p>
+    <h2 class="hl metrics-title-one-line">Señal de tiempo — <em>métricas piloto</em></h2>
+    <p class="lead lead-one-line">Comparativo por etapa: manual vs skills (reloj / activo). Señal ≈ 80–90% menos tiempo donde aplica.</p>
     </div>
     <div class="slide-body">
     <div class="tbl">
@@ -260,19 +270,18 @@
   <div class="foot foot-right">PoC Flex · Oct ’26</div>
 </section>
 
-<!-- 7 · Roadmap (handoff) -->
-<section class="slide slide-spacious roadmap-handoff-slide" aria-label="Roadmap de handoff">
+<!-- 7 · Roadmap + propuesta (merged) -->
+<section class="slide slide-fit roadmap-combined-slide" aria-label="Roadmap de un handoff">
   <div class="logo-sm" data-logo="dark"></div>
-  <div class="inner inner-spacious">
+  <div class="inner inner-viewport compact">
     <div class="slide-head">
     <p class="eyebrow">Volaris Design · PoC Flex</p>
-    <h2 class="hl">Roadmap y qué <em>pedimos hoy</em></h2>
+    <h2 class="hl">Roadmap de un <em>handoff</em></h2>
     </div>
     <div class="slide-body">
-    <div class="section-card">
-      <h3>1. Roadmap de un handoff con este método</h3>
+    <div class="section-card plain">
       <p class="sub">Orden de mano: Producto cierra → Diseño higieniza → Portero sella → Eng consume.</p>
-      <div class="roadmap-steps">
+      <div class="roadmap-steps compact-steps">
         <div class="step-card"><span class="num">1</span><h4>Producto / PO</h4><p>Cierra copy / AC</p></div>
         <span class="road-arrow">→</span>
         <div class="step-card"><span class="num">2</span><h4>Diseñador</h4><p>Intake + higiene (OK humano)</p></div>
@@ -282,26 +291,12 @@
         <div class="step-card"><span class="num">4</span><h4>Eng</h4><p>Consume packs sellados e implementa con menos reproceso garantizado</p></div>
       </div>
     </div>
-    </div>
-  </div>
-  <div class="foot">Roadmap</div>
-  <div class="foot foot-right">PoC Flex · Oct ’26</div>
-</section>
 
-<!-- 8 · Qué pedimos hoy -->
-<section class="slide slide-spacious roadmap-ask-slide" aria-label="Qué pedimos hoy">
-  <div class="logo-sm" data-logo="dark"></div>
-  <div class="inner inner-spacious">
-    <div class="slide-head">
-    <p class="eyebrow">Volaris Design · PoC Flex</p>
-    <h2 class="hl">Roadmap y qué <em>pedimos hoy</em></h2>
-    </div>
-    <div class="slide-body">
-    <div class="section-card green">
-      <h3>2. Qué pedimos hoy</h3>
+    <div class="section-card plain green">
+      <h3>Qué proponemos hoy</h3>
       <p class="sub">Apoyo para socializar el método al resto del equipo. Reconocimiento de tiempos de adopción razonables.</p>
       <div class="grid-2 bottom-cards">
-        <div class="card-soft-green">
+        <div class="card-soft-green compact">
           <h4>Adopción</h4>
           <ul>
             <li>Shadow  2–3 semanas</li>
@@ -309,9 +304,9 @@
             <li>Workshops internos 2-3 semanas</li>
             <li>Rollout ligero  desde mes 2</li>
           </ul>
-          <p style="font-size:.875rem;margin-top:12px;max-width:none;color:var(--gray);line-height:1.45">En paralelo: Formación intensiva en Claude Code, GitHub, Design System y Contratos JSON.<br>Imprescindible: Diseño debe tener acceso a repositorio y SDD.</p>
+          <p class="adopcion-note">En paralelo: Formación intensiva en Claude Code, GitHub, Design System y Contratos JSON.<br>Imprescindible: Diseño debe tener acceso a repositorio y SDD.</p>
         </div>
-        <div class="card-soft-pink">
+        <div class="card-soft-pink compact">
           <h4>Entregables</h4>
           <ul>
             <li>Shadowing reports</li>
@@ -323,7 +318,7 @@
       </div>
     </div>
 
-    <div class="hero-band" style="background:var(--red)">
+    <div class="hero-band compact">
       <span class="lab">SEÑAL CLAVE</span>
       <p>Asentar esta práctica en Diseño tomará 3–6 meses: proceso nuevo (cliente + interno) y curva técnica + accesos que hoy el equipo no tiene.</p>
     </div>
@@ -338,7 +333,7 @@
 <nav class="nav" aria-label="Navegación de diapositivas">
   <button class="nav-btn" id="prev" aria-label="Diapositiva anterior">‹</button>
   <div class="dots" id="dots"></div>
-  <span class="counter" id="counter">1 / 8</span>
+  <span class="counter" id="counter">1 / 7</span>
   <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
 </nav>
 

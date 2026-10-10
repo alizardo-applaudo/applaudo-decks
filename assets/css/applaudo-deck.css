@@ -62,14 +62,19 @@ button{font-family:inherit}
 .card-soft-green.compact li{margin-bottom:4px}
 
 .slide-probamos.inner-viewport{height:auto;max-height:100%;justify-content:flex-start}
-.slide-probamos .slide-body{flex:0 0 auto;overflow:visible}
-.slide-probamos .probamos-grid{flex:none;min-height:auto;height:auto}
-.probamos-grid{display:flex;gap:14px;align-items:flex-start;margin-top:8px}
-.probamos-main{flex:1.55 1 0;min-width:0;display:flex;flex-direction:column;gap:8px}
-.probamos-side{flex:1 1 0;min-width:0}
-.probamos-main .tbl{flex:none;overflow:visible;height:auto;align-self:start}
-.probamos-main .tbl table{height:auto}
-.probamos-side{display:flex;flex-direction:column;gap:10px;justify-content:flex-start}
+.slide-probamos .slide-body{flex:1;min-height:0;overflow:hidden;gap:6px}
+.probamos-stack{display:flex;flex-direction:column;gap:6px;width:100%}
+.callout-e2e{border-left:0;background:linear-gradient(145deg,#E5F6EB,#f4fbf6);padding:12px 16px;border-radius:var(--radius-item)}
+.callout-e2e p{color:#1A6B42;font-weight:600;font-size:.8125rem;line-height:1.35;max-width:none}
+.slide-probamos .probamos-tbl{width:100%;flex:none}
+.slide-probamos .probamos-tbl.compact th{padding:6px 10px;font-size:.6rem}
+.slide-probamos .probamos-tbl.compact td{padding:5px 10px;font-size:.72rem;line-height:1.28}
+.slide-probamos .probamos-read{margin:0;font-size:.75rem;line-height:1.3}
+.probamos-banners{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch;flex:none}
+.probamos-banners .hero-band{margin-top:0;padding:12px 14px}
+.probamos-banners .hero-band p{font-size:.8125rem;line-height:1.25}
+.probamos-banners .card-soft-pink.compact{padding:12px 14px}
+.probamos-banners .card-soft-pink.compact h4{font-size:.8125rem;margin-bottom:4px}
 
 /* Spacious slides (4–8): full type scale + vertical distribution; not slide-fit compact */
 .slide.slide-spacious.active{height:100vh;max-height:100vh;overflow:hidden}
@@ -90,19 +95,32 @@ button{font-family:inherit}
 .slide-spacious .slide-body .note{margin-top:0}
 .slide-spacious .slide-body .section-card{margin-top:0}
 
-.roadmap-handoff-slide .slide-body{justify-content:center}
-.roadmap-handoff-slide .section-card{
-  flex:none;max-height:none;padding:28px 30px;
-}
-.roadmap-handoff-slide .roadmap-steps{margin-top:20px;gap:12px;align-items:stretch}
-.roadmap-handoff-slide .step-card{flex:1 1 180px;padding:20px 18px}
+.metrics-slide .metrics-title-one-line{white-space:nowrap;font-size:clamp(2rem,4.8vw,4.2rem)}
+.metrics-slide .lead-one-line{max-width:none;font-size:clamp(.875rem,1.35vw,1.02rem);white-space:nowrap;line-height:1.4}
 
-.roadmap-ask-slide .slide-body{justify-content:space-evenly;padding-bottom:0}
-.roadmap-ask-slide .section-card.green{
-  padding:clamp(24px,3.2vh,32px) clamp(26px,3vw,30px);flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;
-}
-.roadmap-ask-slide .grid-2.bottom-cards{margin-top:14px;gap:18px}
-.roadmap-ask-slide .slide-body .hero-band{flex:none;margin-top:auto}
+.contracts-slide .poc-list{margin:10px 0 0;padding-left:1.25rem;color:var(--gray);font-size:.9375rem;line-height:1.45}
+.contracts-slide .poc-list li{margin-bottom:8px;padding-left:4px}
+.contracts-slide .card-tint .analogy-heading{color:#fff;font-size:1.05rem;margin-bottom:12px;font-weight:600}
+.analogy-lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.analogy-lines li{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.92);font-size:.9375rem;font-weight:500;line-height:1.35;max-width:none}
+.analogy-icon{width:22px;height:22px;flex:none;color:#fff;opacity:.95}
+
+.roadmap-combined-slide .slide-body{gap:8px;overflow:hidden}
+.roadmap-combined-slide .section-card.plain{border-left:0;border:1px solid var(--line);padding:12px 14px;margin-top:0}
+.roadmap-combined-slide .section-card.plain h3{font-size:1rem;margin-bottom:4px}
+.roadmap-combined-slide .section-card.plain>.sub{font-size:.75rem;margin-bottom:6px;line-height:1.3}
+.roadmap-combined-slide .compact-steps{margin-top:6px;gap:5px}
+.roadmap-combined-slide .compact-steps .step-card{padding:8px 10px;min-width:0;flex:1 1 0}
+.roadmap-combined-slide .compact-steps .step-card .num{font-size:1.15rem}
+.roadmap-combined-slide .compact-steps .step-card h4{font-size:.72rem;margin:3px 0 2px}
+.roadmap-combined-slide .compact-steps .step-card p{font-size:.65rem;line-height:1.22}
+.roadmap-combined-slide .compact-steps .road-arrow{font-size:.85rem}
+.roadmap-combined-slide .grid-2.bottom-cards{margin-top:8px;gap:8px}
+.roadmap-combined-slide .card-soft-green.compact,.roadmap-combined-slide .card-soft-pink.compact{padding:10px 12px}
+.roadmap-combined-slide .card-soft-green.compact h4,.roadmap-combined-slide .card-soft-pink.compact h4{font-size:.8125rem;margin-bottom:6px}
+.roadmap-combined-slide .card-soft-green.compact li,.roadmap-combined-slide .card-soft-pink.compact li{font-size:.72rem;margin-bottom:3px}
+.roadmap-combined-slide .adopcion-note{font-size:.68rem;margin-top:6px;max-width:none;color:var(--gray);line-height:1.32}
+.roadmap-combined-slide .hero-band.compact p{font-size:.75rem;line-height:1.28}
 
 .metrics-slide .tbl{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
 .metrics-slide .tbl table{height:auto}
@@ -284,7 +302,8 @@ button{font-family:inherit}
   .slide.slide-fit.active,.slide.slide-spacious.active{overflow-y:auto}
   .slide-fit .inner-viewport,.slide-spacious .inner-spacious{height:auto;max-height:none;overflow:visible}
   .slide-fit .slide-body,.slide-spacious .slide-body{overflow:visible}
-  .probamos-grid{grid-template-columns:1fr}
+  .probamos-banners{grid-template-columns:1fr}
+  .metrics-slide .metrics-title-one-line,.metrics-slide .lead-one-line{white-space:normal}
   .inner{padding:88px 24px calc(var(--nav-safe) + 24px)}
   .grid-2,.analogy,.deliverable,.roadmap-steps{grid-template-columns:1fr;flex-direction:column}
   .dots{display:none}
@@ -305,8 +324,11 @@ button{font-family:inherit}
 @media (max-height:740px){
   .slide-fit .slide-head h2.hl{font-size:1.45rem}
   .slide-spacious .slide-head h2.hl{font-size:clamp(1.85rem,3.6vw,2.85rem)}
+  .metrics-slide .metrics-title-one-line{font-size:clamp(1.35rem,2.4vw,1.75rem)}
+  .metrics-slide .lead-one-line{font-size:.78rem}
   .tbl.compact td{font-size:.72rem;padding:5px 10px}
   .tbl.compact th{padding:6px 10px}
+  .roadmap-combined-slide .compact-steps .step-card p{font-size:.62rem}
   .dos-slide .dos-header{padding-top:48px;padding-bottom:4px}
   .dos-slide .dos-header h2{font-size:.9rem}
 }
