@@ -71,9 +71,14 @@ button{font-family:inherit}
   gap:0;justify-content:flex-start;
 }
 .probamos-stack{
-  display:flex;flex-direction:column;gap:clamp(12px,2vh,20px);width:100%;flex:1;min-height:0;
+  display:flex;flex-direction:column;gap:clamp(8px,1.2vh,12px);width:100%;flex:1;min-height:0;
   justify-content:flex-start;overflow:visible;
 }
+.slide-probamos .callout-e2e + .probamos-tbl{margin-top:0}
+.slide-probamos .probamos-stack .hero-band{
+  flex:none;margin:0;width:100%;padding:clamp(20px,3.2vh,28px) 28px;
+}
+.slide-probamos .probamos-read{margin-top:auto}
 .probamos-banners{margin-top:clamp(8px,1.5vh,14px)}
 .callout-e2e{
   border:none;border-left:none;background:linear-gradient(145deg,#E5F6EB,#f4fbf6);
@@ -81,8 +86,8 @@ button{font-family:inherit}
 }
 .callout-e2e p{color:#1A6B42;font-weight:600;font-size:clamp(.875rem,1.2vw,1rem);line-height:1.4;max-width:none}
 .slide-probamos .probamos-tbl{
-  width:100%;flex:1 1 auto;margin-top:0;overflow:visible;height:auto;align-self:stretch;
-  display:flex;flex-direction:column;justify-content:center;min-height:0;
+  width:100%;flex:0 1 auto;margin-top:0;overflow:visible;height:auto;align-self:stretch;
+  display:flex;flex-direction:column;justify-content:flex-start;min-height:0;
 }
 .slide-probamos .probamos-tbl table{height:auto}
 .slide-probamos .probamos-tbl th{padding:clamp(11px,1.5vh,14px) 18px;font-size:.6875rem}
@@ -618,6 +623,10 @@ button{font-family:inherit}
   .probamos-banners .hero-band p{font-size:.8125rem}
   .probamos-banners .card-soft-pink.compact p{font-size:.8125rem}
   .slide-probamos .probamos-sello-banner{padding:12px 16px}
+  .slide-probamos .probamos-stack .hero-band{padding:14px 20px}
+  .slide-probamos .probamos-stack .hero-band p{font-size:clamp(.875rem,1.2vw,1rem);line-height:1.32}
+  .slide-probamos .probamos-stack{gap:8px}
+  .slide-probamos .probamos-tbl td{padding:clamp(8px,1.2vh,11px) 14px;font-size:.8125rem}
   .roadmap-combined-slide .roadmap-handoff-sub{font-size:.8125rem;line-height:1.38}
   .roadmap-combined-slide .roadmap-proponemos-head h2.hl{font-size:clamp(1.35rem,2.3vw,1.65rem)}
   .roadmap-combined-slide .slide-head h2.hl{font-size:clamp(1.35rem,2.3vw,1.65rem)}
