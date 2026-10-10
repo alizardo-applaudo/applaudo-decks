@@ -74,11 +74,11 @@ button{font-family:inherit}
   display:flex;flex-direction:column;gap:clamp(8px,1.2vh,12px);width:100%;flex:1;min-height:0;
   justify-content:flex-start;overflow:visible;
 }
-.slide-probamos .callout-e2e + .probamos-tbl{margin-top:0}
+.slide-probamos .callout-e2e + .probamos-tbl{margin-top:16px}
 .slide-probamos .probamos-stack .hero-band{
   flex:none;margin:0;width:100%;padding:clamp(20px,3.2vh,28px) 28px;
 }
-.slide-probamos .probamos-read{margin-top:auto}
+.slide-probamos .probamos-read{margin-top:auto;padding-top:10px}
 .probamos-banners{margin-top:clamp(8px,1.5vh,14px)}
 .callout-e2e{
   border:none;border-left:none;background:linear-gradient(145deg,#E5F6EB,#f4fbf6);
