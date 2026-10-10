@@ -491,5 +491,7 @@ button{font-family:inherit}
   .roadmap-combined-slide .hero-band.compact p{font-size:.75rem;line-height:1.28}
   .dos-slide .dos-header{padding-top:48px;padding-bottom:4px}
   .dos-slide .dos-header h2{font-size:.9rem}
+  .dos-slide .dos-stage{padding-bottom:calc(var(--nav-safe) + 18px)}
+  .dos-slide .dos-credit{margin-top:4px}
 }
 @media (prefers-reduced-motion:reduce){.glow-bg::before{animation:none}.slide.active{animation:none}*{animation:none!important;transition:none!important}}
