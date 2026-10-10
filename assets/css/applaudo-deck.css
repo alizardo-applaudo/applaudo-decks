@@ -191,10 +191,13 @@ button{font-family:inherit}
 .figma-panel{display:flex;flex-direction:column;min-height:0}
 .figma-panel .panel-meta{font-size:.7rem;line-height:1.3;flex:none}
 .figma-panel .volaris-btn-stage{
-  flex:none;display:flex;align-items:center;justify-content:center;
+  flex:1;display:flex;align-items:center;justify-content:center;
   min-height:clamp(72px,9vh,96px);padding:clamp(12px,1.8vh,18px) 12px;margin-bottom:0;
 }
-.figma-panel .figma-spec-list{margin-top:auto;padding-top:clamp(14px,2vh,22px);flex:none}
+.figma-panel .figma-spec-list{margin-top:clamp(12px,1.6vh,16px);padding-top:0;flex:none}
+.deliverable-volaris-slide .figma-panel .volaris-btn-preview{
+  min-height:52px;height:52px;padding:0 48px;font-size:1.2rem;
+}
 .figma-panel .figma-spec-list li{font-size:.875rem}
 .deliverable-panel h3{font-size:1.125rem;margin-bottom:6px;color:var(--ink)}
 .panel-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -228,8 +231,13 @@ button{font-family:inherit}
   margin-top:clamp(10px,1.6vh,16px)!important;font-size:clamp(.8125rem,1.1vw,.875rem);font-weight:600;
   color:var(--ink);text-align:center;max-width:none;flex:none;position:relative;z-index:2;
 }
-.deliverable-volaris-slide .slide-body{gap:clamp(10px,1.8vh,16px);justify-content:space-evenly}
-.deliverable-volaris-slide .deliverable-volaris{flex:none}
+.deliverable-volaris-slide .slide-body{
+  gap:clamp(8px,1.2vh,12px);justify-content:flex-start;min-height:0;
+}
+.deliverable-volaris-slide .deliverable-volaris{flex:1;min-height:0;align-items:stretch}
+.deliverable-volaris-slide .deliverable-takeaway{
+  flex:none;margin-top:auto!important;padding-top:clamp(6px,1vh,10px);
+}
 .contract-panel .codebox{margin-top:8px;padding:clamp(14px,2vh,18px) clamp(14px,2vw,18px)}
 .inner h2.hl em{font-style:normal;color:var(--red)}
 .slide:not(.slide-dark)::after{content:'';position:absolute;top:36px;right:40px;width:14px;height:14px;background:var(--red);pointer-events:none}
