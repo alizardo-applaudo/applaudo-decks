@@ -155,6 +155,7 @@ button{font-family:inherit}
 .roadmap-combined-slide .compact-steps .step-card{
   padding:16px 20px;min-width:0;flex:1 1 0;align-self:stretch;
   display:flex;flex-direction:column;
+  background:#fff;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.03);
 }
 .roadmap-combined-slide .compact-steps .step-card-head{
   display:flex;align-items:baseline;gap:8px;flex:none;
