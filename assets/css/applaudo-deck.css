@@ -131,6 +131,39 @@ button{font-family:inherit}
 .contracts-slide .analogy-lines li::before{display:none;content:none}
 .contracts-slide .analogy-icon{width:26px;height:26px;flex:none;color:#fff;stroke:#fff}
 
+.problema-slide .inner-viewport{
+  padding-top:50px;padding-bottom:calc(var(--nav-safe) + 6px);
+  display:flex;flex-direction:column;overflow:hidden;height:100%;max-height:100%;
+}
+.problema-slide .slide-head{flex:none}
+.problema-slide .slide-head h2.hl{font-size:clamp(1.65rem,2.8vw,2.35rem);line-height:1.06;letter-spacing:-.015em}
+.problema-slide.slide-fit .slide-body{
+  flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:0;overflow:visible;
+}
+.problema-stack{
+  flex:1;min-height:0;display:flex;flex-direction:column;gap:clamp(16px,2.2vh,22px);justify-content:flex-start;
+}
+.problema-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px);flex:1 1 auto;align-items:stretch;min-height:0;
+}
+.problema-card{
+  background:#fff;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.03);
+  border-radius:var(--radius-item);padding:clamp(20px,2.4vh,24px) clamp(18px,2vw,22px);
+  display:flex;flex-direction:column;gap:10px;min-width:0;
+}
+.problema-card .problema-icon{width:28px;height:28px;flex:none;color:var(--red);stroke:var(--red)}
+.problema-card h4{font-size:1rem;margin:0;line-height:1.25;color:var(--ink)}
+.problema-card p{font-size:.875rem;line-height:1.45;color:var(--gray);margin:0;max-width:none}
+.problema-slide .problema-hero{
+  flex:none;margin-top:auto;width:100%;padding:clamp(20px,3.2vh,28px) 28px;
+}
+.slide-probamos .probamos-sello-banner{
+  flex:none;width:100%;margin-top:auto;padding:clamp(18px,2.8vh,26px) clamp(20px,2.5vw,28px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.slide-probamos .probamos-sello-banner h4{font-size:1rem;margin-bottom:8px}
+.slide-probamos .probamos-sello-banner p{font-size:.9375rem;line-height:1.35}
+
 .roadmap-combined-slide .inner-viewport{
   padding-top:50px;padding-bottom:calc(var(--nav-safe) + 6px);
   display:flex;flex-direction:column;overflow:hidden;
@@ -482,6 +515,34 @@ button{font-family:inherit}
   .dos-slide.active{display:flex!important;flex-direction:column}
 }
 @media (max-height:760px){
+  .dos-slide .dos-header{padding:40px 36px 6px 160px}
+  .dos-slide .dos-header h2{font-size:clamp(.85rem,1.6vw,1rem);line-height:1.28}
+  .dos-slide .dos-credit{font-size:.6875rem;margin-top:2px}
+  .dos-slide .dos-stage{padding-bottom:calc(var(--nav-safe) + 24px)}
+  .deliverable-volaris-slide .inner-spacious{padding-top:38px;padding-bottom:calc(var(--nav-safe) + 12px)}
+  .deliverable-volaris-slide .figma-panel .volaris-btn-stage{height:84px;min-height:84px;max-height:84px;padding:6px}
+  .deliverable-volaris-slide .codebox-contract pre{font-size:9px;line-height:1.26}
+  .deliverable-volaris-slide .contract-panel .codebox{padding:5px 7px}
+  .deliverable-volaris-slide .codebox-contract .label{margin-bottom:2px;font-size:.5625rem}
+  .deliverable-volaris-slide .deliverable-volaris-head .lead{font-size:.7rem;line-height:1.26;margin-top:2px}
+  .deliverable-volaris-slide .deliverable-volaris-head h2.hl{font-size:clamp(1.15rem,2vw,1.4rem)}
+  .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{margin-bottom:4px;font-size:.6875rem}
+  .deliverable-volaris-slide .deliverable-takeaway{font-size:.65rem;line-height:1.22;margin-top:4px}
+  .deliverable-volaris-slide .deliverable-panel{padding:8px 10px}
+  .deliverable-volaris-slide .deliverable-panel h3{font-size:.875rem;margin-bottom:2px}
+  .deliverable-volaris-slide .panel-meta{margin-bottom:4px;font-size:.625rem;line-height:1.22}
+  .deliverable-volaris-slide .figma-spec-list{gap:3px}
+  .deliverable-volaris-slide .figma-spec-list li{font-size:.6875rem}
+  .deliverable-volaris-slide .sealed-badge{font-size:.5625rem;padding:3px 8px}
+  .deliverable-volaris-slide .deliverable-volaris{gap:8px}
+  .deliverable-volaris-slide .slide-body{gap:6px;overflow:visible}
+  .deliverable-volaris-slide .contract-panel .codebox-contract{flex:0 1 auto;min-height:auto;overflow:visible}
+  .deliverable-volaris-slide .codebox-contract pre{flex:none;min-height:auto;overflow:visible}
+  .deliverable-volaris-slide .contract-panel,.deliverable-volaris-slide .deliverable-panel.contract-panel{overflow:visible}
+  .problema-cards{gap:12px}
+  .problema-card{padding:16px 16px}
+  .problema-slide .problema-hero{padding:14px 20px;margin-top:12px}
+  .problema-stack{gap:12px}
   .roadmap-combined-slide .slide-head h2.hl,
   .roadmap-combined-slide .roadmap-proponemos-head h2.hl{
     font-size:clamp(1.45rem,2.5vw,1.85rem);
@@ -542,6 +603,10 @@ button{font-family:inherit}
   .probamos-banners .hero-band,.probamos-banners .card-soft-pink.compact{min-height:52px;padding:12px 14px}
   .probamos-banners .hero-band p{font-size:.8125rem}
   .probamos-banners .card-soft-pink.compact p{font-size:.8125rem}
+  .slide-probamos .probamos-sello-banner{padding:14px 18px}
+  .problema-card p{font-size:.8125rem}
+  .problema-card h4{font-size:.9375rem}
+  .problema-cards{gap:10px}
   .roadmap-combined-slide .roadmap-handoff-sub{font-size:.8125rem;line-height:1.38}
   .roadmap-combined-slide .roadmap-proponemos-head h2.hl{font-size:clamp(1.35rem,2.3vw,1.65rem)}
   .roadmap-combined-slide .slide-head h2.hl{font-size:clamp(1.35rem,2.3vw,1.65rem)}

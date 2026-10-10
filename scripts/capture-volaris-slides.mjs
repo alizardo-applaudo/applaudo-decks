@@ -58,7 +58,10 @@ for (const { suffix, width, height } of sizes) {
       if (window.ApplaudoDeck?.goTo) window.ApplaudoDeck.goTo(idx);
     }, i);
 
-    await page.waitForTimeout(i === 2 ? 1200 : 250);
+    const isDosSlide = await page.evaluate((idx) => {
+      return document.querySelectorAll('#deck .slide')[idx]?.classList.contains('dos-slide');
+    }, i);
+    await page.waitForTimeout(isDosSlide ? 1200 : 250);
 
     const nn = String(i + 1).padStart(2, '0');
     const pathBase = join(outDir, `volaris-slide-${nn}`);

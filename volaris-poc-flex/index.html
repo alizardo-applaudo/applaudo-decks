@@ -26,92 +26,44 @@
   <div class="foot foot-right">PoC Flex · Oct ’26</div>
 </section>
 
-<!-- 2 · Cómo lo probamos -->
-<section class="slide slide-fit slide-probamos" aria-label="Cómo lo probamos">
+<!-- 2 · El problema hoy -->
+<section class="slide slide-fit problema-slide" aria-label="El problema hoy">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
-      <p class="eyebrow">Volaris Design · PoC Flex 2</p>
-      <h2 class="hl">Cómo lo <em>probamos</em></h2>
-      <p class="lead-tight">Mapa de pruebas 0→4 en feature real — automatización asistida + entrega sellada.</p>
+      <p class="eyebrow">Volaris Design · Contexto</p>
+      <h2 class="hl">El problema <em>hoy</em></h2>
+      <p class="lead-tight">En el handoff manual cada equipo trabaja con su propia versión de la verdad.</p>
     </div>
-    <div class="slide-body probamos-stack">
-    <div class="callout-e2e">
-      <p><strong>Método E2E en feature real</strong><br>Figma organizado → higiene → verify vs Android + JSON → sello humano → eng consume solo lo sellado.</p>
-    </div>
-
-    <div class="tbl probamos-tbl">
-      <table>
-        <thead>
-          <tr><th>Prueba</th><th>Qué respondía</th><th>Resultado</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>0 Baseline manual</strong></td>
-            <td>¿Cuánto cuesta sin skills?</td>
-            <td>Control: higiene/verify/contracts a mano (días, no horas)</td>
-          </tr>
-          <tr>
-            <td><strong>1 Higiene usando skills</strong></td>
-            <td>¿Claude Project + Figma MCP ordenan el canvas con OK humano?</td>
-            <td>Sí: renombres/patrones asistidos; humano aprueba</td>
-          </tr>
-          <tr>
-            <td><strong>2 Verify figma, specs y codigo usando skills</strong></td>
-            <td>¿Detectamos gaps Figma↔spec↔código sin inventar?</td>
-            <td>Sí: PASS/GAP honestos - Debe agregarse Claude Code + Figma Console MCP <em>obligatoriamente</em></td>
-          </tr>
-          <tr>
-            <td><strong>3 Contratos draft</strong></td>
-            <td>¿Sale draft usable para portero?</td>
-            <td>Sí, draft — no es el handoff eng</td>
-          </tr>
-          <tr>
-            <td><strong>4 Manual Test PoC #2</strong></td>
-            <td>¿Podemos sellar happy path y entregar a eng?</td>
-            <td>Sí: pack sealed · handoff (1 oct)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="note compact probamos-read">Lectura: pruebas 1–3 = automatización asistida; prueba 4 = entrega real.</p>
-    <div class="probamos-banners">
-      <div class="hero-band compact">
-        <span class="lab">SEÑAL DE TIEMPO (PILOTO)</span>
-        <p>Flujo completo  ~1–2 días  →  ~1.5–2.5 h  /  ~40–60 min activos</p>
+    <div class="slide-body problema-stack">
+      <div class="problema-cards">
+        <div class="problema-card">
+          <svg class="problema-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+          <h4>Muchas fuentes de verdad</h4>
+          <p>Figma, specs, tickets y código de Android e iOS describen el mismo componente de formas distintas.</p>
+        </div>
+        <div class="problema-card">
+          <svg class="problema-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          <h4>Dos plataformas, varios sistemas de diseño</h4>
+          <p>Android e iOS, cada uno con sus variantes (light, dark, liquid glass…) y sets viejos y nuevos conviviendo; no siempre es claro cuál manda.</p>
+        </div>
+        <div class="problema-card">
+          <svg class="problema-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <h4>Dev reinterpreta Figma</h4>
+          <p>Lo que no está explícito se adivina, y eso trae retrabajo e idas y vueltas.</p>
+        </div>
       </div>
-      <div class="card-soft-pink compact">
-        <h4>Sello humano (fijo)</h4>
-        <p style="max-width:none;font-weight:600;color:var(--ink);font-size:.8125rem">El sello (~10–15 min) no se automatiza.</p>
+      <div class="hero-band problema-hero">
+        <span class="lab">POR QUÉ IMPORTA</span>
+        <p>Sin una sola fuente de verdad, cada handoff se negocia de nuevo.</p>
       </div>
-    </div>
     </div>
   </div>
-  <div class="foot">Cómo lo probamos</div>
+  <div class="foot">El problema hoy</div>
   <div class="foot foot-right">PoC Flex · Oct ’26</div>
 </section>
 
-<!-- 3 · AI Design Process (diagram) -->
-<section class="slide slide-dark dos-slide" aria-label="Proceso de diseño">
-  <div class="glow-bg alt" aria-hidden="true"></div>
-  <div class="logo-sm" data-logo="light"></div>
-  <header class="dos-header">
-    <p class="eyebrow">Marco Applaudo</p>
-    <h2>El PoC Flex corre sobre este proceso: de la petición al handoff que engineering puede consumir.</h2>
-  </header>
-  <div class="dos-stage">
-    <div class="dos-scale-host" id="dosScaleHost">
-      <div class="dos-scale-wrap" id="dosScaleWrap">
-        <iframe class="dos-frame" id="dosFrame" title="Design OS workflow diagram" src="design-os-workflow-poc-flex.html" allowtransparency="true"></iframe>
-      </div>
-    </div>
-    <p class="dos-credit">Basado en AI Design Process (Fernando Martir), adaptado al PoC Flex</p>
-  </div>
-  <div class="foot">AI Design Process</div>
-</section>
-
-<!-- 4 · Contratos con manzanas -->
+<!-- 3 · Contratos con manzanas -->
 <section class="slide slide-spacious contracts-slide" aria-label="Contratos JSON explicados">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-spacious">
@@ -164,7 +116,7 @@
   <div class="foot">Contratos JSON</div>
 </section>
 
-<!-- 5 · Entregable (Volaris Button · contrato real) -->
+<!-- 4 · Entregable (Volaris Button · contrato real) -->
 <section class="slide slide-spacious deliverable-slide deliverable-volaris-slide" aria-label="Cómo luce el entregable">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-spacious">
@@ -222,7 +174,86 @@
   <div class="foot">Entregable</div>
 </section>
 
-<!-- 6 · Señal de tiempo -->
+<!-- 5 · AI Design Process (diagram) -->
+<section class="slide slide-dark dos-slide" aria-label="Proceso de diseño">
+  <div class="glow-bg alt" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <header class="dos-header">
+    <p class="eyebrow">Marco Applaudo</p>
+    <h2>El PoC Flex corre sobre este proceso: de la petición al handoff que engineering puede consumir.</h2>
+  </header>
+  <div class="dos-stage">
+    <div class="dos-scale-host" id="dosScaleHost">
+      <div class="dos-scale-wrap" id="dosScaleWrap">
+        <iframe class="dos-frame" id="dosFrame" title="Design OS workflow diagram" src="design-os-workflow-poc-flex.html" allowtransparency="true"></iframe>
+      </div>
+    </div>
+    <p class="dos-credit">Basado en AI Design Process (Fernando Martir), adaptado al PoC Flex</p>
+  </div>
+  <div class="foot">AI Design Process</div>
+</section>
+
+<!-- 6 · Cómo lo probamos -->
+<section class="slide slide-fit slide-probamos" aria-label="Cómo lo probamos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Volaris Design · PoC Flex 2</p>
+      <h2 class="hl">Cómo lo <em>probamos</em></h2>
+      <p class="lead-tight">Mapa de pruebas 0→4 en feature real — automatización asistida + entrega sellada.</p>
+    </div>
+    <div class="slide-body probamos-stack">
+    <div class="callout-e2e">
+      <p><strong>Método E2E en feature real</strong><br>Figma organizado → higiene → verify vs Android + JSON → sello humano → eng consume solo lo sellado.</p>
+    </div>
+
+    <div class="tbl probamos-tbl">
+      <table>
+        <thead>
+          <tr><th>Prueba</th><th>Qué respondía</th><th>Resultado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>0 Baseline manual</strong></td>
+            <td>¿Cuánto cuesta sin skills?</td>
+            <td>Control: higiene/verify/contracts a mano (días, no horas)</td>
+          </tr>
+          <tr>
+            <td><strong>1 Higiene usando skills</strong></td>
+            <td>¿Claude Project + Figma MCP ordenan el canvas con OK humano?</td>
+            <td>Sí: renombres/patrones asistidos; humano aprueba</td>
+          </tr>
+          <tr>
+            <td><strong>2 Verify figma, specs y codigo usando skills</strong></td>
+            <td>¿Detectamos gaps Figma↔spec↔código sin inventar?</td>
+            <td>Sí: PASS/GAP honestos - Debe agregarse Claude Code + Figma Console MCP <em>obligatoriamente</em></td>
+          </tr>
+          <tr>
+            <td><strong>3 Contratos draft</strong></td>
+            <td>¿Sale draft usable para portero?</td>
+            <td>Sí, draft — no es el handoff eng</td>
+          </tr>
+          <tr>
+            <td><strong>4 Manual Test PoC #2</strong></td>
+            <td>¿Podemos sellar happy path y entregar a eng?</td>
+            <td>Sí: pack sealed · handoff (1 oct)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note compact probamos-read">Lectura: pruebas 1–3 = automatización asistida; prueba 4 = entrega real.</p>
+    <div class="probamos-sello-banner card-soft-pink compact">
+      <h4>Sello humano (fijo)</h4>
+      <p style="max-width:none;font-weight:600;color:var(--ink);font-size:.9375rem">El sello (~10–15 min) no se automatiza.</p>
+    </div>
+    </div>
+  </div>
+  <div class="foot">Cómo lo probamos</div>
+  <div class="foot foot-right">PoC Flex · Oct ’26</div>
+</section>
+
+<!-- 7 · Señal de tiempo -->
 <section class="slide slide-spacious metrics-slide" aria-label="Señal de tiempo">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-spacious">
@@ -277,7 +308,7 @@
   <div class="foot foot-right">PoC Flex · Oct ’26</div>
 </section>
 
-<!-- 7 · Roadmap + propuesta (merged) -->
+<!-- 8 · Roadmap + propuesta (merged) -->
 <section class="slide slide-fit roadmap-combined-slide" aria-label="Roadmap de un handoff">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
@@ -351,7 +382,7 @@
 <nav class="nav" aria-label="Navegación de diapositivas">
   <button class="nav-btn" id="prev" aria-label="Diapositiva anterior">‹</button>
   <div class="dots" id="dots"></div>
-  <span class="counter" id="counter">1 / 7</span>
+  <span class="counter" id="counter">1 / 8</span>
   <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
 </nav>
 
