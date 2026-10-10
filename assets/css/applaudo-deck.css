@@ -78,7 +78,6 @@ button{font-family:inherit}
 .slide-probamos .probamos-stack .hero-band{
   flex:none;margin:0;width:100%;padding:clamp(20px,3.2vh,28px) 28px;
 }
-.slide-probamos .probamos-read{margin-top:auto;padding-top:10px}
 .probamos-banners{margin-top:clamp(8px,1.5vh,14px)}
 .callout-e2e{
   border:none;border-left:none;background:linear-gradient(145deg,#E5F6EB,#f4fbf6);
@@ -94,7 +93,7 @@ button{font-family:inherit}
 .slide-probamos .probamos-tbl td{padding:clamp(13px,2.2vh,20px) 18px;font-size:.875rem;line-height:1.45}
 .slide-probamos .probamos-tbl.tbl{overflow:visible;background:transparent;border:none;border-radius:0}
 .slide-probamos .probamos-tbl table{border:1px solid var(--line);border-radius:var(--radius);background:var(--page);width:100%;border-collapse:collapse}
-.slide-probamos .probamos-read{margin:0;font-size:clamp(.8125rem,1.1vw,.875rem);line-height:1.35;flex:none}
+.slide-probamos .probamos-read{margin:0;margin-top:auto;padding-top:10px;font-size:clamp(.8125rem,1.1vw,.875rem);line-height:1.35;flex:none}
 .probamos-banners{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,16px);align-items:stretch;flex:none}
 .probamos-banners .hero-band{margin-top:0;padding:clamp(16px,2.5vh,22px) clamp(18px,2.5vw,24px);min-height:clamp(72px,10vh,96px)}
 .probamos-banners .hero-band p{font-size:clamp(.9375rem,1.35vw,1.0625rem);line-height:1.32}
