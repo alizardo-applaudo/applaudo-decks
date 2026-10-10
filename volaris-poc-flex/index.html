@@ -163,53 +163,61 @@
   <div class="foot">Contratos JSON</div>
 </section>
 
-<!-- 5 · Entregable -->
-<section class="slide slide-spacious deliverable-slide" aria-label="Cómo luce el entregable">
+<!-- 5 · Entregable (Volaris Button · contrato real) -->
+<section class="slide slide-spacious deliverable-slide deliverable-volaris-slide" aria-label="Cómo luce el entregable">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-spacious">
-    <div class="slide-head">
-    <p class="eyebrow">Handoff sellado</p>
+    <div class="slide-head deliverable-volaris-head">
+    <p class="eyebrow">Handoff sellado · volaris.button</p>
     <h2 class="hl">Cómo luce el <em>entregable</em></h2>
-    <p class="lead">Eng recibe un pack sellado: contrato JSON alineado al componente en Figma. <strong>Ejemplo ilustrativo</strong> — no es el archivo real del PoC.</p>
+    <p class="lead">Componente real del PoC: set <strong>Button</strong> en Figma ↔ contrato <code class="inline-code">volaris.button</code> sellado para <strong>VolarisButton</strong> (Android).</p>
     </div>
     <div class="slide-body">
 
-    <div class="deliverable">
-      <div class="figma-mock">
-        <span class="stamp">SELLADO</span>
-        <span class="lab">Componente Figma</span>
-        <h3 style="margin-top:6px">Button / Primary</h3>
-        <p style="font-size:.875rem;margin-top:8px">Variantes: default · hover · disabled</p>
-        <div style="margin-top:12px">
-          <span class="chip">theme: primary</span>
-          <span class="chip">size: md</span>
-          <span class="chip">state: enabled</span>
+    <div class="deliverable deliverable-volaris">
+      <div class="deliverable-panel figma-panel">
+        <div class="panel-top">
+          <h3>En Figma</h3>
+          <span class="sealed-badge">Sellado · 2026-10-01 · Adonay</span>
         </div>
-        <span class="ui-btn">Continuar</span>
-        <p style="font-size:.75rem;margin-top:14px;color:var(--gray)">Tokens: color.action.primary, spacing.md, radius.pill</p>
+        <p class="panel-meta">Button · Type=Primary · Size=Medium · State=Default · nodo 1137:255657</p>
+        <div class="volaris-btn-stage">
+          <button type="button" class="volaris-btn-preview" disabled aria-label="Continuar">Continuar</button>
+        </div>
+        <ul class="figma-spec-list">
+          <li><span class="map-hl">Type</span>=Primary <span class="map-conn" aria-hidden="true">↔</span> <span class="map-hl map-code">buttonType</span></li>
+          <li><span class="map-hl">Size</span>=Medium <span class="map-conn" aria-hidden="true">↔</span> <span class="map-hl map-code">buttonSize</span></li>
+          <li><span class="map-hl">Label</span>=<span class="map-val">"Continuar"</span> <span class="map-conn" aria-hidden="true">↔</span> <span class="map-hl map-code">labelText</span></li>
+        </ul>
       </div>
-      <div>
-        <div class="codebox">
-          <div class="label">Ejemplo · contrato JSON (fragmento)</div>
+      <div class="deliverable-panel contract-panel">
+        <h3>El contrato (sellado)</h3>
+        <div class="codebox codebox-contract">
+          <div class="label">volaris.button · excerpt</div>
 <pre>{
-  <span class="st">"component"</span>: <span class="st">"Button"</span>,
-  <span class="st">"variant"</span>: <span class="st">"primary"</span>,
-  <span class="st">"props"</span>: {
-    <span class="st">"label"</span>: <span class="st">"Continuar"</span>,
-    <span class="st">"disabled"</span>: <span class="kw">false</span>
-  },
-  <span class="st">"states"</span>: [<span class="st">"default"</span>, <span class="st">"hover"</span>, <span class="st">"disabled"</span>],
-  <span class="st">"tokens"</span>: {
-    <span class="st">"bg"</span>: <span class="st">"color.action.primary"</span>,
-    <span class="st">"radius"</span>: <span class="st">"radius.pill"</span>
-  },
-  <span class="st">"sealedBy"</span>: <span class="st">"portero/lead-designer"</span>,
-  <span class="cm">// pack sealed · handoff eng</span>
+  <span class="st">"id"</span>: <span class="st">"volaris.button"</span>,
+  <span class="st">"props"</span>: [
+    { <span class="st">"name"</span>: <span class="st">"type"</span>, <span class="st">"type"</span>: { <span class="st">"enum"</span>: [<span class="st">"PRIMARY"</span>,<span class="st">"SECONDARY"</span>,<span class="st">"TERTIARY"</span>,<span class="st">"QUATERNARY"</span>] },
+      <span class="st">"default"</span>: <span class="st">"PRIMARY"</span>,
+      <span class="st">"bindings"</span>: {
+        <span class="st">"code"</span>:  { <span class="st">"prop"</span>: <span class="map-hl map-code">"buttonType"</span>, <span class="st">"composable"</span>: <span class="st">"VolarisButton"</span> },
+        <span class="st">"figma"</span>: { <span class="st">"kind"</span>: <span class="st">"VARIANT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Type"</span>, <span class="st">"set"</span>: <span class="st">"Button"</span> } } },
+    { <span class="st">"name"</span>: <span class="st">"size"</span>, <span class="st">"type"</span>: { <span class="st">"enum"</span>: [<span class="st">"SMALL"</span>,<span class="st">"MEDIUM"</span>,<span class="st">"LARGE"</span>] }, <span class="st">"default"</span>: <span class="st">"MEDIUM"</span>,
+      <span class="st">"bindings"</span>: { <span class="st">"code"</span>: { <span class="st">"prop"</span>: <span class="map-hl map-code">"buttonSize"</span> }, <span class="st">"figma"</span>: { <span class="st">"kind"</span>: <span class="st">"VARIANT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Size"</span> } } },
+    { <span class="st">"name"</span>: <span class="st">"label"</span>, <span class="st">"type"</span>: <span class="st">"string"</span>,
+      <span class="st">"bindings"</span>: { <span class="st">"code"</span>: { <span class="st">"prop"</span>: <span class="map-hl map-code">"labelText"</span> }, <span class="st">"figma"</span>: { <span class="st">"kind"</span>: <span class="st">"TEXT"</span>, <span class="st">"property"</span>: <span class="map-hl">"Label#371:0"</span> } } }
+  ],
+  <span class="st">"anatomy"</span>: { <span class="st">"root"</span>: { <span class="st">"tokens"</span>: {
+    <span class="st">"background-color"</span>: <span class="st">"{action.primary.default}"</span>,
+    <span class="st">"color"</span>: <span class="st">"{content.neutral.inverted}"</span>,
+    <span class="st">"height-medium"</span>: <span class="st">"44"</span> } } },
+  <span class="st">"status"</span>: <span class="st">"sealed"</span>,
+  <span class="st">"sot"</span>: { <span class="st">"sealedAt"</span>: <span class="st">"2026-10-01"</span>, <span class="st">"sealedBy"</span>: <span class="st">"Adonay"</span> }
 }</pre>
         </div>
-        <p class="note">Solo lo sellado sale del pipeline — coherente con prueba 4: pack sealed · handoff.</p>
       </div>
     </div>
+    <p class="note deliverable-takeaway">Cada propiedad de Figma tiene su par en el código: ingeniería implementa el contrato, no interpreta el diseño.</p>
     </div>
   </div>
   <div class="foot">Entregable</div>

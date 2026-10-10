@@ -149,6 +149,33 @@ button{font-family:inherit}
 .deliverable-slide .deliverable{margin-top:0;flex:1;align-items:stretch;min-height:0}
 .deliverable-slide .codebox{max-height:none;flex:1}
 .deliverable-slide .figma-mock{display:flex;flex-direction:column;justify-content:flex-start}
+
+.deliverable-volaris-slide .deliverable-volaris-head .lead{max-width:none;font-size:clamp(.9375rem,1.35vw,1.0625rem)}
+.deliverable-volaris-slide .inline-code{font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:.88em;background:var(--linen);padding:2px 8px;border-radius:8px;border:1px solid var(--line);color:var(--ink)}
+.deliverable-volaris{display:grid;grid-template-columns:1fr 1.12fr;gap:clamp(16px,2vw,22px);align-items:stretch;width:100%}
+.deliverable-panel{border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(16px,2.2vh,22px) clamp(18px,2.5vw,24px);background:#fff;display:flex;flex-direction:column;min-height:0}
+.deliverable-panel h3{font-size:1.125rem;margin-bottom:6px;color:var(--ink)}
+.panel-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sealed-badge{display:inline-flex;align-items:center;padding:6px 12px;border-radius:var(--pill);background:var(--tint);border:1px solid rgba(255,64,64,.25);color:var(--red-dark);font-size:.6875rem;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.panel-meta{font-size:.75rem;color:var(--gray);margin-bottom:clamp(12px,1.8vh,18px);max-width:none;line-height:1.35}
+.volaris-btn-stage{display:flex;align-items:center;justify-content:center;padding:clamp(18px,3vh,28px) 12px;margin-bottom:clamp(12px,2vh,18px);background:var(--linen);border-radius:16px;border:1px solid var(--line)}
+.volaris-btn-preview{
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:44px;padding:0 40px;
+  background:#A62681;color:#fff;border:none;border-radius:999px;font-size:1.0625rem;font-weight:600;
+  font-family:var(--font);letter-spacing:0;line-height:1;cursor:default;box-shadow:0 2px 8px rgba(166,38,129,.28);
+}
+.figma-spec-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.figma-spec-list li{font-size:.9375rem;color:var(--gray);max-width:none;line-height:1.4}
+.map-hl{color:#A62681;font-weight:700}
+.map-hl.map-code{font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:.9em;font-weight:600}
+.map-val{color:var(--ink);font-weight:600}
+.map-conn{color:var(--red);font-weight:700;margin:0 4px;font-size:.875rem}
+.codebox-contract{flex:1;min-height:0;display:flex;flex-direction:column}
+.codebox-contract pre{font-size:clamp(.8125rem,1.05vw,.875rem);line-height:1.55}
+.codebox-contract .map-hl.map-code{color:#ff9fd4}
+.codebox-contract .map-hl:not(.map-code){color:#ffb4e0}
+.deliverable-takeaway{margin-top:0!important;font-size:clamp(.875rem,1.2vw,.9375rem);font-weight:600;color:var(--ink);text-align:center;max-width:none;flex:none}
+.contract-panel .codebox{margin-top:8px;padding:clamp(14px,2vh,18px) clamp(14px,2vw,18px)}
 .inner h2.hl em{font-style:normal;color:var(--red)}
 .slide:not(.slide-dark)::after{content:'';position:absolute;top:36px;right:40px;width:14px;height:14px;background:var(--red);pointer-events:none}
 
@@ -335,6 +362,10 @@ button{font-family:inherit}
   .foot{bottom:28px}
   .roadmap-combined-slide .adopcion-note{font-size:.75rem;line-height:1.32;margin-top:8px}
   .roadmap-combined-slide .card-soft-green.compact li,.roadmap-combined-slide .card-soft-pink.compact li{font-size:.8125rem}
+  .deliverable-volaris-slide .deliverable-volaris-head .lead{font-size:.875rem}
+  .deliverable-volaris-slide .deliverable-volaris-head h2.hl{font-size:clamp(1.85rem,3.2vw,2.5rem)}
+  .codebox-contract pre{font-size:.8125rem;line-height:1.48}
+  .volaris-btn-preview{transform:scale(1.05)}
 }
 @media (max-height:740px){
   .slide-fit .slide-head h2.hl{font-size:1.45rem}
@@ -361,6 +392,13 @@ button{font-family:inherit}
   .roadmap-combined-slide .adopcion-note{font-size:.7rem;margin-top:6px}
   .roadmap-combined-slide .hero-band.compact{padding:12px 14px}
   .roadmap-combined-slide .hero-band.compact p{font-size:.8125rem}
+  .deliverable-volaris-slide .slide-head .eyebrow{margin-bottom:8px}
+  .deliverable-volaris-slide .panel-meta{font-size:.6875rem;margin-bottom:8px}
+  .deliverable-volaris-slide .deliverable-panel{padding:12px 14px}
+  .deliverable-volaris-slide .volaris-btn-stage{padding:12px 8px;margin-bottom:10px}
+  .deliverable-volaris-slide .figma-spec-list li{font-size:.8125rem}
+  .codebox-contract pre{font-size:13px;line-height:1.45}
+  .deliverable-takeaway{font-size:.8125rem}
   .dos-slide .dos-header{padding-top:48px;padding-bottom:4px}
   .dos-slide .dos-header h2{font-size:.9rem}
 }
