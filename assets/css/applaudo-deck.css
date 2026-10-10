@@ -131,7 +131,10 @@ button{font-family:inherit}
 .contracts-slide .analogy-lines li::before{display:none;content:none}
 .contracts-slide .analogy-icon{width:26px;height:26px;flex:none;color:#fff;stroke:#fff}
 
-.roadmap-combined-slide .inner-viewport{padding-bottom:calc(var(--nav-safe) + 18px);display:flex;flex-direction:column}
+.roadmap-combined-slide .inner-viewport{
+  padding-top:50px;padding-bottom:calc(var(--nav-safe) + 6px);
+  display:flex;flex-direction:column;overflow:hidden;
+}
 .roadmap-combined-slide .slide-head{flex:none}
 .roadmap-combined-slide .slide-head h2.hl,
 .roadmap-combined-slide .roadmap-proponemos-head h2.hl{
@@ -141,38 +144,36 @@ button{font-family:inherit}
 .roadmap-combined-slide .roadmap-proponemos-lead{margin-top:8px;font-size:.9375rem;line-height:1.45;color:var(--gray);max-width:none}
 .roadmap-combined-slide .slide-body{
   flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;
-  gap:clamp(16px,2.2vh,24px);overflow:hidden;
+  gap:0;overflow:hidden;
 }
 .roadmap-combined-slide .roadmap-handoff-sub{
-  font-size:.9375rem;line-height:1.45;color:var(--gray);max-width:none;margin:0;flex:none;
+  font-size:.9375rem;line-height:1.45;color:var(--gray);max-width:none;margin:8px 0 12px;flex:none;
 }
 .roadmap-combined-slide .compact-steps{
-  margin-top:0;gap:clamp(16px,2vw,24px);align-items:stretch;flex:none;
+  margin:0 0 12px;gap:clamp(16px,2vw,24px);align-items:flex-start;flex:none;
 }
 .roadmap-combined-slide .compact-steps .step-card{
-  padding:clamp(18px,2.2vh,24px) clamp(16px,2vw,22px);min-width:0;flex:1 1 0;
+  padding:clamp(20px,2.2vh,24px) clamp(16px,2vw,22px);min-width:0;flex:1 1 0;height:auto;align-self:auto;
 }
+.roadmap-combined-slide .roadmap-proponemos-head{margin-bottom:12px}
 .roadmap-combined-slide .compact-steps .step-card .num{font-size:1.75rem;line-height:1}
 .roadmap-combined-slide .compact-steps .step-card h4{font-size:1rem;margin:10px 0 6px;line-height:1.28}
 .roadmap-combined-slide .compact-steps .step-card p{font-size:.875rem;line-height:1.45;max-width:none}
 .roadmap-combined-slide .compact-steps .road-arrow{font-size:1.1rem;align-self:center;flex:none}
-.roadmap-combined-slide .roadmap-adopcion-cards{margin-top:0;gap:clamp(16px,2vw,24px);flex:none}
+.roadmap-combined-slide .roadmap-adopcion-cards{
+  margin:0 0 12px;gap:clamp(16px,2vw,24px);flex:none;align-items:start;
+}
 .roadmap-combined-slide .roadmap-adopcion-cards .card-soft-green,
 .roadmap-combined-slide .roadmap-adopcion-cards .card-soft-pink{
-  padding:clamp(20px,2.4vh,24px) clamp(20px,2vw,24px);
+  padding:clamp(20px,2.4vh,24px) clamp(20px,2vw,24px);height:auto;align-self:stretch;
 }
 .roadmap-combined-slide .roadmap-adopcion-cards h4{font-size:1rem;margin-bottom:12px}
 .roadmap-combined-slide .roadmap-adopcion-cards li{font-size:.9375rem;line-height:1.45;margin-bottom:8px}
 .roadmap-combined-slide .adopcion-note{font-size:.875rem;margin-top:16px;max-width:none;color:var(--gray);line-height:1.45}
-.roadmap-combined-slide .hero-band{
-  flex:none;margin-top:auto;
-  padding:clamp(16px,2.5vh,22px) clamp(18px,2.5vw,24px);
-  border-radius:var(--radius-item);
-}
-.roadmap-combined-slide .hero-band .lab{color:rgba(255,255,255,.85);margin-bottom:8px}
-.roadmap-combined-slide .hero-band p{
-  color:#fff;font-weight:600;max-width:none;line-height:1.32;
-  font-size:clamp(.9375rem,1.35vw,1.0625rem);
+.roadmap-combined-slide .slide-body{flex:1 1 auto;min-height:0}
+.roadmap-combined-slide .inner-viewport > .hero-band{
+  flex:none;margin-top:clamp(12px,1.8vh,16px);width:100%;
+  padding:clamp(20px,3.2vh,28px) 28px;
 }
 .probamos-banners .hero-band,.probamos-banners .card-soft-pink.compact{display:flex;flex-direction:column;justify-content:center}
 
@@ -476,11 +477,8 @@ button{font-family:inherit}
   .slide-spacious .inner-spacious{padding-top:58px;padding-bottom:calc(var(--nav-safe) + 28px)}
   .logo-sm{top:24px;left:32px}
   .foot{bottom:28px}
-  .roadmap-combined-slide .slide-body{gap:14px}
   .roadmap-combined-slide .adopcion-note{font-size:.8125rem;line-height:1.4;margin-top:12px}
   .roadmap-combined-slide .roadmap-adopcion-cards li{font-size:.875rem}
-  .roadmap-combined-slide .hero-band{padding:16px 20px}
-  .roadmap-combined-slide .hero-band p{font-size:.9375rem;line-height:1.3}
   .metrics-slide .metrics-tbl td{padding:clamp(10px,1.55vh,14px) 16px;font-size:.8125rem}
   .metrics-slide .metrics-tbl th{padding:clamp(9px,1.35vh,12px) 16px}
   .metrics-slide .inner-spacious{padding-bottom:calc(var(--nav-safe) + 16px)}
@@ -517,8 +515,10 @@ button{font-family:inherit}
   .roadmap-combined-slide .slide-head h2.hl{font-size:clamp(1.35rem,2.3vw,1.65rem)}
   .roadmap-combined-slide .slide-head .eyebrow{margin-bottom:6px}
   .roadmap-combined-slide .roadmap-proponemos-lead{font-size:.75rem;line-height:1.38;margin-top:4px}
-  .roadmap-combined-slide .slide-body{gap:8px}
-  .roadmap-combined-slide .compact-steps{gap:8px}
+  .roadmap-combined-slide .roadmap-handoff-sub{margin:6px 0 8px}
+  .roadmap-combined-slide .compact-steps{margin-bottom:10px;gap:8px}
+  .roadmap-combined-slide .roadmap-proponemos-head{margin-bottom:10px}
+  .roadmap-combined-slide .roadmap-adopcion-cards{margin-bottom:10px;gap:10px}
   .roadmap-combined-slide .compact-steps .step-card{padding:12px 10px}
   .roadmap-combined-slide .compact-steps .step-card .num{font-size:1.15rem}
   .roadmap-combined-slide .compact-steps .step-card p{font-size:.75rem;line-height:1.35;max-width:none}
@@ -529,9 +529,6 @@ button{font-family:inherit}
   .roadmap-combined-slide .roadmap-adopcion-cards h4{font-size:.875rem;margin-bottom:8px}
   .roadmap-combined-slide .roadmap-adopcion-cards li{font-size:.75rem;line-height:1.35;margin-bottom:4px}
   .roadmap-combined-slide .adopcion-note{font-size:.75rem;margin-top:8px;line-height:1.32}
-  .roadmap-combined-slide .hero-band{padding:12px 14px}
-  .roadmap-combined-slide .hero-band .lab{margin-bottom:4px}
-  .roadmap-combined-slide .hero-band p{font-size:.8125rem;line-height:1.28}
   .metrics-slide .metrics-tbl td{padding:clamp(7px,1.05vh,9px) 12px;font-size:.8125rem;line-height:1.35}
   .metrics-slide .metrics-tbl th{padding:7px 12px}
   .metrics-slide .slide-body{gap:12px}
@@ -552,7 +549,7 @@ button{font-family:inherit}
   .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{margin-bottom:2px;font-size:.7rem}
   .deliverable-volaris-slide .deliverable-panel h3{font-size:.9375rem;margin-bottom:2px}
   .deliverable-volaris-slide .slide-body{gap:6px;margin-top:2px}
-  .roadmap-combined-slide .inner-viewport{padding-bottom:calc(var(--nav-safe) + 10px);padding-top:44px}
+  .roadmap-combined-slide .inner-viewport{padding-bottom:calc(var(--nav-safe) + 4px);padding-top:40px}
   .dos-slide .dos-header{padding-top:48px;padding-bottom:4px}
   .dos-slide .dos-header h2{font-size:.9rem}
   .dos-slide .dos-stage{padding-bottom:calc(var(--nav-safe) + 18px)}
