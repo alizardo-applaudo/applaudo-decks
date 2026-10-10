@@ -2,7 +2,7 @@
 
 Sitio estático en **GitHub Pages** para presentaciones internas de Applaudo (HTML, sin build step).
 
-**Índice en vivo:** [https://alizardo-applaudo.github.io/applaudo-decks/](https://alizardo-applaudo.github.io/applaudo-decks/)
+**Índice en vivo:** [https://alizardo-applaudo.github.io/applaudo-decks/](https://alizardo-applaudo.github.io/applaudo-decks/) (publicado vía GitHub Actions → Pages)
 
 ## Decks publicados
 

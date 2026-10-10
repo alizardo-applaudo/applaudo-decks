@@ -90,9 +90,12 @@ button{font-family:inherit}
 .slide-spacious .slide-body .note{margin-top:0}
 .slide-spacious .slide-body .section-card{margin-top:0}
 
-.roadmap-handoff-slide .section-card{padding:clamp(26px,3.5vh,36px) clamp(28px,3vw,34px);display:flex;flex-direction:column;justify-content:center;flex:1;max-height:100%}
-.roadmap-handoff-slide .roadmap-steps{margin-top:clamp(16px,2.5vh,28px);gap:12px;align-items:stretch}
-.roadmap-handoff-slide .step-card{flex:1 1 180px;padding:clamp(18px,2.8vh,26px) 18px}
+.roadmap-handoff-slide .slide-body{justify-content:center}
+.roadmap-handoff-slide .section-card{
+  flex:none;max-height:none;padding:28px 30px;
+}
+.roadmap-handoff-slide .roadmap-steps{margin-top:20px;gap:12px;align-items:stretch}
+.roadmap-handoff-slide .step-card{flex:1 1 180px;padding:20px 18px}
 
 .roadmap-ask-slide .slide-body{justify-content:space-evenly;padding-bottom:0}
 .roadmap-ask-slide .section-card.green{
