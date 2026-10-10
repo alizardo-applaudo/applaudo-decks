@@ -177,28 +177,54 @@ button{font-family:inherit}
 .deliverable-slide .codebox{max-height:none;flex:1}
 .deliverable-slide .figma-mock{display:flex;flex-direction:column;justify-content:flex-start}
 
-.deliverable-volaris-slide .deliverable-volaris-head .lead{max-width:none;font-size:clamp(.9375rem,1.35vw,1.0625rem)}
+.deliverable-volaris-slide .inner-spacious{
+  display:grid;grid-template-rows:auto minmax(0,1fr);
+  min-height:0;height:100%;max-height:100%;overflow:hidden;
+}
+.deliverable-volaris-slide .deliverable-volaris-head{grid-row:1;min-width:0}
+.deliverable-volaris-slide .deliverable-volaris-head .eyebrow{margin-bottom:clamp(6px,0.9vh,10px)}
+.deliverable-volaris-slide .deliverable-volaris-head h2.hl{
+  font-size:clamp(1.45rem,2.4vw,2.05rem);line-height:1.04;letter-spacing:-.015em;
+}
+.deliverable-volaris-slide .deliverable-volaris-head .lead{
+  max-width:none;font-size:clamp(.8125rem,1.15vw,.9375rem);margin-top:clamp(4px,0.7vh,8px);line-height:1.4;
+}
 .deliverable-volaris-slide .inline-code{font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:.88em;background:var(--linen);padding:2px 8px;border-radius:8px;border:1px solid var(--line);color:var(--ink)}
+.deliverable-volaris-slide .slide-body{
+  grid-row:2;min-height:0;min-width:0;
+  display:grid;grid-template-rows:minmax(0,1fr) auto;
+  gap:clamp(8px,1.1vh,12px);margin-top:clamp(4px,0.9vh,12px);
+  flex:unset;justify-content:unset;overflow:hidden;
+}
 .deliverable-volaris{
+  grid-row:1;min-height:0;height:100%;
   display:grid;grid-template-columns:minmax(0,.32fr) minmax(0,.68fr);gap:clamp(12px,1.6vw,16px);
   align-items:stretch;width:100%;max-width:100%;min-width:0;
 }
 .deliverable-panel{
-  border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(14px,2vh,18px) clamp(14px,2vw,18px);
-  background:#fff;display:flex;flex-direction:column;min-width:0;max-width:100%;overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(12px,1.6vh,16px) clamp(12px,1.6vw,16px);
+  background:#fff;display:flex;flex-direction:column;min-width:0;max-width:100%;min-height:0;height:100%;
+  overflow:hidden;
 }
-.deliverable-panel.contract-panel{overflow:visible}
-.figma-panel{display:flex;flex-direction:column;min-height:0}
-.figma-panel .panel-meta{font-size:.7rem;line-height:1.3;flex:none}
+.deliverable-panel.contract-panel{min-height:0}
+.figma-panel{display:flex;flex-direction:column;min-height:0;height:100%}
+.figma-panel .panel-meta{font-size:.7rem;line-height:1.3;flex:none;margin-bottom:clamp(8px,1.2vh,12px)}
 .figma-panel .volaris-btn-stage{
-  flex:1;display:flex;align-items:center;justify-content:center;
-  min-height:clamp(72px,9vh,96px);padding:clamp(12px,1.8vh,18px) 12px;margin-bottom:0;
+  flex:none;display:flex;align-items:center;justify-content:center;
+  height:clamp(140px,16vh,180px);min-height:140px;max-height:180px;
+  padding:12px;margin-bottom:0;
 }
-.figma-panel .figma-spec-list{margin-top:clamp(12px,1.6vh,16px);padding-top:0;flex:none}
+.figma-panel .figma-spec-list{margin-top:clamp(10px,1.4vh,14px);padding-top:0;flex:none}
+.figma-panel .figma-panel-rest{flex:1;min-height:0}
 .deliverable-volaris-slide .figma-panel .volaris-btn-preview{
-  min-height:52px;height:52px;padding:0 48px;font-size:1.2rem;
+  min-height:48px;height:48px;padding:0 44px;font-size:1.125rem;
 }
 .figma-panel .figma-spec-list li{font-size:.875rem}
+.contract-panel{display:flex;flex-direction:column;min-height:0;height:100%}
+.contract-panel h3{flex:none}
+.contract-panel .codebox-contract{
+  flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;margin-top:6px;
+}
 .deliverable-panel h3{font-size:1.125rem;margin-bottom:6px;color:var(--ink)}
 .panel-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .sealed-badge{display:inline-flex;align-items:center;padding:6px 12px;border-radius:var(--pill);background:var(--tint);border:1px solid rgba(255,64,64,.25);color:var(--red-dark);font-size:.6875rem;font-weight:700;letter-spacing:.02em;white-space:nowrap}
@@ -215,30 +241,26 @@ button{font-family:inherit}
 .map-hl.map-code{font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:.9em;font-weight:600}
 .map-val{color:var(--ink);font-weight:600}
 .map-conn{color:var(--red);font-weight:700;margin:0 4px;font-size:.875rem}
-.codebox-contract{flex:none;min-width:0;display:flex;flex-direction:column;overflow:visible;max-width:100%}
-.codebox-contract pre{
-  font-size:12px;line-height:1.28;
-  white-space:pre;overflow:visible;max-width:100%;margin:0;
+.codebox-contract{min-width:0;display:flex;flex-direction:column;max-width:100%}
+.deliverable-volaris-slide .codebox-contract pre{
+  font-size:12px;line-height:1.45;
+  white-space:pre;overflow:hidden;max-width:100%;margin:0;flex:1;min-height:0;
 }
-.deliverable-volaris-slide .codebox-contract pre{font-size:12px;line-height:1.28}
-.codebox-contract .label{margin-bottom:6px}
-.contract-panel .codebox{overflow:visible;max-width:100%;max-height:none;flex:none}
-.deliverable-volaris-slide .contract-panel .codebox-contract{overflow:visible}
-.deliverable-volaris-slide .slide-body,.deliverable-volaris-slide .inner-spacious{min-width:0;overflow-x:hidden}
+.codebox-contract .label{margin-bottom:6px;flex:none}
+.contract-panel .codebox{
+  overflow:hidden;max-width:100%;flex:1;min-height:0;
+  padding:clamp(10px,1.4vh,14px) clamp(10px,1.2vw,14px);
+}
+.deliverable-volaris-slide .slide-body,.deliverable-volaris-slide .inner-spacious{min-width:0}
 .codebox-contract .map-hl.map-code{color:#ff9fd4}
 .codebox-contract .map-hl:not(.map-code){color:#ffb4e0}
 .deliverable-takeaway{
-  margin-top:clamp(10px,1.6vh,16px)!important;font-size:clamp(.8125rem,1.1vw,.875rem);font-weight:600;
-  color:var(--ink);text-align:center;max-width:none;flex:none;position:relative;z-index:2;
+  margin-top:0!important;font-size:clamp(.8125rem,1.1vw,.875rem);font-weight:600;
+  color:var(--ink);text-align:center;max-width:none;position:relative;z-index:2;
 }
-.deliverable-volaris-slide .slide-body{
-  gap:clamp(8px,1.2vh,12px);justify-content:flex-start;min-height:0;
-}
-.deliverable-volaris-slide .deliverable-volaris{flex:1;min-height:0;align-items:stretch}
 .deliverable-volaris-slide .deliverable-takeaway{
-  flex:none;margin-top:auto!important;padding-top:clamp(6px,1vh,10px);
+  grid-row:2;flex:none;align-self:center;padding:0 8px;line-height:1.32;
 }
-.contract-panel .codebox{margin-top:8px;padding:clamp(14px,2vh,18px) clamp(14px,2vw,18px)}
 .inner h2.hl em{font-style:normal;color:var(--red)}
 .slide:not(.slide-dark)::after{content:'';position:absolute;top:36px;right:40px;width:14px;height:14px;background:var(--red);pointer-events:none}
 
@@ -435,17 +457,14 @@ button{font-family:inherit}
   .slide-probamos .probamos-tbl th{padding:clamp(9px,1.35vh,12px) 16px}
   .slide-probamos .inner-viewport{padding-top:52px;padding-bottom:calc(var(--nav-safe) + 14px)}
   .probamos-banners .hero-band,.probamos-banners .card-soft-pink.compact{min-height:clamp(64px,9vh,88px)}
-  .deliverable-volaris-slide .inner-spacious{padding-top:48px;padding-bottom:calc(var(--nav-safe) + 20px)}
-  .deliverable-volaris-slide .deliverable-volaris-head .lead{font-size:.875rem;margin-top:8px}
+  .deliverable-volaris-slide .inner-spacious{padding-top:48px;padding-bottom:calc(var(--nav-safe) + 16px)}
+  .deliverable-volaris-slide .deliverable-volaris-head .lead{font-size:.875rem;margin-top:6px}
   .deliverable-volaris-slide .deliverable-volaris-head h2.hl{font-size:clamp(1.55rem,2.6vw,2rem)}
-  .deliverable-volaris-slide .slide-body{gap:8px;margin-top:4px}
-  .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{margin-bottom:10px}
-  .deliverable-volaris-slide .contract-panel .codebox{padding:10px 12px}
-  .deliverable-volaris-slide .figma-panel .volaris-btn-stage{min-height:84px;padding:12px 8px}
-  .deliverable-volaris-slide .codebox-contract pre{font-size:12px;line-height:1.36}
-  .deliverable-volaris-slide .deliverable-takeaway{font-size:.8125rem;margin-top:4px!important;line-height:1.28}
-  .deliverable-volaris-slide .contract-panel h3{margin-bottom:4px;font-size:1rem}
-  .volaris-btn-preview{transform:scale(1.05)}
+  .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{margin-bottom:8px}
+  .deliverable-volaris-slide .codebox-contract pre{font-size:11px;line-height:1.45}
+  .deliverable-volaris-slide .deliverable-takeaway{font-size:.8125rem;line-height:1.28}
+  .deliverable-volaris-slide .contract-panel h3{margin-bottom:2px;font-size:1rem}
+  .deliverable-volaris-slide .figma-panel .volaris-btn-stage{height:clamp(130px,15vh,170px);min-height:130px;max-height:170px}
 }
 @media (max-height:740px){
   .slide-fit .slide-head h2.hl{font-size:1.45rem}
@@ -475,26 +494,22 @@ button{font-family:inherit}
   .roadmap-combined-slide .adopcion-note{font-size:.75rem;margin-top:6px}
   .roadmap-combined-slide .hero-band.compact{padding:12px 14px}
   .roadmap-combined-slide .hero-band.compact p{font-size:.8125rem}
-  .deliverable-volaris-slide .slide-head .eyebrow{margin-bottom:8px}
-  .deliverable-volaris-slide .inner-spacious{padding-left:36px;padding-right:36px;padding-top:52px}
+  .deliverable-volaris-slide .slide-head .eyebrow{margin-bottom:4px}
+  .deliverable-volaris-slide .inner-spacious{padding-left:36px;padding-right:36px;padding-top:40px;padding-bottom:calc(var(--nav-safe) + 10px)}
   .deliverable-volaris-slide .deliverable-volaris{grid-template-columns:minmax(0,.32fr) minmax(0,.68fr);gap:10px}
-  .deliverable-volaris-slide .panel-meta{font-size:.6875rem;margin-bottom:8px}
-  .deliverable-volaris-slide .deliverable-panel{padding:10px 12px}
-  .deliverable-volaris-slide .volaris-btn-stage{padding:10px 8px;margin-bottom:8px}
+  .deliverable-volaris-slide .panel-meta{font-size:.6875rem;margin-bottom:6px}
+  .deliverable-volaris-slide .deliverable-panel{padding:8px 10px}
   .deliverable-volaris-slide .figma-spec-list li{font-size:.8125rem}
-  .deliverable-volaris-slide .deliverable-volaris-head h2.hl{font-size:clamp(1.45rem,2.6vw,1.85rem)}
-  .deliverable-volaris-slide .codebox-contract pre{font-size:11.5px;line-height:1.3}
-  .deliverable-volaris-slide .contract-panel .codebox{padding:8px 10px}
-  .deliverable-volaris-slide .figma-panel .volaris-btn-stage{min-height:72px;padding:10px 8px}
-  .deliverable-volaris-slide .deliverable-takeaway{font-size:.7rem;margin-top:4px!important;line-height:1.25}
-  .deliverable-volaris-slide .inner-spacious{padding-top:40px;padding-bottom:calc(var(--nav-safe) + 12px)}
+  .deliverable-volaris-slide .deliverable-volaris-head h2.hl{font-size:clamp(1.25rem,2.2vw,1.55rem)}
+  .deliverable-volaris-slide .codebox-contract pre{font-size:8.75px;line-height:1.38}
+  .deliverable-volaris-slide .contract-panel .codebox{padding:7px 9px}
+  .deliverable-volaris-slide .codebox-contract .label{margin-bottom:3px;font-size:.625rem}
+  .deliverable-volaris-slide .figma-panel .volaris-btn-stage{height:clamp(110px,12vh,140px);min-height:110px;max-height:140px;padding:10px 8px}
+  .deliverable-volaris-slide .deliverable-takeaway{font-size:.7rem;line-height:1.25}
   .deliverable-volaris-slide .deliverable-volaris-head .lead{font-size:.72rem;margin-top:2px;line-height:1.28}
-  .deliverable-volaris-slide .deliverable-volaris-head h2.hl{font-size:clamp(1.25rem,2.2vw,1.5rem)}
-  .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{margin-bottom:4px;font-size:.7rem}
-  .deliverable-volaris-slide .codebox-contract pre{font-size:10px;line-height:1.22}
+  .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{margin-bottom:2px;font-size:.7rem}
   .deliverable-volaris-slide .deliverable-panel h3{font-size:.9375rem;margin-bottom:2px}
-  .deliverable-volaris-slide .figma-panel .volaris-btn-stage{min-height:64px;padding:8px}
-  .deliverable-volaris-slide .panel-meta{margin-bottom:6px}
+  .deliverable-volaris-slide .slide-body{gap:6px;margin-top:2px}
   .roadmap-combined-slide .inner-viewport{padding-bottom:calc(var(--nav-safe) + 24px);padding-top:48px}
   .roadmap-combined-slide .hero-band.compact p{font-size:.75rem;line-height:1.28}
   .dos-slide .dos-header{padding-top:48px;padding-bottom:4px}
