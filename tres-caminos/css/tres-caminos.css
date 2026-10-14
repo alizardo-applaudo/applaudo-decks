@@ -48,11 +48,12 @@
 .bridge-volaris-slide .problema-card p{flex:1}
 
 .roadmap-combined-slide .inner-viewport{
-  display:flex;flex-direction:column;min-height:0;
+  display:flex;flex-direction:column;min-height:0;overflow:hidden;
 }
 .roadmap-combined-slide.slide-fit .slide-body{
-  flex:1 1 auto;justify-content:space-evenly;gap:clamp(16px,2.5vh,28px);min-height:0;
+  flex:1 1 auto;justify-content:flex-start;gap:clamp(6px,1vh,12px);min-height:0;overflow:visible;
 }
+.roadmap-combined-slide .roadmap-handoff-sub{margin:4px 0 8px}
 .roadmap-combined-slide .roadmap-method-row{margin-bottom:0;flex-wrap:nowrap;align-items:stretch}
 .roadmap-combined-slide .roadmap-method-row .step-card-diagnostic{
   flex:0 1 clamp(200px,19vw,260px);min-width:0;
@@ -71,16 +72,20 @@
 }
 .roadmap-combined-slide .roadmap-method-row .road-arrow{flex:none;padding:0 2px}
 .roadmap-combined-slide .roadmap-proponemos-head{
-  margin-top:clamp(8px,1.5vh,16px);margin-bottom:clamp(10px,1.8vh,18px);
+  margin-top:clamp(4px,0.9vh,10px);margin-bottom:clamp(6px,1vh,10px);
 }
+.roadmap-combined-slide .roadmap-proponemos-lead{margin-top:4px;margin-bottom:0}
+.roadmap-combined-slide .roadmap-proponemos-steps{flex:none;margin-bottom:0}
 .roadmap-combined-slide .inner-viewport > .hero-band{
-  margin-top:clamp(28px,4.5vh,52px);flex:none;
+  margin-top:max(24px,clamp(12px,2vh,20px));flex:0 0 auto;
 }
 .roadmap-combined-slide .compact-steps .step-card{
   padding:clamp(20px,2.6vh,28px) clamp(22px,2.2vw,28px);
 }
 .roadmap-combined-slide .roadmap-method-row .step-card,
-.roadmap-combined-slide .roadmap-proponemos-steps .step-card{align-self:stretch;height:100%}
+.roadmap-combined-slide .roadmap-proponemos-steps .step-card{
+  align-self:stretch;height:auto;min-height:0;
+}
 .roadmap-combined-slide .roadmap-proponemos-steps{margin-bottom:0}
 .roadmap-combined-slide .roadmap-proponemos-steps .step-card-head{margin-bottom:0}
 .roadmap-combined-slide .roadmap-proponemos-steps .step-card p{
@@ -191,4 +196,17 @@
   .curva-col{padding:16px 18px}
   .curva-col li{font-size:.875rem}
   .curva-columns{gap:14px}
+  .roadmap-combined-slide .inner-viewport{padding-top:38px}
+  .roadmap-combined-slide .compact-steps .step-card{padding:12px 14px}
+  .roadmap-combined-slide .compact-steps{gap:8px}
+  .roadmap-combined-slide .roadmap-handoff-sub{margin:2px 0 6px;font-size:.8125rem;line-height:1.35}
+  .roadmap-combined-slide .roadmap-method-row .step-card-diagnostic{flex:0 1 168px}
+  .roadmap-combined-slide .roadmap-method-row .step-card-diagnostic p{font-size:.75rem;line-height:1.32}
+  .roadmap-combined-slide .roadmap-method-row .step-card-method h4{font-size:.75rem;line-height:1.25}
+  .roadmap-combined-slide .roadmap-method-row .step-card-method .method-ref{font-size:.75rem;margin-top:4px}
+  .roadmap-combined-slide .roadmap-proponemos-head{margin-top:2px;margin-bottom:6px}
+  .roadmap-combined-slide .roadmap-proponemos-lead{font-size:.8125rem;line-height:1.35}
+  .roadmap-combined-slide .roadmap-proponemos-steps .step-card p{font-size:.8125rem;line-height:1.32;margin-top:6px}
+  .roadmap-combined-slide .compact-steps .step-card .num{font-size:1.1rem}
+  .roadmap-combined-slide .inner-viewport > .hero-band{margin-top:24px;padding:14px 18px}
 }

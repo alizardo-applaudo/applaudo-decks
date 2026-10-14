@@ -9,8 +9,10 @@ const deckUrl = '/tres-caminos/index.html';
 const SLIDE_COUNT = 12;
 const DOS_SLIDE_INDEX = 6;
 const MATRIX_SLIDE_INDEX = 2;
+const ROADMAP_SLIDE_INDEX = 10;
 const MATRIX_CARD_GAP_PX = 8;
 const MATRIX_BOARD_INSET_PX = 2;
+const ROADMAP_HERO_BAND_MIN_GAP_PX = 24;
 
 const MIME = {
   '.html': 'text/html',
@@ -203,6 +205,60 @@ async function checkMatrixCards(page, slideIndex, label) {
   return pass;
 }
 
+async function checkRoadmapProponemosHeroBand(page, slideIndex, label) {
+  if (slideIndex !== ROADMAP_SLIDE_INDEX) return true;
+
+  const failures = await page.evaluate(({ minGap }) => {
+    const slide = document.querySelectorAll('#deck .slide')[10];
+    const steps = slide?.querySelector('.roadmap-proponemos-steps');
+    const band = slide?.querySelector('.inner-viewport > .hero-band');
+    if (!steps || !band) return [{ slide: 11, reason: 'proponemos-or-hero-band-missing' }];
+
+    function overlaps(a, b, gap = 0) {
+      return !(
+        a.right + gap <= b.left ||
+        b.right + gap <= a.left ||
+        a.bottom + gap <= b.top ||
+        b.bottom + gap <= a.top
+      );
+    }
+
+    const stepsRect = steps.getBoundingClientRect();
+    const bandRect = band.getBoundingClientRect();
+    const gapPx = bandRect.top - stepsRect.bottom;
+    const out = [];
+
+    if (gapPx < minGap - 0.5) {
+      out.push({
+        slide: 11,
+        reason: 'proponemos-hero-band-gap',
+        gapPx: Math.round(gapPx * 10) / 10,
+        minGap,
+      });
+    }
+
+    for (const card of steps.querySelectorAll('.step-card')) {
+      const cardRect = card.getBoundingClientRect();
+      if (overlaps(cardRect, bandRect, 0)) {
+        out.push({
+          slide: 11,
+          reason: 'proponemos-card-hero-band-overlap',
+          text: (card.textContent || '').trim().slice(0, 50),
+        });
+      }
+    }
+
+    return out;
+  }, { minGap: ROADMAP_HERO_BAND_MIN_GAP_PX });
+
+  const pass = failures.length === 0;
+  console.log(`  slide 11 proponemos vs SEÑAL CLAVE @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
+  if (!pass) {
+    for (const f of failures) console.log('   ', JSON.stringify(f));
+  }
+  return pass;
+}
+
 const sizes = [
   { label: '1440x900', width: 1440, height: 900 },
   { label: '1280x720', width: 1280, height: 720 },
@@ -230,6 +286,10 @@ for (const { label, width, height } of sizes) {
     if (i === MATRIX_SLIDE_INDEX) {
       const matrixPass = await checkMatrixCards(page, i, label);
       if (!matrixPass) allPass = false;
+    }
+    if (i === ROADMAP_SLIDE_INDEX) {
+      const roadmapPass = await checkRoadmapProponemosHeroBand(page, i, label);
+      if (!roadmapPass) allPass = false;
     }
   }
   await context.close();
