@@ -66,7 +66,9 @@
       var vh = window.innerHeight;
       var stageW = stage ? stage.clientWidth : vw;
       if (vw <= 600 || stageW <= 600) return true;
-      return vh > vw && vw <= 700;
+      if (vh > vw && vw <= 700) return true;
+      if (vh <= 620 && vw <= 1024) return true;
+      return false;
     }
 
     function fitEmbeddedDiagram(cfg) {
@@ -95,6 +97,9 @@
           isNarrowDiagramViewport(stage);
         if (doc.documentElement) {
           doc.documentElement.classList.toggle('is-mobile-narrow', narrow);
+        }
+        if (doc.body) {
+          doc.body.style.overflow = narrow ? 'hidden' : '';
         }
         fr.style.width = narrow
           ? Math.max(320, Math.floor(availW)) + 'px'
@@ -125,7 +130,7 @@
           doc.body ? doc.body.scrollHeight : 0,
         );
         contentH = Math.ceil(contentH);
-        if (narrow) contentH += 2;
+        if (narrow) contentH += 6;
         fr.style.height = contentH + 'px';
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
@@ -149,6 +154,20 @@
         }
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         if (narrow) scale = Math.min(scale, 1);
+        if (!narrow && doc) {
+          var fontSel =
+            cfg.frameId === 'dosFrame'
+              ? '.box,.stack .seg .t,.stack .seg .s,.cap,.footnote,.frame-label,.osbar,.skills .box,.feeds'
+              : '.box,.method-title,.method-cap,.method-sublabel,.team-header,.stack .seg .t,.signal,.signal .lab';
+          var minFs = Infinity;
+          doc.querySelectorAll(fontSel).forEach(function (el) {
+            var fs = parseFloat(win.getComputedStyle(el).fontSize);
+            if (fs > 0 && fs < minFs) minFs = fs;
+          });
+          if (isFinite(minFs) && minFs > 0 && minFs * scale < 11) {
+            scale = Math.min(1, 11 / minFs);
+          }
+        }
         var scaledH = Math.ceil(contentH * scale);
         wrap.style.transformOrigin = 'top center';
         wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';

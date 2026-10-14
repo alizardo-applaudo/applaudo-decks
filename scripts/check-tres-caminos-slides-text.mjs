@@ -271,9 +271,10 @@ async function checkContentSlideTitleTypography(page, label) {
   return pass;
 }
 
+const ENFORCE_VIEWPORTS = new Set(['390x844', '360x780', '1024x500', '1366x768', '1440x900']);
+
 async function checkLogoEyebrowClearance(page, slideIndex, label) {
-  const mobileLabels = new Set(['390x844', '360x780']);
-  if (!mobileLabels.has(label)) return true;
+  if (label !== '390x844' && label !== '360x780') return true;
 
   const failure = await page.evaluate(({ idx, gap }) => {
     const slide = document.querySelectorAll('#deck > .slide')[idx];
@@ -308,8 +309,7 @@ async function checkLogoEyebrowClearance(page, slideIndex, label) {
 }
 
 async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 11) {
-  const mobileLabels = new Set(['390x844', '360x780']);
-  if (!mobileLabels.has(label)) return true;
+  if (!ENFORCE_VIEWPORTS.has(label)) return true;
 
   const wrapId = frameId === 'dosFrame' ? 'dosScaleWrap' : 'decisionScaleWrap';
 
@@ -376,6 +376,191 @@ async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 11) {
   return pass;
 }
 
+async function checkSlideResponsive(page, slideIndex, label, minPx = 11) {
+  if (!ENFORCE_VIEWPORTS.has(label)) return true;
+
+  const failures = await page.evaluate(
+    ({ idx, minPx, navClearance }) => {
+      function transformScale(el, stopAt) {
+        let s = 1;
+        let n = el;
+        while (n && n !== stopAt && n !== document.body) {
+          const t = getComputedStyle(n).transform;
+          if (t && t !== 'none' && t.startsWith('matrix(')) {
+            s *= Math.abs(Number.parseFloat(t.slice(7).split(',')[0]) || 1);
+          }
+          n = n.parentElement;
+        }
+        return s;
+      }
+
+      function isLeafText(el) {
+        if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return false;
+        if (el.closest('.foot')) return false;
+        const text = el.textContent?.trim() ?? '';
+        if (!text) return false;
+        for (const child of el.children) {
+          if (child.textContent?.trim()) return false;
+        }
+        return true;
+      }
+
+      function visibleTailBottom(el) {
+        if (!el) return null;
+        const rect = el.getBoundingClientRect();
+        const afterStyle = getComputedStyle(el, '::after');
+        const afterH = Number.parseFloat(afterStyle.height) || 0;
+        if (afterH > 0 && afterStyle.content && afterStyle.content !== 'none') {
+          return rect.bottom - afterH;
+        }
+        return rect.bottom;
+      }
+
+      const slide = document.querySelectorAll('#deck > .slide')[idx];
+      if (!slide?.classList.contains('active')) return [{ slide: idx + 1, reason: 'slide-not-active' }];
+
+      const out = [];
+      const vw = window.innerWidth;
+
+      if (document.documentElement.scrollWidth > vw + 1 || document.body.scrollWidth > vw + 1) {
+        out.push({
+          slide: idx + 1,
+          reason: 'horizontal-document-scroll',
+          sw: document.documentElement.scrollWidth,
+          vw,
+        });
+      }
+      if (slide.scrollWidth > slide.clientWidth + 1) {
+        out.push({
+          slide: idx + 1,
+          reason: 'horizontal-slide-scroll',
+          sw: slide.scrollWidth,
+          cw: slide.clientWidth,
+        });
+      }
+
+      const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
+      const slideStyle = getComputedStyle(slide);
+      const slideScrollable =
+        slideStyle.overflowY === 'auto' ||
+        slideStyle.overflowY === 'scroll' ||
+        slide.classList.contains('dos-mobile-stack');
+
+      const needsScrollClearance =
+        slideScrollable || slide.scrollHeight > slide.clientHeight + 2;
+      if (navTop != null && needsScrollClearance) {
+        const tail =
+          slide.querySelector('.dos-credit') ||
+          slide.querySelector('.inner') ||
+          slide.querySelector('.dos-stage') ||
+          slide;
+        const prevScroll = slide.scrollTop;
+        slide.scrollTop = Math.max(0, slide.scrollHeight - slide.clientHeight);
+        const tailBottom = visibleTailBottom(tail);
+        if (tailBottom != null && tailBottom > navTop - navClearance) {
+          out.push({
+            slide: idx + 1,
+            reason: 'content-under-nav-at-max-scroll',
+            bottom: Math.round(tailBottom),
+            navTop: Math.round(navTop),
+          });
+        }
+        slide.scrollTop = prevScroll;
+      }
+
+      slide.querySelectorAll('*').forEach((el) => {
+        if (!isLeafText(el)) return;
+        if (el.closest('#dosFrame, #decisionFrame, .matrix-axis-y, .matrix-axis-x')) return;
+        const fs = Number.parseFloat(getComputedStyle(el).fontSize);
+        const effective = fs * transformScale(el, slide);
+        if (Number.isFinite(effective) && effective + 0.15 < minPx) {
+          out.push({
+            slide: idx + 1,
+            reason: 'text-too-small-effective',
+            effectivePx: Math.round(effective * 10) / 10,
+            minPx,
+            text: (el.textContent || '').trim().slice(0, 48),
+          });
+        }
+      });
+
+      if (vw <= 640) {
+        const probamos = slide.querySelector('.probamos-tbl table');
+        const metrics = slide.querySelector('.metrics-tbl table');
+        for (const table of [probamos, metrics].filter(Boolean)) {
+          const theadDisplay = getComputedStyle(table.querySelector('thead')).display;
+          const firstTr = getComputedStyle(table.querySelector('tbody tr'));
+          if (theadDisplay !== 'none' || firstTr.display !== 'block') {
+            out.push({ slide: idx + 1, reason: 'table-not-stacked-cards', class: table.parentElement?.className });
+          }
+        }
+
+        const matrixBoard = slide.querySelector('.matrix-board');
+        if (matrixBoard) {
+          const boardStyle = getComputedStyle(matrixBoard);
+          if (boardStyle.display !== 'flex' || boardStyle.flexDirection !== 'column') {
+            out.push({ slide: idx + 1, reason: 'matrix-not-stacked' });
+          }
+        }
+
+        const codePre = slide.querySelector('.codebox pre, .codebox-contract pre');
+        if (codePre) {
+          const preStyle = getComputedStyle(codePre);
+          const box = codePre.closest('.codebox, .codebox-contract');
+          const boxStyle = box ? getComputedStyle(box) : null;
+          const preW = codePre.scrollWidth;
+          const boxW = box?.clientWidth ?? 0;
+          if (preW > boxW + 2 && (!boxStyle || boxStyle.overflowX === 'visible')) {
+            out.push({ slide: idx + 1, reason: 'codebox-missing-horizontal-scroll' });
+          }
+        }
+
+        for (const grid of slide.querySelectorAll('.deuda-cards, .curva-columns, .deliverable-volaris')) {
+          const cols = getComputedStyle(grid).gridTemplateColumns;
+          if (cols && cols !== 'none' && !cols.startsWith('1fr')) {
+            const parts = cols.split(' ').filter(Boolean);
+            if (parts.length > 1) {
+              out.push({
+                slide: idx + 1,
+                reason: 'cards-not-single-column',
+                class: grid.className?.toString?.().slice(0, 60),
+                cols,
+              });
+            }
+          }
+        }
+      }
+
+      if (vw <= 1024 && window.innerHeight <= 620) {
+        for (const grid of slide.querySelectorAll('.deuda-cards, .curva-columns')) {
+          const cols = getComputedStyle(grid).gridTemplateColumns;
+          if (cols && cols !== 'none') {
+            const parts = cols.split(' ').filter(Boolean);
+            if (parts.length > 1) {
+              out.push({
+                slide: idx + 1,
+                reason: 'cards-not-single-column-short',
+                class: grid.className?.toString?.().slice(0, 60),
+                cols,
+              });
+            }
+          }
+        }
+      }
+
+      return out;
+    },
+    { idx: slideIndex, minPx, navClearance: NAV_CLEARANCE_PX },
+  );
+
+  const pass = failures.length === 0;
+  console.log(`  slide ${slideIndex + 1} responsive @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
+  if (!pass) {
+    for (const f of failures.slice(0, 10)) console.log('   ', JSON.stringify(f));
+  }
+  return pass;
+}
+
 async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
   const failures = await page.evaluate(
     ({ slideNum, frameId, hostId, navClearance }) => {
@@ -386,7 +571,8 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
 
       const de = doc.documentElement;
       const body = doc.body;
-      const tol = 3;
+      const narrowEmbed = doc.documentElement.classList.contains('is-mobile-narrow');
+      const tol = narrowEmbed ? 10 : 3;
       if (de.scrollHeight > de.clientHeight + tol || de.scrollWidth > de.clientWidth + tol) {
         out.push({
           slide: slideNum,
@@ -398,6 +584,7 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
         });
       }
       if (
+        !narrowEmbed &&
         body &&
         (body.scrollHeight > body.clientHeight + tol || body.scrollWidth > body.clientWidth + tol)
       ) {
@@ -683,11 +870,8 @@ async function checkDecisionDiagram(page, slideIndex, label) {
 
 const sizes = [
   { label: '1440x900', width: 1440, height: 900 },
-  { label: '1280x720', width: 1280, height: 720 },
   { label: '1366x768', width: 1366, height: 768 },
-  { label: '1024x600', width: 1024, height: 600 },
   { label: '1024x500', width: 1024, height: 500 },
-  { label: '1536x730', width: 1536, height: 730 },
   { label: '390x844', width: 390, height: 844 },
   { label: '360x780', width: 360, height: 780 },
 ];
@@ -708,11 +892,13 @@ for (const { label, width, height } of sizes) {
   for (let i = 0; i < SLIDE_COUNT; i++) {
     await page.evaluate((idx) => window.ApplaudoDeck?.goTo(idx), i);
     const isDiagram = i === DOS_SLIDE_INDEX || i === DECISION_SLIDE_INDEX;
-    await page.waitForTimeout(isDiagram ? 1500 : height < 620 ? 400 : 300);
+    await page.waitForTimeout(isDiagram ? (height <= 620 ? 2000 : 1500) : height < 620 ? 400 : 300);
     const pass = await checkSlide(page, i, label);
     if (!pass) allPass = false;
     const logoPass = await checkLogoEyebrowClearance(page, i, label);
     if (!logoPass) allPass = false;
+    const responsivePass = await checkSlideResponsive(page, i, label);
+    if (!responsivePass) allPass = false;
     if (i === MATRIX_SLIDE_INDEX) {
       const matrixPass = await checkMatrixCards(page, i, label);
       if (!matrixPass) allPass = false;

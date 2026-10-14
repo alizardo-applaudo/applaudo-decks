@@ -35,6 +35,11 @@ function staticServer() {
   });
 }
 
+const captures = [
+  { suffix: '390x844', width: 390, height: 844, expandScroll: true },
+  { suffix: '1024x500', width: 1024, height: 500, expandScroll: false },
+];
+
 const server = await staticServer();
 const port = server.address().port;
 const base = `http://127.0.0.1:${port}${deckUrl}`;
@@ -42,27 +47,40 @@ const base = `http://127.0.0.1:${port}${deckUrl}`;
 const browser = await chromium.launch({ channel: 'chrome' });
 const outDir = join(root, 'artifacts', 'screenshots');
 
-const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-const page = await context.newPage();
-await page.goto(base, { waitUntil: 'networkidle' });
+for (const { suffix, width, height, expandScroll } of captures) {
+  const context = await browser.newContext({ viewport: { width, height } });
+  const page = await context.newPage();
+  await page.goto(base, { waitUntil: 'networkidle' });
 
-const slideCount = await page.evaluate(() => document.querySelectorAll('#deck .slide').length);
-for (let i = 0; i < slideCount; i++) {
-  await page.evaluate((idx) => {
-    if (window.ApplaudoDeck?.goTo) window.ApplaudoDeck.goTo(idx);
-  }, i);
+  const slideCount = await page.evaluate(() => document.querySelectorAll('#deck .slide').length);
+  for (let i = 0; i < slideCount; i++) {
+    await page.evaluate((idx) => window.ApplaudoDeck?.goTo(idx), i);
+    const isDiagram = await page.evaluate(
+      (idx) => document.querySelectorAll('#deck .slide')[idx]?.classList.contains('dos-slide'),
+      i,
+    );
+    await page.waitForTimeout(isDiagram ? (height <= 620 ? 2000 : 1500) : 350);
 
-  const isDosSlide = await page.evaluate((idx) => {
-    return document.querySelectorAll('#deck .slide')[idx]?.classList.contains('dos-slide');
-  }, i);
-  await page.waitForTimeout(isDosSlide ? 1200 : 250);
+    if (expandScroll) {
+      const fullH = await page.evaluate(() => {
+        const slide = document.querySelector('.slide.active');
+        return Math.max(Math.ceil(slide?.scrollHeight || 0), window.innerHeight);
+      });
+      if (fullH > height) {
+        await page.setViewportSize({ width, height: fullH });
+        await page.waitForTimeout(400);
+        await page.evaluate((idx) => window.ApplaudoDeck?.goTo(idx), i);
+        await page.waitForTimeout(isDiagram ? 1200 : 300);
+      }
+    }
 
-  const nn = String(i + 1).padStart(2, '0');
-  const pathOut = join(outDir, `tres-caminos-slide-${nn}-1440x900.png`);
-  await page.screenshot({ path: pathOut });
-  console.log(`Wrote ${pathOut}`);
+    const nn = String(i + 1).padStart(2, '0');
+    const pathOut = join(outDir, `tres-caminos-slide-${nn}-${suffix}.png`);
+    await page.screenshot({ path: pathOut });
+    console.log(`Wrote ${pathOut}`);
+  }
+  await context.close();
 }
-await context.close();
 
 await browser.close();
 server.close();

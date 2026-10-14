@@ -58,6 +58,11 @@
 }
 
 @media (max-height:780px){
+  #deck > .slide > .inner::after,
+  #deck > .slide > .inner.inner-viewport::after,
+  #deck > .slide > .inner.inner-spacious::after{
+    content:'';display:block;height:calc(var(--nav-safe) + 28px);width:100%;flex:none;
+  }
   .slide.slide-fit.active,.slide.slide-spacious.active,.slide.cierre-slide.active{
     overflow-y:auto!important;-webkit-overflow-scrolling:touch;
   }
@@ -81,12 +86,14 @@
   .dos-slide .dos-header{padding-left:clamp(20px,5vw,48px)!important;padding-right:clamp(20px,5vw,48px)!important}
   .deliverable-volaris{grid-template-columns:1fr!important}
   .analogy{grid-template-columns:1fr}
-  .deuda-cards{grid-template-columns:1fr 1fr}
+  .deuda-cards{grid-template-columns:1fr}
   .curva-columns{grid-template-columns:1fr}
   .probamos-banners{grid-template-columns:1fr!important}
 }
 
 @media (max-width:1024px),(max-height:620px){
+  .deuda-cards .problema-card:nth-child(n){grid-column:auto!important;grid-row:auto!important}
+  .curva-columns{grid-template-columns:1fr!important}
   .matrix-slide .slide-body{overflow:visible;flex:none;min-height:0}
   .matrix-stack{overflow:visible;flex:none;height:auto;min-height:0}
   .matrix-board{
@@ -116,9 +123,17 @@
 }
 
 @media (max-width:640px){
+  html,body{overflow-x:hidden;max-width:100vw}
+  #deck,.deck{width:100%;max-width:100vw;overflow-x:hidden}
+  #deck > .slide{max-width:100vw;overflow-x:hidden}
   :root{--logo-clearance:76px}
   #deck > .slide > .inner{
     padding-top:var(--logo-clearance)!important;
+  }
+  #deck > .slide > .inner::after,
+  #deck > .slide > .inner.inner-viewport::after,
+  #deck > .slide > .inner.inner-spacious::after{
+    content:'';display:block;height:calc(var(--nav-safe) + 40px);width:100%;flex:none;
   }
   #deck > .slide > .inner.center{
     justify-content:flex-start;
@@ -143,4 +158,61 @@
   .matrix-board{min-height:360px;height:auto}
   .dos-slide.active{overflow-y:auto}
   .dos-slide .dos-stage{min-height:min(52vh,420px)}
+  .deuda-cards .problema-card:nth-child(n){grid-column:auto!important;grid-row:auto!important}
+  .curva-columns,.roadmap-adopcion-cards,.compact-steps,.problema-cards,.grid-2{
+    grid-template-columns:1fr!important;
+  }
+  .deliverable-volaris{grid-template-columns:1fr!important}
+  .tbl{overflow-x:visible!important;border:none;background:transparent}
+  .probamos-tbl table,.metrics-tbl table{min-width:0!important;width:100%;border:none;background:transparent}
+  .probamos-tbl thead,.metrics-tbl thead{display:none}
+  .probamos-tbl tbody,.metrics-tbl tbody{display:flex;flex-direction:column;gap:12px}
+  .probamos-tbl tr,.metrics-tbl tr{
+    display:block;border:1px solid var(--line);border-radius:var(--radius);background:var(--page);
+    padding:12px 14px;box-shadow:0 2px 8px rgba(18,18,18,.04);
+  }
+  .probamos-tbl td,.metrics-tbl td{
+    display:block;border:none;padding:6px 0;font-size:13px;line-height:1.4;text-align:left;
+  }
+  .probamos-tbl td+td,.metrics-tbl td+td{border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
+  .probamos-tbl td:first-child,.metrics-tbl td:first-child{font-weight:700;color:var(--ink);padding-top:0;border-top:0;margin-top:0}
+  .probamos-tbl td:nth-child(2)::before,.metrics-tbl td:nth-child(2)::before{
+    display:block;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;
+    color:var(--gray);margin-bottom:4px;
+  }
+  .probamos-tbl td:nth-child(2)::before{content:'Qué respondía'}
+  .probamos-tbl td:nth-child(3)::before{content:'Resultado'}
+  .metrics-tbl td:nth-child(2)::before{content:'Manual'}
+  .metrics-tbl td:nth-child(3)::before{content:'Con skills'}
+  .metrics-tbl td:nth-child(4)::before{content:'Señal'}
+  .codebox,.codebox-contract{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .codebox pre,.codebox-contract pre{
+    font-size:max(11px,.75rem);line-height:1.45;overflow-x:auto;max-width:100%;white-space:pre;
+  }
+}
+
+@media (max-height:620px){
+  .deuda-cards{grid-template-columns:1fr!important}
+  .deuda-cards .problema-card:nth-child(n){grid-column:auto!important;grid-row:auto!important}
+  .deliverable-volaris{grid-template-columns:1fr!important}
+  #deck > .slide.slide-fit.active,
+  #deck > .slide.slide-spacious.active,
+  #deck > .slide.dos-slide.active{overflow-y:auto!important}
+  #deck > .slide > .inner::after,
+  #deck > .slide > .inner.inner-viewport::after,
+  #deck > .slide > .inner.inner-spacious::after{
+    content:'';display:block;height:calc(var(--nav-safe) + 32px);width:100%;flex:none;
+  }
+}
+
+@media (max-height:620px) and (min-width:641px){
+  .deliverable-volaris-slide .codebox-contract pre{font-size:11px!important;line-height:1.35}
+  .deliverable-volaris-slide .codebox-contract .map-hl,.deliverable-volaris-slide .codebox-contract .map-code{font-size:inherit}
+  .deliverable-volaris-slide .inline-code{font-size:11px!important}
+  .dos-slide:not(.decision-slide) .dos-credit{font-size:11px!important}
+  .deliverable-volaris-slide .codebox-contract .label{font-size:11px}
+  .tbl.compact td,.tbl.compact th{font-size:11px}
+  .metrics-slide .lead-one-line{font-size:max(11px,.78rem)}
+  .roadmap-combined-slide .roadmap-proponemos-lead{font-size:max(11px,.75rem)}
+  .roadmap-combined-slide .compact-steps .step-card p{font-size:max(11px,.75rem)}
 }
