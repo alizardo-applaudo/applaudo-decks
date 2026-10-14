@@ -73,17 +73,19 @@
         var doc = fr.contentDocument;
         var win = fr.contentWindow;
         if (!doc || !win) return;
-        var marginX = 48;
-        var marginY = 12;
+        var marginX = 24;
+        var marginY = 4;
+        var navClear = 24;
         fr.style.width = '1500px';
+        fr.style.overflow = 'hidden';
         if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
         win.dispatchEvent(new Event('resize'));
         var canvas = doc.getElementById('canvas');
         var contentW = 1360;
         var contentH = 520;
         if (canvas) {
-          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360) + 56;
-          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + 8;
+          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360) + 48;
+          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + 12;
           var foot = doc.querySelector('.footnote');
           if (foot) contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 8);
         } else {
@@ -96,15 +98,37 @@
         if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
-        var availW = stage.clientWidth - marginX * 2;
+        var stageStyle = window.getComputedStyle(stage);
+        var padT = parseFloat(stageStyle.paddingTop) || 0;
+        var padB = parseFloat(stageStyle.paddingBottom) || 0;
+        var padL = parseFloat(stageStyle.paddingLeft) || 0;
+        var padR = parseFloat(stageStyle.paddingRight) || 0;
         var creditEl = slide.querySelector('.dos-credit');
-        var creditBand = creditEl ? creditEl.offsetHeight + 10 : 0;
-        var availH = stage.clientHeight - marginY - creditBand;
+        var creditBand = creditEl ? creditEl.offsetHeight + 8 : 0;
+        var availW = stage.clientWidth - padL - padR - marginX * 2;
+        var availH = stage.clientHeight - padT - padB - marginY - creditBand;
         var scale = Math.min(availW / contentW, availH / contentH);
+        var navEl = document.querySelector('.nav');
+        if (navEl) {
+          var navTop = navEl.getBoundingClientRect().top;
+          var stageRect = stage.getBoundingClientRect();
+          var maxHostH = navTop - navClear - stageRect.top - padT - marginY;
+          if (maxHostH > 24 && contentH > 0) scale = Math.min(scale, maxHostH / contentH);
+        }
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
+        var scaledH = Math.ceil(contentH * scale);
+        wrap.style.transformOrigin = 'top center';
         wrap.style.transform = 'scale(' + scale + ')';
-        host.style.width = Math.ceil(contentW * scale) + 'px';
-        host.style.height = Math.ceil(contentH * scale) + 'px';
+        host.style.display = 'flex';
+        host.style.justifyContent = 'center';
+        host.style.alignItems = 'flex-start';
+        host.style.overflow = 'hidden';
+        host.style.width = '100%';
+        host.style.maxWidth = Math.max(0, stage.clientWidth - padL - padR) + 'px';
+        host.style.height = scaledH + 'px';
+        host.style.flex = '1 1 auto';
+        host.style.minHeight = '0';
+        host.style.margin = '0 auto';
       } catch (e) {}
     }
 

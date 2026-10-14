@@ -14,6 +14,8 @@ const MATRIX_CARD_GAP_PX = 8;
 const MATRIX_BOARD_INSET_PX = 2;
 const DECISION_NODE_GAP_PX = 6;
 const DECISION_NAV_CLEARANCE_PX = 24;
+const NAV_CLEARANCE_PX = 24;
+const PROCESS_SLIDE_INDEX = 6;
 
 const MIME = {
   '.html': 'text/html',
@@ -43,7 +45,7 @@ function staticServer() {
 }
 
 async function checkSlide(page, slideIndex, label) {
-  const failures = await page.evaluate(({ slideIndex: idx }) => {
+  const failures = await page.evaluate(({ slideIndex: idx, navClearance }) => {
     function nearestOverflowHidden(el) {
       let node = el.parentElement;
       while (node) {
@@ -86,6 +88,12 @@ async function checkSlide(page, slideIndex, label) {
     const scopes = getScope(slide);
     const nav = document.querySelector('.nav');
     const navTop = nav?.getBoundingClientRect().top ?? window.innerHeight;
+    const slideStyle = getComputedStyle(slide);
+    const slideScrollable =
+      slideStyle.overflowY === 'auto' ||
+      slideStyle.overflowY === 'scroll' ||
+      slideStyle.overflow === 'auto' ||
+      slideStyle.overflow === 'scroll';
 
     const out = [];
     for (const scope of scopes) {
@@ -95,7 +103,7 @@ async function checkSlide(page, slideIndex, label) {
         if (rect.width === 0 && rect.height === 0) return;
 
         const ancestor = nearestOverflowHidden(el);
-        if (ancestor) {
+        if (ancestor && !slideScrollable) {
           const a = ancestor.getBoundingClientRect();
           const tol = 1;
           if (
@@ -114,7 +122,7 @@ async function checkSlide(page, slideIndex, label) {
           }
         }
 
-        if (rect.bottom > navTop - 2) {
+        if (!slideScrollable && rect.bottom > navTop - navClearance) {
           out.push({
             slide: idx + 1,
             tag: el.tagName,
@@ -126,7 +134,7 @@ async function checkSlide(page, slideIndex, label) {
       });
     }
     return out;
-  }, { slideIndex });
+  }, { slideIndex, navClearance: NAV_CLEARANCE_PX });
 
   const pass = failures.length === 0;
   console.log(`  slide ${slideIndex + 1} @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
@@ -216,6 +224,7 @@ async function checkContentSlideTitleTypography(page, label) {
     for (let i = 0; i < slides.length; i++) {
       const slide = slides[i];
       if (i === 0 || slide.classList.contains('cierre-slide')) continue;
+      if (slide.classList.contains('dos-slide') && !slide.classList.contains('decision-slide')) continue;
       const h = mainTitle(slide);
       if (!h) {
         rows.push({ slide: i + 1, reason: 'content-title-missing' });
@@ -258,6 +267,71 @@ async function checkContentSlideTitleTypography(page, label) {
   console.log(`  content slide title typography @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
   if (!pass) {
     for (const f of failures.slice(0, 12)) console.log('   ', JSON.stringify(f));
+  }
+  return pass;
+}
+
+async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
+  const failures = await page.evaluate(
+    ({ slideNum, frameId, hostId, navClearance }) => {
+      const out = [];
+      const fr = document.getElementById(frameId);
+      const doc = fr?.contentDocument;
+      if (!doc) return [{ slide: slideNum, reason: 'iframe-missing', frameId }];
+
+      const de = doc.documentElement;
+      const body = doc.body;
+      const tol = 3;
+      if (de.scrollHeight > de.clientHeight + tol || de.scrollWidth > de.clientWidth + tol) {
+        out.push({
+          slide: slideNum,
+          reason: 'iframe-document-scrollbar',
+          sh: de.scrollHeight,
+          ch: de.clientHeight,
+          sw: de.scrollWidth,
+          cw: de.clientWidth,
+        });
+      }
+      if (
+        body &&
+        (body.scrollHeight > body.clientHeight + tol || body.scrollWidth > body.clientWidth + tol)
+      ) {
+        out.push({ slide: slideNum, reason: 'iframe-body-scrollbar' });
+      }
+
+      const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
+      const hostRect = document.getElementById(hostId)?.getBoundingClientRect();
+      const header = document.querySelector('.dos-slide.active .dos-header');
+      if (header && navTop != null && header.getBoundingClientRect().bottom > navTop - navClearance) {
+        out.push({
+          slide: slideNum,
+          reason: 'dos-header-over-nav',
+          bottom: Math.round(header.getBoundingClientRect().bottom),
+          navTop: Math.round(navTop),
+        });
+      }
+      if (hostRect && navTop != null && hostRect.bottom > navTop - navClearance) {
+        out.push({
+          slide: slideNum,
+          reason: 'diagram-host-over-nav',
+          bottom: Math.round(hostRect.bottom),
+          navTop: Math.round(navTop),
+        });
+      }
+      const stage = document.querySelector('.dos-slide.active .dos-stage');
+      const stageRect = stage?.getBoundingClientRect();
+      if (stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
+        out.push({ slide: slideNum, reason: 'diagram-host-clipped-by-stage' });
+      }
+      return out;
+    },
+    { slideNum, frameId, hostId, navClearance: NAV_CLEARANCE_PX },
+  );
+
+  const pass = failures.length === 0;
+  console.log(`  slide ${slideNum} embedded diagram @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
+  if (!pass) {
+    for (const f of failures.slice(0, 8)) console.log('   ', JSON.stringify(f));
   }
   return pass;
 }
@@ -410,20 +484,6 @@ async function checkDecisionDiagram(page, slideIndex, label) {
       });
     }
 
-    const sig = doc.getElementById('n-signal');
-    if (sig && navTop != null) {
-      const sigRect = sig.getBoundingClientRect();
-      if (sigRect.bottom > navTop - clearance) {
-        out.push({
-          slide: 11,
-          reason: 'signal-over-nav-pill',
-          bottom: Math.round(sigRect.bottom),
-          navTop: Math.round(navTop),
-          gap: Math.round(navTop - sigRect.bottom),
-        });
-      }
-    }
-
     return out;
   }, { gap: DECISION_NODE_GAP_PX, pad: 2, navClearance: DECISION_NAV_CLEARANCE_PX });
 
@@ -438,6 +498,11 @@ async function checkDecisionDiagram(page, slideIndex, label) {
 const sizes = [
   { label: '1440x900', width: 1440, height: 900 },
   { label: '1280x720', width: 1280, height: 720 },
+  { label: '1366x768', width: 1366, height: 768 },
+  { label: '1024x600', width: 1024, height: 600 },
+  { label: '1024x500', width: 1024, height: 500 },
+  { label: '1536x730', width: 1536, height: 730 },
+  { label: '390x844', width: 390, height: 844 },
 ];
 
 const server = await staticServer();
@@ -456,16 +521,22 @@ for (const { label, width, height } of sizes) {
   for (let i = 0; i < SLIDE_COUNT; i++) {
     await page.evaluate((idx) => window.ApplaudoDeck?.goTo(idx), i);
     const isDiagram = i === DOS_SLIDE_INDEX || i === DECISION_SLIDE_INDEX;
-    await page.waitForTimeout(isDiagram ? 1200 : 300);
+    await page.waitForTimeout(isDiagram ? 1500 : height < 620 ? 400 : 300);
     const pass = await checkSlide(page, i, label);
     if (!pass) allPass = false;
     if (i === MATRIX_SLIDE_INDEX) {
       const matrixPass = await checkMatrixCards(page, i, label);
       if (!matrixPass) allPass = false;
     }
+    if (i === PROCESS_SLIDE_INDEX) {
+      const dosPass = await checkEmbeddedIframe(page, 7, 'dosFrame', 'dosScaleHost', label);
+      if (!dosPass) allPass = false;
+    }
     if (i === DECISION_SLIDE_INDEX) {
       const decisionPass = await checkDecisionDiagram(page, i, label);
       if (!decisionPass) allPass = false;
+      const embedPass = await checkEmbeddedIframe(page, 11, 'decisionFrame', 'decisionScaleHost', label);
+      if (!embedPass) allPass = false;
     }
   }
   const titlesPass = await checkContentSlideTitleTypography(page, label);

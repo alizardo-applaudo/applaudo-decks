@@ -77,6 +77,7 @@
         var marginX = cfg.marginX != null ? cfg.marginX : 48;
         var marginY = cfg.marginY != null ? cfg.marginY : 12;
         fr.style.width = (cfg.measureWidth || 1500) + 'px';
+        fr.style.overflow = 'hidden';
         if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
         win.dispatchEvent(new Event('resize'));
         var canvas = doc.getElementById('canvas');
@@ -85,6 +86,8 @@
         if (canvas) {
           contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, cfg.defaultW || 1280) + (cfg.padW || 56);
           contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + (cfg.padH || 8);
+          var foot = doc.querySelector('.footnote');
+          if (foot) contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 8);
         } else {
           contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, contentH);
         }
@@ -95,34 +98,45 @@
         if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
-        var availW = stage.clientWidth - marginX * 2;
+
         var stageStyle = window.getComputedStyle(stage);
         var padT = parseFloat(stageStyle.paddingTop) || 0;
         var padB = parseFloat(stageStyle.paddingBottom) || 0;
+        var padL = parseFloat(stageStyle.paddingLeft) || 0;
+        var padR = parseFloat(stageStyle.paddingRight) || 0;
         var creditEl = slide.querySelector('.dos-credit');
         var subEl = slide.querySelector('.decision-sub');
         var isDecision = slide.classList.contains('decision-slide');
-        var extraBand = isDecision
-          ? 0
-          : (creditEl ? creditEl.offsetHeight + 10 : 0) + (subEl ? subEl.offsetHeight + 6 : 0);
+        var creditBand = creditEl ? creditEl.offsetHeight + 8 : 0;
+        var extraBand = isDecision ? 0 : creditBand;
+        var availW = stage.clientWidth - padL - padR - marginX * 2;
         var availH = stage.clientHeight - padT - padB - marginY - extraBand;
         var scale = Math.min(availW / contentW, availH / contentH);
-        if (cfg.navClearance != null) {
-          var navEl = document.querySelector('.nav');
-          if (navEl) {
-            var navTop = navEl.getBoundingClientRect().top;
-            var stageRect = stage.getBoundingClientRect();
-            var maxHostBottom = navTop - cfg.navClearance;
-            var maxHostH = maxHostBottom - stageRect.top - padT - marginY;
-            if (maxHostH > 24 && contentH > 0) {
-              scale = Math.min(scale, maxHostH / contentH);
-            }
+        var navClear = cfg.navClearance != null ? cfg.navClearance : 24;
+        var navEl = document.querySelector('.nav');
+        if (navEl) {
+          var navTop = navEl.getBoundingClientRect().top;
+          var stageRect = stage.getBoundingClientRect();
+          var maxHostBottom = navTop - navClear;
+          var maxHostH = maxHostBottom - stageRect.top - padT - marginY;
+          if (maxHostH > 24 && contentH > 0) {
+            scale = Math.min(scale, maxHostH / contentH);
           }
         }
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
+        var scaledH = Math.ceil(contentH * scale);
+        wrap.style.transformOrigin = 'top center';
         wrap.style.transform = 'scale(' + scale + ')';
-        host.style.width = Math.ceil(contentW * scale) + 'px';
-        host.style.height = Math.ceil(contentH * scale) + 'px';
+        host.style.display = 'flex';
+        host.style.justifyContent = 'center';
+        host.style.alignItems = 'flex-start';
+        host.style.overflow = 'hidden';
+        host.style.width = '100%';
+        host.style.maxWidth = Math.max(0, stage.clientWidth - padL - padR) + 'px';
+        host.style.height = scaledH + 'px';
+        host.style.flex = '1 1 auto';
+        host.style.minHeight = '0';
+        host.style.margin = '0 auto';
       } catch (e) {}
     }
 
@@ -140,7 +154,12 @@
       hostId: 'dosScaleHost',
       relayoutFn: 'designOSRelayout',
       defaultW: 1360,
-      defaultH: 520
+      defaultH: 520,
+      marginX: 24,
+      marginY: 4,
+      padW: 48,
+      padH: 12,
+      navClearance: 24
     };
     var DECISION_CFG = {
       frameId: 'decisionFrame',
@@ -149,7 +168,7 @@
       relayoutFn: 'decisionRelayout',
       defaultW: 1180,
       defaultH: 620,
-      marginX: 36,
+      marginX: 24,
       marginY: 2,
       padW: 32,
       padH: 12,

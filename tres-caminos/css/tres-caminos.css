@@ -1,9 +1,8 @@
 /* Tres caminos deck — slides not in shared assets */
 
-/* Unified main titles (slides 2–4 reference); excludes cover (1) and cierre (12) */
-#deck > .slide:not(:first-child):not(.cierre-slide) .slide-head h2.hl,
-#deck > .slide.dos-slide .dos-header h2{
-  font-size:clamp(2.4rem,5.6vw,4.6rem);
+/* Unified main titles — see responsive.css for fluid sizing; decision slide only on dos-header */
+#deck > .slide:not(:first-child):not(.cierre-slide):not(.dos-slide) .slide-head h2.hl,
+#deck > .slide.decision-slide .dos-header h2{
   letter-spacing:-.015em;
   line-height:1.02;
   font-weight:600;
@@ -64,9 +63,9 @@
 @media (max-height:760px){
   .decision-slide .decision-header{padding-bottom:6px}
   .decision-slide .decision-sub{font-size:.8125rem;margin-top:6px;line-height:1.35}
-  #deck > .slide:not(:first-child):not(.cierre-slide) .slide-head h2.hl,
-  #deck > .slide.dos-slide .dos-header h2{
-    font-size:clamp(1.85rem,3.6vw,2.85rem);
+  #deck > .slide:not(:first-child):not(.cierre-slide):not(.dos-slide) .slide-head h2.hl,
+  #deck > .slide.decision-slide .dos-header h2{
+    font-size:clamp(1.85rem,min(3.6vw,5.5vh),2.85rem);
   }
 }
 @media (max-width:900px){

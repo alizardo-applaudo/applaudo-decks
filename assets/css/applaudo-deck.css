@@ -680,4 +680,18 @@ button{font-family:inherit}
   .slide-probamos .probamos-tbl th{padding:5px 12px}
   .slide-probamos .callout-e2e{padding:10px 14px}
 }
+/* Shared responsive: diagram slides (Volaris + decks using assets CSS) */
+.dos-slide .dos-header h2{
+  font-size:clamp(0.7rem,min(0.9vw + 1.25vh,2.4vh + 0.5rem),1.1rem);
+  line-height:1.28;max-width:min(72ch,100%);
+}
+.dos-slide .dos-header{padding:clamp(28px,7vh,48px) clamp(20px,4vw,48px) clamp(4px,1vh,8px) clamp(20px,10vw,160px);max-width:100%;width:100%}
+.dos-slide .dos-stage{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.dos-scale-host{flex:1 1 auto;min-height:0;max-height:100%;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;width:100%}
+.dos-scale-wrap{transform-origin:top center}
+@media (max-height:800px){:root{--nav-safe:104px}}
+@media (max-height:650px){:root{--nav-safe:96px}}
+@media (max-height:520px){:root{--nav-safe:88px}.foot{display:none}}
+@media (max-width:900px){.dos-slide .dos-header{padding-left:clamp(20px,5vw,48px)!important;padding-right:clamp(20px,5vw,48px)!important}}
+
 @media (prefers-reduced-motion:reduce){.glow-bg::before{animation:none}.slide.active{animation:none}*{animation:none!important;transition:none!important}}
