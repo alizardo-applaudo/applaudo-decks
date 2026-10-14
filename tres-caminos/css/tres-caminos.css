@@ -80,14 +80,18 @@
 .axis-end{
   font-size:.6875rem;font-weight:600;color:var(--gray);letter-spacing:.03em;line-height:1.2;
 }
+.matrix-axis-y > *{
+  writing-mode:vertical-lr;transform:rotate(180deg);text-align:center;
+  white-space:nowrap;line-height:1.25;
+}
 .axis-y-top{align-self:start}
 .axis-y-bottom{align-self:end}
 .axis-x-left{justify-self:start;text-align:left}
 .axis-x-right{justify-self:end;text-align:right}
 .axis-title{font-weight:700;color:var(--ink);letter-spacing:.01em;line-height:1.3}
+.matrix-axis-y .axis-end{font-size:.6875rem}
 .axis-title-y{
-  writing-mode:vertical-lr;transform:rotate(180deg);
-  font-size:clamp(.75rem,1.05vw,.8125rem);text-align:center;padding:6px 0;
+  font-size:clamp(.75rem,1.05vw,.8125rem);padding:6px 0;
   max-height:100%;overflow:visible;
 }
 .axis-title-x{
