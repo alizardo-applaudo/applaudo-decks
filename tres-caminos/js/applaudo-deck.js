@@ -129,12 +129,12 @@
       wrapId: 'decisionScaleWrap',
       hostId: 'decisionScaleHost',
       relayoutFn: 'decisionRelayout',
-      defaultW: 1280,
-      defaultH: 640,
-      marginX: 40,
-      marginY: 8,
+      defaultW: 1180,
+      defaultH: 720,
+      marginX: 36,
+      marginY: 4,
       padW: 32,
-      padH: 12
+      padH: 16
     };
 
     function scheduleActiveDiagramFit() {

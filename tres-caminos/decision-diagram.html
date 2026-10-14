@@ -20,45 +20,54 @@
     --lift:0 1px 2px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.035);
     --lift-hi:0 10px 28px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
     --radius:12px;
-    --wire-gap:14px;
+    --wire-gap:34px;
     --font:"Poppins","Avenir Next","Segoe UI",system-ui,sans-serif;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:transparent;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
-  html.is-embed body{padding:8px 0 4px;min-height:0;overflow:visible}
+  html.is-embed body{padding:10px 0 6px;min-height:0;overflow:visible}
+  html.is-embed .page{min-height:660px;display:flex;flex-direction:column;justify-content:center}
+  html.is-embed .vflow{flex:1;justify-content:space-evenly;min-height:620px}
   body:not(.is-embed-body){padding:24px;display:flex;justify-content:center}
-  .page{width:100%;max-width:1280px;margin:0 auto}
-  .canvas{position:relative;width:100%;padding:6px 12px 10px}
+  .page{width:100%;max-width:1180px;margin:0 auto}
+  .canvas{position:relative;width:100%;padding:8px 16px 12px}
   svg#links{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:visible}
-  svg#links path{stroke:var(--wire);stroke-width:1.4;fill:none;transition:stroke .18s,opacity .18s}
+  svg#links path{
+    stroke:var(--wire);stroke-width:1.4;fill:none;
+    stroke-linecap:round;stroke-linejoin:round;
+    transition:stroke .18s,opacity .18s;
+  }
   svg#links polygon{fill:var(--wire);transition:fill .18s,opacity .18s}
+  svg#links g{opacity:1;transition:opacity .18s}
   svg#links g.on path{stroke:var(--red)}
   svg#links g.on polygon{fill:var(--red)}
+  .dimmed svg#links g:not(.on){opacity:.18}
+  .dimmed .box:not(.on),.dimmed .team-card:not(.on),.dimmed .signal{opacity:.32}
+  .dimmed .stack .seg:not(.on){opacity:.32}
   .vflow{
     position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;
     gap:var(--wire-gap);width:100%;
   }
-  .row{display:flex;align-items:stretch;justify-content:center;gap:16px;width:100%;max-width:1180px}
+  .row{display:flex;align-items:stretch;justify-content:center;gap:18px;width:100%;max-width:1180px}
   .row.methods{align-items:stretch;gap:18px;padding:2px 0}
-  .row.decisions .nodewrap{flex:1 1 0;min-width:0;max-width:420px}
-  .row.methods .nodewrap{flex:1 1 0;min-width:0;max-width:380px}
+  .row.decisions .nodewrap,.row.methods .nodewrap{flex:1 1 0;min-width:0;max-width:none}
   .nodewrap{position:relative;width:100%}
-  .nodewrap.center{max-width:440px}
-  .nodewrap.wide{max-width:980px}
+  .nodewrap.center{max-width:520px;width:100%}
+  .nodewrap.wide{max-width:1180px;width:100%}
   .box{
     width:100%;background:var(--card-grad);border:1px solid var(--line);border-radius:var(--radius);
-    padding:14px 12px;text-align:center;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);
+    padding:16px 18px;text-align:center;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);
     cursor:pointer;transition:.18s;box-shadow:var(--lift);display:block;
   }
-  .box.decision{font-size:12px;line-height:1.35;padding:13px 12px;font-weight:600}
+  .box.decision{font-size:12.5px;line-height:1.38;padding:16px 18px;font-weight:600}
   .box.method{
-    background:var(--method-grad);padding:20px 16px 18px;min-height:96px;
+    background:var(--method-grad);padding:22px 18px 20px;min-height:104px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
     border-color:rgba(255,255,255,.14);
   }
   .box.method .method-title{font-size:14px;font-weight:700;line-height:1.32;display:block}
   .box.method .method-cap{font-size:11px;font-weight:600;color:var(--cap);line-height:1.2;display:block}
-  .box:hover,.stack .seg:hover{background:var(--card-grad-hi);border-color:rgba(255,255,255,.18);transform:translateY(-1px);box-shadow:var(--lift-hi)}
+  .box:hover,.stack .seg:hover{background:var(--card-grad-hi);border-color:rgba(255,255,255,.18);transform:translateY(-2px);box-shadow:var(--lift-hi)}
   .box.method:hover{background:var(--card-grad-hi)}
   .box:focus-visible,.stack .seg:focus-visible{outline:2px solid var(--red);outline-offset:3px}
   .box.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.16), inset 0 1px 0 rgba(255,255,255,.05)}
@@ -69,20 +78,20 @@
   }
   .team-card.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.16), inset 0 1px 0 rgba(255,255,255,.05)}
   .team-header{
-    padding:11px 16px;text-align:center;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:12px 18px;text-align:center;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
     color:var(--red);border-bottom:1px solid var(--line);background:rgba(244,98,107,.07);line-height:1.35;
   }
   .stack{width:100%;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:hidden}
   .stack .seg{
-    display:block;width:100%;background:transparent;border:0;padding:12px 16px;text-align:left;
+    display:block;width:100%;background:transparent;border:0;padding:13px 18px;text-align:left;
     font-family:inherit;cursor:pointer;transition:.18s;
   }
   .stack .seg + .seg{border-top:1px dotted rgba(255,255,255,.15)}
   .stack .seg .t{font-size:12px;font-weight:600;line-height:1.42;color:var(--ink);display:block}
   .stack .seg.on{background:rgba(244,98,107,.09)}
   .signal{
-    width:100%;max-width:980px;background:var(--red-tint);border:1px solid var(--red-line);border-radius:var(--radius);
-    padding:16px 20px;font-size:13px;font-weight:600;line-height:1.45;color:var(--ink);text-align:center;
+    width:100%;max-width:1180px;background:var(--red-tint);border:1px solid var(--red-line);border-radius:var(--radius);
+    padding:18px 22px;font-size:13px;font-weight:600;line-height:1.45;color:var(--ink);text-align:center;
     box-shadow:0 10px 30px rgba(244,98,107,.12), inset 0 1px 0 rgba(255,255,255,.05);
   }
   .signal .lab{display:block;font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--red);margin-bottom:8px}
@@ -154,7 +163,8 @@
           </div>
         </div>
       </div>
-      <div class="signal" id="n-signal" aria-label="Señal clave">
+      <div class="signal" id="n-signal" data-node="signal" aria-label="Señal clave"
+        data-tip="Asentar esta práctica en Diseño tomará 3–6 meses: proceso nuevo (cliente + interno) y curva técnica + accesos que hoy el equipo no tiene.">
         <span class="lab">SEÑAL CLAVE</span>
         Asentar esta práctica en Diseño tomará 3–6 meses: proceso nuevo (cliente + interno) y curva técnica + accesos que hoy el equipo no tiene.
       </div>
@@ -173,9 +183,45 @@
   const tip = document.getElementById('tip');
   let current = null;
 
+  const snap = (n) => Math.round(n) + 0.5;
+
   const cx = (el) => el.getBoundingClientRect().left + el.getBoundingClientRect().width / 2;
   const top = (el) => el.getBoundingClientRect().top;
   const bottom = (el) => el.getBoundingClientRect().bottom;
+
+  /** Same vertical wire + arrowhead as slide 7 design-os diagram */
+  function wireDown(x, yFrom, yTo, linkId, forNodes){
+    const tip = yTo;
+    const bx = tip - 7;
+    const forAttr = forNodes.join(',');
+    return `<g data-link="${linkId}" data-for="${forAttr}">`
+      + `<path d="M ${x} ${yFrom} L ${x} ${bx}"/>`
+      + `<polygon points="${x},${tip} ${x-4.5},${bx} ${x+4.5},${bx}"/>`
+      + `</g>`;
+  }
+
+  function wireH(x1, x2, y, linkId, forNodes){
+    const forAttr = forNodes.join(',');
+    return `<g data-link="${linkId}" data-for="${forAttr}"><path d="M ${x1} ${y} L ${x2} ${y}"/></g>`;
+  }
+
+  function wirePath(d, linkId, forNodes){
+    const forAttr = forNodes.join(',');
+    return `<g data-link="${linkId}" data-for="${forAttr}"><path d="${d}"/></g>`;
+  }
+
+  const LINK_FOR = {
+    diag: ['stem-diag', 'bus-q', 'tap-hist', 'tap-ctrl'],
+    hist: ['tap-hist', 'stem-hist', 'bus-m'],
+    ctrl: ['tap-ctrl', 'stem-ctrl', 'bus-m'],
+    volaris: ['bus-m', 'drop-volaris', 'bus-t', 'stem-volaris'],
+    bain: ['bus-m', 'drop-bain', 'bus-t', 'stem-bain'],
+    knewton: ['bus-m', 'drop-knewton', 'bus-t', 'stem-knewton'],
+    team1: ['bus-t', 'drop-team', 'stem-signal'],
+    team2: ['bus-t', 'drop-team', 'stem-signal'],
+    team3: ['bus-t', 'drop-team', 'stem-signal'],
+    signal: ['stem-signal'],
+  };
 
   function drawLinks(){
     const base = canvas.getBoundingClientRect();
@@ -184,10 +230,6 @@
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const rel = (x,y) => ({ x: x - base.left, y: y - base.top });
 
-    const path = (d, key) => `<g data-link="${key}"><path d="${d}"/></g>`;
-    const arrowDown = (x, y, key) =>
-      `<g data-link="${key}"><polygon points="${x},${y} ${x-4.5},${y-7} ${x+4.5},${y-7}"/></g>`;
-
     const diag = document.getElementById('n-diag');
     const hist = document.getElementById('n-hist');
     const ctrl = document.getElementById('n-ctrl');
@@ -195,50 +237,56 @@
     const teamCard = document.getElementById('n-team-card');
     const signal = document.getElementById('n-signal');
 
-    const dB = rel(cx(diag), bottom(diag) + 2);
-    const hT = rel(cx(hist), top(hist) - 2);
-    const cT = rel(cx(ctrl), top(ctrl) - 2);
-    const hubY = rel(cx(diag), (bottom(diag) + top(hist)) / 2).y;
+    const dX = snap(rel(cx(diag), 0).x);
+    const dB = rel(cx(diag), bottom(diag) + 4).y;
+    const hX = snap(rel(cx(hist), 0).x);
+    const cX = snap(rel(cx(ctrl), 0).x);
+    const hT = rel(cx(hist), top(hist) - 4).y;
+    const cT = rel(cx(ctrl), top(ctrl) - 4).y;
+    const hB = rel(cx(hist), bottom(hist) + 4).y;
+    const cB = rel(cx(ctrl), bottom(ctrl) + 4).y;
 
-    let out = path(`M ${dB.x} ${dB.y} L ${dB.x} ${hubY}`, 'diag');
-    out += path(`M ${Math.min(dB.x, hT.x)} ${hubY} L ${Math.max(dB.x, cT.x)} ${hubY}`, 'hub-dec');
-    out += path(`M ${hT.x} ${hubY} L ${hT.x} ${hT.y}`, 'hist');
-    out += arrowDown(hT.x, hT.y, 'hist');
-    out += path(`M ${cT.x} ${hubY} L ${cT.x} ${cT.y}`, 'ctrl');
-    out += arrowDown(cT.x, cT.y, 'ctrl');
+    const busQ = snap((dB + hT) / 2);
+    const mx = methods.map((m) => snap(rel(cx(m), 0).x));
+    const mT = methods.map((m) => rel(cx(m), top(m) - 4).y);
+    const mB = methods.map((m) => rel(cx(m), bottom(m) + 4).y);
+    const busM = snap((Math.max(hB, cB) + mT[1]) / 2);
 
-    const decBottom = Math.max(bottom(hist), bottom(ctrl));
-    const methodTops = methods.map((m) => top(m) - 2);
-    const busAboveMethods = rel(cx(methods[1]), (decBottom + methodTops[1]) / 2).y;
+    const teamX = snap(rel(cx(teamCard), 0).x);
+    const teamT = rel(cx(teamCard), top(teamCard) - 4).y;
+    const teamB = rel(cx(teamCard), bottom(teamCard) + 4).y;
+    const busT = snap((Math.max(...mB) + teamT) / 2);
 
-    [hist, ctrl].forEach((node, i) => {
-      const b = rel(cx(node), bottom(node) + 2);
-      out += path(`M ${b.x} ${b.y} L ${b.x} ${busAboveMethods}`, i ? 'ctrl-bus' : 'hist-bus');
-    });
-    const mx = methods.map((m) => rel(cx(m), 0).x);
-    out += path(`M ${Math.min(...mx)} ${busAboveMethods} L ${Math.max(...mx)} ${busAboveMethods}`, 'methods-bus');
+    const sigX = snap(rel(cx(signal), 0).x);
+    const sigT = rel(cx(signal), top(signal) - 4).y;
+
+    const qLeft = Math.min(hX, cX, dX);
+    const qRight = Math.max(hX, cX, dX);
+    const mLeft = Math.min(...mx);
+    const mRight = Math.max(...mx);
+
+    let out = '';
+    out += wirePath(`M ${dX} ${dB} L ${dX} ${busQ}`, 'stem-diag', ['diag', 'bus-q', 'tap-hist', 'tap-ctrl']);
+    out += wireH(qLeft, qRight, busQ, 'bus-q', ['diag', 'hist', 'ctrl', 'tap-hist', 'tap-ctrl']);
+    out += wireDown(hX, busQ, hT, 'tap-hist', ['diag', 'hist', 'tap-hist']);
+    out += wireDown(cX, busQ, cT, 'tap-ctrl', ['diag', 'ctrl', 'tap-ctrl']);
+
+    out += wirePath(`M ${hX} ${hB} L ${hX} ${busM}`, 'stem-hist', ['hist', 'bus-m']);
+    out += wirePath(`M ${cX} ${cB} L ${cX} ${busM}`, 'stem-ctrl', ['ctrl', 'bus-m']);
+    out += wireH(mLeft, mRight, busM, 'bus-m', ['hist', 'ctrl', 'volaris', 'bain', 'knewton']);
     methods.forEach((m, i) => {
-      const t = rel(cx(m), top(m) - 2);
-      out += path(`M ${t.x} ${busAboveMethods} L ${t.x} ${t.y}`, m.id);
-      out += arrowDown(t.x, t.y, m.id);
+      const id = m.id.replace('n-', '');
+      out += wireDown(mx[i], busM, mT[i], `drop-${id}`, ['hist', 'ctrl', id, 'bus-m']);
     });
 
-    const methodBottoms = methods.map((m) => bottom(m) + 2);
-    const teamTop = rel(cx(teamCard), top(teamCard) - 2);
-    const busAboveTeam = rel(cx(teamCard), (Math.max(...methodBottoms) + teamTop.y) / 2).y;
-
-    methods.forEach((m) => {
-      const b = rel(cx(m), bottom(m) + 2);
-      out += path(`M ${b.x} ${b.y} L ${b.x} ${busAboveTeam}`, `${m.id}-out`);
+    methods.forEach((m, i) => {
+      const id = m.id.replace('n-', '');
+      out += wirePath(`M ${mx[i]} ${mB[i]} L ${mx[i]} ${busT}`, `stem-${id}`, [id, 'bus-t']);
     });
-    out += path(`M ${Math.min(...mx)} ${busAboveTeam} L ${Math.max(...mx)} ${busAboveTeam}`, 'team-bus');
-    out += path(`M ${teamTop.x} ${busAboveTeam} L ${teamTop.x} ${teamTop.y}`, 'team');
-    out += arrowDown(teamTop.x, teamTop.y, 'team');
+    out += wireH(mLeft, mRight, busT, 'bus-t', ['volaris', 'bain', 'knewton', 'team1', 'team2', 'team3']);
+    out += wireDown(teamX, busT, teamT, 'drop-team', ['volaris', 'bain', 'knewton', 'team1', 'team2', 'team3', 'bus-t']);
 
-    const teamB = rel(cx(teamCard), bottom(teamCard) + 2);
-    const sigT = rel(cx(signal), top(signal) - 2);
-    out += path(`M ${teamB.x} ${teamB.y} L ${sigT.x} ${sigT.y}`, 'signal');
-    out += arrowDown(sigT.x, sigT.y, 'signal');
+    out += wireDown(teamX, teamB, sigT, 'stem-signal', ['team1', 'team2', 'team3', 'signal']);
 
     svg.innerHTML = out;
   }
@@ -253,14 +301,15 @@
 
   function highlight(el, on){
     const key = el.dataset.node;
-    if (el.classList.contains('seg')) el.closest('.stack').classList.toggle('on', on);
+    if (el.classList.contains('seg')) el.classList.toggle('on', on);
     else el.classList.toggle('on', on);
     if (el.closest('.team-card') && on) document.getElementById('n-team-card').classList.add('on');
     else if (!on && !document.querySelector('.seg.on')) document.getElementById('n-team-card').classList.remove('on');
-    const ids = [el.id, key, `${el.id}-out`];
-    ids.forEach((id) => {
-      if (!id) return;
-      svg.querySelectorAll(`g[data-link="${id}"]`).forEach((g) => g.classList.toggle('on', on));
+    canvas.classList.toggle('dimmed', on);
+    const links = key && LINK_FOR[key] ? LINK_FOR[key] : [];
+    svg.querySelectorAll('g[data-link]').forEach((g) => {
+      const id = g.getAttribute('data-link');
+      g.classList.toggle('on', on && links.includes(id));
     });
   }
 
@@ -296,6 +345,7 @@
     current = null;
     tip.classList.remove('show');
     tip.setAttribute('aria-hidden','true');
+    canvas.classList.remove('dimmed');
   }
 
   document.querySelectorAll('[data-tip]').forEach(el=>{

@@ -48,7 +48,7 @@
 .bridge-volaris-slide .problema-card p{flex:1}
 
 .decision-slide .decision-header h2{
-  max-width:22ch;font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.12;
+  max-width:none;font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.12;white-space:nowrap;
 }
 .decision-slide .decision-sub{
   margin-top:10px;font-size:clamp(.875rem,1.35vw,1rem);line-height:1.45;
@@ -59,6 +59,9 @@
   .decision-slide .decision-header{padding-bottom:6px}
   .decision-slide .decision-header h2{font-size:clamp(1.05rem,2vw,1.35rem)}
   .decision-slide .decision-sub{font-size:.8125rem;margin-top:6px;line-height:1.35}
+}
+@media (max-width:900px){
+  .decision-slide .decision-header h2{white-space:normal}
 }
 
 .matrix-slide .slide-head .lead{max-width:78ch}
