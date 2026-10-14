@@ -43,6 +43,9 @@
 .deuda-cards .problema-card p{font-size:1rem;line-height:1.45;flex:1}
 
 .bridge-volaris-slide .problema-stack{justify-content:center}
+.bridge-volaris-slide .problema-cards{align-items:stretch}
+.bridge-volaris-slide .problema-card{align-self:stretch;height:100%;min-height:0}
+.bridge-volaris-slide .problema-card p{flex:1}
 
 .matrix-slide .slide-head .lead{max-width:78ch}
 .matrix-stack{
