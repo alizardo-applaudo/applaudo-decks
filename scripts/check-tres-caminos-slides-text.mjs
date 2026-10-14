@@ -230,9 +230,8 @@ async function checkDecisionDiagram(page, slideIndex, label) {
     const canvasRect = canvas.getBoundingClientRect();
     const nodeEls = [
       ...doc.querySelectorAll('.box'),
-      doc.getElementById('n-team'),
+      doc.getElementById('n-team-card'),
       doc.getElementById('n-signal'),
-      doc.querySelector('.team-label'),
     ].filter(Boolean);
 
     const rects = nodeEls.map((el) => ({
@@ -256,6 +255,66 @@ async function checkDecisionDiagram(page, slideIndex, label) {
       for (let j = i + 1; j < rects.length; j++) {
         if (overlaps(rects[i].rect, rects[j].rect, gap)) {
           out.push({ slide: 11, reason: 'node-overlap', a: rects[i].id, b: rects[j].id });
+        }
+      }
+    }
+
+    const textRects = [...doc.querySelectorAll('.method-cap, .team-header, .stack .seg .t, .signal')].map(
+      (el) => el.getBoundingClientRect(),
+    );
+
+    function pointInRect(x, y, r, inset = 3) {
+      return (
+        x >= r.left + inset &&
+        x <= r.right - inset &&
+        y >= r.top + inset &&
+        y <= r.bottom - inset
+      );
+    }
+
+    function sampleSegHitsRect(x1, y1, x2, y2, r, trim = 14) {
+      const len = Math.hypot(x2 - x1, y2 - y1);
+      if (len <= trim * 2) return false;
+      const steps = 28;
+      for (let i = 1; i < steps; i++) {
+        const t = i / steps;
+        const dist = len * t;
+        if (dist < trim || dist > len - trim) continue;
+        const x = x1 + (x2 - x1) * t;
+        const y = y1 + (y2 - y1) * t;
+        if (pointInRect(x, y, r)) return true;
+      }
+      return false;
+    }
+
+    function parsePathSegments(d) {
+      const segs = [];
+      const tokens = d.trim().split(/(?=[ML])/);
+      let cx = 0;
+      let cy = 0;
+      for (const tok of tokens) {
+        const nums = tok.slice(1).trim().split(/[\s,]+/).map(Number).filter((n) => !Number.isNaN(n));
+        if (tok[0] === 'M' && nums.length >= 2) {
+          cx = nums[0];
+          cy = nums[1];
+        } else if (tok[0] === 'L' && nums.length >= 2) {
+          segs.push({ x1: cx, y1: cy, x2: nums[0], y2: nums[1] });
+          cx = nums[0];
+          cy = nums[1];
+        }
+      }
+      return segs;
+    }
+
+    for (const pathEl of doc.querySelectorAll('#links path')) {
+      const d = pathEl.getAttribute('d');
+      if (!d) continue;
+      for (const seg of parsePathSegments(d)) {
+        for (const tr of textRects) {
+          if (sampleSegHitsRect(seg.x1, seg.y1, seg.x2, seg.y2, tr)) {
+            out.push({ slide: 11, reason: 'wire-crosses-text', d: d.slice(0, 40) });
+            break;
+          }
         }
       }
     }
