@@ -38,34 +38,54 @@
 
 .bridge-volaris-slide .problema-stack{justify-content:center}
 
-.matrix-stack{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.matrix-slide .slide-head .lead{max-width:78ch}
+.matrix-stack{
+  flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:12px;
+  overflow:visible;
+}
 .matrix-board{
-  position:relative;width:100%;flex:1;min-height:280px;max-height:min(52vh,480px);
+  position:relative;width:100%;flex:1;
+  min-height:min(420px,52vh);height:min(58vh,560px);
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:clamp(16px,2.4vh,28px) clamp(20px,2.8vw,32px);
+  padding:clamp(28px,4vh,40px) clamp(24px,2.5vw,32px) clamp(36px,4.5vh,44px) clamp(44px,3.5vw,52px);
   border:1px solid var(--line);border-radius:var(--radius-item);background:#fff;
-  box-shadow:0 6px 18px rgba(18,18,18,.03);
+  box-shadow:0 6px 18px rgba(18,18,18,.03);overflow:visible;box-sizing:border-box;
 }
 .matrix-board::before{
-  content:'';position:absolute;left:12%;right:8%;top:50%;height:1px;background:var(--line-strong);
+  content:'';position:absolute;left:clamp(44px,3.5vw,52px);right:clamp(24px,2.5vw,32px);
+  top:50%;height:1px;background:var(--line-strong);pointer-events:none;
 }
 .matrix-board::after{
-  content:'';position:absolute;top:10%;bottom:14%;left:50%;width:1px;background:var(--line-strong);
+  content:'';position:absolute;top:clamp(28px,4vh,40px);bottom:clamp(36px,4.5vh,44px);
+  left:50%;width:1px;background:var(--line-strong);pointer-events:none;
 }
 .matrix-axis{
-  position:absolute;font-size:.75rem;font-weight:600;color:var(--gray);letter-spacing:.02em;
+  position:absolute;font-size:.8125rem;font-weight:600;color:var(--gray);letter-spacing:.02em;
+  pointer-events:none;z-index:1;
 }
-.matrix-axis.axis-x{bottom:10px;left:12%;right:8%;text-align:center}
-.matrix-axis.axis-y{top:50%;left:8px;transform:rotate(-90deg) translateX(-50%);transform-origin:left center;white-space:nowrap}
+.matrix-axis.axis-x{
+  bottom:clamp(10px,1.5vh,14px);left:clamp(44px,3.5vw,52px);right:clamp(24px,2.5vw,32px);
+  text-align:center;
+}
+.matrix-axis.axis-y{
+  left:clamp(6px,0.6vw,10px);top:clamp(28px,4vh,40px);bottom:clamp(36px,4.5vh,44px);
+  width:clamp(28px,2.2vw,36px);
+  writing-mode:vertical-lr;transform:rotate(180deg);
+  display:flex;align-items:center;justify-content:center;line-height:1.35;
+  white-space:normal;text-align:center;
+}
 .matrix-case{
-  position:absolute;width:min(30%,320px);padding:16px 18px;
+  position:relative;width:100%;max-width:none;padding:18px 20px;box-sizing:border-box;
   background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);
-  box-shadow:0 8px 24px rgba(18,18,18,.06);
+  box-shadow:0 8px 24px rgba(18,18,18,.06);overflow:visible;
 }
-.matrix-case h4{font-size:1rem;margin:0 0 8px;color:var(--ink)}
-.matrix-case p{font-size:.875rem;line-height:1.45;color:var(--gray);margin:0;max-width:none}
+.matrix-case h4{font-size:1.0625rem;margin:0 0 8px;color:var(--ink);line-height:1.25}
+.matrix-case p{font-size:.9375rem;line-height:1.45;color:var(--gray);margin:0;max-width:none}
 .matrix-case .case-tag{font-size:.6875rem;font-weight:700;color:var(--red-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
-.matrix-case.case-volaris{top:8%;left:6%;border-color:rgba(255,64,64,.35)}
-.matrix-case.case-bain{top:14%;right:6%}
-.matrix-case.case-knewton{bottom:10%;right:6%;border-color:rgba(26,107,66,.35)}
+.matrix-case.case-volaris{grid-column:1;grid-row:1;align-self:start;justify-self:stretch;border-color:rgba(255,64,64,.35)}
+.matrix-case.case-bain{grid-column:2;grid-row:1;align-self:start;justify-self:stretch}
+.matrix-case.case-knewton{grid-column:2;grid-row:2;align-self:end;justify-self:stretch;border-color:rgba(26,107,66,.35)}
 
 .curva-stack{
   flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:20px;width:100%;
@@ -99,8 +119,11 @@
   .deuda-cards .problema-card h4{font-size:1rem}
   .deuda-cards .problema-card p{font-size:.875rem}
   .deuda-cards{gap:12px}
-  .matrix-case{width:min(32%,300px);padding:12px 14px}
-  .matrix-case p{font-size:.8125rem}
+  .matrix-board{min-height:min(340px,48vh);height:min(52vh,480px);gap:14px 18px;padding:24px 20px 32px 40px}
+  .matrix-case{padding:14px 16px}
+  .matrix-case h4{font-size:.9375rem}
+  .matrix-case p{font-size:.8125rem;line-height:1.4}
+  .matrix-axis.axis-y{font-size:.75rem}
   .curva-col{padding:16px 18px}
   .curva-col li{font-size:.875rem}
   .curva-columns{gap:14px}
