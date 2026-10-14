@@ -271,6 +271,49 @@ async function checkContentSlideTitleTypography(page, label) {
   return pass;
 }
 
+async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 11) {
+  const mobileLabels = new Set(['390x844', '360x780']);
+  if (!mobileLabels.has(label)) return true;
+
+  const failures = await page.evaluate(
+    ({ slideNum, frameId, minPx }) => {
+      const fr = document.getElementById(frameId);
+      const doc = fr?.contentDocument;
+      if (!doc) return [{ slide: slideNum, reason: 'iframe-missing', frameId }];
+
+      const selectors =
+        frameId === 'dosFrame'
+          ? '.box,.stack .seg .t,.stack .seg .s,.cap,.footnote,.frame-label,.osbar,.skills .box,.feeds'
+          : '.box,.method-cap,.team-header,.stack .seg .t,.signal';
+
+      const out = [];
+      doc.querySelectorAll(selectors).forEach((el) => {
+        const text = (el.textContent || '').trim();
+        if (!text) return;
+        const fs = parseFloat(getComputedStyle(el).fontSize);
+        if (!Number.isFinite(fs) || fs + 0.05 < minPx) {
+          out.push({
+            slide: slideNum,
+            reason: 'diagram-font-too-small',
+            fontSize: fs,
+            minPx,
+            text: text.slice(0, 48),
+          });
+        }
+      });
+      return out;
+    },
+    { slideNum, frameId, minPx },
+  );
+
+  const pass = failures.length === 0;
+  console.log(`  slide ${slideNum} diagram min font @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
+  if (!pass) {
+    for (const f of failures.slice(0, 8)) console.log('   ', JSON.stringify(f));
+  }
+  return pass;
+}
+
 async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
   const failures = await page.evaluate(
     ({ slideNum, frameId, hostId, navClearance }) => {
@@ -299,6 +342,13 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
         out.push({ slide: slideNum, reason: 'iframe-body-scrollbar' });
       }
 
+      const slide = document.querySelector('.dos-slide.active');
+      const mobileStack = slide?.classList.contains('dos-mobile-stack');
+      const slideScrollable =
+        mobileStack ||
+        (slide &&
+          (getComputedStyle(slide).overflowY === 'auto' || getComputedStyle(slide).overflowY === 'scroll'));
+
       const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
       const hostRect = document.getElementById(hostId)?.getBoundingClientRect();
       const header = document.querySelector('.dos-slide.active .dos-header');
@@ -310,7 +360,39 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
           navTop: Math.round(navTop),
         });
       }
-      if (hostRect && navTop != null && hostRect.bottom > navTop - navClearance) {
+
+      const useMaxScrollNavCheck =
+        mobileStack || window.innerWidth <= 640 || window.matchMedia('(max-width:600px)').matches;
+
+      function visibleTailBottom(el) {
+        if (!el) return null;
+        const rect = el.getBoundingClientRect();
+        const afterStyle = getComputedStyle(el, '::after');
+        const afterH = parseFloat(afterStyle.height) || 0;
+        if (afterH > 0 && afterStyle.content && afterStyle.content !== 'none') {
+          return rect.bottom - afterH;
+        }
+        return rect.bottom;
+      }
+
+      if (useMaxScrollNavCheck && slideScrollable && slide && navTop != null) {
+        const prevScroll = slide.scrollTop;
+        slide.scrollTop = Math.max(0, slide.scrollHeight - slide.clientHeight);
+        const tail =
+          slide.querySelector('.dos-credit') ||
+          slide.querySelector('.dos-stage') ||
+          document.getElementById(hostId);
+        const tailBottom = visibleTailBottom(tail);
+        if (tailBottom != null && tailBottom > navTop - navClearance) {
+          out.push({
+            slide: slideNum,
+            reason: 'diagram-tail-under-nav-at-max-scroll',
+            bottom: Math.round(tailBottom),
+            navTop: Math.round(navTop),
+          });
+        }
+        slide.scrollTop = prevScroll;
+      } else if (hostRect && navTop != null && hostRect.bottom > navTop - navClearance) {
         out.push({
           slide: slideNum,
           reason: 'diagram-host-over-nav',
@@ -318,9 +400,10 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
           navTop: Math.round(navTop),
         });
       }
+
       const stage = document.querySelector('.dos-slide.active .dos-stage');
       const stageRect = stage?.getBoundingClientRect();
-      if (stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
+      if (!slideScrollable && stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
         out.push({ slide: slideNum, reason: 'diagram-host-clipped-by-stage' });
       }
       return out;
@@ -503,6 +586,7 @@ const sizes = [
   { label: '1024x500', width: 1024, height: 500 },
   { label: '1536x730', width: 1536, height: 730 },
   { label: '390x844', width: 390, height: 844 },
+  { label: '360x780', width: 360, height: 780 },
 ];
 
 const server = await staticServer();
@@ -531,12 +615,16 @@ for (const { label, width, height } of sizes) {
     if (i === PROCESS_SLIDE_INDEX) {
       const dosPass = await checkEmbeddedIframe(page, 7, 'dosFrame', 'dosScaleHost', label);
       if (!dosPass) allPass = false;
+      const dosFontPass = await checkDiagramMinFont(page, 7, 'dosFrame', label);
+      if (!dosFontPass) allPass = false;
     }
     if (i === DECISION_SLIDE_INDEX) {
       const decisionPass = await checkDecisionDiagram(page, i, label);
       if (!decisionPass) allPass = false;
       const embedPass = await checkEmbeddedIframe(page, 11, 'decisionFrame', 'decisionScaleHost', label);
       if (!embedPass) allPass = false;
+      const decisionFontPass = await checkDiagramMinFont(page, 11, 'decisionFrame', label);
+      if (!decisionFontPass) allPass = false;
     }
   }
   const titlesPass = await checkContentSlideTitleTypography(page, label);

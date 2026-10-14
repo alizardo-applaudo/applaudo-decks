@@ -61,6 +61,14 @@
       });
     }
 
+    function isNarrowDiagramViewport(stage) {
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+      var stageW = stage ? stage.clientWidth : vw;
+      if (vw <= 600 || stageW <= 600) return true;
+      return vh > vw && vw <= 700;
+    }
+
     function fitDosDiagram() {
       var fr = document.getElementById('dosFrame');
       var wrap = document.getElementById('dosScaleWrap');
@@ -76,7 +84,19 @@
         var marginX = 24;
         var marginY = 4;
         var navClear = 24;
-        fr.style.width = '1500px';
+        var stageStyle = window.getComputedStyle(stage);
+        var padT = parseFloat(stageStyle.paddingTop) || 0;
+        var padB = parseFloat(stageStyle.paddingBottom) || 0;
+        var padL = parseFloat(stageStyle.paddingLeft) || 0;
+        var padR = parseFloat(stageStyle.paddingRight) || 0;
+        var availW = stage.clientWidth - padL - padR - marginX * 2;
+        var narrow = isNarrowDiagramViewport(stage);
+        if (doc.documentElement) {
+          doc.documentElement.classList.toggle('is-mobile-narrow', narrow);
+        }
+        fr.style.width = narrow
+          ? Math.max(320, Math.floor(availW)) + 'px'
+          : '1500px';
         fr.style.overflow = 'hidden';
         if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
         win.dispatchEvent(new Event('resize'));
@@ -84,8 +104,9 @@
         var contentW = 1360;
         var contentH = 520;
         if (canvas) {
-          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360) + 48;
-          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + 12;
+          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, narrow ? 0 : 1360);
+          if (!narrow) contentW += 48;
+          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + (narrow ? 4 : 12);
           var foot = doc.querySelector('.footnote');
           if (foot) contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 8);
         } else {
@@ -96,39 +117,43 @@
         fr.style.width = contentW + 'px';
         fr.style.height = contentH + 'px';
         if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
+        contentH = Math.max(
+          contentH,
+          doc.documentElement.scrollHeight,
+          doc.body ? doc.body.scrollHeight : 0,
+        );
+        contentH = Math.ceil(contentH);
+        if (narrow) contentH += 2;
+        fr.style.height = contentH + 'px';
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
-        var stageStyle = window.getComputedStyle(stage);
-        var padT = parseFloat(stageStyle.paddingTop) || 0;
-        var padB = parseFloat(stageStyle.paddingBottom) || 0;
-        var padL = parseFloat(stageStyle.paddingLeft) || 0;
-        var padR = parseFloat(stageStyle.paddingRight) || 0;
         var creditEl = slide.querySelector('.dos-credit');
         var creditBand = creditEl ? creditEl.offsetHeight + 8 : 0;
-        var availW = stage.clientWidth - padL - padR - marginX * 2;
         var availH = stage.clientHeight - padT - padB - marginY - creditBand;
-        var scale = Math.min(availW / contentW, availH / contentH);
+        var scale = narrow ? 1 : Math.min(availW / contentW, availH / contentH);
         var navEl = document.querySelector('.nav');
-        if (navEl) {
+        if (!narrow && navEl) {
           var navTop = navEl.getBoundingClientRect().top;
           var stageRect = stage.getBoundingClientRect();
           var maxHostH = navTop - navClear - stageRect.top - padT - marginY;
           if (maxHostH > 24 && contentH > 0) scale = Math.min(scale, maxHostH / contentH);
         }
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
+        if (narrow) scale = Math.min(scale, 1);
         var scaledH = Math.ceil(contentH * scale);
         wrap.style.transformOrigin = 'top center';
-        wrap.style.transform = 'scale(' + scale + ')';
+        wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
         host.style.display = 'flex';
         host.style.justifyContent = 'center';
         host.style.alignItems = 'flex-start';
-        host.style.overflow = 'hidden';
+        host.style.overflow = narrow ? 'visible' : 'hidden';
         host.style.width = '100%';
         host.style.maxWidth = Math.max(0, stage.clientWidth - padL - padR) + 'px';
         host.style.height = scaledH + 'px';
-        host.style.flex = '1 1 auto';
-        host.style.minHeight = '0';
+        host.style.flex = narrow ? '0 0 auto' : '1 1 auto';
+        host.style.minHeight = narrow ? '0' : '0';
         host.style.margin = '0 auto';
+        slide.classList.toggle('dos-mobile-stack', narrow);
       } catch (e) {}
     }
 

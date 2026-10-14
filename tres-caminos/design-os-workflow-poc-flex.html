@@ -208,39 +208,48 @@
   .tip[data-side="bottom"]::after{bottom:100%;border-bottom-color:#302F2C}
   @media (prefers-reduced-motion:reduce){ .tip{transition:none} }
 
-  /* ---------- mobile: real vertical reflow ---------- */
-  @media (max-width:899px){
+  /* ---------- mobile / narrow: vertical reflow (≤600px or portrait ≤700px) ---------- */
+  @media (max-width:600px),(orientation:portrait) and (max-width:700px){
     body{padding:26px 0 48px}
     .scroller{overflow:visible}
-    .canvas{min-width:0}
+    .canvas{min-width:0;width:100%}
     svg#links{display:none}
 
-    .flow{flex-direction:column;align-items:stretch;padding:8px 0 0;gap:0}
-    .frame{flex:none;flex-direction:column;align-items:stretch;padding:30px 16px 22px;margin:0}
-    .frame.fluency{flex:none;background:none}
+    .flow{flex-direction:column;align-items:stretch;padding:8px 0 0;gap:0;width:100%}
+    .frame{flex:none;flex-direction:column;align-items:stretch;padding:22px 14px 18px;margin:0;width:100%}
+    .frame.fluency{flex:none;background:none;flex-direction:column;gap:0}
     .frame.fluency::before{border-color:var(--red-line);background:var(--red-tint)}
-    .frame.translation{flex:none;margin:0;padding:30px 16px 22px}
+    .frame.fluency > .arrow{display:flex!important}
+    .frame.translation{flex:none;margin:0;padding:22px 14px 18px;flex-direction:column;gap:0}
+    .frame.translation > .arrow{display:flex!important}
     .frame.leverage{flex:none}
-    .nodewrap{flex:none !important}
-    .cap{position:static;display:block;margin-top:8px;text-align:center}
-    .box{padding:16px 14px}
+    .nodewrap{flex:none !important;width:100%}
+    .cap{position:static;display:block;margin-top:8px;text-align:center;font-size:11px;line-height:1.35}
+    .cap[data-for="engineering"]{left:auto;right:auto;font-size:11px}
+    .box{padding:16px 14px;font-size:14px;line-height:1.3}
+    .stack .seg{padding:14px 12px}
+    .stack .seg .t{font-size:13px;line-height:1.35}
+    .stack .seg .s{font-size:11px;line-height:1.35;margin-top:6px}
+    .frame-label{font-size:11px;letter-spacing:.12em}
 
-    .arrow{flex-direction:column;width:12px;height:26px;margin:10px auto}
+    .arrow{flex-direction:column;width:12px;height:26px;margin:10px auto;flex:none}
     .arrow i{width:1.4px;height:auto;flex:1}
     .arrow b{border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-top:7px solid var(--wire);border-bottom:0}
     .arrow.up{transform:rotate(180deg)}
 
-    .integrity{margin-top:10px;padding:30px 16px 22px}
-    .skills{flex-direction:column;gap:14px;margin-top:0}
-    .feeds{margin-top:14px;font-size:11px;color:var(--cap);text-align:center;line-height:1.5}
+    .integrity{margin-top:10px;padding:22px 14px 18px;width:100%}
+    .osbar{font-size:14px;padding:16px 12px}
+    .skills{flex-direction:column;gap:12px;margin-top:12px}
+    .skills .box{font-size:13px;padding:14px 12px}
+    .feeds{display:block;margin-top:12px;font-size:11px;color:var(--cap);text-align:center;line-height:1.5}
+    .footnote{font-size:11px;line-height:1.45;padding:14px 10px 8px;text-align:center;color:var(--ink)}
     .detail{flex-direction:column;gap:12px}
     .facet{flex-direction:column;gap:3px}
     .facet dt{flex:none}
   }
-  @media (min-width:900px){
+  @media (min-width:901px){
     .feeds{display:none}
     .arrow.mobile-only{display:none}
-    /* en desktop la etiqueta FLUENCY la pone el marco rojo superpuesto */
     .frame.fluency > .frame-label{display:none}
   }
 </style>
@@ -256,6 +265,14 @@
   }
   html.is-embed .scroller{overflow:visible;padding-bottom:0}
   html.is-embed .page{background:transparent}
+  html.is-embed.is-mobile-narrow{overflow:hidden}
+  html.is-embed.is-mobile-narrow body{
+    display:block;min-height:0;padding:8px 10px 16px;align-items:stretch;justify-content:flex-start;overflow:hidden;
+  }
+  html.is-embed.is-mobile-narrow .page{width:100%;max-width:100%}
+  html.is-embed.is-mobile-narrow .canvas{min-width:0!important;width:100%}
+  html.is-embed.is-mobile-narrow .flow{padding-top:0}
+  html.is-embed.is-mobile-narrow #fluencyFrame{display:none!important}
 </style></head>
 <body>
 <div class="page">
@@ -362,7 +379,10 @@
   const canvas   = document.getElementById('canvas');
   const svg      = document.getElementById('links');
   const fluencyG = document.getElementById('f-fluency');
-  const isWide   = () => window.matchMedia('(min-width:900px)').matches;
+  const isWide   = () => {
+    if (document.documentElement.classList.contains('is-mobile-narrow')) return false;
+    return window.matchMedia('(min-width:901px)').matches;
+  };
 
   /* ---------- overlay rojo: FLUENCY abarca hasta el handoff card ---------- */
   let overlay = document.createElement('div');
