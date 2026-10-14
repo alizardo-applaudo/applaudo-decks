@@ -1,5 +1,15 @@
 /* Tres caminos deck — slides not in shared assets */
 
+/* Unified main titles (slides 2–4 reference); excludes cover (1) and cierre (12) */
+#deck > .slide:not(:first-child):not(.cierre-slide) .slide-head h2.hl,
+#deck > .slide.dos-slide .dos-header h2{
+  font-size:clamp(2.4rem,5.6vw,4.6rem);
+  letter-spacing:-.015em;
+  line-height:1.02;
+  font-weight:600;
+  margin:0;
+}
+
 .deuda-slide .inner-viewport,
 .matrix-slide .inner-viewport,
 .curva-slide .inner-viewport{
@@ -9,11 +19,6 @@
 .deuda-slide .slide-head .eyebrow,
 .matrix-slide .slide-head .eyebrow,
 .curva-slide .slide-head .eyebrow{margin-bottom:18px;font-size:.9rem}
-.deuda-slide .slide-head h2.hl,
-.matrix-slide .slide-head h2.hl,
-.curva-slide .slide-head h2.hl{
-  font-size:clamp(2.4rem,5.6vw,4.6rem);letter-spacing:-.015em;line-height:1.02;margin:0;
-}
 .deuda-slide .slide-head .lead,
 .matrix-slide .slide-head .lead,
 .curva-slide .slide-head .lead{
@@ -50,9 +55,7 @@
 .decision-slide .dos-header.decision-header{
   padding-top:46px;padding-bottom:2px;
 }
-.decision-slide .decision-header h2{
-  max-width:none;font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.12;white-space:nowrap;
-}
+.decision-slide .decision-header h2{max-width:none;white-space:nowrap}
 .decision-slide .decision-sub{
   margin-top:6px;font-size:clamp(.875rem,1.35vw,1rem);line-height:1.4;
   color:rgba(255,255,255,.78);max-width:52ch;font-weight:500;
@@ -60,14 +63,29 @@
 .decision-slide .dos-stage{padding-top:0;padding-bottom:calc(var(--nav-safe) + 24px)}
 @media (max-height:760px){
   .decision-slide .decision-header{padding-bottom:6px}
-  .decision-slide .decision-header h2{font-size:clamp(1.05rem,2vw,1.35rem)}
   .decision-slide .decision-sub{font-size:.8125rem;margin-top:6px;line-height:1.35}
+  #deck > .slide:not(:first-child):not(.cierre-slide) .slide-head h2.hl,
+  #deck > .slide.dos-slide .dos-header h2{
+    font-size:clamp(1.85rem,3.6vw,2.85rem);
+  }
 }
 @media (max-width:900px){
   .decision-slide .decision-header h2{white-space:normal}
 }
 
 .matrix-slide .slide-head .lead{max-width:78ch}
+
+.metrics-slide .metrics-title-one-line{white-space:normal;max-width:100%}
+.slide-probamos .slide-head .eyebrow{margin-bottom:8px}
+@media (max-height:760px){
+  .slide-probamos .inner-viewport{padding-top:38px}
+  .slide-probamos .probamos-stack{margin-top:10px}
+  .slide-probamos .probamos-stack > .probamos-tbl{margin-top:14px}
+  .slide-probamos .probamos-stack > .hero-band{margin-top:10px;padding:12px 18px}
+  .slide-probamos .probamos-stack > .probamos-sello-banner{margin-top:10px;padding:8px 14px}
+  .deliverable-volaris-slide .inner-spacious{padding-top:40px}
+  .deliverable-volaris-slide .deliverable-volaris-head .lead{margin-top:8px}
+}
 .matrix-stack{
   flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:12px;
   overflow:visible;
@@ -158,9 +176,6 @@
 }
 
 @media (max-height:760px){
-  .deuda-slide .slide-head h2.hl,.matrix-slide .slide-head h2.hl,.curva-slide .slide-head h2.hl{
-    font-size:clamp(1.85rem,3.6vw,2.85rem);
-  }
   .deuda-cards .problema-card h4{font-size:1rem}
   .deuda-cards .problema-card p{font-size:.875rem}
   .deuda-cards{gap:12px}

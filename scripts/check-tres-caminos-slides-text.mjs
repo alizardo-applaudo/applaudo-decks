@@ -206,6 +206,62 @@ async function checkMatrixCards(page, slideIndex, label) {
   return pass;
 }
 
+async function checkContentSlideTitleTypography(page, label) {
+  const failures = await page.evaluate(() => {
+    const slides = [...document.querySelectorAll('#deck > .slide')];
+    function mainTitle(slide) {
+      return slide.querySelector('.slide-head h2.hl') || slide.querySelector('.dos-header h2');
+    }
+    const rows = [];
+    for (let i = 0; i < slides.length; i++) {
+      const slide = slides[i];
+      if (i === 0 || slide.classList.contains('cierre-slide')) continue;
+      const h = mainTitle(slide);
+      if (!h) {
+        rows.push({ slide: i + 1, reason: 'content-title-missing' });
+        continue;
+      }
+      const cs = getComputedStyle(h);
+      rows.push({
+        slide: i + 1,
+        fontSize: cs.fontSize,
+        fontWeight: cs.fontWeight,
+        lineHeight: cs.lineHeight,
+      });
+    }
+    const ref = rows.find((r) => r.slide === 2 && r.fontSize);
+    if (!ref) return [{ reason: 'reference-title-slide-2-missing' }];
+    const out = [];
+    for (const r of rows) {
+      if (r.reason) {
+        out.push(r);
+        continue;
+      }
+      if (r.fontSize !== ref.fontSize || r.fontWeight !== ref.fontWeight || r.lineHeight !== ref.lineHeight) {
+        out.push({
+          slide: r.slide,
+          reason: 'title-typography-mismatch',
+          fontSize: r.fontSize,
+          fontWeight: r.fontWeight,
+          lineHeight: r.lineHeight,
+          refSlide: 2,
+          refFontSize: ref.fontSize,
+          refFontWeight: ref.fontWeight,
+          refLineHeight: ref.lineHeight,
+        });
+      }
+    }
+    return out;
+  });
+
+  const pass = failures.length === 0;
+  console.log(`  content slide title typography @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
+  if (!pass) {
+    for (const f of failures.slice(0, 12)) console.log('   ', JSON.stringify(f));
+  }
+  return pass;
+}
+
 async function checkDecisionDiagram(page, slideIndex, label) {
   if (slideIndex !== DECISION_SLIDE_INDEX) return true;
 
@@ -412,6 +468,9 @@ for (const { label, width, height } of sizes) {
       if (!decisionPass) allPass = false;
     }
   }
+  const titlesPass = await checkContentSlideTitleTypography(page, label);
+  if (!titlesPass) allPass = false;
+
   await context.close();
 }
 
