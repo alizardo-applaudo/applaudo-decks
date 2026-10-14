@@ -47,10 +47,29 @@
 .bridge-volaris-slide .problema-card{align-self:stretch;height:100%;min-height:0}
 .bridge-volaris-slide .problema-card p{flex:1}
 
+.roadmap-combined-slide .inner-viewport{
+  display:flex;flex-direction:column;min-height:0;
+}
+.roadmap-combined-slide.slide-fit .slide-body{
+  flex:1 1 auto;justify-content:space-evenly;gap:clamp(16px,2.5vh,28px);min-height:0;
+}
+.roadmap-combined-slide .roadmap-handoff-steps{margin-bottom:0}
+.roadmap-combined-slide .roadmap-proponemos-head{
+  margin-top:clamp(8px,1.5vh,16px);margin-bottom:clamp(10px,1.8vh,18px);
+}
+.roadmap-combined-slide .inner-viewport > .hero-band{
+  margin-top:clamp(28px,4.5vh,52px);flex:none;
+}
+.roadmap-combined-slide .compact-steps .step-card{
+  padding:clamp(20px,2.6vh,28px) clamp(22px,2.2vw,28px);
+}
 .roadmap-combined-slide .roadmap-handoff-steps .step-card,
 .roadmap-combined-slide .roadmap-proponemos-steps .step-card{align-self:stretch;height:100%}
 .roadmap-combined-slide .roadmap-proponemos-steps{margin-bottom:0}
-.roadmap-combined-slide .roadmap-proponemos-steps .step-card p{margin:0}
+.roadmap-combined-slide .roadmap-proponemos-steps .step-card-head{margin-bottom:0}
+.roadmap-combined-slide .roadmap-proponemos-steps .step-card p{
+  margin:clamp(8px,1.2vh,12px) 0 0;flex:1;
+}
 
 .matrix-slide .slide-head .lead{max-width:78ch}
 .matrix-stack{
