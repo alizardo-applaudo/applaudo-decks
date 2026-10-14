@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decisión por cuenta — Applaudo</title>
+<style>
+  :root{
+    --card:#1D1D1B;
+    --card-grad:linear-gradient(180deg,#272723 0%,#1E1E1C 100%);
+    --card-grad-hi:linear-gradient(180deg,#2E2E29 0%,#232321 100%);
+    --ink:#F1EFEB;
+    --muted:#8C8880;
+    --cap:#A9A49B;
+    --line:rgba(255,255,255,.11);
+    --wire:rgba(255,255,255,.46);
+    --red:#F4626B;
+    --red-line:rgba(244,98,107,.55);
+    --red-tint:linear-gradient(180deg,rgba(244,98,107,.12) 0%,rgba(244,98,107,.04) 100%);
+    --lift:0 1px 2px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.035);
+    --lift-hi:0 10px 28px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
+    --radius:12px;
+    --font:"Poppins","Avenir Next","Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:transparent;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  html.is-embed body{padding:8px 0 4px;min-height:0;overflow:visible}
+  body:not(.is-embed-body){padding:24px;display:flex;justify-content:center}
+  .page{width:100%;max-width:1280px;margin:0 auto}
+  .canvas{position:relative;width:100%;padding:4px 12px 8px}
+  svg#links{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:visible}
+  svg#links path{stroke:var(--wire);stroke-width:1.4;fill:none;transition:stroke .18s,opacity .18s}
+  svg#links polygon{fill:var(--wire);transition:fill .18s,opacity .18s}
+  svg#links g.on path{stroke:var(--red)}
+  svg#links g.on polygon{fill:var(--red)}
+  .vflow{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:0}
+  .row{display:flex;align-items:stretch;justify-content:center;gap:14px;width:100%;max-width:1180px}
+  .row.methods .nodewrap{flex:1 1 0;min-width:0;max-width:360px;padding-bottom:24px}
+  .row.decisions .nodewrap{flex:1 1 0;min-width:0;max-width:420px}
+  .nodewrap{position:relative;width:100%}
+  .nodewrap.center{max-width:420px}
+  .nodewrap.wide{max-width:980px}
+  .box{
+    width:100%;background:var(--card-grad);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 12px;text-align:center;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);
+    cursor:pointer;transition:.18s;box-shadow:var(--lift);display:block;
+  }
+  .box.decision{font-size:12px;line-height:1.35;padding:12px 10px;font-weight:600}
+  .box:hover,.stack .seg:hover{background:var(--card-grad-hi);border-color:rgba(255,255,255,.18);transform:translateY(-1px);box-shadow:var(--lift-hi)}
+  .box:focus-visible,.stack .seg:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+  .box.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.16), inset 0 1px 0 rgba(255,255,255,.05)}
+  .cap{position:absolute;top:calc(100% + 8px);left:0;right:0;text-align:center;font-size:11px;color:var(--cap);line-height:1.3;font-weight:600}
+  .cap.on{color:var(--red)}
+  .arrow.col{display:flex;flex-direction:column;align-items:center;width:12px;height:22px;margin:6px auto;flex:none}
+  .arrow.col i{display:block;width:1.4px;flex:1;background:var(--wire)}
+  .arrow.col b{display:block;width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-top:7px solid var(--wire);border-bottom:0}
+  .arrow.col.short{height:16px;margin:4px auto}
+  .stack{
+    width:100%;background:var(--card-grad);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--lift);overflow:hidden;transition:.18s;
+  }
+  .stack .seg{
+    display:block;width:100%;background:transparent;border:0;padding:12px 14px;text-align:left;
+    font-family:inherit;cursor:pointer;transition:.18s;
+  }
+  .stack .seg + .seg{border-top:1px dotted rgba(255,255,255,.15)}
+  .stack .seg .t{font-size:12px;font-weight:600;line-height:1.42;color:var(--ink);display:block}
+  .stack.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.16), inset 0 1px 0 rgba(255,255,255,.05)}
+  .stack .seg.on{background:rgba(244,98,107,.09)}
+  .team-label{
+    display:block;text-align:center;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--red);margin-bottom:8px;
+  }
+  .signal{
+    width:100%;max-width:980px;background:var(--red-tint);border:1px solid var(--red-line);border-radius:var(--radius);
+    padding:16px 20px;font-size:13px;font-weight:600;line-height:1.45;color:var(--ink);text-align:center;
+    box-shadow:0 10px 30px rgba(244,98,107,.12), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .signal .lab{display:block;font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--red);margin-bottom:8px}
+  .tip{
+    position:fixed;z-index:50;top:0;left:0;width:max-content;max-width:min(300px,calc(100vw - 20px));
+    background:linear-gradient(180deg,#302F2C 0%,#232220 100%);border:1px solid rgba(255,255,255,.10);
+    color:#F3F1ED;border-radius:8px;padding:9px 12px;font-size:12px;line-height:1.45;font-family:var(--font);
+    box-shadow:0 12px 34px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(3px);
+    transition:opacity .13s ease,transform .13s ease,visibility .13s;pointer-events:none;
+  }
+  .tip.show{opacity:1;visibility:visible;transform:translateY(0)}
+  .tip::after{content:"";position:absolute;left:var(--ax,50%);margin-left:-5px;border:5px solid transparent}
+  .tip[data-side="top"]::after{top:100%;border-top-color:#232220}
+  .tip[data-side="bottom"]::after{bottom:100%;border-bottom-color:#302F2C}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="canvas" id="canvas">
+    <svg id="links" aria-hidden="true"></svg>
+    <div class="vflow">
+      <div class="nodewrap center">
+        <button type="button" class="box" id="n-diag" data-node="diag"
+          data-tip="Deuda, fuentes de verdad, plataformas (web, Android, iOS) y políticas del cliente">Diagnosticar la cuenta</button>
+      </div>
+      <div class="arrow col"><i></i><b></b></div>
+      <div class="row decisions">
+        <div class="nodewrap">
+          <button type="button" class="box decision" id="n-hist" data-node="hist"
+            data-tip="Poco histórico abre caminos sin Figma; mucho histórico empuja a contratos sobre Figma">¿Cuánto histórico hay en Figma?</button>
+        </div>
+        <div class="nodewrap">
+          <button type="button" class="box decision" id="n-ctrl" data-node="ctrl"
+            data-tip="Políticas del cliente y acceso a repos definen cuánto podemos elegir herramientas">¿Cuánto control tenemos sobre herramientas e implementación?</button>
+        </div>
+      </div>
+      <div class="arrow col short"><i></i><b></b></div>
+      <div class="row methods">
+        <div class="nodewrap">
+          <button type="button" class="box" id="n-volaris" data-node="volaris"
+            data-tip="Mucho histórico y muchas fuentes de verdad: Figma se queda, el contrato sellado es la verdad que engineering implementa.">Contratos JSON + Figma</button>
+          <span class="cap" data-for="volaris">como Volaris</span>
+        </div>
+        <div class="nodewrap">
+          <button type="button" class="box" id="n-bain" data-node="bain"
+            data-tip="Figma obligatorio por política: se diseña en código con el DS del cliente y Figma queda como espejo.">Híbrido: diseño en HTML + Figma</button>
+          <span class="cap" data-for="bain">como Bain</span>
+        </div>
+        <div class="nodewrap">
+          <button type="button" class="box" id="n-knewton" data-node="knewton"
+            data-tip="Poco histórico y control total: SDD y diseño en Pencil.dev, sin Figma.">Diseñar en código, sin Figma</button>
+          <span class="cap" data-for="knewton">como Knewton</span>
+        </div>
+      </div>
+      <div class="arrow col"><i></i><b></b></div>
+      <div class="nodewrap wide">
+        <span class="team-label">Para cualquier camino (lo que proponemos hoy)</span>
+        <div class="stack" id="n-team">
+          <button type="button" class="seg" data-node="team1"
+            data-tip="Formar a todo el equipo según el método de cada cuenta, incluyendo repositorios y SDD a nivel fundamental."><span class="t">Formar a todo el equipo según el método de cada cuenta, incluyendo repositorios y SDD a nivel fundamental.</span></button>
+          <button type="button" class="seg" data-node="team2"
+            data-tip="Contratar distinto a los próximos: perfiles con base técnica."><span class="t">Contratar distinto a los próximos: perfiles con base técnica.</span></button>
+          <button type="button" class="seg" data-node="team3"
+            data-tip="Empaquetar lo que ya funcionó (Volaris, Bain, Knewton) en plantillas y agentes."><span class="t">Empaquetar lo que ya funcionó (Volaris, Bain, Knewton) en plantillas y agentes.</span></button>
+        </div>
+      </div>
+      <div class="arrow col"><i></i><b></b></div>
+      <div class="signal" id="n-signal" aria-label="Señal clave">
+        <span class="lab">SEÑAL CLAVE</span>
+        Asentar esta práctica en Diseño tomará 3–6 meses: proceso nuevo (cliente + interno) y curva técnica + accesos que hoy el equipo no tiene.
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+<script>
+(function(){
+  if (window.self !== window.top) {
+    document.documentElement.classList.add('is-embed');
+    document.body.classList.add('is-embed-body');
+  }
+  const canvas = document.getElementById('canvas');
+  const svg = document.getElementById('links');
+  const tip = document.getElementById('tip');
+  let current = null;
+
+  function centerBottom(el){ const r = el.getBoundingClientRect(); return { x: r.left + r.width/2, y: r.bottom }; }
+  function centerTop(el){ const r = el.getBoundingClientRect(); return { x: r.left + r.width/2, y: r.top }; }
+
+  function drawLinks(){
+    const base = canvas.getBoundingClientRect();
+    const W = canvas.clientWidth, H = canvas.clientHeight;
+    svg.setAttribute('width', W); svg.setAttribute('height', H);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const rel = (x,y) => ({ x: x - base.left, y: y - base.top });
+    const segV = (x,y1,y2,key) => {
+      const dir = y2 > y1 ? 1 : -1;
+      const tipY = y2;
+      const baseY = tipY - dir * 7;
+      return `<g data-link="${key}"><path d="M ${x} ${y1} L ${x} ${baseY}"/><polygon points="${x},${tipY} ${x-4.5},${baseY} ${x+4.5},${baseY}"/></g>`;
+    };
+    const segH = (x1,x2,y,key) =>
+      `<g data-link="${key}"><path d="M ${x1} ${y} L ${x2} ${y}"/></g>`;
+    const diag = document.getElementById('n-diag');
+    const hist = document.getElementById('n-hist');
+    const ctrl = document.getElementById('n-ctrl');
+    const methodsRow = document.querySelector('.row.methods');
+    const team = document.getElementById('n-team');
+    const signal = document.getElementById('n-signal');
+    const dB = rel(centerBottom(diag).x, centerBottom(diag).y + 2);
+    const hT = rel(centerTop(hist).x, centerTop(hist).y - 2);
+    const cT = rel(centerTop(ctrl).x, centerTop(ctrl).y - 2);
+    const hubY = (dB.y + hT.y) / 2;
+    let out = segV(dB.x, dB.y, hubY, 'diag');
+    out += segH(Math.min(dB.x, hT.x), Math.max(dB.x, cT.x), hubY, 'hub');
+    out += segV(hT.x, hubY, hT.y, 'hist');
+    out += segV(cT.x, hubY, cT.y, 'ctrl');
+    const mR = methodsRow.getBoundingClientRect();
+    const mTop = rel(mR.left + mR.width/2, mR.top - 2);
+    const decB = rel((centerBottom(hist).x + centerBottom(ctrl).x)/2, Math.max(centerBottom(hist).y, centerBottom(ctrl).y) + 2);
+    out += segV(decB.x, decB.y, mTop.y, 'methods');
+    const teamT = rel(centerTop(team).x, centerTop(team).y - 2);
+    const mBot = rel(mR.left + mR.width/2, mR.bottom + 18);
+    out += segV(mBot.x, mBot.y, teamT.y, 'team');
+    const teamB = rel(centerBottom(team).x, centerBottom(team).y + 2);
+    const sT = rel(centerTop(signal).x, centerTop(signal).y - 2);
+    out += segV(teamB.x, teamB.y, sT.y, 'signal');
+    svg.innerHTML = out;
+  }
+
+  function relayout(){ drawLinks(); }
+  window.decisionRelayout = relayout;
+  window.addEventListener('resize', relayout);
+  window.addEventListener('load', relayout);
+  if (window.ResizeObserver) new ResizeObserver(relayout).observe(canvas);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  relayout();
+
+  function highlight(el, on){
+    const key = el.dataset.node;
+    el.classList.toggle('on', on);
+    if (el.classList.contains('seg')) el.closest('.stack').classList.toggle('on', on);
+    document.querySelectorAll('.cap').forEach(c=>{
+      if (c.dataset.for === key) c.classList.toggle('on', on);
+    });
+    const g = svg.querySelector(`g[data-link="${el.id || key}"]`);
+    if (g) g.classList.toggle('on', on);
+  }
+
+  function place(el){
+    tip.style.left = '0px'; tip.style.top = '0px';
+    const r = el.getBoundingClientRect();
+    const t = tip.getBoundingClientRect();
+    const gap = 10, pad = 8;
+    let side = 'top';
+    let top = r.top - t.height - gap;
+    if (top < pad){ side = 'bottom'; top = r.bottom + gap; }
+    top = Math.max(pad, Math.min(top, window.innerHeight - t.height - pad));
+    let left = r.left + r.width/2 - t.width/2;
+    left = Math.max(pad, Math.min(left, window.innerWidth - t.width - pad));
+    tip.style.top = Math.round(top) + 'px';
+    tip.style.left = Math.round(left) + 'px';
+    tip.dataset.side = side;
+    tip.style.setProperty('--ax', Math.round(r.left + r.width/2 - left) + 'px');
+  }
+
+  function show(el){
+    const text = el.dataset.tip;
+    if (!text) return;
+    current = el;
+    tip.textContent = text;
+    tip.classList.add('show');
+    tip.setAttribute('aria-hidden','false');
+    place(el);
+    if (el.dataset.node) highlight(el, true);
+  }
+  function hide(){
+    if (current && current.dataset.node) highlight(current, false);
+    current = null;
+    tip.classList.remove('show');
+    tip.setAttribute('aria-hidden','true');
+  }
+
+  document.querySelectorAll('[data-tip]').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>show(el));
+    el.addEventListener('mouseleave', hide);
+    el.addEventListener('focus', ()=>show(el));
+    el.addEventListener('blur', hide);
+  });
+  document.addEventListener('keydown', e=>{ if (e.key === 'Escape') hide(); });
+  window.addEventListener('scroll', hide, true);
+  window.addEventListener('resize', hide);
+})();
+</script>
+</body>
+</html>

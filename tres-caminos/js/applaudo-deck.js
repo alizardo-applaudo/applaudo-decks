@@ -61,45 +61,45 @@
       });
     }
 
-    function fitDosDiagram() {
-      var fr = document.getElementById('dosFrame');
-      var wrap = document.getElementById('dosScaleWrap');
-      var host = document.getElementById('dosScaleHost');
-      var stage = document.querySelector('.dos-slide .dos-stage');
-      if (!fr || !wrap || !host || !stage) return;
+    function fitEmbeddedDiagram(cfg) {
+      var fr = document.getElementById(cfg.frameId);
+      var wrap = document.getElementById(cfg.wrapId);
+      var host = document.getElementById(cfg.hostId);
+      if (!fr || !wrap || !host) return;
       var slide = fr.closest('.slide');
       if (!slide || !slide.classList.contains('active')) return;
+      var stage = slide.querySelector('.dos-stage');
+      if (!stage) return;
       try {
         var doc = fr.contentDocument;
         var win = fr.contentWindow;
         if (!doc || !win) return;
-        var marginX = 48;
-        var marginY = 12;
-        fr.style.width = '1500px';
-        if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
+        var marginX = cfg.marginX != null ? cfg.marginX : 48;
+        var marginY = cfg.marginY != null ? cfg.marginY : 12;
+        fr.style.width = (cfg.measureWidth || 1500) + 'px';
+        if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
         win.dispatchEvent(new Event('resize'));
         var canvas = doc.getElementById('canvas');
-        var contentW = 1360;
-        var contentH = 520;
+        var contentW = cfg.defaultW || 1280;
+        var contentH = cfg.defaultH || 520;
         if (canvas) {
-          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, 1360) + 56;
-          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + 8;
-          var foot = doc.querySelector('.footnote');
-          if (foot) contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 8);
+          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, cfg.defaultW || 1280) + (cfg.padW || 56);
+          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + (cfg.padH || 8);
         } else {
-          contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, 520);
+          contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, contentH);
         }
         contentW = Math.ceil(contentW);
         contentH = Math.ceil(contentH);
         fr.style.width = contentW + 'px';
         fr.style.height = contentH + 'px';
-        if (typeof win.designOSRelayout === 'function') win.designOSRelayout();
+        if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
         var availW = stage.clientWidth - marginX * 2;
         var creditEl = slide.querySelector('.dos-credit');
-        var creditBand = creditEl ? creditEl.offsetHeight + 10 : 0;
-        var availH = stage.clientHeight - marginY - creditBand;
+        var subEl = slide.querySelector('.decision-sub');
+        var extraBand = (creditEl ? creditEl.offsetHeight + 10 : 0) + (subEl ? subEl.offsetHeight + 6 : 0);
+        var availH = stage.clientHeight - marginY - extraBand;
         var scale = Math.min(availW / contentW, availH / contentH);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         wrap.style.transform = 'scale(' + scale + ')';
@@ -108,12 +108,40 @@
       } catch (e) {}
     }
 
-    function scheduleDosFit() {
-      fitDosDiagram();
-      requestAnimationFrame(fitDosDiagram);
-      setTimeout(fitDosDiagram, 120);
-      setTimeout(fitDosDiagram, 450);
-      setTimeout(fitDosDiagram, 900);
+    function scheduleDiagramFit(cfg) {
+      fitEmbeddedDiagram(cfg);
+      requestAnimationFrame(function () { fitEmbeddedDiagram(cfg); });
+      setTimeout(function () { fitEmbeddedDiagram(cfg); }, 120);
+      setTimeout(function () { fitEmbeddedDiagram(cfg); }, 450);
+      setTimeout(function () { fitEmbeddedDiagram(cfg); }, 900);
+    }
+
+    var DOS_CFG = {
+      frameId: 'dosFrame',
+      wrapId: 'dosScaleWrap',
+      hostId: 'dosScaleHost',
+      relayoutFn: 'designOSRelayout',
+      defaultW: 1360,
+      defaultH: 520
+    };
+    var DECISION_CFG = {
+      frameId: 'decisionFrame',
+      wrapId: 'decisionScaleWrap',
+      hostId: 'decisionScaleHost',
+      relayoutFn: 'decisionRelayout',
+      defaultW: 1280,
+      defaultH: 640,
+      marginX: 40,
+      marginY: 8,
+      padW: 32,
+      padH: 12
+    };
+
+    function scheduleActiveDiagramFit() {
+      var slide = slides[cur];
+      if (!slide) return;
+      if (slide.classList.contains('decision-slide')) scheduleDiagramFit(DECISION_CFG);
+      else if (slide.classList.contains('dos-slide')) scheduleDiagramFit(DOS_CFG);
     }
 
     function goTo(n) {
@@ -131,7 +159,7 @@
       try {
         history.replaceState(null, '', '#' + (cur + 1));
       } catch (e) {}
-      if (slides[cur].classList.contains('dos-slide')) scheduleDosFit();
+      scheduleActiveDiagramFit();
       if (options.onSlideChange) options.onSlideChange(cur, slides[cur]);
     }
 
@@ -157,25 +185,28 @@
     var h = parseInt((location.hash || '').slice(1), 10);
     if (h > 1 && h <= N) goTo(h - 1);
 
-    var fr = document.getElementById('dosFrame');
-    if (fr) {
-      function bindKeys() {
-        try {
-          fr.contentWindow.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowRight' || e.key === 'PageDown') goTo(cur + 1);
-            if (e.key === 'ArrowLeft' || e.key === 'PageUp') goTo(cur - 1);
-          });
-        } catch (x) {}
-      }
-      fr.addEventListener('load', function () {
-        bindKeys();
-        scheduleDosFit();
-      });
-      bindKeys();
-      window.addEventListener('resize', function () {
-        if (slides[cur] && slides[cur].classList.contains('dos-slide')) scheduleDosFit();
-      });
+    function bindFrameKeys(fr) {
+      try {
+        fr.contentWindow.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight' || e.key === 'PageDown') goTo(cur + 1);
+          if (e.key === 'ArrowLeft' || e.key === 'PageUp') goTo(cur - 1);
+        });
+      } catch (x) {}
     }
+
+    ['dosFrame', 'decisionFrame'].forEach(function (id) {
+      var fr = document.getElementById(id);
+      if (!fr) return;
+      fr.addEventListener('load', function () {
+        bindFrameKeys(fr);
+        scheduleActiveDiagramFit();
+      });
+      bindFrameKeys(fr);
+    });
+
+    window.addEventListener('resize', function () {
+      scheduleActiveDiagramFit();
+    });
 
     global.ApplaudoDeck = { goTo: goTo, getCurrent: function () { return cur; } };
     return goTo;

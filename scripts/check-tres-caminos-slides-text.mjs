@@ -9,10 +9,10 @@ const deckUrl = '/tres-caminos/index.html';
 const SLIDE_COUNT = 12;
 const DOS_SLIDE_INDEX = 6;
 const MATRIX_SLIDE_INDEX = 2;
-const ROADMAP_SLIDE_INDEX = 10;
+const DECISION_SLIDE_INDEX = 10;
 const MATRIX_CARD_GAP_PX = 8;
 const MATRIX_BOARD_INSET_PX = 2;
-const ROADMAP_HERO_BAND_MIN_GAP_PX = 24;
+const DECISION_NODE_GAP_PX = 6;
 
 const MIME = {
   '.html': 'text/html',
@@ -205,56 +205,90 @@ async function checkMatrixCards(page, slideIndex, label) {
   return pass;
 }
 
-async function checkRoadmapProponemosHeroBand(page, slideIndex, label) {
-  if (slideIndex !== ROADMAP_SLIDE_INDEX) return true;
+async function checkDecisionDiagram(page, slideIndex, label) {
+  if (slideIndex !== DECISION_SLIDE_INDEX) return true;
 
-  const failures = await page.evaluate(({ minGap }) => {
-    const slide = document.querySelectorAll('#deck .slide')[10];
-    const steps = slide?.querySelector('.roadmap-proponemos-steps');
-    const band = slide?.querySelector('.inner-viewport > .hero-band');
-    if (!steps || !band) return [{ slide: 11, reason: 'proponemos-or-hero-band-missing' }];
+  const failures = await page.evaluate(({ gap, pad }) => {
+    const fr = document.getElementById('decisionFrame');
+    const doc = fr?.contentDocument;
+    const win = fr?.contentWindow;
+    if (!doc || !win) return [{ slide: 11, reason: 'decision-iframe-missing' }];
 
-    function overlaps(a, b, gap = 0) {
+    const canvas = doc.getElementById('canvas');
+    if (!canvas) return [{ slide: 11, reason: 'decision-canvas-missing' }];
+
+    function overlaps(a, b, g = 0) {
       return !(
-        a.right + gap <= b.left ||
-        b.right + gap <= a.left ||
-        a.bottom + gap <= b.top ||
-        b.bottom + gap <= a.top
+        a.right + g <= b.left ||
+        b.right + g <= a.left ||
+        a.bottom + g <= b.top ||
+        b.bottom + g <= a.top
       );
     }
 
-    const stepsRect = steps.getBoundingClientRect();
-    const bandRect = band.getBoundingClientRect();
-    const gapPx = bandRect.top - stepsRect.bottom;
     const out = [];
+    const canvasRect = canvas.getBoundingClientRect();
+    const nodeEls = [
+      ...doc.querySelectorAll('.box'),
+      doc.getElementById('n-team'),
+      doc.getElementById('n-signal'),
+      doc.querySelector('.team-label'),
+    ].filter(Boolean);
 
-    if (gapPx < minGap - 0.5) {
-      out.push({
-        slide: 11,
-        reason: 'proponemos-hero-band-gap',
-        gapPx: Math.round(gapPx * 10) / 10,
-        minGap,
-      });
-    }
+    const rects = nodeEls.map((el) => ({
+      el,
+      id: el.id || el.className,
+      rect: el.getBoundingClientRect(),
+    }));
 
-    for (const card of steps.querySelectorAll('.step-card')) {
-      const cardRect = card.getBoundingClientRect();
-      if (overlaps(cardRect, bandRect, 0)) {
-        out.push({
-          slide: 11,
-          reason: 'proponemos-card-hero-band-overlap',
-          text: (card.textContent || '').trim().slice(0, 50),
-        });
+    for (const { el, id, rect } of rects) {
+      if (
+        rect.bottom > canvasRect.bottom + pad ||
+        rect.top < canvasRect.top - pad ||
+        rect.right > canvasRect.right + pad ||
+        rect.left < canvasRect.left - pad
+      ) {
+        out.push({ slide: 11, reason: 'node-outside-canvas', id, text: (el.textContent || '').slice(0, 40) });
       }
     }
 
+    for (let i = 0; i < rects.length; i++) {
+      for (let j = i + 1; j < rects.length; j++) {
+        if (overlaps(rects[i].rect, rects[j].rect, gap)) {
+          out.push({ slide: 11, reason: 'node-overlap', a: rects[i].id, b: rects[j].id });
+        }
+      }
+    }
+
+    const host = doc.getElementById('n-volaris');
+    if (host && host.dataset.tip) {
+      host.dispatchEvent(new Event('mouseenter'));
+      const tip = doc.getElementById('tip');
+      if (tip && tip.classList.contains('show')) {
+        const tr = tip.getBoundingClientRect();
+        const vw = win.innerWidth;
+        const vh = win.innerHeight;
+        if (tr.top < 4 || tr.left < 4 || tr.bottom > vh - 4 || tr.right > vw - 4) {
+          out.push({ slide: 11, reason: 'tooltip-outside-iframe-viewport' });
+        }
+      }
+      host.dispatchEvent(new Event('mouseleave'));
+    }
+
+    const stage = document.querySelector('.decision-slide .dos-stage');
+    const stageRect = stage?.getBoundingClientRect();
+    const hostRect = document.getElementById('decisionScaleHost')?.getBoundingClientRect();
+    if (stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
+      out.push({ slide: 11, reason: 'diagram-host-clipped-by-stage' });
+    }
+
     return out;
-  }, { minGap: ROADMAP_HERO_BAND_MIN_GAP_PX });
+  }, { gap: DECISION_NODE_GAP_PX, pad: 2 });
 
   const pass = failures.length === 0;
-  console.log(`  slide 11 proponemos vs SEÑAL CLAVE @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
+  console.log(`  slide 11 decision diagram @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);
   if (!pass) {
-    for (const f of failures) console.log('   ', JSON.stringify(f));
+    for (const f of failures.slice(0, 10)) console.log('   ', JSON.stringify(f));
   }
   return pass;
 }
@@ -279,17 +313,17 @@ for (const { label, width, height } of sizes) {
 
   for (let i = 0; i < SLIDE_COUNT; i++) {
     await page.evaluate((idx) => window.ApplaudoDeck?.goTo(idx), i);
-    const isDos = i === DOS_SLIDE_INDEX;
-    await page.waitForTimeout(isDos ? 1200 : 300);
+    const isDiagram = i === DOS_SLIDE_INDEX || i === DECISION_SLIDE_INDEX;
+    await page.waitForTimeout(isDiagram ? 1200 : 300);
     const pass = await checkSlide(page, i, label);
     if (!pass) allPass = false;
     if (i === MATRIX_SLIDE_INDEX) {
       const matrixPass = await checkMatrixCards(page, i, label);
       if (!matrixPass) allPass = false;
     }
-    if (i === ROADMAP_SLIDE_INDEX) {
-      const roadmapPass = await checkRoadmapProponemosHeroBand(page, i, label);
-      if (!roadmapPass) allPass = false;
+    if (i === DECISION_SLIDE_INDEX) {
+      const decisionPass = await checkDecisionDiagram(page, i, label);
+      if (!decisionPass) allPass = false;
     }
   }
   await context.close();
