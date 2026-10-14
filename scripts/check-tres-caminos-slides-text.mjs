@@ -4,6 +4,13 @@ import { readFileSync, existsSync } from 'fs';
 import { join, extname } from 'path';
 import { fileURLToPath } from 'url';
 
+/**
+ * Tres Caminos slide responsive checks.
+ *
+ * Owner constraint: do not change slide content (text, wording, labels, order, data).
+ * Only layout/CSS/structural markup for responsiveness. Stacked-table labels may
+ * mirror existing <th> text via ::before or data-label — same wording as headers.
+ */
 const root = join(fileURLToPath(import.meta.url), '..', '..');
 const deckUrl = '/tres-caminos/index.html';
 const SLIDE_COUNT = 12;
@@ -564,11 +571,25 @@ async function checkSlideResponsive(page, slideIndex, label, minPx = 11) {
         }
 
         for (const tbl of slide.querySelectorAll('.probamos-tbl, .metrics-tbl')) {
+          const headerLabels = [...tbl.querySelectorAll('thead th')].map((th) =>
+            (th.textContent || '').trim(),
+          );
           tbl.querySelectorAll('tbody tr').forEach((tr, rowIdx) => {
             tr.querySelectorAll('td').forEach((td, colIdx) => {
               if (colIdx === 0) return;
               const beforeStyle = getComputedStyle(td, '::before');
               const label = beforeStyle.content?.replace(/^["']|["']$/g, '') ?? '';
+              const expectedLabel = headerLabels[colIdx] ?? '';
+              if (expectedLabel && label && label !== expectedLabel) {
+                out.push({
+                  slide: idx + 1,
+                  reason: 'table-field-label-not-matching-header',
+                  row: rowIdx + 1,
+                  col: colIdx + 1,
+                  expected: expectedLabel.slice(0, 48),
+                  actual: label.slice(0, 48),
+                });
+              }
               if (beforeStyle.display !== 'block' || !label || label === 'none') {
                 out.push({
                   slide: idx + 1,
