@@ -13,6 +13,7 @@ const DECISION_SLIDE_INDEX = 10;
 const MATRIX_CARD_GAP_PX = 8;
 const MATRIX_BOARD_INSET_PX = 2;
 const DECISION_NODE_GAP_PX = 6;
+const DECISION_NAV_CLEARANCE_PX = 24;
 
 const MIME = {
   '.html': 'text/html',
@@ -208,7 +209,7 @@ async function checkMatrixCards(page, slideIndex, label) {
 async function checkDecisionDiagram(page, slideIndex, label) {
   if (slideIndex !== DECISION_SLIDE_INDEX) return true;
 
-  const failures = await page.evaluate(({ gap, pad }) => {
+  const failures = await page.evaluate(({ gap, pad, navClearance }) => {
     const fr = document.getElementById('decisionFrame');
     const doc = fr?.contentDocument;
     const win = fr?.contentWindow;
@@ -341,8 +342,34 @@ async function checkDecisionDiagram(page, slideIndex, label) {
       out.push({ slide: 11, reason: 'diagram-host-clipped-by-stage' });
     }
 
+    const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
+    const clearance = navClearance;
+    if (navTop != null && hostRect && hostRect.bottom > navTop - clearance) {
+      out.push({
+        slide: 11,
+        reason: 'diagram-over-nav-pill',
+        bottom: Math.round(hostRect.bottom),
+        navTop: Math.round(navTop),
+        gap: Math.round(navTop - hostRect.bottom),
+      });
+    }
+
+    const sig = doc.getElementById('n-signal');
+    if (sig && navTop != null) {
+      const sigRect = sig.getBoundingClientRect();
+      if (sigRect.bottom > navTop - clearance) {
+        out.push({
+          slide: 11,
+          reason: 'signal-over-nav-pill',
+          bottom: Math.round(sigRect.bottom),
+          navTop: Math.round(navTop),
+          gap: Math.round(navTop - sigRect.bottom),
+        });
+      }
+    }
+
     return out;
-  }, { gap: DECISION_NODE_GAP_PX, pad: 2 });
+  }, { gap: DECISION_NODE_GAP_PX, pad: 2, navClearance: DECISION_NAV_CLEARANCE_PX });
 
   const pass = failures.length === 0;
   console.log(`  slide 11 decision diagram @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`);

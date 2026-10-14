@@ -47,14 +47,17 @@
 .bridge-volaris-slide .problema-card{align-self:stretch;height:100%;min-height:0}
 .bridge-volaris-slide .problema-card p{flex:1}
 
+.decision-slide .dos-header.decision-header{
+  padding-top:46px;padding-bottom:2px;
+}
 .decision-slide .decision-header h2{
   max-width:none;font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.12;white-space:nowrap;
 }
 .decision-slide .decision-sub{
-  margin-top:10px;font-size:clamp(.875rem,1.35vw,1rem);line-height:1.45;
+  margin-top:6px;font-size:clamp(.875rem,1.35vw,1rem);line-height:1.4;
   color:rgba(255,255,255,.78);max-width:52ch;font-weight:500;
 }
-.decision-slide .dos-stage{padding-bottom:calc(var(--nav-safe) + 20px)}
+.decision-slide .dos-stage{padding-top:0;padding-bottom:calc(var(--nav-safe) + 24px)}
 @media (max-height:760px){
   .decision-slide .decision-header{padding-bottom:6px}
   .decision-slide .decision-header h2{font-size:clamp(1.05rem,2vw,1.35rem)}

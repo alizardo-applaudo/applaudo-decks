@@ -96,11 +96,29 @@
         wrap.style.width = contentW + 'px';
         wrap.style.height = contentH + 'px';
         var availW = stage.clientWidth - marginX * 2;
+        var stageStyle = window.getComputedStyle(stage);
+        var padT = parseFloat(stageStyle.paddingTop) || 0;
+        var padB = parseFloat(stageStyle.paddingBottom) || 0;
         var creditEl = slide.querySelector('.dos-credit');
         var subEl = slide.querySelector('.decision-sub');
-        var extraBand = (creditEl ? creditEl.offsetHeight + 10 : 0) + (subEl ? subEl.offsetHeight + 6 : 0);
-        var availH = stage.clientHeight - marginY - extraBand;
+        var isDecision = slide.classList.contains('decision-slide');
+        var extraBand = isDecision
+          ? 0
+          : (creditEl ? creditEl.offsetHeight + 10 : 0) + (subEl ? subEl.offsetHeight + 6 : 0);
+        var availH = stage.clientHeight - padT - padB - marginY - extraBand;
         var scale = Math.min(availW / contentW, availH / contentH);
+        if (cfg.navClearance != null) {
+          var navEl = document.querySelector('.nav');
+          if (navEl) {
+            var navTop = navEl.getBoundingClientRect().top;
+            var stageRect = stage.getBoundingClientRect();
+            var maxHostBottom = navTop - cfg.navClearance;
+            var maxHostH = maxHostBottom - stageRect.top - padT - marginY;
+            if (maxHostH > 24 && contentH > 0) {
+              scale = Math.min(scale, maxHostH / contentH);
+            }
+          }
+        }
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         wrap.style.transform = 'scale(' + scale + ')';
         host.style.width = Math.ceil(contentW * scale) + 'px';
@@ -130,11 +148,12 @@
       hostId: 'decisionScaleHost',
       relayoutFn: 'decisionRelayout',
       defaultW: 1180,
-      defaultH: 720,
+      defaultH: 620,
       marginX: 36,
-      marginY: 4,
+      marginY: 2,
       padW: 32,
-      padH: 16
+      padH: 12,
+      navClearance: 24
     };
 
     function scheduleActiveDiagramFit() {
