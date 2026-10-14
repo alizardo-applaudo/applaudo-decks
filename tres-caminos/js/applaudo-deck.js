@@ -1,5 +1,7 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-r2-20261014';
+  global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
     'M266.7,106.9c-6.8,0-13.3-2.9-16.8-7.7h-.2v32.7h-18.2V50h17.3v6.8h.3c3.3-4.4,9.5-8.3,17.6-8.3,16.1,0,26.2,13.5,26.2,29s-9.6,29.4-26.3,29.4h0ZM262.3,63.3c-8.2,0-13.3,7.2-13.3,14.2s5.1,14.2,13.3,14.2,13-7.1,13-14.3-4.3-14.1-13-14.1h0Z',
@@ -139,24 +141,25 @@
         var isDecision = slide.classList.contains('decision-slide');
         var creditBand = creditEl ? creditEl.offsetHeight + 8 : 0;
         var extraBand = isDecision ? 0 : creditBand;
-        var availH = stage.clientHeight - padT - padB - marginY - extraBand;
-        var scale = narrow ? 1 : Math.min(availW / contentW, availH / contentH);
-        if (!narrow && cfg.designW && cfg.designH) {
-          scale = Math.min(scale, availW / cfg.designW, availH / cfg.designH);
-        }
+        var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
+        var hostW = Math.max(0, stageInnerW - marginX * 2);
+        var hostH = stage.clientHeight - padT - padB - marginY - extraBand;
         var navClear = cfg.navClearance != null ? cfg.navClearance : 24;
         var navEl = document.querySelector('.nav');
         if (!narrow && navEl) {
           var navTop = navEl.getBoundingClientRect().top;
           var stageRect = stage.getBoundingClientRect();
           var maxHostBottom = navTop - navClear;
-          var maxHostH = maxHostBottom - stageRect.top - padT - marginY - extraBand;
-          if (maxHostH > 24 && contentH > 0) {
-            scale = Math.min(scale, maxHostH / contentH);
-          }
+          hostH = Math.min(hostH, maxHostBottom - stageRect.top - padT - marginY);
         }
+        hostH = Math.max(0, hostH);
+
+        var designW = cfg.designW || contentW;
+        var designH = cfg.designH || contentH;
+        var scale = narrow ? 1 : Math.min(hostW / designW, hostH / designH, hostW / contentW, hostH / contentH);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         if (narrow) scale = Math.min(scale, 1);
+        else scale = Math.min(scale, 1);
         if (!narrow && doc) {
           var fontSel =
             cfg.frameId === 'dosFrame'
@@ -167,33 +170,30 @@
             var fs = parseFloat(win.getComputedStyle(el).fontSize);
             if (fs > 0 && fs < minFs) minFs = fs;
           });
-          if (isFinite(minFs) && minFs > 0 && minFs * scale < 12) {
-            scale = Math.min(1, 12 / minFs);
+          if (isFinite(minFs) && minFs > 0) {
+            scale = Math.max(scale, Math.min(1, 12 / minFs));
           }
         }
+
         var scaledH = Math.ceil(contentH * scale);
         var scaledW = Math.ceil(contentW * scale);
-        var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
         wrap.style.transformOrigin = 'top center';
-        if (narrow || scale >= 1) {
-          wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
-          wrap.style.zoom = '';
-        } else {
-          wrap.style.transform = 'none';
-          wrap.style.zoom = String(scale);
-        }
+        wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
+        wrap.style.zoom = '';
         host.style.display = 'flex';
         host.style.justifyContent = 'center';
         host.style.alignItems = 'flex-start';
         host.style.overflow = narrow ? 'visible' : 'hidden';
-        host.style.width = narrow ? '100%' : Math.min(stageInnerW, scaledW) + 'px';
-        host.style.maxWidth = stageInnerW + 'px';
+        host.style.width = narrow ? '100%' : Math.min(hostW, scaledW) + 'px';
+        host.style.maxWidth = hostW + 'px';
         host.style.height = scaledH + 'px';
-        host.style.flex = narrow ? '0 0 auto' : '0 0 auto';
-        host.style.minHeight = narrow ? '0' : '0';
+        host.style.flex = '0 0 auto';
+        host.style.minHeight = '0';
         host.style.minWidth = '0';
         host.style.margin = '0 auto';
+        host.setAttribute('data-scale', String(Math.round(scale * 1000) / 1000));
         slide.classList.toggle('dos-mobile-stack', narrow);
+        if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
       } catch (e) {}
     }
 
@@ -306,8 +306,16 @@
     window.addEventListener('resize', function () {
       scheduleActiveDiagramFit();
     });
+    window.addEventListener('load', function () {
+      scheduleActiveDiagramFit();
+    });
 
-    global.ApplaudoDeck = { goTo: goTo, getCurrent: function () { return cur; } };
+    global.ApplaudoDeck = {
+      goTo: goTo,
+      getCurrent: function () { return cur; },
+      build: APPLAUDO_DECK_BUILD,
+      refitDiagrams: scheduleActiveDiagramFit,
+    };
     return goTo;
   }
 
