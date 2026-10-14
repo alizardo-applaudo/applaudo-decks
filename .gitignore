@@ -1,2 +1,5 @@
 node_modules/
+<<<<<<< HEAD
 package-lock.json
+=======
+>>>>>>> 7a1c33f (Add tres-caminos deck: 12 slides, checks, and screenshots)
