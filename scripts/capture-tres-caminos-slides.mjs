@@ -36,8 +36,11 @@ function staticServer() {
 }
 
 const captures = [
-  { suffix: '390x844', width: 390, height: 844, expandScroll: true },
+  { suffix: '1440x900', width: 1440, height: 900, expandScroll: false },
+  { suffix: '1366x768', width: 1366, height: 768, expandScroll: false },
+  { suffix: '1536x730', width: 1536, height: 730, expandScroll: false },
   { suffix: '1024x500', width: 1024, height: 500, expandScroll: false },
+  { suffix: '390x844', width: 390, height: 844, expandScroll: true },
 ];
 
 const server = await staticServer();
@@ -59,7 +62,7 @@ for (const { suffix, width, height, expandScroll } of captures) {
       (idx) => document.querySelectorAll('#deck .slide')[idx]?.classList.contains('dos-slide'),
       i,
     );
-    await page.waitForTimeout(isDiagram ? (height <= 620 ? 2000 : 1500) : 350);
+    await page.waitForTimeout(isDiagram ? (height <= 600 ? 2000 : 1500) : 350);
 
     if (expandScroll) {
       const fullH = await page.evaluate(() => {

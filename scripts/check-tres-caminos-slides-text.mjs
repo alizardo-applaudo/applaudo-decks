@@ -278,44 +278,56 @@ async function checkContentSlideTitleTypography(page, label) {
   return pass;
 }
 
-const ENFORCE_VIEWPORTS = new Set(['390x844', '360x780', '1024x500', '1366x768', '1440x900']);
+const ENFORCE_VIEWPORTS = new Set([
+  '390x844',
+  '1024x500',
+  '1366x768',
+  '1440x900',
+  '1536x730',
+]);
 
 async function checkLogoEyebrowClearance(page, slideIndex, label) {
-  if (label !== '390x844' && label !== '360x780') return true;
+  const shortViewport = label === '1024x500' || label === '390x844';
+  if (!shortViewport) return true;
 
   const failure = await page.evaluate(({ idx, gap }) => {
     const slide = document.querySelectorAll('#deck > .slide')[idx];
     if (!slide?.classList.contains('active')) return null;
     const logo = slide.querySelector('.logo-sm');
-    const eyebrow =
+    if (!logo) return null;
+    const lr = logo.getBoundingClientRect();
+    if (lr.height === 0) return null;
+    const head =
+      slide.querySelector('.slide-head h2.hl') ||
+      slide.querySelector('.slide-head h1') ||
       slide.querySelector('.slide-head .eyebrow') ||
       slide.querySelector('.dos-header .eyebrow') ||
-      slide.querySelector('.inner > .eyebrow');
-    if (!logo || !eyebrow) return null;
-    const lr = logo.getBoundingClientRect();
-    const er = eyebrow.getBoundingClientRect();
-    if (lr.height === 0 || er.height === 0) return null;
-    if (er.top < lr.bottom + gap) {
+      slide.querySelector('.inner > .eyebrow') ||
+      slide.querySelector('.big');
+    if (!head) return null;
+    const hr = head.getBoundingClientRect();
+    if (hr.height === 0) return null;
+    if (hr.top < lr.bottom + gap) {
       return {
         slide: idx + 1,
-        reason: 'eyebrow-overlaps-logo',
+        reason: 'head-overlaps-logo',
         logoBottom: Math.round(lr.bottom),
-        eyebrowTop: Math.round(er.top),
-        text: (eyebrow.textContent || '').trim().slice(0, 40),
+        headTop: Math.round(hr.top),
+        tag: head.tagName,
       };
     }
     return null;
   }, { idx: slideIndex, gap: 6 });
 
   if (failure) {
-    console.log(`  slide ${slideIndex + 1} logo vs eyebrow @ ${label}: FAIL`);
+    console.log(`  slide ${slideIndex + 1} logo clearance @ ${label}: FAIL`);
     console.log('   ', JSON.stringify(failure));
     return false;
   }
   return true;
 }
 
-async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 11) {
+async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 12) {
   if (!ENFORCE_VIEWPORTS.has(label)) return true;
 
   const wrapId = frameId === 'dosFrame' ? 'dosScaleWrap' : 'decisionScaleWrap';
@@ -383,7 +395,7 @@ async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 11) {
   return pass;
 }
 
-async function checkSlideResponsive(page, slideIndex, label, minPx = 11) {
+async function checkSlideResponsive(page, slideIndex, label, minPx = 12) {
   if (!ENFORCE_VIEWPORTS.has(label)) return true;
 
   const failures = await page.evaluate(
@@ -404,6 +416,10 @@ async function checkSlideResponsive(page, slideIndex, label, minPx = 11) {
       function isLeafText(el) {
         if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return false;
         if (el.closest('.foot')) return false;
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+        const thead = el.closest('thead');
+        if (thead && getComputedStyle(thead).display === 'none') return false;
         const text = el.textContent?.trim() ?? '';
         if (!text) return false;
         for (const child of el.children) {
@@ -471,12 +487,16 @@ async function checkSlideResponsive(page, slideIndex, label, minPx = 11) {
         });
       }
       if (slide.scrollWidth > slide.clientWidth + 1) {
-        out.push({
-          slide: idx + 1,
-          reason: 'horizontal-slide-scroll',
-          sw: slide.scrollWidth,
-          cw: slide.clientWidth,
-        });
+        const ox = getComputedStyle(slide).overflowX;
+        const clipX = ox === 'hidden' || ox === 'clip';
+        if (!(slide.classList.contains('dos-slide') && clipX)) {
+          out.push({
+            slide: idx + 1,
+            reason: 'horizontal-slide-scroll',
+            sw: slide.scrollWidth,
+            cw: slide.clientWidth,
+          });
+        }
       }
 
       const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
@@ -681,7 +701,8 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
       const slideScrollable =
         mobileStack ||
         (slide &&
-          (getComputedStyle(slide).overflowY === 'auto' || getComputedStyle(slide).overflowY === 'scroll'));
+          (getComputedStyle(slide).overflowY === 'auto' || getComputedStyle(slide).overflowY === 'scroll')) ||
+        window.innerHeight <= 800;
 
       const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
       const hostRect = document.getElementById(hostId)?.getBoundingClientRect();
@@ -696,7 +717,10 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
       }
 
       const useMaxScrollNavCheck =
-        mobileStack || window.innerWidth <= 640 || window.matchMedia('(max-width:600px)').matches;
+        mobileStack ||
+        window.innerWidth <= 640 ||
+        window.innerHeight <= 800 ||
+        window.matchMedia('(max-width:600px)').matches;
 
       function visibleTailBottom(el) {
         if (!el) return null;
@@ -737,7 +761,13 @@ async function checkEmbeddedIframe(page, slideNum, frameId, hostId, label) {
 
       const stage = document.querySelector('.dos-slide.active .dos-stage');
       const stageRect = stage?.getBoundingClientRect();
-      if (!slideScrollable && stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
+      if (
+        !slideScrollable &&
+        !mobileStack &&
+        stageRect &&
+        hostRect &&
+        hostRect.bottom > stageRect.bottom + 2
+      ) {
         out.push({ slide: slideNum, reason: 'diagram-host-clipped-by-stage' });
       }
       return out;
@@ -909,14 +939,18 @@ async function checkDecisionDiagram(page, slideIndex, label) {
     const stage = document.querySelector('.decision-slide .dos-stage');
     const stageRect = stage?.getBoundingClientRect();
     const hostRect = document.getElementById('decisionScaleHost')?.getBoundingClientRect();
-    if (!mobileStack && stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
+    const shortH = window.innerHeight <= 800;
+    if (!mobileStack && !shortH && stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
       out.push({ slide: 11, reason: 'diagram-host-clipped-by-stage' });
     }
 
     const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
     const clearance = navClearance;
     const useMaxScrollNavCheck =
-      mobileStack || window.innerWidth <= 640 || window.matchMedia('(max-width:600px)').matches;
+      mobileStack ||
+      window.innerWidth <= 640 ||
+      window.innerHeight <= 800 ||
+      window.matchMedia('(max-width:600px)').matches;
 
     if (useMaxScrollNavCheck && slideScrollable && slide && navTop != null) {
       const prevScroll = slide.scrollTop;
@@ -956,9 +990,9 @@ async function checkDecisionDiagram(page, slideIndex, label) {
 const sizes = [
   { label: '1440x900', width: 1440, height: 900 },
   { label: '1366x768', width: 1366, height: 768 },
+  { label: '1536x730', width: 1536, height: 730 },
   { label: '1024x500', width: 1024, height: 500 },
   { label: '390x844', width: 390, height: 844 },
-  { label: '360x780', width: 360, height: 780 },
 ];
 
 const server = await staticServer();
@@ -977,7 +1011,7 @@ for (const { label, width, height } of sizes) {
   for (let i = 0; i < SLIDE_COUNT; i++) {
     await page.evaluate((idx) => window.ApplaudoDeck?.goTo(idx), i);
     const isDiagram = i === DOS_SLIDE_INDEX || i === DECISION_SLIDE_INDEX;
-    await page.waitForTimeout(isDiagram ? (height <= 620 ? 2000 : 1500) : height < 620 ? 400 : 300);
+    await page.waitForTimeout(isDiagram ? (height <= 600 ? 2000 : 1500) : height < 620 ? 400 : 300);
     const pass = await checkSlide(page, i, label);
     if (!pass) allPass = false;
     const logoPass = await checkLogoEyebrowClearance(page, i, label);

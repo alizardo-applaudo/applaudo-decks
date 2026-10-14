@@ -67,7 +67,7 @@
       var stageW = stage ? stage.clientWidth : vw;
       if (vw <= 600 || stageW <= 600) return true;
       if (vh > vw && vw <= 700) return true;
-      if (vh <= 620 && vw <= 1024) return true;
+      if (vh <= 600 && vw <= 1024) return true;
       return false;
     }
 
@@ -141,13 +141,16 @@
         var extraBand = isDecision ? 0 : creditBand;
         var availH = stage.clientHeight - padT - padB - marginY - extraBand;
         var scale = narrow ? 1 : Math.min(availW / contentW, availH / contentH);
+        if (!narrow && cfg.designW && cfg.designH) {
+          scale = Math.min(scale, availW / cfg.designW, availH / cfg.designH);
+        }
         var navClear = cfg.navClearance != null ? cfg.navClearance : 24;
         var navEl = document.querySelector('.nav');
         if (!narrow && navEl) {
           var navTop = navEl.getBoundingClientRect().top;
           var stageRect = stage.getBoundingClientRect();
           var maxHostBottom = navTop - navClear;
-          var maxHostH = maxHostBottom - stageRect.top - padT - marginY;
+          var maxHostH = maxHostBottom - stageRect.top - padT - marginY - extraBand;
           if (maxHostH > 24 && contentH > 0) {
             scale = Math.min(scale, maxHostH / contentH);
           }
@@ -164,22 +167,31 @@
             var fs = parseFloat(win.getComputedStyle(el).fontSize);
             if (fs > 0 && fs < minFs) minFs = fs;
           });
-          if (isFinite(minFs) && minFs > 0 && minFs * scale < 11) {
-            scale = Math.min(1, 11 / minFs);
+          if (isFinite(minFs) && minFs > 0 && minFs * scale < 12) {
+            scale = Math.min(1, 12 / minFs);
           }
         }
         var scaledH = Math.ceil(contentH * scale);
+        var scaledW = Math.ceil(contentW * scale);
+        var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
         wrap.style.transformOrigin = 'top center';
-        wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
+        if (narrow || scale >= 1) {
+          wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
+          wrap.style.zoom = '';
+        } else {
+          wrap.style.transform = 'none';
+          wrap.style.zoom = String(scale);
+        }
         host.style.display = 'flex';
         host.style.justifyContent = 'center';
         host.style.alignItems = 'flex-start';
         host.style.overflow = narrow ? 'visible' : 'hidden';
-        host.style.width = '100%';
-        host.style.maxWidth = Math.max(0, stage.clientWidth - padL - padR) + 'px';
+        host.style.width = narrow ? '100%' : Math.min(stageInnerW, scaledW) + 'px';
+        host.style.maxWidth = stageInnerW + 'px';
         host.style.height = scaledH + 'px';
-        host.style.flex = narrow ? '0 0 auto' : '1 1 auto';
+        host.style.flex = narrow ? '0 0 auto' : '0 0 auto';
         host.style.minHeight = narrow ? '0' : '0';
+        host.style.minWidth = '0';
         host.style.margin = '0 auto';
         slide.classList.toggle('dos-mobile-stack', narrow);
       } catch (e) {}
@@ -200,6 +212,8 @@
       relayoutFn: 'designOSRelayout',
       defaultW: 1360,
       defaultH: 520,
+      designW: 1424,
+      designH: 635,
       marginX: 24,
       marginY: 4,
       padW: 48,
@@ -213,6 +227,8 @@
       relayoutFn: 'decisionRelayout',
       defaultW: 1180,
       defaultH: 620,
+      designW: 1180,
+      designH: 635,
       marginX: 24,
       marginY: 2,
       padW: 32,
