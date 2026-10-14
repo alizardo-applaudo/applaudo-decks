@@ -90,7 +90,9 @@
         var padL = parseFloat(stageStyle.paddingLeft) || 0;
         var padR = parseFloat(stageStyle.paddingRight) || 0;
         var availW = stage.clientWidth - padL - padR - marginX * 2;
-        var narrow = cfg.frameId === 'dosFrame' && isNarrowDiagramViewport(stage);
+        var narrow =
+          (cfg.frameId === 'dosFrame' || cfg.frameId === 'decisionFrame') &&
+          isNarrowDiagramViewport(stage);
         if (doc.documentElement) {
           doc.documentElement.classList.toggle('is-mobile-narrow', narrow);
         }

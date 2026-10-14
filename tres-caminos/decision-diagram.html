@@ -105,6 +105,50 @@
   .tip::after{content:"";position:absolute;left:var(--ax,50%);margin-left:-5px;border:5px solid transparent}
   .tip[data-side="top"]::after{top:100%;border-top-color:#232220}
   .tip[data-side="bottom"]::after{bottom:100%;border-bottom-color:#302F2C}
+
+  .v-arrow{
+    display:none;flex:none;flex-direction:column;align-items:center;width:12px;height:22px;
+    margin:8px auto;
+  }
+  .v-arrow i{display:block;width:1.4px;flex:1;background:var(--wire)}
+  .v-arrow b{
+    display:block;width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;
+    border-top:7px solid var(--wire);border-bottom:0;
+  }
+  .method-sublabel{display:none}
+
+  @media (max-width:600px),(orientation:portrait) and (max-width:700px){
+    html.is-mobile-layout svg#links{display:none!important}
+    svg#links{display:none!important}
+    .canvas{padding:4px 8px 12px}
+    .vflow{gap:0;align-items:stretch;width:100%}
+    .v-arrow{display:flex}
+    .row{flex-direction:column;align-items:stretch;gap:10px;width:100%;max-width:none;padding:0}
+    .row.decisions,.row.methods{gap:12px}
+    .nodewrap,.nodewrap.center,.nodewrap.wide{max-width:none;width:100%}
+    .box{font-size:14px;line-height:1.35;padding:16px 14px}
+    .box.decision{font-size:13px;font-weight:600;text-align:left}
+    .box.method{
+      min-height:0;padding:18px 14px;align-items:flex-start;text-align:left;gap:6px;
+    }
+    .box.method .method-title{font-size:14px;text-align:left}
+    .box.method .method-cap{font-size:11px;margin-top:2px;text-align:left}
+    .method-sublabel{
+      display:block;font-size:11px;font-weight:500;color:var(--cap);line-height:1.45;
+      margin-top:8px;text-align:left;
+    }
+    .team-header{font-size:11px;line-height:1.35;padding:14px 12px}
+    .stack .seg{padding:14px 12px;text-align:left}
+    .stack .seg .t{font-size:13px;line-height:1.4}
+    .signal{font-size:13px;line-height:1.45;padding:18px 14px;text-align:left}
+    .signal .lab{font-size:11px;margin-bottom:8px}
+    .tip{display:none!important}
+  }
+
+  html.is-embed.is-mobile-narrow{overflow:hidden}
+  html.is-embed.is-mobile-narrow body{padding:8px 6px 14px;overflow:hidden}
+  html.is-embed.is-mobile-narrow .canvas{padding:0 4px 8px}
+  html.is-embed.is-mobile-narrow .vflow{padding-top:0}
 </style>
 </head>
 <body>
@@ -116,16 +160,19 @@
         <button type="button" class="box" id="n-diag" data-node="diag"
           data-tip="Deuda, fuentes de verdad, plataformas (web, Android, iOS) y políticas del cliente">Diagnosticar la cuenta</button>
       </div>
+      <div class="v-arrow" aria-hidden="true"><i></i><b></b></div>
       <div class="row decisions">
         <div class="nodewrap">
           <button type="button" class="box decision" id="n-hist" data-node="hist"
             data-tip="Poco histórico abre caminos sin Figma; mucho histórico empuja a contratos sobre Figma">¿Cuánto histórico hay en Figma?</button>
         </div>
+        <div class="v-arrow" aria-hidden="true"><i></i><b></b></div>
         <div class="nodewrap">
           <button type="button" class="box decision" id="n-ctrl" data-node="ctrl"
             data-tip="Políticas del cliente y acceso a repos definen cuánto podemos elegir herramientas">¿Cuánto control tenemos sobre herramientas e implementación?</button>
         </div>
       </div>
+      <div class="v-arrow" aria-hidden="true"><i></i><b></b></div>
       <div class="row methods">
         <div class="nodewrap">
           <button type="button" class="box method" id="n-volaris" data-node="volaris"
@@ -149,6 +196,7 @@
           </button>
         </div>
       </div>
+      <div class="v-arrow" aria-hidden="true"><i></i><b></b></div>
       <div class="nodewrap wide">
         <div class="team-card" id="n-team-card">
           <div class="team-header" id="n-team-header">Para cualquier camino (lo que proponemos hoy)</div>
@@ -162,6 +210,7 @@
           </div>
         </div>
       </div>
+      <div class="v-arrow" aria-hidden="true"><i></i><b></b></div>
       <div class="signal" id="n-signal" data-node="signal" aria-label="Señal clave"
         data-tip="Asentar esta práctica en Diseño tomará 3–6 meses: proceso nuevo (cliente + interno) y curva técnica + accesos que hoy el equipo no tiene.">
         <span class="lab">SEÑAL CLAVE</span>
@@ -222,7 +271,35 @@
     signal: ['stem-signal'],
   };
 
+  function isMobileNarrow(){
+    return document.documentElement.classList.contains('is-mobile-narrow')
+      || window.matchMedia('(max-width:600px)').matches
+      || (window.matchMedia('(orientation:portrait)').matches && window.innerWidth <= 700);
+  }
+
+  function syncMobileSublabels(){
+    const mobile = isMobileNarrow();
+    document.documentElement.classList.toggle('is-mobile-layout', mobile);
+    document.querySelectorAll('.box.method').forEach((btn) => {
+      let sub = btn.querySelector('.method-sublabel');
+      if (mobile && btn.dataset.tip) {
+        if (!sub) {
+          sub = document.createElement('span');
+          sub.className = 'method-sublabel';
+          btn.appendChild(sub);
+        }
+        sub.textContent = btn.dataset.tip;
+      } else if (sub) {
+        sub.remove();
+      }
+    });
+  }
+
   function drawLinks(){
+    if (isMobileNarrow()) {
+      svg.innerHTML = '';
+      return;
+    }
     const base = canvas.getBoundingClientRect();
     const W = canvas.clientWidth, H = canvas.clientHeight;
     svg.setAttribute('width', W); svg.setAttribute('height', H);
@@ -290,7 +367,10 @@
     svg.innerHTML = out;
   }
 
-  function relayout(){ drawLinks(); }
+  function relayout(){
+    syncMobileSublabels();
+    drawLinks();
+  }
   window.decisionRelayout = relayout;
   window.addEventListener('resize', relayout);
   window.addEventListener('load', relayout);

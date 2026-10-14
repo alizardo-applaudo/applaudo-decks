@@ -271,31 +271,93 @@ async function checkContentSlideTitleTypography(page, label) {
   return pass;
 }
 
+async function checkLogoEyebrowClearance(page, slideIndex, label) {
+  const mobileLabels = new Set(['390x844', '360x780']);
+  if (!mobileLabels.has(label)) return true;
+
+  const failure = await page.evaluate(({ idx, gap }) => {
+    const slide = document.querySelectorAll('#deck > .slide')[idx];
+    if (!slide?.classList.contains('active')) return null;
+    const logo = slide.querySelector('.logo-sm');
+    const eyebrow =
+      slide.querySelector('.slide-head .eyebrow') ||
+      slide.querySelector('.dos-header .eyebrow') ||
+      slide.querySelector('.inner > .eyebrow');
+    if (!logo || !eyebrow) return null;
+    const lr = logo.getBoundingClientRect();
+    const er = eyebrow.getBoundingClientRect();
+    if (lr.height === 0 || er.height === 0) return null;
+    if (er.top < lr.bottom + gap) {
+      return {
+        slide: idx + 1,
+        reason: 'eyebrow-overlaps-logo',
+        logoBottom: Math.round(lr.bottom),
+        eyebrowTop: Math.round(er.top),
+        text: (eyebrow.textContent || '').trim().slice(0, 40),
+      };
+    }
+    return null;
+  }, { idx: slideIndex, gap: 6 });
+
+  if (failure) {
+    console.log(`  slide ${slideIndex + 1} logo vs eyebrow @ ${label}: FAIL`);
+    console.log('   ', JSON.stringify(failure));
+    return false;
+  }
+  return true;
+}
+
 async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 11) {
   const mobileLabels = new Set(['390x844', '360x780']);
   if (!mobileLabels.has(label)) return true;
 
+  const wrapId = frameId === 'dosFrame' ? 'dosScaleWrap' : 'decisionScaleWrap';
+
   const failures = await page.evaluate(
-    ({ slideNum, frameId, minPx }) => {
+    ({ slideNum, frameId, wrapId, minPx }) => {
       const fr = document.getElementById(frameId);
       const doc = fr?.contentDocument;
       if (!doc) return [{ slide: slideNum, reason: 'iframe-missing', frameId }];
 
+      const wrap = document.getElementById(wrapId);
+      const scale = (() => {
+        const t = wrap ? getComputedStyle(wrap).transform : 'none';
+        if (!t || t === 'none') return 1;
+        if (t.startsWith('matrix3d(')) {
+          const parts = t
+            .slice(9, -1)
+            .split(',')
+            .map((n) => Number.parseFloat(n.trim()));
+          return parts[0] || 1;
+        }
+        if (t.startsWith('matrix(')) {
+          const parts = t
+            .slice(7, -1)
+            .split(',')
+            .map((n) => Number.parseFloat(n.trim()));
+          return parts[0] || 1;
+        }
+        return 1;
+      })();
+
       const selectors =
         frameId === 'dosFrame'
           ? '.box,.stack .seg .t,.stack .seg .s,.cap,.footnote,.frame-label,.osbar,.skills .box,.feeds'
-          : '.box,.method-cap,.team-header,.stack .seg .t,.signal';
+          : '.box,.box .method-title,.method-cap,.method-sublabel,.team-header,.stack .seg .t,.signal,.signal .lab';
 
       const out = [];
       doc.querySelectorAll(selectors).forEach((el) => {
         const text = (el.textContent || '').trim();
         if (!text) return;
         const fs = parseFloat(getComputedStyle(el).fontSize);
-        if (!Number.isFinite(fs) || fs + 0.05 < minPx) {
+        const effective = fs * scale;
+        if (!Number.isFinite(effective) || effective + 0.05 < minPx) {
           out.push({
             slide: slideNum,
             reason: 'diagram-font-too-small',
             fontSize: fs,
+            scale,
+            effectivePx: effective,
             minPx,
             text: text.slice(0, 48),
           });
@@ -303,7 +365,7 @@ async function checkDiagramMinFont(page, slideNum, frameId, label, minPx = 11) {
       });
       return out;
     },
-    { slideNum, frameId, minPx },
+    { slideNum, frameId, wrapId, minPx },
   );
 
   const pass = failures.length === 0;
@@ -428,6 +490,10 @@ async function checkDecisionDiagram(page, slideIndex, label) {
     const win = fr?.contentWindow;
     if (!doc || !win) return [{ slide: 11, reason: 'decision-iframe-missing' }];
 
+    const mobileLayout =
+      doc.documentElement.classList.contains('is-mobile-narrow') ||
+      doc.documentElement.classList.contains('is-mobile-layout');
+
     const canvas = doc.getElementById('canvas');
     if (!canvas) return [{ slide: 11, reason: 'decision-canvas-missing' }];
 
@@ -520,44 +586,81 @@ async function checkDecisionDiagram(page, slideIndex, label) {
       return segs;
     }
 
-    for (const pathEl of doc.querySelectorAll('#links path')) {
-      const d = pathEl.getAttribute('d');
-      if (!d) continue;
-      for (const seg of parsePathSegments(d)) {
-        for (const tr of textRects) {
-          if (sampleSegHitsRect(seg.x1, seg.y1, seg.x2, seg.y2, tr)) {
-            out.push({ slide: 11, reason: 'wire-crosses-text', d: d.slice(0, 40) });
-            break;
+    if (!mobileLayout) {
+      for (const pathEl of doc.querySelectorAll('#links path')) {
+        const d = pathEl.getAttribute('d');
+        if (!d) continue;
+        for (const seg of parsePathSegments(d)) {
+          for (const tr of textRects) {
+            if (sampleSegHitsRect(seg.x1, seg.y1, seg.x2, seg.y2, tr)) {
+              out.push({ slide: 11, reason: 'wire-crosses-text', d: d.slice(0, 40) });
+              break;
+            }
           }
         }
       }
+
+      const host = doc.getElementById('n-volaris');
+      if (host && host.dataset.tip) {
+        host.dispatchEvent(new Event('mouseenter'));
+        const tip = doc.getElementById('tip');
+        if (tip && tip.classList.contains('show')) {
+          const tr = tip.getBoundingClientRect();
+          const vw = win.innerWidth;
+          const vh = win.innerHeight;
+          if (tr.top < 4 || tr.left < 4 || tr.bottom > vh - 4 || tr.right > vw - 4) {
+            out.push({ slide: 11, reason: 'tooltip-outside-iframe-viewport' });
+          }
+        }
+        host.dispatchEvent(new Event('mouseleave'));
+      }
     }
 
-    const host = doc.getElementById('n-volaris');
-    if (host && host.dataset.tip) {
-      host.dispatchEvent(new Event('mouseenter'));
-      const tip = doc.getElementById('tip');
-      if (tip && tip.classList.contains('show')) {
-        const tr = tip.getBoundingClientRect();
-        const vw = win.innerWidth;
-        const vh = win.innerHeight;
-        if (tr.top < 4 || tr.left < 4 || tr.bottom > vh - 4 || tr.right > vw - 4) {
-          out.push({ slide: 11, reason: 'tooltip-outside-iframe-viewport' });
-        }
+    const slide = document.querySelector('.decision-slide.active');
+    const mobileStack = slide?.classList.contains('dos-mobile-stack') || mobileLayout;
+    const slideScrollable =
+      mobileStack ||
+      (slide &&
+        (getComputedStyle(slide).overflowY === 'auto' || getComputedStyle(slide).overflowY === 'scroll'));
+
+    function visibleTailBottom(el) {
+      if (!el) return null;
+      const rect = el.getBoundingClientRect();
+      const afterStyle = getComputedStyle(el, '::after');
+      const afterH = parseFloat(afterStyle.height) || 0;
+      if (afterH > 0 && afterStyle.content && afterStyle.content !== 'none') {
+        return rect.bottom - afterH;
       }
-      host.dispatchEvent(new Event('mouseleave'));
+      return rect.bottom;
     }
 
     const stage = document.querySelector('.decision-slide .dos-stage');
     const stageRect = stage?.getBoundingClientRect();
     const hostRect = document.getElementById('decisionScaleHost')?.getBoundingClientRect();
-    if (stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
+    if (!mobileStack && stageRect && hostRect && hostRect.bottom > stageRect.bottom + 2) {
       out.push({ slide: 11, reason: 'diagram-host-clipped-by-stage' });
     }
 
     const navTop = document.querySelector('.nav')?.getBoundingClientRect().top;
     const clearance = navClearance;
-    if (navTop != null && hostRect && hostRect.bottom > navTop - clearance) {
+    const useMaxScrollNavCheck =
+      mobileStack || window.innerWidth <= 640 || window.matchMedia('(max-width:600px)').matches;
+
+    if (useMaxScrollNavCheck && slideScrollable && slide && navTop != null) {
+      const prevScroll = slide.scrollTop;
+      slide.scrollTop = Math.max(0, slide.scrollHeight - slide.clientHeight);
+      const tail = slide.querySelector('.dos-stage') || document.getElementById('decisionScaleHost');
+      const tailBottom = visibleTailBottom(tail);
+      if (tailBottom != null && tailBottom > navTop - clearance) {
+        out.push({
+          slide: 11,
+          reason: 'diagram-tail-under-nav-at-max-scroll',
+          bottom: Math.round(tailBottom),
+          navTop: Math.round(navTop),
+        });
+      }
+      slide.scrollTop = prevScroll;
+    } else if (navTop != null && hostRect && hostRect.bottom > navTop - clearance) {
       out.push({
         slide: 11,
         reason: 'diagram-over-nav-pill',
@@ -608,6 +711,8 @@ for (const { label, width, height } of sizes) {
     await page.waitForTimeout(isDiagram ? 1500 : height < 620 ? 400 : 300);
     const pass = await checkSlide(page, i, label);
     if (!pass) allPass = false;
+    const logoPass = await checkLogoEyebrowClearance(page, i, label);
+    if (!logoPass) allPass = false;
     if (i === MATRIX_SLIDE_INDEX) {
       const matrixPass = await checkMatrixCards(page, i, label);
       if (!matrixPass) allPass = false;
