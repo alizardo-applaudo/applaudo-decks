@@ -419,8 +419,41 @@ async function checkSlideResponsive(page, slideIndex, label, minPx = 11) {
       const slide = document.querySelectorAll('#deck > .slide')[idx];
       if (!slide?.classList.contains('active')) return [{ slide: idx + 1, reason: 'slide-not-active' }];
 
+      slide.scrollTop = 0;
+
       const out = [];
       const vw = window.innerWidth;
+
+      function rectsOverlap(a, b, gap = 2) {
+        return !(
+          a.right + gap <= b.left ||
+          b.right + gap <= a.left ||
+          a.bottom + gap <= b.top ||
+          b.bottom + gap <= a.top
+        );
+      }
+
+      const titleEl = slide.querySelector('.slide-head') || slide.querySelector('.dos-header');
+      const titleRect = titleEl?.getBoundingClientRect();
+      if (titleRect && titleRect.height > 0) {
+        const cardSelector =
+          '.problema-card,.matrix-case,.card-soft-pink,.card-soft-green,.section-card,.hero-band,.probamos-tbl tbody tr,.metrics-tbl tbody tr,.roadmap-adopcion-cards > *,.compact-steps .step-card,.curva-col,.deliverable-panel,.contract-panel,.analogy .card';
+        slide.querySelectorAll(cardSelector).forEach((card) => {
+          const cr = card.getBoundingClientRect();
+          if (cr.width === 0 && cr.height === 0) return;
+          const verticalOverlap = cr.top < titleRect.bottom - 4;
+          const horizontalOverlap = !(cr.right <= titleRect.left + 2 || cr.left >= titleRect.right - 2);
+          if (verticalOverlap && horizontalOverlap) {
+            out.push({
+              slide: idx + 1,
+              reason: 'title-overlaps-card',
+              card: card.className?.toString?.().slice(0, 60) || card.tagName,
+              cardTop: Math.round(cr.top),
+              titleBottom: Math.round(titleRect.bottom),
+            });
+          }
+        });
+      }
 
       if (document.documentElement.scrollWidth > vw + 1 || document.body.scrollWidth > vw + 1) {
         out.push({
@@ -528,6 +561,37 @@ async function checkSlideResponsive(page, slideIndex, label, minPx = 11) {
               });
             }
           }
+        }
+
+        for (const tbl of slide.querySelectorAll('.probamos-tbl, .metrics-tbl')) {
+          tbl.querySelectorAll('tbody tr').forEach((tr, rowIdx) => {
+            tr.querySelectorAll('td').forEach((td, colIdx) => {
+              if (colIdx === 0) return;
+              const beforeStyle = getComputedStyle(td, '::before');
+              const label = beforeStyle.content?.replace(/^["']|["']$/g, '') ?? '';
+              if (beforeStyle.display !== 'block' || !label || label === 'none') {
+                out.push({
+                  slide: idx + 1,
+                  reason: 'table-field-label-not-on-own-line',
+                  row: rowIdx + 1,
+                  col: colIdx + 1,
+                  display: beforeStyle.display,
+                });
+                return;
+              }
+              const value = (td.textContent || '').trim();
+              if (value && label && !/\s/.test(value.slice(0, label.length + 1)) && value.startsWith(label)) {
+                out.push({
+                  slide: idx + 1,
+                  reason: 'table-label-value-concatenated',
+                  row: rowIdx + 1,
+                  col: colIdx + 1,
+                  label,
+                  value: value.slice(0, 48),
+                });
+              }
+            });
+          });
         }
       }
 

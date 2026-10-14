@@ -74,6 +74,13 @@ for (const { suffix, width, height, expandScroll } of captures) {
       }
     }
 
+    await page.evaluate(() => {
+      const slide = document.querySelector('.slide.active');
+      if (slide) slide.scrollTop = 0;
+      window.scrollTo(0, 0);
+    });
+    await page.waitForTimeout(120);
+
     const nn = String(i + 1).padStart(2, '0');
     const pathOut = join(outDir, `tres-caminos-slide-${nn}-${suffix}.png`);
     await page.screenshot({ path: pathOut });

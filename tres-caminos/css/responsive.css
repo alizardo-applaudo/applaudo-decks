@@ -63,6 +63,16 @@
   #deck > .slide > .inner.inner-spacious::after{
     content:'';display:block;height:calc(var(--nav-safe) + 28px);width:100%;flex:none;
   }
+  .slide-spacious .inner-spacious,.slide-fit .inner-viewport{
+    height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;
+  }
+  .slide-spacious .slide-body,.slide-fit .slide-body,.problema-slide .slide-body{
+    flex:none!important;justify-content:flex-start!important;min-height:0;overflow:visible;
+  }
+  .deuda-stack,.curva-stack,.matrix-stack,.bridge-volaris-slide .problema-stack{
+    flex:none!important;justify-content:flex-start!important;
+  }
+  .metrics-slide .slide-body{flex:none!important;justify-content:flex-start!important}
   .slide.slide-fit.active,.slide.slide-spacious.active,.slide.cierre-slide.active{
     overflow-y:auto!important;-webkit-overflow-scrolling:touch;
   }
@@ -151,9 +161,26 @@
     content:'';display:block;height:calc(var(--nav-safe) + 48px);width:100%;flex:none;
   }
   .slide.active{overflow-y:auto!important;-webkit-overflow-scrolling:touch}
-  .slide-fit.active,.slide-spacious.active{height:100vh;max-height:none;min-height:100vh}
-  .slide-fit .inner-viewport,.slide-spacious .inner-spacious{height:auto;max-height:none;overflow:visible;min-height:min(100%,100vh)}
-  .slide-fit .slide-body,.slide-spacious .slide-body{overflow:visible}
+  .slide-fit.active,.slide-spacious.active{
+    height:auto!important;min-height:100vh;max-height:none;overflow-y:auto!important;
+  }
+  .slide.slide-spacious.active,.slide.slide-fit.active{overflow-x:hidden}
+  .slide-fit .inner-viewport,.slide-spacious .inner-spacious{
+    height:auto!important;max-height:none!important;min-height:0!important;overflow:visible;
+  }
+  .deuda-slide .inner-viewport,.matrix-slide .inner-viewport,.curva-slide .inner-viewport{
+    height:auto!important;max-height:none!important;overflow:visible!important;
+  }
+  .slide-fit .slide-body,.slide-spacious .slide-body{
+    flex:none!important;min-height:0;overflow:visible;width:100%;
+  }
+  .deuda-stack,.matrix-stack,.curva-stack{
+    flex:none!important;justify-content:flex-start!important;min-height:0;width:100%;
+  }
+  .metrics-slide .slide-body{
+    flex:none!important;justify-content:flex-start!important;min-height:0;width:100%;
+  }
+  .slide-head{position:relative;z-index:2;flex:none;width:100%}
   .deuda-cards{grid-template-columns:1fr}
   .matrix-board{min-height:360px;height:auto}
   .dos-slide.active{overflow-y:auto}
@@ -176,9 +203,9 @@
   }
   .probamos-tbl td+td,.metrics-tbl td+td{border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
   .probamos-tbl td:first-child,.metrics-tbl td:first-child{font-weight:700;color:var(--ink);padding-top:0;border-top:0;margin-top:0}
-  .probamos-tbl td:nth-child(2)::before,.metrics-tbl td:nth-child(2)::before{
-    display:block;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;
-    color:var(--gray);margin-bottom:4px;
+  .probamos-tbl td:not(:first-child)::before,.metrics-tbl td:not(:first-child)::before{
+    display:block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--gray);margin-bottom:6px;line-height:1.3;
   }
   .probamos-tbl td:nth-child(2)::before{content:'Qué respondía'}
   .probamos-tbl td:nth-child(3)::before{content:'Resultado'}
@@ -195,6 +222,21 @@
   .deuda-cards{grid-template-columns:1fr!important}
   .deuda-cards .problema-card:nth-child(n){grid-column:auto!important;grid-row:auto!important}
   .deliverable-volaris{grid-template-columns:1fr!important}
+  .slide-spacious .inner-spacious{
+    height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;
+  }
+  .slide-fit .inner-viewport{
+    height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;
+  }
+  .slide-spacious .slide-body,.slide-fit .slide-body{
+    flex:none!important;justify-content:flex-start!important;min-height:0;overflow:visible;
+  }
+  .deuda-stack,.matrix-stack,.curva-stack,.metrics-slide .slide-body{
+    flex:none!important;justify-content:flex-start!important;
+  }
+  .slide.slide-spacious.active,.slide.slide-fit.active{
+    height:auto!important;min-height:100vh;overflow-y:auto!important;
+  }
   #deck > .slide.slide-fit.active,
   #deck > .slide.slide-spacious.active,
   #deck > .slide.dos-slide.active{overflow-y:auto!important}
