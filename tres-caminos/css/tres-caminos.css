@@ -171,10 +171,6 @@
 .cierre-slide .big{max-width:20ch;font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:1.05}
 .cierre-slide .cierre-thanks{margin-top:36px;font-size:clamp(1.25rem,2vw,1.65rem);color:rgba(255,255,255,.88);font-weight:600}
 
-.deliverable-deliverables-line{
-  font-size:.875rem;line-height:1.45;color:var(--gray);margin-top:10px;max-width:none;flex:none;
-}
-
 @media (max-height:760px){
   .deuda-cards .problema-card h4{font-size:1rem}
   .deuda-cards .problema-card p{font-size:.875rem}

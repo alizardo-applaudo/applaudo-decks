@@ -308,7 +308,7 @@ button{font-family:inherit}
   flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;margin-top:6px;
 }
 .deliverable-volaris-slide .contract-code-note{
-  flex:none;margin:8px 0 0;font-size:12px;line-height:1.4;color:var(--gray);max-width:none;
+  flex:none;margin-top:clamp(10px,1.4vh,14px);font-size:12px;line-height:1.4;color:var(--gray);max-width:none;
 }
 .deliverable-panel h3{font-size:1.125rem;margin-bottom:6px;color:var(--ink)}
 .panel-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
