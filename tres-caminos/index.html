@@ -84,8 +84,16 @@
     <div class="slide-body">
     <div class="matrix-stack">
       <div class="matrix-board" role="img" aria-label="Matriz: control sobre herramientas e implementación versus histórico en Figma">
-        <span class="matrix-axis axis-x">Control sobre herramientas e implementación · bajo → alto</span>
-        <span class="matrix-axis axis-y">Histórico en Figma · poco → mucho</span>
+        <div class="matrix-axis-y" aria-hidden="true">
+          <span class="axis-end axis-y-top">Mucho</span>
+          <span class="axis-title axis-title-y">Histórico en Figma</span>
+          <span class="axis-end axis-y-bottom">Poco</span>
+        </div>
+        <div class="matrix-axis-x" aria-hidden="true">
+          <span class="axis-end axis-x-left">Bajo</span>
+          <span class="axis-title axis-title-x">Control sobre herramientas e implementación</span>
+          <span class="axis-end axis-x-right">Alto</span>
+        </div>
         <div class="matrix-case case-volaris">
           <p class="case-tag">Volaris</p>
           <h4>Mucho histórico, poco control</h4>

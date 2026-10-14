@@ -28,13 +28,16 @@
   flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:24px;width:100%;
 }
 .deuda-cards{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:16px;width:100%;flex:none;align-items:start;
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr auto;
+  gap:16px;width:100%;flex:none;align-items:stretch;
 }
-.deuda-cards .problema-card{grid-column:span 2}
-.deuda-cards .problema-card:nth-child(4){grid-column:1 / span 3}
-.deuda-cards .problema-card:nth-child(5){grid-column:4 / span 3}
+.deuda-cards .problema-card:nth-child(-n+3){
+  grid-row:1;display:flex;flex-direction:column;height:100%;min-height:0;
+}
+.deuda-cards .problema-card:nth-child(4){grid-column:1 / span 2;grid-row:2}
+.deuda-cards .problema-card:nth-child(5){grid-column:3;grid-row:2}
 .deuda-cards .problema-card h4{font-size:1.15rem}
-.deuda-cards .problema-card p{font-size:1rem;line-height:1.45}
+.deuda-cards .problema-card p{font-size:1rem;line-height:1.45;flex:1}
 
 .bridge-volaris-slide .problema-stack{justify-content:center}
 
@@ -48,35 +51,47 @@
   min-height:min(420px,52vh);height:min(58vh,560px);
   display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
   gap:clamp(16px,2.4vh,28px) clamp(20px,2.8vw,32px);
-  padding:clamp(28px,4vh,40px) clamp(24px,2.5vw,32px) clamp(36px,4.5vh,44px) clamp(44px,3.5vw,52px);
+  padding:clamp(28px,4vh,40px) clamp(24px,2.5vw,32px) clamp(48px,5.5vh,56px) clamp(52px,4vw,60px);
   border:1px solid var(--line);border-radius:var(--radius-item);background:#fff;
   box-shadow:0 6px 18px rgba(18,18,18,.03);overflow:visible;box-sizing:border-box;
 }
 .matrix-board::before{
-  content:'';position:absolute;left:clamp(44px,3.5vw,52px);right:clamp(24px,2.5vw,32px);
+  content:'';position:absolute;left:clamp(52px,4vw,60px);right:clamp(24px,2.5vw,32px);
   top:50%;height:1px;background:var(--line-strong);pointer-events:none;
 }
 .matrix-board::after{
-  content:'';position:absolute;top:clamp(28px,4vh,40px);bottom:clamp(36px,4.5vh,44px);
+  content:'';position:absolute;top:clamp(28px,4vh,40px);bottom:clamp(48px,5.5vh,56px);
   left:50%;width:1px;background:var(--line-strong);pointer-events:none;
 }
-.matrix-axis{
-  position:absolute;font-size:.8125rem;font-weight:600;color:var(--gray);letter-spacing:.02em;
-  pointer-events:none;z-index:1;
+.matrix-axis-y{
+  position:absolute;z-index:1;pointer-events:none;
+  left:clamp(4px,0.5vw,8px);top:clamp(28px,4vh,40px);bottom:clamp(48px,5.5vh,56px);
+  width:clamp(40px,3.2vw,48px);
+  display:grid;grid-template-rows:auto 1fr auto;align-items:center;justify-items:center;
 }
-.matrix-axis.axis-x{
-  bottom:clamp(10px,1.5vh,14px);left:clamp(44px,3.5vw,52px);right:clamp(24px,2.5vw,32px);
-  text-align:center;
+.matrix-axis-x{
+  position:absolute;z-index:1;pointer-events:none;
+  left:clamp(52px,4vw,60px);right:clamp(24px,2.5vw,32px);bottom:clamp(8px,1vh,12px);
+  display:grid;grid-template-columns:auto 1fr auto;align-items:end;column-gap:clamp(8px,1.2vw,14px);
 }
-.matrix-axis.axis-y{
-  left:clamp(6px,0.6vw,10px);top:clamp(28px,4vh,40px);bottom:clamp(36px,4.5vh,44px);
-  width:clamp(28px,2.2vw,36px);
+.axis-end{
+  font-size:.6875rem;font-weight:600;color:var(--gray);letter-spacing:.03em;line-height:1.2;
+}
+.axis-y-top{align-self:start}
+.axis-y-bottom{align-self:end}
+.axis-x-left{justify-self:start;text-align:left}
+.axis-x-right{justify-self:end;text-align:right}
+.axis-title{font-weight:700;color:var(--ink);letter-spacing:.01em;line-height:1.3}
+.axis-title-y{
   writing-mode:vertical-lr;transform:rotate(180deg);
-  display:flex;align-items:center;justify-content:center;line-height:1.35;
-  white-space:normal;text-align:center;
+  font-size:clamp(.75rem,1.05vw,.8125rem);text-align:center;padding:6px 0;
+  max-height:100%;overflow:visible;
+}
+.axis-title-x{
+  font-size:clamp(.75rem,1.05vw,.8125rem);text-align:center;justify-self:center;padding:0 4px;
 }
 .matrix-case{
-  position:relative;width:100%;max-width:none;padding:18px 20px;box-sizing:border-box;
+  position:relative;z-index:2;width:100%;max-width:none;padding:18px 20px;box-sizing:border-box;
   background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);
   box-shadow:0 8px 24px rgba(18,18,18,.06);overflow:visible;
 }
@@ -123,7 +138,6 @@
   .matrix-case{padding:14px 16px}
   .matrix-case h4{font-size:.9375rem}
   .matrix-case p{font-size:.8125rem;line-height:1.4}
-  .matrix-axis.axis-y{font-size:.75rem}
   .curva-col{padding:16px 18px}
   .curva-col li{font-size:.875rem}
   .curva-columns{gap:14px}
