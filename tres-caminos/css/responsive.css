@@ -83,7 +83,7 @@
 .dos-slide:not(.dos-mobile-stack) .dos-scale-host{
   padding-left:16px;padding-right:16px;
 }
-.dos-scale-wrap{transform-origin:top center}
+.dos-scale-wrap{transform-origin:top left}
 .dos-credit{flex:none;margin-top:clamp(2px,0.6vh,6px)}
 
 .slide-head .lead,.slide-head .lead-tight{

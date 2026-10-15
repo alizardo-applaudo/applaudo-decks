@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'tres-caminos-polish-20261015b';
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-polish-20261015d';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -183,9 +183,13 @@
             scale = Math.min(1, 12 / minFs);
           }
         }
-
         var scaledH = Math.ceil(contentH * scale);
         var scaledW = Math.ceil(contentW * scale);
+        if (!narrow && scaledW > hostInnerW + 0.5) {
+          scale = Math.min(scale, hostInnerW / contentW);
+          scaledW = Math.ceil(contentW * scale);
+          scaledH = Math.ceil(contentH * scale);
+        }
         var insetPad = narrow ? 0 : hostInset;
         var offsetX = narrow ? 0 : Math.max(0, (hostInnerW - scaledW) / 2);
         wrap.style.transformOrigin = 'top left';
@@ -205,6 +209,23 @@
         host.style.minHeight = '0';
         host.style.minWidth = '0';
         host.style.margin = '0 auto';
+        if (!narrow) {
+          void host.offsetHeight;
+          var hostBox = host.getBoundingClientRect();
+          var insetL = parseFloat(window.getComputedStyle(host).paddingLeft) || 0;
+          var insetR = parseFloat(window.getComputedStyle(host).paddingRight) || 0;
+          var innerWidth = hostBox.width - insetL - insetR;
+          var wrapBox = wrap.getBoundingClientRect();
+          if (innerWidth > 0 && wrapBox.width > innerWidth + 0.5) {
+            scale = scale * (innerWidth / wrapBox.width);
+            scaledW = Math.ceil(contentW * scale);
+            scaledH = Math.ceil(contentH * scale);
+            offsetX = Math.max(0, (hostInnerW - scaledW) / 2);
+            wrap.style.transform = 'scale(' + scale + ')';
+            wrap.style.marginLeft = offsetX + 'px';
+            host.style.height = scaledH + 'px';
+          }
+        }
         host.setAttribute('data-host-inset', String(hostInset));
         host.setAttribute('data-scale', String(Math.round(scale * 1000) / 1000));
         slide.classList.toggle('dos-mobile-stack', narrow);
@@ -229,7 +250,7 @@
       defaultH: 520,
       designW: 1424,
       designH: 635,
-      marginX: 24,
+      marginX: 12,
       marginY: 4,
       hostInset: 16,
       padW: 48,
@@ -245,7 +266,7 @@
       defaultH: 620,
       designW: 1180,
       designH: 635,
-      marginX: 24,
+      marginX: 12,
       marginY: 2,
       hostInset: 16,
       padW: 32,
