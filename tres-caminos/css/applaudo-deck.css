@@ -455,7 +455,7 @@ button{font-family:inherit}
 }
 .dos-scale-wrap{
   flex:none;
-  transform-origin:top left;
+  transform-origin:top center;
   background:transparent;
   will-change:transform;
 }
