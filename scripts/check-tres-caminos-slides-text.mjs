@@ -506,6 +506,20 @@ async function checkSlideResponsive(page, slideIndex, label, minPx = 12) {
         slideStyle.overflowY === 'scroll' ||
         slide.classList.contains('dos-mobile-stack');
 
+      if (window.innerHeight <= 800 && navTop != null && !slide.classList.contains('dos-slide')) {
+        slide.scrollTop = 0;
+        const loadTail = slide.querySelector('.inner') || slide;
+        const loadBottom = visibleTailBottom(loadTail);
+        if (loadBottom != null && loadBottom > navTop - navClearance) {
+          out.push({
+            slide: idx + 1,
+            reason: 'content-under-nav-at-load',
+            bottom: Math.round(loadBottom),
+            navTop: Math.round(navTop),
+          });
+        }
+      }
+
       const needsScrollClearance =
         slideScrollable || slide.scrollHeight > slide.clientHeight + 2;
       if (navTop != null && needsScrollClearance) {

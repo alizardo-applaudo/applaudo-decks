@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'tres-caminos-r2-20261014b';
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-polish-20261015';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -142,7 +142,9 @@
         var creditBand = creditEl ? creditEl.offsetHeight + 8 : 0;
         var extraBand = isDecision ? 0 : creditBand;
         var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
+        var hostInset = narrow ? 0 : cfg.hostInset != null ? cfg.hostInset : 16;
         var hostW = Math.max(0, stageInnerW - marginX * 2);
+        var hostInnerW = Math.max(0, hostW - hostInset * 2);
         var hostH = stage.clientHeight - padT - padB - marginY - extraBand;
         var navClear = cfg.navClearance != null ? cfg.navClearance : 24;
         var navEl = document.querySelector('.nav');
@@ -156,7 +158,14 @@
 
         var designW = cfg.designW || contentW;
         var designH = cfg.designH || contentH;
-        var scale = narrow ? 1 : Math.min(hostW / designW, hostH / designH, hostW / contentW, hostH / contentH);
+        var scale = narrow
+          ? 1
+          : Math.min(
+              hostInnerW / designW,
+              hostH / designH,
+              hostInnerW / contentW,
+              hostH / contentH,
+            );
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         if (narrow) scale = Math.min(scale, 1);
         else scale = Math.min(scale, 1);
@@ -184,13 +193,17 @@
         host.style.justifyContent = 'center';
         host.style.alignItems = 'flex-start';
         host.style.overflow = narrow ? 'visible' : 'hidden';
-        host.style.width = narrow ? '100%' : Math.min(hostW, scaledW) + 'px';
+        host.style.boxSizing = 'border-box';
+        host.style.paddingLeft = hostInset + 'px';
+        host.style.paddingRight = hostInset + 'px';
+        host.style.width = narrow ? '100%' : Math.min(hostW, scaledW + hostInset * 2) + 'px';
         host.style.maxWidth = hostW + 'px';
         host.style.height = scaledH + 'px';
         host.style.flex = '0 0 auto';
         host.style.minHeight = '0';
         host.style.minWidth = '0';
         host.style.margin = '0 auto';
+        host.setAttribute('data-host-inset', String(hostInset));
         host.setAttribute('data-scale', String(Math.round(scale * 1000) / 1000));
         slide.classList.toggle('dos-mobile-stack', narrow);
         if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
@@ -216,6 +229,7 @@
       designH: 635,
       marginX: 24,
       marginY: 4,
+      hostInset: 16,
       padW: 48,
       padH: 12,
       navClearance: 24
@@ -231,6 +245,7 @@
       designH: 635,
       marginX: 24,
       marginY: 2,
+      hostInset: 16,
       padW: 32,
       padH: 12,
       navClearance: 24
