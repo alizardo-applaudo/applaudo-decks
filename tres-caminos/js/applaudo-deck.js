@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'tres-caminos-diagram-uniform-20261015f';
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-diagram-uniform-20261015g';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -76,10 +76,38 @@
     function readIframeContentSize(doc) {
       var docEl = doc.documentElement;
       var body = doc.body;
-      return {
-        contentW: Math.ceil(Math.max(docEl.scrollWidth, body ? body.scrollWidth : 0, docEl.offsetWidth || 0)),
-        contentH: Math.ceil(Math.max(docEl.scrollHeight, body ? body.scrollHeight : 0, docEl.offsetHeight || 0)),
-      };
+      var contentW = Math.ceil(
+        Math.max(docEl.scrollWidth, body ? body.scrollWidth : 0, docEl.offsetWidth || 0),
+      );
+      var contentH = Math.ceil(
+        Math.max(docEl.scrollHeight, body ? body.scrollHeight : 0, docEl.offsetHeight || 0),
+      );
+      var canvas = doc.getElementById('canvas');
+      if (canvas) {
+        var root = body || docEl;
+        var rootTop = root.getBoundingClientRect().top;
+        var minTop = Infinity;
+        var maxBottom = -Infinity;
+        var maxRight = -Infinity;
+        canvas
+          .querySelectorAll(
+            '.frame-label, .frame, .integrity, .box, .footnote, #fluencyFrame, svg#links',
+          )
+          .forEach(function (el) {
+            var r = el.getBoundingClientRect();
+            if (r.width === 0 && r.height === 0) return;
+            if (r.top < minTop) minTop = r.top;
+            if (r.bottom > maxBottom) maxBottom = r.bottom;
+            if (r.right > maxRight) maxRight = r.right;
+          });
+        if (isFinite(minTop) && isFinite(maxBottom)) {
+          contentH = Math.max(contentH, Math.ceil(maxBottom - rootTop + 6));
+        }
+        if (isFinite(maxRight)) {
+          contentW = Math.max(contentW, Math.ceil(maxRight + 6));
+        }
+      }
+      return { contentW: contentW, contentH: contentH };
     }
 
     function visibleBoxBottom(el) {

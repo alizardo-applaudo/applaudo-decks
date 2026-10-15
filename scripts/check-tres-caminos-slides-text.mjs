@@ -287,6 +287,12 @@ const ENFORCE_VIEWPORTS = new Set([
 ]);
 
 const DIAGRAM_NODE_VIEWPORTS = new Set(['1440x900', '1366x768', '1536x730']);
+const TRANSLATION_LABEL_VIEWPORTS = new Set([
+  '1440x900',
+  '1366x768',
+  '1536x730',
+  '1024x500',
+]);
 const DIAGRAM_VIEWPORT_MARGIN_PX = 16;
 const DIAGRAM_CREDIT_NAV_CLEARANCE_PX = 28;
 
@@ -382,6 +388,60 @@ async function checkDiagramNodeViewportBounds(page, slideNum, frameId, label) {
   );
   if (!pass) {
     for (const f of failures.slice(0, 10)) console.log('   ', JSON.stringify(f));
+  }
+  return pass;
+}
+
+async function checkTranslationFrameLabel(page, label) {
+  if (!TRANSLATION_LABEL_VIEWPORTS.has(label)) return true;
+
+  const failures = await page.evaluate(() => {
+    const fr = document.getElementById('dosFrame');
+    const doc = fr?.contentDocument;
+    if (!doc) return [{ slide: 7, reason: 'iframe-missing', frameId: 'dosFrame' }];
+
+    const out = [];
+    const translationLabel = doc.querySelector('[data-label="translation"]');
+    const translationFrame = doc.getElementById('f-translation');
+    if (!translationLabel) {
+      out.push({ slide: 7, reason: 'translation-label-missing' });
+      return out;
+    }
+    const lr = translationLabel.getBoundingClientRect();
+    if (lr.height < 8 || lr.width < 24) {
+      out.push({
+        slide: 7,
+        reason: 'translation-label-not-visible',
+        height: Math.round(lr.height),
+        width: Math.round(lr.width),
+      });
+    }
+    if (lr.top < 2) {
+      out.push({
+        slide: 7,
+        reason: 'translation-label-clipped-iframe-top',
+        top: Math.round(lr.top * 10) / 10,
+      });
+    }
+    if (translationFrame) {
+      const frameRect = translationFrame.getBoundingClientRect();
+      if (frameRect.top < 2) {
+        out.push({
+          slide: 7,
+          reason: 'translation-frame-clipped-iframe-top',
+          frameTop: Math.round(frameRect.top),
+        });
+      }
+    }
+    return out;
+  });
+
+  const pass = failures.length === 0;
+  console.log(
+    `  slide 7 translation label @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`,
+  );
+  if (!pass) {
+    for (const f of failures.slice(0, 8)) console.log('   ', JSON.stringify(f));
   }
   return pass;
 }
@@ -1145,6 +1205,8 @@ for (const { label, width, height } of sizes) {
       if (!dosPass) allPass = false;
       const dosNodePass = await checkDiagramNodeViewportBounds(page, 7, 'dosFrame', label);
       if (!dosNodePass) allPass = false;
+      const translationPass = await checkTranslationFrameLabel(page, label);
+      if (!translationPass) allPass = false;
       const dosFontPass = await checkDiagramMinFont(page, 7, 'dosFrame', label);
       if (!dosFontPass) allPass = false;
     }
