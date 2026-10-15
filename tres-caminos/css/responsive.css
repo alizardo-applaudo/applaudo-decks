@@ -54,11 +54,16 @@
   font-size:clamp(1.85rem,min(5.6vw,7.2vh),4.6rem);
 }
 
-/* Slide 7 (process diagram): compact title above diagram */
+/* Slide 7 (process diagram): eyebrow + title below logo (same as content slides) */
 #deck > .slide.dos-slide:not(.decision-slide) .dos-header{
-  padding:clamp(28px,7vh,48px) clamp(20px,4vw,48px) clamp(4px,1vh,8px) clamp(20px,10vw,160px);
+  padding:clamp(68px,5vh,84px) clamp(20px,4vw,48px) clamp(4px,0.8vh,8px) clamp(20px,4vw,48px);
   max-width:100%;
   width:100%;
+  box-sizing:border-box;
+}
+#deck > .slide.dos-slide:not(.decision-slide) .dos-header .eyebrow{
+  display:block;
+  margin:10px 0 8px;
 }
 #deck > .slide.dos-slide:not(.decision-slide) .dos-header h2{
   font-size:clamp(0.7rem,min(0.9vw + 1.25vh,2.4vh + 0.5rem),1.1rem);
@@ -73,11 +78,39 @@
   display:flex;flex-direction:column;align-items:stretch;
   justify-content:flex-start;
   overflow:hidden;
+  box-sizing:border-box;
+}
+@media (min-width:901px) and (min-height:560px){
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack).active{
+    gap:16px 0;
+  }
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
+    display:grid!important;
+    grid-template-rows:1fr auto;
+    grid-template-areas:"dos-diagram" "dos-credit";
+    align-self:stretch;
+    width:100%;
+    height:100%;
+    min-height:0;
+    padding:0 clamp(20px,4vw,48px) 0!important;
+  }
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-scale-host{
+    grid-area:dos-diagram;
+    place-self:center center;
+    width:100%;
+    max-height:100%;
+    min-height:0;
+    margin:0;
+  }
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-credit{
+    grid-area:dos-credit;
+    justify-self:center;
+    margin:8px 0 max(28px,calc(var(--nav-safe) + 10px));
+  }
 }
 .dos-scale-host{
-  flex:1 1 auto;min-height:0;max-height:100%;
   display:flex;justify-content:center;align-items:flex-start;
-  overflow:hidden;width:100%;margin:0 auto;
+  overflow:hidden;margin:0 auto;
   box-sizing:border-box;
 }
 .dos-slide:not(.dos-mobile-stack) .dos-scale-host{
@@ -105,16 +138,20 @@
 }
 
 @media (max-height:730px) and (min-width:901px){
-  .dos-slide:not(.decision-slide) .dos-header{
-    padding-top:24px!important;
-    padding-bottom:0!important;
+  #deck > .slide.dos-slide:not(.decision-slide) .dos-header{
+    padding-top:clamp(72px,5vh,80px)!important;
+    padding-bottom:4px!important;
   }
   .dos-slide:not(.decision-slide) .dos-header h2{
     font-size:clamp(0.78rem,min(2vw,2.6vh),0.98rem)!important;
     line-height:1.04!important;
   }
-  .dos-slide:not(.decision-slide) .dos-stage{
-    padding-bottom:calc(var(--nav-safe) + 2px)!important;
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
+    padding-top:0!important;
+    padding-bottom:0!important;
+  }
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-credit{
+    margin-bottom:max(28px,calc(var(--nav-safe) + 10px))!important;
   }
 }
 
@@ -131,14 +168,12 @@
 }
 
 @media (max-height:800px) and (min-width:901px){
-  .dos-slide:not(.decision-slide) .dos-header{
-    padding-top:clamp(28px,5vh,36px)!important;
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack).active{overflow:hidden!important}
+  #deck > .slide.dos-slide:not(.decision-slide) .dos-header{
+    padding-top:clamp(72px,5.5vh,84px)!important;
     padding-right:clamp(20px,4vw,48px)!important;
-    padding-bottom:0!important;
-    padding-left:clamp(168px,12vw,200px)!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-header .eyebrow{
-    display:block;width:100%;clear:both;
+    padding-bottom:4px!important;
+    padding-left:clamp(20px,4vw,48px)!important;
   }
   .dos-slide:not(.decision-slide) .dos-header h2{
     font-size:clamp(0.82rem,min(2.2vw,2.9vh),1.05rem)!important;
@@ -150,8 +185,11 @@
     line-height:1.25!important;
     max-width:min(96vw,920px)!important;
   }
-  .dos-slide:not(.decision-slide) .dos-stage{
-    padding:2px clamp(20px,4vw,48px) calc(var(--nav-safe) + 2px)!important;
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
+    padding:0 clamp(20px,4vw,48px) 0!important;
+  }
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-credit{
+    margin-bottom:max(28px,calc(var(--nav-safe) + 10px))!important;
   }
 }
 
@@ -238,17 +276,26 @@
     height:auto;max-height:none;overflow:visible;min-height:0;
   }
   .slide-fit .slide-body,.slide-spacious .slide-body{overflow:visible;min-height:0}
-  .dos-slide.active{overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch}
-  .dos-slide.decision-slide.active{overflow-y:auto!important;overflow-x:hidden!important}
+  #deck > .slide.dos-slide:not(.decision-slide).dos-mobile-stack.active{
+    overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;
+  }
+  .dos-slide.decision-slide.active{overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch}
   .dos-slide.decision-slide .dos-stage{padding-bottom:calc(var(--nav-safe) + 56px)}
   .dos-slide.decision-slide .dos-stage::after{
     content:'';display:block;height:calc(var(--nav-safe) + 48px);width:100%;flex:none;
   }
-  .dos-slide .dos-stage{overflow:visible;min-height:0;max-width:100%}
+  .dos-slide .dos-stage{min-height:0;max-width:100%}
+  .dos-slide:not(.decision-slide) .dos-stage{overflow:hidden}
+  .dos-slide.decision-slide .dos-stage{overflow:visible}
   .dos-slide:not(.dos-mobile-stack) .dos-scale-host{overflow:hidden;max-height:none;max-width:100%}
   .dos-slide.dos-mobile-stack .dos-scale-host{overflow:visible;max-height:none;max-width:100%}
-  .dos-slide:not(.dos-mobile-stack) .dos-stage{padding-bottom:calc(var(--nav-safe) + 80px)}
-  .dos-slide:not(.dos-mobile-stack) .dos-credit::after{
+  .dos-slide.decision-slide:not(.dos-mobile-stack) .dos-stage{
+    padding-bottom:calc(var(--nav-safe) + 56px)!important;
+  }
+  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
+    padding-bottom:calc(var(--nav-safe) + 12px)!important;
+  }
+  .dos-slide.decision-slide:not(.dos-mobile-stack) .dos-credit::after{
     content:'';display:block;height:calc(var(--nav-safe) + 36px);width:100%;
   }
 }
@@ -458,7 +505,8 @@
   }
   #deck > .slide.slide-fit.active,
   #deck > .slide.slide-spacious.active,
-  #deck > .slide.dos-slide.active{overflow-y:auto!important}
+  #deck > .slide.dos-slide.decision-slide.active{overflow-y:auto!important}
+  #deck > .slide.dos-slide:not(.decision-slide).active{overflow:hidden!important}
   #deck > .slide > .inner::after,
   #deck > .slide > .inner.inner-viewport::after,
   #deck > .slide > .inner.inner-spacious::after{

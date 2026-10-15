@@ -412,7 +412,7 @@ button{font-family:inherit}
 .dos-slide::after{display:none}
 .dos-slide.active{
   display:grid!important;
-  grid-template-rows:auto 1fr;
+  grid-template-rows:auto minmax(0,1fr);
   grid-template-areas:"dos-head" "dos-stage";
   height:100vh;
   overflow:hidden;
@@ -442,10 +442,11 @@ button{font-family:inherit}
   padding:2px 48px calc(var(--nav-safe) + 10px);
   display:flex;
   flex-direction:column;
-  align-items:center;
+  align-items:stretch;
   justify-content:flex-start;
   overflow:hidden;
   background:transparent;
+  box-sizing:border-box;
 }
 .dos-scale-host{
   flex:none;

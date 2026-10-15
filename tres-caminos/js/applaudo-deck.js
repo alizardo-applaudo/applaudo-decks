@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'tres-caminos-diagram-uniform-20261015c';
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-diagram-uniform-20261015f';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -201,7 +201,8 @@
         var creditBand = creditEl ? creditEl.offsetHeight + 6 : 0;
         var extraBand = isDecision ? 0 : creditBand;
         var hostW = availStageW;
-        var hostH = stage.clientHeight - padT - padB - marginY - extraBand;
+        var stageInnerH = Math.max(0, stage.clientHeight - padT - padB);
+        var hostH = Math.max(0, stageInnerH - marginY - extraBand);
         var navClear = cfg.navClearance != null ? cfg.navClearance : 28;
         var navEl = document.querySelector('.nav');
         var clearBand = window.innerHeight <= 730 ? 18 : navClear;
@@ -209,6 +210,11 @@
           var navTop = navEl.getBoundingClientRect().top;
           var stageRect = stage.getBoundingClientRect();
           hostH = Math.min(hostH, navTop - clearBand - stageRect.top - padT - marginY);
+          if (creditEl && !isDecision) {
+            var diagramMaxBottom = navTop - clearBand - creditBand;
+            var diagramAvailH = diagramMaxBottom - stageRect.top - padT - marginY;
+            hostH = Math.min(hostH, Math.max(0, diagramAvailH));
+          }
         }
         hostH = Math.max(0, hostH);
 
@@ -251,32 +257,60 @@
           wrap.style.transform = 'none';
           wrap.style.marginLeft = '0';
           wrap.style.marginRight = '0';
-          if (narrow || scale >= 1) {
+          if (narrow) {
+            wrap.style.zoom = scale < 1 ? String(scale) : '';
+          } else if (scale >= 1) {
             wrap.style.zoom = '';
           } else {
             wrap.style.zoom = String(scale);
           }
           host.style.display = 'flex';
-          host.style.justifyContent = 'center';
-          host.style.alignItems = 'flex-start';
-          host.style.overflow = narrow ? 'visible' : 'hidden';
           host.style.boxSizing = 'border-box';
           host.style.paddingLeft = '0';
           host.style.paddingRight = '0';
           host.style.width = narrow ? '100%' : hostW + 'px';
           host.style.maxWidth = '100%';
-          host.style.height = Math.ceil(contentH * scale) + 'px';
-          host.style.flex = '0 0 auto';
           host.style.minHeight = '0';
           host.style.minWidth = '0';
           host.style.margin = '0 auto';
+          wrap.style.marginTop = '0';
+          wrap.style.marginBottom = '0';
+          if (narrow) {
+            host.style.flexDirection = '';
+            host.style.justifyContent = 'center';
+            host.style.alignItems = 'flex-start';
+            host.style.overflow = 'visible';
+            host.style.height = 'auto';
+            host.style.maxHeight = 'none';
+            host.style.flex = '1 1 auto';
+            wrap.style.flex = '';
+          } else {
+            var scaledH = Math.ceil(contentH * scale);
+            host.style.flexDirection = 'column';
+            host.style.justifyContent = 'flex-start';
+            host.style.alignItems = 'center';
+            host.style.overflow = 'hidden';
+            host.style.height = scaledH + 'px';
+            host.style.maxHeight = hostH + 'px';
+            host.style.flex = '0 0 auto';
+            host.style.marginTop = '0';
+            host.style.marginBottom = '0';
+            host.style.minHeight = '0';
+            wrap.style.flex = '0 0 auto';
+          }
+          if (fr.contentWindow) {
+            fr.contentWindow.scrollTo(0, 0);
+          }
+          if (doc.documentElement) doc.documentElement.scrollTop = 0;
+          if (doc.body) doc.body.scrollTop = 0;
+          slide.scrollTop = 0;
           void host.offsetHeight;
         }
 
         applyScale(scale);
 
         if (!narrow && creditEl && navEl) {
-          for (var cv = 0; cv < 12; cv++) {
+          for (var cv = 0; cv < 16; cv++) {
             if (visibleBoxBottom(creditEl) <= navEl.getBoundingClientRect().top - clearBand) break;
             var hostTop = host.getBoundingClientRect().top;
             var creditRect = creditEl.getBoundingClientRect();
