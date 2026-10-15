@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'tres-caminos-diagram-uniform-20261015g';
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-r2-20261014b';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -73,54 +73,6 @@
       return false;
     }
 
-    function readIframeContentSize(doc) {
-      var docEl = doc.documentElement;
-      var body = doc.body;
-      var contentW = Math.ceil(
-        Math.max(docEl.scrollWidth, body ? body.scrollWidth : 0, docEl.offsetWidth || 0),
-      );
-      var contentH = Math.ceil(
-        Math.max(docEl.scrollHeight, body ? body.scrollHeight : 0, docEl.offsetHeight || 0),
-      );
-      var canvas = doc.getElementById('canvas');
-      if (canvas) {
-        var root = body || docEl;
-        var rootTop = root.getBoundingClientRect().top;
-        var minTop = Infinity;
-        var maxBottom = -Infinity;
-        var maxRight = -Infinity;
-        canvas
-          .querySelectorAll(
-            '.frame-label, .frame, .integrity, .box, .footnote, #fluencyFrame, svg#links',
-          )
-          .forEach(function (el) {
-            var r = el.getBoundingClientRect();
-            if (r.width === 0 && r.height === 0) return;
-            if (r.top < minTop) minTop = r.top;
-            if (r.bottom > maxBottom) maxBottom = r.bottom;
-            if (r.right > maxRight) maxRight = r.right;
-          });
-        if (isFinite(minTop) && isFinite(maxBottom)) {
-          contentH = Math.max(contentH, Math.ceil(maxBottom - rootTop + 6));
-        }
-        if (isFinite(maxRight)) {
-          contentW = Math.max(contentW, Math.ceil(maxRight + 6));
-        }
-      }
-      return { contentW: contentW, contentH: contentH };
-    }
-
-    function visibleBoxBottom(el) {
-      if (!el) return 0;
-      var rect = el.getBoundingClientRect();
-      var afterStyle = window.getComputedStyle(el, '::after');
-      var afterH = parseFloat(afterStyle.height) || 0;
-      if (afterH > 0 && afterStyle.content && afterStyle.content !== 'none') {
-        return rect.bottom - afterH;
-      }
-      return rect.bottom;
-    }
-
     function fitEmbeddedDiagram(cfg) {
       var fr = document.getElementById(cfg.frameId);
       var wrap = document.getElementById(cfg.wrapId);
@@ -134,225 +86,111 @@
         var doc = fr.contentDocument;
         var win = fr.contentWindow;
         if (!doc || !win) return;
-        var marginX = cfg.marginX != null ? cfg.marginX : 0;
+        var marginX = cfg.marginX != null ? cfg.marginX : 48;
         var marginY = cfg.marginY != null ? cfg.marginY : 12;
-        var viewportMargin = cfg.viewportMargin != null ? cfg.viewportMargin : 16;
         var stageStyle = window.getComputedStyle(stage);
         var padT = parseFloat(stageStyle.paddingTop) || 0;
         var padB = parseFloat(stageStyle.paddingBottom) || 0;
         var padL = parseFloat(stageStyle.paddingLeft) || 0;
         var padR = parseFloat(stageStyle.paddingRight) || 0;
-        var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
-        var availStageW = Math.max(0, stageInnerW - marginX * 2);
+        var availW = stage.clientWidth - padL - padR - marginX * 2;
         var narrow =
           (cfg.frameId === 'dosFrame' || cfg.frameId === 'decisionFrame') &&
           isNarrowDiagramViewport(stage);
         if (doc.documentElement) {
           doc.documentElement.classList.toggle('is-mobile-narrow', narrow);
-          doc.documentElement.classList.toggle(
-            'is-short-embed',
-            !narrow && window.innerHeight <= 730,
-          );
         }
         if (doc.body) {
-          doc.body.style.margin = '0';
-          doc.body.style.overflow = 'hidden';
+          doc.body.style.overflow = narrow ? 'hidden' : '';
         }
         fr.style.width = narrow
-          ? Math.max(320, Math.floor(availStageW)) + 'px'
-          : (cfg.measureWidth || 1600) + 'px';
+          ? Math.max(320, Math.floor(availW)) + 'px'
+          : (cfg.measureWidth || 1500) + 'px';
         fr.style.overflow = 'hidden';
         if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
         win.dispatchEvent(new Event('resize'));
-
-        function syncEmbedDocumentWidth() {
-          if (narrow || !doc) return 0;
-          var canvas = doc.getElementById('canvas');
-          if (!canvas) return 0;
-          var page = doc.querySelector('.page');
-          var docW = Math.ceil(
-            Math.max(canvas.scrollWidth, canvas.offsetWidth, canvas.getBoundingClientRect().width),
-          );
-          if (page) {
-            page.style.width = docW + 'px';
-            page.style.maxWidth = 'none';
-          }
-          if (doc.documentElement) {
-            doc.documentElement.style.width = docW + 'px';
-          }
-          if (doc.body) {
-            doc.body.style.width = docW + 'px';
-          }
-          if (doc.documentElement.classList.contains('is-short-embed')) {
-            var integ = doc.querySelector('.integrity');
-            var foot = doc.querySelector('.footnote');
-            if (integ) {
-              integ.style.marginTop = '12px';
-              integ.style.paddingBottom = '10px';
-            }
-            if (foot) foot.style.marginTop = '4px';
-          }
-          fr.style.width = docW + 'px';
-          return docW;
-        }
-
-        syncEmbedDocumentWidth();
-        var sizes = readIframeContentSize(doc);
-        var contentW = sizes.contentW;
-        var contentH = sizes.contentH;
-        if (!narrow) {
-          fr.style.height = contentH + 'px';
-          wrap.style.width = contentW + 'px';
-          wrap.style.height = contentH + 'px';
-          if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
-          win.dispatchEvent(new Event('resize'));
-          syncEmbedDocumentWidth();
-          sizes = readIframeContentSize(doc);
-          contentW = sizes.contentW;
-          contentH = sizes.contentH;
-          fr.style.width = contentW + 'px';
-          fr.style.height = contentH + 'px';
-          wrap.style.width = contentW + 'px';
-          wrap.style.height = contentH + 'px';
-          if (doc.documentElement) doc.documentElement.style.overflow = 'hidden';
+        var canvas = doc.getElementById('canvas');
+        var contentW = cfg.defaultW || 1280;
+        var contentH = cfg.defaultH || 520;
+        if (canvas) {
+          contentW = Math.max(canvas.scrollWidth, canvas.offsetWidth, narrow ? 0 : cfg.defaultW || 1280);
+          if (!narrow) contentW += cfg.padW || 56;
+          contentH = Math.max(canvas.scrollHeight, canvas.offsetHeight) + (cfg.padH || 8);
+          var foot = doc.querySelector('.footnote');
+          if (foot) contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 8);
         } else {
-          contentH = Math.ceil(
-            Math.max(contentH, doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0),
-          ) + 6;
-          fr.style.height = contentH + 'px';
-          wrap.style.width = contentW + 'px';
-          wrap.style.height = contentH + 'px';
+          contentH = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, contentH);
         }
+        contentW = Math.ceil(contentW);
+        contentH = Math.ceil(contentH);
+        fr.style.width = contentW + 'px';
+        fr.style.height = contentH + 'px';
+        if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
+        contentH = Math.max(
+          contentH,
+          doc.documentElement.scrollHeight,
+          doc.body ? doc.body.scrollHeight : 0,
+        );
+        contentH = Math.ceil(contentH);
+        if (narrow) contentH += 6;
+        fr.style.height = contentH + 'px';
+        wrap.style.width = contentW + 'px';
+        wrap.style.height = contentH + 'px';
 
         var creditEl = slide.querySelector('.dos-credit');
         var isDecision = slide.classList.contains('decision-slide');
-        var creditBand = creditEl ? creditEl.offsetHeight + 6 : 0;
+        var creditBand = creditEl ? creditEl.offsetHeight + 8 : 0;
         var extraBand = isDecision ? 0 : creditBand;
-        var hostW = availStageW;
-        var stageInnerH = Math.max(0, stage.clientHeight - padT - padB);
-        var hostH = Math.max(0, stageInnerH - marginY - extraBand);
-        var navClear = cfg.navClearance != null ? cfg.navClearance : 28;
+        var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
+        var hostW = Math.max(0, stageInnerW - marginX * 2);
+        var hostH = stage.clientHeight - padT - padB - marginY - extraBand;
+        var navClear = cfg.navClearance != null ? cfg.navClearance : 24;
         var navEl = document.querySelector('.nav');
-        var clearBand = window.innerHeight <= 730 ? 18 : navClear;
         if (!narrow && navEl) {
           var navTop = navEl.getBoundingClientRect().top;
           var stageRect = stage.getBoundingClientRect();
-          hostH = Math.min(hostH, navTop - clearBand - stageRect.top - padT - marginY);
-          if (creditEl && !isDecision) {
-            var diagramMaxBottom = navTop - clearBand - creditBand;
-            var diagramAvailH = diagramMaxBottom - stageRect.top - padT - marginY;
-            hostH = Math.min(hostH, Math.max(0, diagramAvailH));
-          }
+          var maxHostBottom = navTop - navClear;
+          hostH = Math.min(hostH, maxHostBottom - stageRect.top - padT - marginY);
         }
         hostH = Math.max(0, hostH);
 
-        var vw = window.innerWidth;
-        var availW = Math.max(0, Math.min(hostW, vw) - viewportMargin * 2);
-        var scale = narrow ? 1 : Math.min(availW / contentW, hostH / contentH, 1);
+        var designW = cfg.designW || contentW;
+        var designH = cfg.designH || contentH;
+        var scale = narrow ? 1 : Math.min(hostW / designW, hostH / designH, hostW / contentW, hostH / contentH);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         if (narrow) scale = Math.min(scale, 1);
-        var minFs = Infinity;
-        var minScaleFromFont = 0.25;
+        else scale = Math.min(scale, 1);
         if (!narrow && doc) {
           var fontSel =
             cfg.frameId === 'dosFrame'
               ? '.box,.stack .seg .t,.stack .seg .s,.cap,.footnote,.frame-label,.osbar,.skills .box,.feeds'
               : '.box,.method-title,.method-cap,.method-sublabel,.team-header,.stack .seg .t,.signal,.signal .lab';
+          var minFs = Infinity;
           doc.querySelectorAll(fontSel).forEach(function (el) {
             var fs = parseFloat(win.getComputedStyle(el).fontSize);
             if (fs > 0 && fs < minFs) minFs = fs;
           });
-          if (isFinite(minFs) && minFs > 0) {
-            minScaleFromFont = 12 / minFs;
-            if (minFs * scale < 12) {
-              scale = Math.min(minScaleFromFont, availW / contentW, hostH / contentH, 1);
-            }
+          if (!narrow && isFinite(minFs) && minFs > 0 && minFs * scale < 12) {
+            scale = Math.min(1, 12 / minFs);
           }
         }
 
-        function applyScale(nextScale, opts) {
-          opts = opts || {};
-          if (
-            !narrow &&
-            !opts.allowBelowMinFont &&
-            isFinite(minScaleFromFont) &&
-            minScaleFromFont > 0
-          ) {
-            nextScale = Math.max(minScaleFromFont, nextScale);
-          }
-          scale = nextScale;
-          wrap.style.transformOrigin = 'top center';
-          wrap.style.transform = 'none';
-          wrap.style.marginLeft = '0';
-          wrap.style.marginRight = '0';
-          if (narrow) {
-            wrap.style.zoom = scale < 1 ? String(scale) : '';
-          } else if (scale >= 1) {
-            wrap.style.zoom = '';
-          } else {
-            wrap.style.zoom = String(scale);
-          }
-          host.style.display = 'flex';
-          host.style.boxSizing = 'border-box';
-          host.style.paddingLeft = '0';
-          host.style.paddingRight = '0';
-          host.style.width = narrow ? '100%' : hostW + 'px';
-          host.style.maxWidth = '100%';
-          host.style.minHeight = '0';
-          host.style.minWidth = '0';
-          host.style.margin = '0 auto';
-          wrap.style.marginTop = '0';
-          wrap.style.marginBottom = '0';
-          if (narrow) {
-            host.style.flexDirection = '';
-            host.style.justifyContent = 'center';
-            host.style.alignItems = 'flex-start';
-            host.style.overflow = 'visible';
-            host.style.height = 'auto';
-            host.style.maxHeight = 'none';
-            host.style.flex = '1 1 auto';
-            wrap.style.flex = '';
-          } else {
-            var scaledH = Math.ceil(contentH * scale);
-            host.style.flexDirection = 'column';
-            host.style.justifyContent = 'flex-start';
-            host.style.alignItems = 'center';
-            host.style.overflow = 'hidden';
-            host.style.height = scaledH + 'px';
-            host.style.maxHeight = hostH + 'px';
-            host.style.flex = '0 0 auto';
-            host.style.marginTop = '0';
-            host.style.marginBottom = '0';
-            host.style.minHeight = '0';
-            wrap.style.flex = '0 0 auto';
-          }
-          if (fr.contentWindow) {
-            fr.contentWindow.scrollTo(0, 0);
-          }
-          if (doc.documentElement) doc.documentElement.scrollTop = 0;
-          if (doc.body) doc.body.scrollTop = 0;
-          slide.scrollTop = 0;
-          void host.offsetHeight;
-        }
-
-        applyScale(scale);
-
-        if (!narrow && creditEl && navEl) {
-          for (var cv = 0; cv < 16; cv++) {
-            if (visibleBoxBottom(creditEl) <= navEl.getBoundingClientRect().top - clearBand) break;
-            var hostTop = host.getBoundingClientRect().top;
-            var creditRect = creditEl.getBoundingClientRect();
-            var creditTextH = Math.max(0, visibleBoxBottom(creditEl) - creditRect.top);
-            var maxScaledH =
-              navEl.getBoundingClientRect().top - clearBand - creditTextH - 6 - hostTop;
-            if (maxScaledH <= 0 || contentH <= 0) break;
-            applyScale(Math.max(0.25, Math.min(scale, maxScaledH / contentH)), {
-              allowBelowMinFont: true,
-            });
-          }
-        }
-
-        host.setAttribute('data-host-inset', String(viewportMargin));
+        var scaledH = Math.ceil(contentH * scale);
+        var scaledW = Math.ceil(contentW * scale);
+        wrap.style.transformOrigin = 'top center';
+        wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
+        wrap.style.zoom = '';
+        host.style.display = 'flex';
+        host.style.justifyContent = 'center';
+        host.style.alignItems = 'flex-start';
+        host.style.overflow = narrow ? 'visible' : 'hidden';
+        host.style.width = narrow ? '100%' : Math.min(hostW, scaledW) + 'px';
+        host.style.maxWidth = hostW + 'px';
+        host.style.height = scaledH + 'px';
+        host.style.flex = '0 0 auto';
+        host.style.minHeight = '0';
+        host.style.minWidth = '0';
+        host.style.margin = '0 auto';
         host.setAttribute('data-scale', String(Math.round(scale * 1000) / 1000));
         slide.classList.toggle('dos-mobile-stack', narrow);
         if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
@@ -372,20 +210,30 @@
       wrapId: 'dosScaleWrap',
       hostId: 'dosScaleHost',
       relayoutFn: 'designOSRelayout',
-      marginX: 0,
+      defaultW: 1360,
+      defaultH: 520,
+      designW: 1424,
+      designH: 635,
+      marginX: 24,
       marginY: 4,
-      viewportMargin: 16,
-      navClearance: 28,
+      padW: 48,
+      padH: 12,
+      navClearance: 24
     };
     var DECISION_CFG = {
       frameId: 'decisionFrame',
       wrapId: 'decisionScaleWrap',
       hostId: 'decisionScaleHost',
       relayoutFn: 'decisionRelayout',
-      marginX: 0,
+      defaultW: 1180,
+      defaultH: 620,
+      designW: 1180,
+      designH: 635,
+      marginX: 24,
       marginY: 2,
-      viewportMargin: 16,
-      navClearance: 28,
+      padW: 32,
+      padH: 12,
+      navClearance: 24
     };
 
     function scheduleActiveDiagramFit() {

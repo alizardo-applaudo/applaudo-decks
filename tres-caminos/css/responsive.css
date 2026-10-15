@@ -17,12 +17,11 @@
   .deliverable-volaris-slide .panel-meta,
   .deliverable-volaris-slide .sealed-badge,
   .deliverable-volaris-slide .codebox-contract .label,
-  .deliverable-volaris-slide .contract-code-note{font-size:max(14px,.875rem)}
   .deliverable-volaris-slide .codebox-contract pre,
   .deliverable-volaris-slide .deliverable-panel h3,
-  .deliverable-volaris-slide .figma-spec-list li{font-size:max(14px,.875rem)}
-  .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{font-size:max(14px,.875rem)!important}
-  .deliverable-volaris-slide .inline-code{font-size:max(13px,.8125rem)!important}
+  .deliverable-volaris-slide .figma-spec-list li,
+  .deliverable-volaris-slide .contract-code-note{font-size:max(13px,.8125rem)}
+  .deliverable-volaris-slide .deliverable-volaris-head .eyebrow{font-size:max(13px,.8125rem)!important}
   .deliverable-volaris-slide .codebox-contract .map-hl,
   .deliverable-volaris-slide .codebox-contract .map-code,
   .deliverable-volaris-slide .codebox-contract .map-val,
@@ -54,16 +53,11 @@
   font-size:clamp(1.85rem,min(5.6vw,7.2vh),4.6rem);
 }
 
-/* Slide 7 (process diagram): eyebrow + title below logo (same as content slides) */
+/* Slide 7 (process diagram): compact title above diagram */
 #deck > .slide.dos-slide:not(.decision-slide) .dos-header{
-  padding:clamp(68px,5vh,84px) clamp(20px,4vw,48px) clamp(4px,0.8vh,8px) clamp(20px,4vw,48px);
+  padding:clamp(28px,7vh,48px) clamp(20px,4vw,48px) clamp(4px,1vh,8px) clamp(20px,10vw,160px);
   max-width:100%;
   width:100%;
-  box-sizing:border-box;
-}
-#deck > .slide.dos-slide:not(.decision-slide) .dos-header .eyebrow{
-  display:block;
-  margin:10px 0 8px;
 }
 #deck > .slide.dos-slide:not(.decision-slide) .dos-header h2{
   font-size:clamp(0.7rem,min(0.9vw + 1.25vh,2.4vh + 0.5rem),1.1rem);
@@ -78,43 +72,11 @@
   display:flex;flex-direction:column;align-items:stretch;
   justify-content:flex-start;
   overflow:hidden;
-  box-sizing:border-box;
-}
-@media (min-width:901px) and (min-height:560px){
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack).active{
-    gap:16px 0;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
-    display:grid!important;
-    grid-template-rows:1fr auto;
-    grid-template-areas:"dos-diagram" "dos-credit";
-    align-self:stretch;
-    width:100%;
-    height:100%;
-    min-height:0;
-    padding:0 clamp(20px,4vw,48px) 0!important;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-scale-host{
-    grid-area:dos-diagram;
-    place-self:center center;
-    width:100%;
-    max-height:100%;
-    min-height:0;
-    margin:0;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-credit{
-    grid-area:dos-credit;
-    justify-self:center;
-    margin:8px 0 max(28px,calc(var(--nav-safe) + 10px));
-  }
 }
 .dos-scale-host{
+  flex:1 1 auto;min-height:0;max-height:100%;
   display:flex;justify-content:center;align-items:flex-start;
-  overflow:hidden;margin:0 auto;
-  box-sizing:border-box;
-}
-.dos-slide:not(.dos-mobile-stack) .dos-scale-host{
-  padding-left:0;padding-right:0;
+  overflow:hidden;width:100%;margin:0 auto;
 }
 .dos-scale-wrap{transform-origin:top center}
 .dos-credit{flex:none;margin-top:clamp(2px,0.6vh,6px)}
@@ -137,117 +99,17 @@
   .decision-slide .dos-header.decision-header{padding-top:clamp(32px,6vh,42px)}
 }
 
-@media (max-height:730px) and (min-width:901px){
-  #deck > .slide.dos-slide:not(.decision-slide) .dos-header{
-    padding-top:clamp(72px,5vh,80px)!important;
-    padding-bottom:4px!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-header h2{
-    font-size:clamp(0.78rem,min(2vw,2.6vh),0.98rem)!important;
-    line-height:1.04!important;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
-    padding-top:0!important;
-    padding-bottom:0!important;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-credit{
-    margin-bottom:max(28px,calc(var(--nav-safe) + 10px))!important;
-  }
-}
-
-@media (max-height:730px) and (max-width:900px){
-  .dos-slide:not(.decision-slide) .dos-header{
-    padding-top:12px!important;
-    padding-bottom:0!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-header h2{
-    font-size:clamp(0.9rem,min(2.5vw,3.2vh),1.28rem)!important;
-    line-height:1.1!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-stage{padding-bottom:calc(var(--nav-safe) + 2px)!important}
-}
-
-@media (max-height:800px) and (min-width:901px){
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack).active{overflow:hidden!important}
-  #deck > .slide.dos-slide:not(.decision-slide) .dos-header{
-    padding-top:clamp(72px,5.5vh,84px)!important;
-    padding-right:clamp(20px,4vw,48px)!important;
-    padding-bottom:4px!important;
-    padding-left:clamp(20px,4vw,48px)!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-header h2{
-    font-size:clamp(0.82rem,min(2.2vw,2.9vh),1.05rem)!important;
-    line-height:1.06!important;
-    max-width:62ch!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-credit{
-    margin-top:0!important;
-    line-height:1.25!important;
-    max-width:min(96vw,920px)!important;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
-    padding:0 clamp(20px,4vw,48px) 0!important;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-credit{
-    margin-bottom:max(28px,calc(var(--nav-safe) + 10px))!important;
-  }
-}
-
-@media (max-height:800px) and (max-width:900px){
-  .dos-slide:not(.decision-slide) .dos-header{
-    padding-top:clamp(16px,3.5vh,26px)!important;
-    padding-right:clamp(20px,4vw,48px)!important;
-    padding-bottom:2px!important;
-    padding-left:clamp(72px,14vw,160px)!important;
-    max-width:100%!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-header h2{
-    font-size:clamp(0.98rem,min(2.8vw,3.8vh),1.45rem)!important;
-    line-height:1.12!important;
-    max-width:62ch!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-credit{
-    margin-top:2px!important;
-    line-height:1.3!important;
-    max-width:min(96vw,920px)!important;
-  }
-  .dos-slide:not(.decision-slide) .dos-stage{
-    padding-bottom:calc(var(--nav-safe) + 4px)!important;
-  }
-}
-
 @media (max-height:800px){
-  .deuda-slide .inner-viewport{padding-top:clamp(32px,6.5vh,42px)!important;padding-bottom:calc(var(--nav-safe) + 6px)!important;overflow:visible!important}
-  .deuda-cards .problema-card h4{font-size:max(13px,.95rem)!important;margin-bottom:4px!important}
-  .deuda-cards .problema-card p{font-size:max(12px,.8125rem)!important;line-height:1.34!important}
-  .deuda-slide .slide-head .eyebrow{margin-bottom:8px!important}
-  .deuda-slide .slide-head .lead{margin-top:4px!important;line-height:1.32!important}
-  .deuda-stack{gap:8px!important}
-  .deuda-cards{gap:8px!important}
-  .deuda-cards .problema-card{padding:12px 14px!important}
-  .bridge-volaris-slide .inner-viewport{padding-top:clamp(32px,6.5vh,42px)!important;padding-bottom:calc(var(--nav-safe) + 6px)!important}
-  .bridge-volaris-slide .problema-stack{gap:8px!important}
-  .bridge-volaris-slide .problema-cards{gap:8px!important}
-  .bridge-volaris-slide .problema-card{padding:12px 14px!important}
-  .bridge-volaris-slide .hero-band{padding:12px 16px!important;margin-top:6px!important}
-  .contracts-slide .inner-spacious{padding-top:clamp(32px,6.5vh,42px)!important;padding-bottom:calc(var(--nav-safe) + 6px)!important}
-  .contracts-slide .slide-head .lead{margin-top:4px!important;line-height:1.32!important}
-  .contracts-slide .slide-body{gap:10px!important}
-  .contracts-slide .analogy .card{padding:16px 18px!important}
-  .contracts-slide .analogy{gap:10px!important;margin-top:10px!important}
+  .deuda-cards{gap:10px!important}
+  .deuda-cards .problema-card{padding:14px 16px!important}
   .problema-stack{gap:14px!important}
   .problema-cards{gap:12px!important}
   .problema-card{padding:14px 16px!important}
-  .slide-probamos .inner-viewport{padding-top:clamp(32px,6.5vh,42px)!important;padding-bottom:calc(var(--nav-safe) + 6px)!important}
-  .slide-probamos .probamos-stack{gap:8px!important;margin-top:10px!important}
-  .slide-probamos .probamos-stack > .probamos-sello-banner{margin-top:6px;padding:6px 10px}
-  .slide-probamos .probamos-stack > .hero-band{padding:10px 14px;margin-top:6px}
-  .slide-probamos .probamos-stack > .probamos-tbl{margin-top:10px!important}
-  .slide-probamos .probamos-tbl td,.slide-probamos .probamos-tbl th{padding:4px 10px!important;line-height:1.3!important}
-  .slide-probamos .probamos-read{margin-top:6px!important;font-size:max(12px,.78rem)!important}
-  .cierre-slide .big{font-size:clamp(1.5rem,min(5vw,10vh),2.85rem)!important;line-height:1.04}
-  .cierre-slide .inner.center{padding-top:clamp(32px,6.5vh,42px)!important;padding-bottom:calc(var(--nav-safe) + 12px)!important}
-  .cierre-slide .cierre-thanks{margin-top:12px!important;font-size:max(13px,.875rem)!important}
+  .slide-probamos .probamos-stack{gap:10px}
+  .slide-probamos .probamos-stack > .probamos-sello-banner{margin-top:8px;padding:8px 12px}
+  .slide-probamos .probamos-stack > .hero-band{padding:12px 16px;margin-top:8px}
+  .cierre-slide .big{font-size:clamp(1.65rem,min(5.5vw,11vh),3.2rem)!important;line-height:1.06}
+  .cierre-slide .inner.center{padding-top:clamp(36px,7vh,48px)!important;padding-bottom:calc(var(--nav-safe) + 48px)!important}
   #deck > .slide > .inner::after,
   #deck > .slide > .inner.inner-viewport::after,
   #deck > .slide > .inner.inner-spacious::after{
@@ -276,26 +138,17 @@
     height:auto;max-height:none;overflow:visible;min-height:0;
   }
   .slide-fit .slide-body,.slide-spacious .slide-body{overflow:visible;min-height:0}
-  #deck > .slide.dos-slide:not(.decision-slide).dos-mobile-stack.active{
-    overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;
-  }
-  .dos-slide.decision-slide.active{overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch}
+  .dos-slide.active{overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch}
+  .dos-slide.decision-slide.active{overflow-y:auto!important;overflow-x:hidden!important}
   .dos-slide.decision-slide .dos-stage{padding-bottom:calc(var(--nav-safe) + 56px)}
   .dos-slide.decision-slide .dos-stage::after{
     content:'';display:block;height:calc(var(--nav-safe) + 48px);width:100%;flex:none;
   }
-  .dos-slide .dos-stage{min-height:0;max-width:100%}
-  .dos-slide:not(.decision-slide) .dos-stage{overflow:hidden}
-  .dos-slide.decision-slide .dos-stage{overflow:visible}
+  .dos-slide .dos-stage{overflow:visible;min-height:0;max-width:100%}
   .dos-slide:not(.dos-mobile-stack) .dos-scale-host{overflow:hidden;max-height:none;max-width:100%}
   .dos-slide.dos-mobile-stack .dos-scale-host{overflow:visible;max-height:none;max-width:100%}
-  .dos-slide.decision-slide:not(.dos-mobile-stack) .dos-stage{
-    padding-bottom:calc(var(--nav-safe) + 56px)!important;
-  }
-  .dos-slide:not(.decision-slide):not(.dos-mobile-stack) .dos-stage{
-    padding-bottom:calc(var(--nav-safe) + 12px)!important;
-  }
-  .dos-slide.decision-slide:not(.dos-mobile-stack) .dos-credit::after{
+  .dos-slide:not(.dos-mobile-stack) .dos-stage{padding-bottom:calc(var(--nav-safe) + 80px)}
+  .dos-slide:not(.dos-mobile-stack) .dos-credit::after{
     content:'';display:block;height:calc(var(--nav-safe) + 36px);width:100%;
   }
 }
@@ -505,8 +358,7 @@
   }
   #deck > .slide.slide-fit.active,
   #deck > .slide.slide-spacious.active,
-  #deck > .slide.dos-slide.decision-slide.active{overflow-y:auto!important}
-  #deck > .slide.dos-slide:not(.decision-slide).active{overflow:hidden!important}
+  #deck > .slide.dos-slide.active{overflow-y:auto!important}
   #deck > .slide > .inner::after,
   #deck > .slide > .inner.inner-viewport::after,
   #deck > .slide > .inner.inner-spacious::after{
@@ -583,7 +435,7 @@
   .deliverable-volaris-slide .deliverable-panel h3,
   .deliverable-volaris-slide .figma-spec-list li,
   .deliverable-volaris-slide .deliverable-takeaway{font-size:max(13px,.8125rem)!important;line-height:1.45}
-  .deliverable-volaris-slide .inline-code{font-size:max(13px,.8125rem)!important}
+  .deliverable-volaris-slide .inline-code{font-size:max(12px,.75rem)!important}
 }
 
 @media (max-height:620px) and (min-width:641px){
