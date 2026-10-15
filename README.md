@@ -6,10 +6,11 @@ Sitio estático en **GitHub Pages** para presentaciones internas de Applaudo (HT
 
 ## Decks publicados
 
-| Deck | URL |
-|------|-----|
-| Volaris PoC Flex | [/volaris-poc-flex/](https://alizardo-applaudo.github.io/applaudo-decks/volaris-poc-flex/) |
-| Plantilla | [/template/](https://alizardo-applaudo.github.io/applaudo-decks/template/) |
+| Deck | Descripción | Path | URL |
+|------|-------------|------|-----|
+| Un método, tres caminos | Diseño-código con AI en Applaudo. | `tres-caminos/` | [/tres-caminos/](https://alizardo-applaudo.github.io/applaudo-decks/tres-caminos/) |
+| Volaris PoC Flex | Mapa de pruebas, señales de tiempo y roadmap del handoff sellado — para liderazgo interno. | `volaris-poc-flex/` | [/volaris-poc-flex/](https://alizardo-applaudo.github.io/applaudo-decks/volaris-poc-flex/) |
+| Plantilla | Copia esta carpeta para un deck nuevo | `template/` | [/template/](https://alizardo-applaudo.github.io/applaudo-decks/template/) |
 
 ## Cómo agregar un deck nuevo (para diseño, sin código complicado)
 
