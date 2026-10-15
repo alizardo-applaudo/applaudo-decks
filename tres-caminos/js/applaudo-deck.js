@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'tres-caminos-diagram-fit-20261015';
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-diagram-uniform-20261015f';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -73,56 +73,12 @@
       return false;
     }
 
-    function measureEmbedContent(doc, cfg) {
+    function readIframeContentSize(doc) {
       var docEl = doc.documentElement;
       var body = doc.body;
-      var canvas = doc.getElementById('canvas');
-      var foot = doc.querySelector('.footnote');
-      var nodeSel = cfg.nodeSel || '.box';
-      var rootRect = docEl.getBoundingClientRect();
-      var minX = Infinity;
-      var maxX = -Infinity;
-      var maxY = 0;
-      doc.querySelectorAll(nodeSel).forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.width < 0.5 && r.height < 0.5) return;
-        var left = r.left - rootRect.left + docEl.scrollLeft;
-        var right = r.right - rootRect.left + docEl.scrollLeft;
-        var bottom = r.bottom - rootRect.top + docEl.scrollTop;
-        minX = Math.min(minX, left);
-        maxX = Math.max(maxX, right);
-        maxY = Math.max(maxY, bottom);
-      });
-      if (!isFinite(minX)) {
-        minX = 0;
-        maxX = canvas ? canvas.scrollWidth : docEl.scrollWidth;
-      }
-      var bleed = cfg.nodeBleed != null ? cfg.nodeBleed : 8;
-      var nodeSpanW = Math.max(0, maxX - minX);
-      var contentW = Math.ceil(Math.max(maxX + bleed, minX + nodeSpanW + bleed));
-      if (canvas) {
-        contentW = Math.ceil(
-          Math.max(contentW, canvas.scrollWidth, canvas.offsetWidth, maxX + bleed),
-        );
-      } else {
-        contentW = Math.ceil(Math.max(contentW, docEl.scrollWidth, body ? body.scrollWidth : 0));
-      }
-      var contentH = 0;
-      if (canvas) {
-        contentH = Math.max(canvas.offsetHeight, maxY + bleed);
-        if (foot && foot.offsetHeight > 0 && cfg.includeFootnoteInHeight !== false) {
-          contentH = Math.max(contentH, foot.offsetTop + foot.offsetHeight + 4);
-        }
-      } else {
-        contentH = Math.max(docEl.scrollHeight, body ? body.scrollHeight : 0, maxY + bleed);
-      }
-      contentH = Math.ceil(contentH);
       return {
-        contentW: contentW,
-        contentH: contentH,
-        nodeMinX: minX,
-        nodeMaxX: maxX,
-        nodeSpanW: nodeSpanW,
+        contentW: Math.ceil(Math.max(docEl.scrollWidth, body ? body.scrollWidth : 0, docEl.offsetWidth || 0)),
+        contentH: Math.ceil(Math.max(docEl.scrollHeight, body ? body.scrollHeight : 0, docEl.offsetHeight || 0)),
       };
     }
 
@@ -135,27 +91,6 @@
         return rect.bottom - afterH;
       }
       return rect.bottom;
-    }
-
-    function diagramNodeViewportSpan(doc, fr) {
-      if (!doc || !fr) return null;
-      var frRect = fr.getBoundingClientRect();
-      var docRect = doc.documentElement.getBoundingClientRect();
-      var docW = docRect.width || doc.documentElement.scrollWidth || 1;
-      var minL = Infinity;
-      var maxR = -Infinity;
-      doc.querySelectorAll('.box').forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.width < 0.5 && r.height < 0.5) return;
-        var relL = r.left - docRect.left;
-        var relR = r.right - docRect.left;
-        var left = frRect.left + (relL / docW) * frRect.width;
-        var right = frRect.left + (relR / docW) * frRect.width;
-        minL = Math.min(minL, left);
-        maxR = Math.max(maxR, right);
-      });
-      if (!isFinite(minL)) return null;
-      return { minL: minL, maxR: maxR, span: maxR - minL };
     }
 
     function fitEmbeddedDiagram(cfg) {
@@ -174,70 +109,88 @@
         var marginX = cfg.marginX != null ? cfg.marginX : 0;
         var marginY = cfg.marginY != null ? cfg.marginY : 12;
         var viewportMargin = cfg.viewportMargin != null ? cfg.viewportMargin : 16;
-        if (!narrow && window.innerHeight <= 730) viewportMargin = 14;
         var stageStyle = window.getComputedStyle(stage);
         var padT = parseFloat(stageStyle.paddingTop) || 0;
         var padB = parseFloat(stageStyle.paddingBottom) || 0;
         var padL = parseFloat(stageStyle.paddingLeft) || 0;
         var padR = parseFloat(stageStyle.paddingRight) || 0;
-        var availW = stage.clientWidth - padL - padR - marginX * 2;
+        var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
+        var availStageW = Math.max(0, stageInnerW - marginX * 2);
         var narrow =
           (cfg.frameId === 'dosFrame' || cfg.frameId === 'decisionFrame') &&
           isNarrowDiagramViewport(stage);
         if (doc.documentElement) {
           doc.documentElement.classList.toggle('is-mobile-narrow', narrow);
+          doc.documentElement.classList.toggle(
+            'is-short-embed',
+            !narrow && window.innerHeight <= 730,
+          );
         }
         if (doc.body) {
-          doc.body.style.overflow = narrow ? 'hidden' : '';
+          doc.body.style.margin = '0';
+          doc.body.style.overflow = 'hidden';
         }
         fr.style.width = narrow
-          ? Math.max(320, Math.floor(availW)) + 'px'
+          ? Math.max(320, Math.floor(availStageW)) + 'px'
           : (cfg.measureWidth || 1600) + 'px';
         fr.style.overflow = 'hidden';
         if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
         win.dispatchEvent(new Event('resize'));
 
-        var measured = measureEmbedContent(doc, cfg);
-        var contentW = measured.contentW;
-        var contentH = measured.contentH;
+        function syncEmbedDocumentWidth() {
+          if (narrow || !doc) return 0;
+          var canvas = doc.getElementById('canvas');
+          if (!canvas) return 0;
+          var page = doc.querySelector('.page');
+          var docW = Math.ceil(
+            Math.max(canvas.scrollWidth, canvas.offsetWidth, canvas.getBoundingClientRect().width),
+          );
+          if (page) {
+            page.style.width = docW + 'px';
+            page.style.maxWidth = 'none';
+          }
+          if (doc.documentElement) {
+            doc.documentElement.style.width = docW + 'px';
+          }
+          if (doc.body) {
+            doc.body.style.width = docW + 'px';
+          }
+          if (doc.documentElement.classList.contains('is-short-embed')) {
+            var integ = doc.querySelector('.integrity');
+            var foot = doc.querySelector('.footnote');
+            if (integ) {
+              integ.style.marginTop = '12px';
+              integ.style.paddingBottom = '10px';
+            }
+            if (foot) foot.style.marginTop = '4px';
+          }
+          fr.style.width = docW + 'px';
+          return docW;
+        }
+
+        syncEmbedDocumentWidth();
+        var sizes = readIframeContentSize(doc);
+        var contentW = sizes.contentW;
+        var contentH = sizes.contentH;
         if (!narrow) {
-          fr.style.width = contentW + 'px';
           fr.style.height = contentH + 'px';
           wrap.style.width = contentW + 'px';
           wrap.style.height = contentH + 'px';
-          if (doc.body) {
-            doc.body.style.margin = '0';
-            doc.body.style.overflow = 'hidden';
-          }
           if (cfg.relayoutFn && typeof win[cfg.relayoutFn] === 'function') win[cfg.relayoutFn]();
           win.dispatchEvent(new Event('resize'));
-          measured = measureEmbedContent(doc, cfg);
-          contentW = measured.contentW;
-          contentH = measured.contentH;
+          syncEmbedDocumentWidth();
+          sizes = readIframeContentSize(doc);
+          contentW = sizes.contentW;
+          contentH = sizes.contentH;
           fr.style.width = contentW + 'px';
           fr.style.height = contentH + 'px';
           wrap.style.width = contentW + 'px';
           wrap.style.height = contentH + 'px';
-          if (doc.documentElement) {
-            doc.documentElement.style.overflow = 'hidden';
-            doc.documentElement.style.width = contentW + 'px';
-          }
-          if (doc.body) {
-            doc.body.style.width = contentW + 'px';
-          }
-          var docH = Math.max(
-            doc.documentElement.scrollHeight,
-            doc.body ? doc.body.scrollHeight : 0,
-            contentH,
-          );
-          if (docH > contentH) {
-            contentH = Math.ceil(docH);
-            fr.style.height = contentH + 'px';
-            wrap.style.height = contentH + 'px';
-          }
+          if (doc.documentElement) doc.documentElement.style.overflow = 'hidden';
         } else {
-          contentH = Math.max(contentH, doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0);
-          contentH = Math.ceil(contentH) + 6;
+          contentH = Math.ceil(
+            Math.max(contentH, doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0),
+          ) + 6;
           fr.style.height = contentH + 'px';
           wrap.style.width = contentW + 'px';
           wrap.style.height = contentH + 'px';
@@ -245,149 +198,129 @@
 
         var creditEl = slide.querySelector('.dos-credit');
         var isDecision = slide.classList.contains('decision-slide');
-        var creditBand = creditEl ? creditEl.offsetHeight + 10 : 0;
+        var creditBand = creditEl ? creditEl.offsetHeight + 6 : 0;
         var extraBand = isDecision ? 0 : creditBand;
-        var stageInnerW = Math.max(0, stage.clientWidth - padL - padR);
-        var hostInset = narrow ? 0 : 0;
-        var hostW = Math.max(0, stageInnerW - marginX * 2);
-        var hostInnerW = Math.max(0, hostW - hostInset * 2);
-        var hostH = stage.clientHeight - padT - padB - marginY - extraBand;
-        var navClear = cfg.navClearance != null ? cfg.navClearance : 24;
+        var hostW = availStageW;
+        var stageInnerH = Math.max(0, stage.clientHeight - padT - padB);
+        var hostH = Math.max(0, stageInnerH - marginY - extraBand);
+        var navClear = cfg.navClearance != null ? cfg.navClearance : 28;
         var navEl = document.querySelector('.nav');
+        var clearBand = window.innerHeight <= 730 ? 18 : navClear;
         if (!narrow && navEl) {
           var navTop = navEl.getBoundingClientRect().top;
           var stageRect = stage.getBoundingClientRect();
-          var maxHostBottom = navTop - navClear;
-          hostH = Math.min(hostH, maxHostBottom - stageRect.top - padT - marginY);
+          hostH = Math.min(hostH, navTop - clearBand - stageRect.top - padT - marginY);
+          if (creditEl && !isDecision) {
+            var diagramMaxBottom = navTop - clearBand - creditBand;
+            var diagramAvailH = diagramMaxBottom - stageRect.top - padT - marginY;
+            hostH = Math.min(hostH, Math.max(0, diagramAvailH));
+          }
         }
         hostH = Math.max(0, hostH);
 
         var vw = window.innerWidth;
-        var fitW = Math.max(0, vw - viewportMargin * 2 - 2);
-        var bleedPx = cfg.nodeBleed != null ? cfg.nodeBleed : 8;
-        var nodeSpanW = Math.max(measured.nodeSpanW + bleedPx * 2, 1);
-        var scale = narrow ? 1 : Math.min(fitW / nodeSpanW, fitW / contentW, 1);
+        var availW = Math.max(0, Math.min(hostW, vw) - viewportMargin * 2);
+        var scale = narrow ? 1 : Math.min(availW / contentW, hostH / contentH, 1);
         if (!isFinite(scale) || scale <= 0) scale = 0.5;
         if (narrow) scale = Math.min(scale, 1);
-        else scale = Math.min(scale, 1);
         var minFs = Infinity;
+        var minScaleFromFont = 0.25;
         if (!narrow && doc) {
           var fontSel =
             cfg.frameId === 'dosFrame'
               ? '.box,.stack .seg .t,.stack .seg .s,.cap,.footnote,.frame-label,.osbar,.skills .box,.feeds'
               : '.box,.method-title,.method-cap,.method-sublabel,.team-header,.stack .seg .t,.signal,.signal .lab';
-          minFs = Infinity;
           doc.querySelectorAll(fontSel).forEach(function (el) {
             var fs = parseFloat(win.getComputedStyle(el).fontSize);
             if (fs > 0 && fs < minFs) minFs = fs;
           });
-          if (isFinite(minFs) && minFs > 0 && minFs * scale < 12) {
-            var fontScale = Math.min(1, 12 / minFs);
-            scale = Math.min(fontScale, fitW / nodeSpanW, fitW / contentW, 1);
+          if (isFinite(minFs) && minFs > 0) {
+            minScaleFromFont = 12 / minFs;
+            if (minFs * scale < 12) {
+              scale = Math.min(minScaleFromFont, availW / contentW, hostH / contentH, 1);
+            }
           }
         }
-        var insetPad = narrow ? 0 : hostInset;
-        wrap.style.transformOrigin = 'top left';
-        wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
-        wrap.style.marginLeft = insetPad + 'px';
-        wrap.style.marginRight = '0';
-        wrap.style.zoom = '';
-        host.style.display = 'block';
-        host.style.overflow = narrow ? 'visible' : 'hidden';
-        host.style.boxSizing = 'border-box';
-        host.style.paddingLeft = insetPad + 'px';
-        host.style.paddingRight = insetPad + 'px';
-        host.style.width = narrow ? '100%' : hostW + 'px';
-        host.style.maxWidth = hostW + 'px';
-        host.style.height = Math.ceil(contentH * scale) + 'px';
-        host.style.flex = '0 0 auto';
-        host.style.minHeight = '0';
-        host.style.minWidth = '0';
-        host.style.margin = '0 auto';
-        void host.offsetHeight;
 
-        if (!narrow) {
-          function centerDiagramNodes() {
-            var span = diagramNodeViewportSpan(doc, fr);
-            if (!span || span.span <= 0) return span;
-            var maxEdge = vw - viewportMargin;
-            if (span.minL < viewportMargin - 0.5 || span.maxR > maxEdge + 0.5) {
-              var factor = fitW / span.span;
-              scale = scale * Math.min(1, factor * 0.992);
-              wrap.style.transform = 'scale(' + scale + ')';
-              host.style.height = Math.ceil(contentH * scale) + 'px';
-              void host.offsetHeight;
-              span = diagramNodeViewportSpan(doc, fr);
-            }
-            if (span && span.span > 0) {
-              var slack = fitW - span.span;
-              var targetMin = viewportMargin + Math.max(0, slack) / 2;
-              var shift = targetMin - span.minL;
-              var ml = parseFloat(wrap.style.marginLeft) || insetPad;
-              wrap.style.marginLeft = ml + shift + 'px';
-              void host.offsetHeight;
-            }
-            return diagramNodeViewportSpan(doc, fr);
+        function applyScale(nextScale, opts) {
+          opts = opts || {};
+          if (
+            !narrow &&
+            !opts.allowBelowMinFont &&
+            isFinite(minScaleFromFont) &&
+            minScaleFromFont > 0
+          ) {
+            nextScale = Math.max(minScaleFromFont, nextScale);
           }
-
-          for (var pass = 0; pass < 8; pass++) {
-            var aligned = centerDiagramNodes();
-            if (
-              aligned &&
-              aligned.minL >= viewportMargin - 0.5 &&
-              aligned.maxR <= vw - viewportMargin + 0.5
-            ) {
-              break;
-            }
+          scale = nextScale;
+          wrap.style.transformOrigin = 'top center';
+          wrap.style.transform = 'none';
+          wrap.style.marginLeft = '0';
+          wrap.style.marginRight = '0';
+          if (narrow) {
+            wrap.style.zoom = scale < 1 ? String(scale) : '';
+          } else if (scale >= 1) {
+            wrap.style.zoom = '';
+          } else {
+            wrap.style.zoom = String(scale);
           }
+          host.style.display = 'flex';
+          host.style.boxSizing = 'border-box';
+          host.style.paddingLeft = '0';
+          host.style.paddingRight = '0';
+          host.style.width = narrow ? '100%' : hostW + 'px';
+          host.style.maxWidth = '100%';
+          host.style.minHeight = '0';
+          host.style.minWidth = '0';
+          host.style.margin = '0 auto';
+          wrap.style.marginTop = '0';
+          wrap.style.marginBottom = '0';
+          if (narrow) {
+            host.style.flexDirection = '';
+            host.style.justifyContent = 'center';
+            host.style.alignItems = 'flex-start';
+            host.style.overflow = 'visible';
+            host.style.height = 'auto';
+            host.style.maxHeight = 'none';
+            host.style.flex = '1 1 auto';
+            wrap.style.flex = '';
+          } else {
+            var scaledH = Math.ceil(contentH * scale);
+            host.style.flexDirection = 'column';
+            host.style.justifyContent = 'flex-start';
+            host.style.alignItems = 'center';
+            host.style.overflow = 'hidden';
+            host.style.height = scaledH + 'px';
+            host.style.maxHeight = hostH + 'px';
+            host.style.flex = '0 0 auto';
+            host.style.marginTop = '0';
+            host.style.marginBottom = '0';
+            host.style.minHeight = '0';
+            wrap.style.flex = '0 0 auto';
+          }
+          if (fr.contentWindow) {
+            fr.contentWindow.scrollTo(0, 0);
+          }
+          if (doc.documentElement) doc.documentElement.scrollTop = 0;
+          if (doc.body) doc.body.scrollTop = 0;
+          slide.scrollTop = 0;
+          void host.offsetHeight;
+        }
 
-          function enforceCreditAboveNav() {
-            if (!creditEl || !navEl) return true;
-            var navTopNow = navEl.getBoundingClientRect().top;
+        applyScale(scale);
+
+        if (!narrow && creditEl && navEl) {
+          for (var cv = 0; cv < 16; cv++) {
+            if (visibleBoxBottom(creditEl) <= navEl.getBoundingClientRect().top - clearBand) break;
+            var hostTop = host.getBoundingClientRect().top;
             var creditRect = creditEl.getBoundingClientRect();
             var creditTextH = Math.max(0, visibleBoxBottom(creditEl) - creditRect.top);
-            var hostTop = host.getBoundingClientRect().top;
-            var clearBand = window.innerHeight <= 730 ? 18 : navClear;
-            var maxDiagramBottom = navTopNow - clearBand - creditTextH - 4;
-            var maxScaledH = maxDiagramBottom - hostTop;
-            if (maxScaledH > 0 && contentH * scale > maxScaledH + 0.5) {
-              scale = Math.max(0.25, maxScaledH / contentH);
-              wrap.style.transform = 'scale(' + scale + ')';
-              host.style.height = Math.ceil(contentH * scale) + 'px';
-              void host.offsetHeight;
-              centerDiagramNodes();
-            }
-            return visibleBoxBottom(creditEl) <= navTopNow - clearBand;
-          }
-
-          for (var cv = 0; cv < 10; cv++) {
-            if (enforceCreditAboveNav()) break;
-          }
-
-          if (doc && isFinite(minFs) && minFs > 0) {
-            var minFontScale = Math.min(1, 12 / minFs);
-            if (scale < minFontScale) {
-              var tryScale = minFontScale;
-              wrap.style.transform = 'scale(' + tryScale + ')';
-              host.style.height = Math.ceil(contentH * tryScale) + 'px';
-              void host.offsetHeight;
-              centerDiagramNodes();
-              var spanTry = diagramNodeViewportSpan(doc, fr);
-              var maxEdgeTry = vw - viewportMargin;
-              var creditOk = enforceCreditAboveNav();
-              if (
-                creditOk &&
-                spanTry &&
-                spanTry.minL >= viewportMargin - 0.5 &&
-                spanTry.maxR <= maxEdgeTry + 0.5
-              ) {
-                scale = tryScale;
-              } else {
-                wrap.style.transform = 'scale(' + scale + ')';
-                host.style.height = Math.ceil(contentH * scale) + 'px';
-                centerDiagramNodes();
-              }
-            }
+            var maxScaledH =
+              navEl.getBoundingClientRect().top - clearBand - creditTextH - 6 - hostTop;
+            if (maxScaledH <= 0 || contentH <= 0) break;
+            applyScale(Math.max(0.25, Math.min(scale, maxScaledH / contentH)), {
+              allowBelowMinFont: true,
+            });
           }
         }
 
@@ -411,16 +344,10 @@
       wrapId: 'dosScaleWrap',
       hostId: 'dosScaleHost',
       relayoutFn: 'designOSRelayout',
-      defaultW: 1360,
-      defaultH: 520,
-      designW: 1424,
-      designH: 635,
       marginX: 0,
       marginY: 4,
       viewportMargin: 16,
-      nodeBleed: 8,
-      includeFootnoteInHeight: false,
-      navClearance: 28
+      navClearance: 28,
     };
     var DECISION_CFG = {
       frameId: 'decisionFrame',
@@ -430,8 +357,7 @@
       marginX: 0,
       marginY: 2,
       viewportMargin: 16,
-      nodeBleed: 8,
-      navClearance: 28
+      navClearance: 28,
     };
 
     function scheduleActiveDiagramFit() {
