@@ -286,6 +286,99 @@ const ENFORCE_VIEWPORTS = new Set([
   '1536x730',
 ]);
 
+const DIAGRAM_NODE_VIEWPORTS = new Set(['1440x900', '1366x768', '1536x730']);
+const DIAGRAM_VIEWPORT_MARGIN_PX = 16;
+const DIAGRAM_CREDIT_NAV_CLEARANCE_PX = 28;
+
+async function checkDiagramNodeViewportBounds(page, slideNum, frameId, label) {
+  if (!DIAGRAM_NODE_VIEWPORTS.has(label)) return true;
+
+  const failures = await page.evaluate(
+    ({ slideNum, frameId, margin, navClearance, shortHeightNavClearance }) => {
+      const vw = window.innerWidth;
+      const creditClear =
+        window.innerHeight <= 730 ? shortHeightNavClearance : navClearance;
+      const fr = document.getElementById(frameId);
+      const doc = fr?.contentDocument;
+      if (!doc) return [{ slide: slideNum, reason: 'iframe-missing', frameId }];
+
+      const wrapId = frameId === 'dosFrame' ? 'dosScaleWrap' : 'decisionScaleWrap';
+      const wrap = document.getElementById(wrapId);
+      const frRect = fr.getBoundingClientRect();
+      const docRect = doc.documentElement.getBoundingClientRect();
+      const docW = docRect.width || doc.documentElement.scrollWidth || 1;
+
+      const out = [];
+      doc.querySelectorAll('.box').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.width < 0.5 && r.height < 0.5) return;
+        const relL = r.left - docRect.left;
+        const relR = r.right - docRect.left;
+        const left = frRect.left + (relL / docW) * frRect.width;
+        const right = frRect.left + (relR / docW) * frRect.width;
+        const text = (el.textContent || '').trim().slice(0, 40);
+        if (left < margin - 0.5) {
+          out.push({
+            slide: slideNum,
+            reason: 'diagram-node-outside-viewport-left',
+            left: Math.round(left * 10) / 10,
+            min: margin,
+            text,
+          });
+        }
+        if (right > vw - margin + 0.5) {
+          out.push({
+            slide: slideNum,
+            reason: 'diagram-node-outside-viewport-right',
+            right: Math.round(right * 10) / 10,
+            max: vw - margin,
+            text,
+          });
+        }
+      });
+
+      const slide = document.querySelector('.dos-slide.active');
+      const credit = slide?.querySelector('.dos-credit');
+      const nav = document.querySelector('.nav');
+      if (slideNum === 7 && credit && nav) {
+        const creditRect = credit.getBoundingClientRect();
+        const afterStyle = getComputedStyle(credit, '::after');
+        const afterH = parseFloat(afterStyle.height) || 0;
+        const creditBottom =
+          afterH > 0 && afterStyle.content && afterStyle.content !== 'none'
+            ? creditRect.bottom - afterH
+            : creditRect.bottom;
+        const navTop = nav.getBoundingClientRect().top;
+        if (creditBottom > navTop - creditClear) {
+          out.push({
+            slide: slideNum,
+            reason: 'dos-credit-under-nav',
+            creditBottom: Math.round(creditBottom),
+            navTop: Math.round(navTop),
+          });
+        }
+      }
+      return out;
+    },
+    {
+      slideNum,
+      frameId,
+      margin: DIAGRAM_VIEWPORT_MARGIN_PX,
+      navClearance: DIAGRAM_CREDIT_NAV_CLEARANCE_PX,
+      shortHeightNavClearance: 18,
+    },
+  );
+
+  const pass = failures.length === 0;
+  console.log(
+    `  slide ${slideNum} diagram node viewport @ ${label}: ${pass ? 'PASS' : 'FAIL'} (${failures.length})`,
+  );
+  if (!pass) {
+    for (const f of failures.slice(0, 10)) console.log('   ', JSON.stringify(f));
+  }
+  return pass;
+}
+
 async function checkLogoEyebrowClearance(page, slideIndex, label) {
   const shortViewport = label === '1024x500' || label === '390x844';
   if (!shortViewport) return true;
@@ -1039,6 +1132,8 @@ for (const { label, width, height } of sizes) {
     if (i === PROCESS_SLIDE_INDEX) {
       const dosPass = await checkEmbeddedIframe(page, 7, 'dosFrame', 'dosScaleHost', label);
       if (!dosPass) allPass = false;
+      const dosNodePass = await checkDiagramNodeViewportBounds(page, 7, 'dosFrame', label);
+      if (!dosNodePass) allPass = false;
       const dosFontPass = await checkDiagramMinFont(page, 7, 'dosFrame', label);
       if (!dosFontPass) allPass = false;
     }
@@ -1047,6 +1142,8 @@ for (const { label, width, height } of sizes) {
       if (!decisionPass) allPass = false;
       const embedPass = await checkEmbeddedIframe(page, 11, 'decisionFrame', 'decisionScaleHost', label);
       if (!embedPass) allPass = false;
+      const decisionNodePass = await checkDiagramNodeViewportBounds(page, 11, 'decisionFrame', label);
+      if (!decisionNodePass) allPass = false;
       const decisionFontPass = await checkDiagramMinFont(page, 11, 'decisionFrame', label);
       if (!decisionFontPass) allPass = false;
     }
