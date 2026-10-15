@@ -105,7 +105,9 @@
 }
 
 @media (max-height:800px){
-  .deuda-slide .inner-viewport{padding-top:clamp(32px,6.5vh,42px)!important;padding-bottom:calc(var(--nav-safe) + 6px)!important}
+  .deuda-slide .inner-viewport{padding-top:clamp(32px,6.5vh,42px)!important;padding-bottom:calc(var(--nav-safe) + 6px)!important;overflow:visible!important}
+  .deuda-cards .problema-card h4{font-size:max(13px,.95rem)!important;margin-bottom:4px!important}
+  .deuda-cards .problema-card p{font-size:max(12px,.8125rem)!important;line-height:1.34!important}
   .deuda-slide .slide-head .eyebrow{margin-bottom:8px!important}
   .deuda-slide .slide-head .lead{margin-top:4px!important;line-height:1.32!important}
   .deuda-stack{gap:8px!important}

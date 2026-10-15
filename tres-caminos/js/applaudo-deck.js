@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'tres-caminos-polish-20261015';
+  var APPLAUDO_DECK_BUILD = 'tres-caminos-polish-20261015b';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -186,17 +186,19 @@
 
         var scaledH = Math.ceil(contentH * scale);
         var scaledW = Math.ceil(contentW * scale);
-        wrap.style.transformOrigin = 'top center';
+        var insetPad = narrow ? 0 : hostInset;
+        var offsetX = narrow ? 0 : Math.max(0, (hostInnerW - scaledW) / 2);
+        wrap.style.transformOrigin = 'top left';
         wrap.style.transform = narrow && scale >= 1 ? 'none' : 'scale(' + scale + ')';
+        wrap.style.marginLeft = offsetX + 'px';
+        wrap.style.marginRight = '0';
         wrap.style.zoom = '';
-        host.style.display = 'flex';
-        host.style.justifyContent = 'center';
-        host.style.alignItems = 'flex-start';
+        host.style.display = 'block';
         host.style.overflow = narrow ? 'visible' : 'hidden';
         host.style.boxSizing = 'border-box';
-        host.style.paddingLeft = hostInset + 'px';
-        host.style.paddingRight = hostInset + 'px';
-        host.style.width = narrow ? '100%' : Math.min(hostW, scaledW + hostInset * 2) + 'px';
+        host.style.paddingLeft = insetPad + 'px';
+        host.style.paddingRight = insetPad + 'px';
+        host.style.width = narrow ? '100%' : hostW + 'px';
         host.style.maxWidth = hostW + 'px';
         host.style.height = scaledH + 'px';
         host.style.flex = '0 0 auto';
