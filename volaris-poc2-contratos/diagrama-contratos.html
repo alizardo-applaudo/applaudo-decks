@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagrama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#141413;--card-grad:linear-gradient(180deg,#272723 0%,#1E1E1C 100%);--card-grad-hi:linear-gradient(180deg,#2E2E29 0%,#232321 100%);
+--ink:#F1EFEB;--muted:#8C8880;--cap:#A9A49B;--line:rgba(255,255,255,.11);--dash:rgba(255,255,255,.34);--wire:rgba(255,255,255,.46);
+--red:#F4626B;--red-line:rgba(244,98,107,.5);--lift:0 1px 2px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.035);
+--lift-hi:0 10px 28px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);--radius:12px;
+--font:"Poppins","Avenir Next","Segoe UI",-apple-system,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;min-height:100vh;position:relative;overflow-x:hidden}
+.glow-bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.glow-bg::before{content:'';position:absolute;inset:-25%;background:radial-gradient(ellipse 52% 48% at 22% 90%,rgba(255,64,64,.58) 0%,rgba(168,34,34,.32) 38%,rgba(168,34,34,0) 70%),radial-gradient(ellipse 38% 34% at 6% 60%,rgba(255,64,64,.2) 0%,rgba(255,64,64,0) 70%);animation:glow 22s ease-in-out infinite alternate;will-change:transform}
+@keyframes glow{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-5%,-4%,0) scale(1.08)}100%{transform:translate3d(3%,-8%,0) scale(1.14)}}
+.wrap{position:relative;z-index:1;width:max-content;max-width:none;margin:0 auto;padding:44px 30px 30px}
+.eyebrow{font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.6);margin:0 0 8px}
+h1{font-size:28px;font-weight:600;line-height:1.25;margin:0 0 6px;max-width:900px;letter-spacing:-.01em}
+.sub{font-size:13px;color:var(--muted);margin:0 0 18px}
+.canvas{position:relative;margin:0 auto}
+svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.fr path{fill:none;stroke:var(--dash);stroke-width:1.4;stroke-dasharray:5 4}
+.fr rect{fill:none}
+.fr.red path{stroke:var(--red-line)}.fr.red rect{fill:url(#redTint)}
+#wires g path{stroke:var(--wire);stroke-width:1.4;fill:none;transition:stroke .18s,opacity .18s}
+#wires g polygon{fill:var(--wire);transition:fill .18s}
+#wires g{transition:opacity .18s}
+#wires g.on path{stroke:var(--red)}#wires g.on polygon{fill:var(--red)}
+.dimmed #wires g:not(.on){opacity:.18}
+.frame-label{position:absolute;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:7px;padding:0 9px;line-height:16px;color:var(--ink);transition:opacity .18s}
+.frame-label::before{content:"";width:5px;height:5px;background:currentColor;transform:rotate(45deg)}
+.frame-label.red{color:var(--red)}
+.dimmed .frame-label:not(.on){opacity:.3}
+.box{position:absolute;background:var(--card-grad);border:1px solid var(--line);border-radius:var(--radius);
+ box-shadow:var(--lift);color:var(--ink);font-family:inherit;cursor:pointer;transition:.18s;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;z-index:2}
+.box .t{font-size:14px;font-weight:700}.box .s{font-size:11px;color:var(--cap);margin-top:3px}
+.box:hover{background:var(--card-grad-hi);border-color:rgba(255,255,255,.18);transform:translateY(-2px);box-shadow:var(--lift-hi)}
+.box:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.box.on{border-color:var(--red);box-shadow:0 10px 30px rgba(244,98,107,.16),inset 0 1px 0 rgba(255,255,255,.05)}
+.box.on .s{color:var(--red);font-weight:600}
+.dimmed .box:not(.on){opacity:.3}
+.detail{max-width:760px;margin:6px auto 0;text-align:center;font-size:13px;line-height:1.5;min-height:42px}
+.detail b{color:var(--red);font-weight:600;margin-right:6px}.detail span{color:var(--ink)}
+.tip{position:fixed;z-index:50;top:0;left:0;max-width:280px;background:linear-gradient(180deg,#302F2C 0%,#232220 100%);border:1px solid rgba(255,255,255,.10);color:#F3F1ED;border-radius:8px;padding:9px 12px;font-size:12px;line-height:1.45;box-shadow:0 12px 34px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(3px);transition:opacity .13s,transform .13s,visibility .13s;pointer-events:none}
+.tip.show{opacity:1;visibility:visible;transform:none}
+@media (prefers-reduced-motion:reduce){.glow-bg::before{animation:none}*{transition:none!important}}
+.elabel{position:absolute;transform:translate(-50%,-50%);font-size:10.5px;font-weight:500;color:var(--cap);background:var(--bg);padding:1px 7px;border-radius:6px;white-space:nowrap;z-index:1;transition:opacity .18s,color .18s;pointer-events:none}
+.elabel.on{color:var(--red)}.dimmed .elabel:not(.on){opacity:.18}
+</style>
+<script id="diagram-data" type="application/json">
+{
+ "width": 1300,
+ "height": 440,
+ "eyebrow": "Volaris PoC 2 · Fare Flex",
+ "title": "Contratos: antes vs ahora",
+ "subtitle": "Pasa el cursor o haz clic en un bloque para ver qué cubre.",
+ "caption": "Antes el contrato cubría piezas y estados. Ahora cubre también geometría, composición, datos, reglas y paridad.",
+ "groups": [
+  {
+   "id": "antes",
+   "label": "Antes · pack v1",
+   "accent": false,
+   "x": 20,
+   "y": 40,
+   "w": 380,
+   "h": 370,
+   "tip": "Lo que cubría el contrato de la primera corrida"
+  },
+  {
+   "id": "ahora",
+   "label": "Ahora · pack nuevo",
+   "accent": true,
+   "x": 460,
+   "y": 40,
+   "w": 820,
+   "h": 370,
+   "tip": "Lo que cubre el pack nuevo para la segunda corrida"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "a1",
+   "label": "Componentes",
+   "caption": "qué piezas reusar",
+   "desc": "El contrato v1 decía qué componentes usar y cuáles no.",
+   "group": "antes",
+   "x": 50,
+   "y": 80,
+   "w": 320,
+   "h": 84
+  },
+  {
+   "id": "a2",
+   "label": "Estados",
+   "caption": "cargando · 0/2 · 1/2 · 2/2",
+   "desc": "También definía los estados de cada pieza.",
+   "group": "antes",
+   "x": 50,
+   "y": 190,
+   "w": 320,
+   "h": 84
+  },
+  {
+   "id": "a3",
+   "label": "Todo lo demás",
+   "caption": "sin definir: el agente decidía",
+   "desc": "Tamaños, espaciado, íconos y origen de los datos quedaban fuera del contrato.",
+   "group": "antes",
+   "x": 50,
+   "y": 300,
+   "w": 320,
+   "h": 84
+  },
+  {
+   "id": "geo",
+   "label": "Geometría completa",
+   "caption": "tipografía · espaciado · alturas · colores · radios · íconos",
+   "desc": "Cada parte y cada estado definen su geometría por nombre de token. El agente ya no elige tamaños a ojo.",
+   "group": "ahora",
+   "x": 490,
+   "y": 80,
+   "w": 370,
+   "h": 84
+  },
+  {
+   "id": "comp",
+   "label": "Contrato de composición",
+   "caption": "qué va dentro de qué, y en qué orden",
+   "desc": "Además de las piezas, el contrato fija cómo se arman: por ejemplo, el selector va dentro de la card Flex.",
+   "group": "ahora",
+   "x": 890,
+   "y": 80,
+   "w": 370,
+   "h": 84
+  },
+  {
+   "id": "datos",
+   "label": "Origen de cada dato",
+   "caption": "CMS · backend · carrito, o fallback sellado",
+   "desc": "Cada contenido dinámico declara de dónde viene, si existe hoy y qué pasa si falta.",
+   "group": "ahora",
+   "x": 490,
+   "y": 190,
+   "w": 370,
+   "h": 84
+  },
+  {
+   "id": "reglas",
+   "label": "Reglas de negocio",
+   "caption": "validadas contra Confluence antes del sello",
+   "desc": "Ningún contrato se sella sin revisar las reglas de negocio. Así se detectó que Flex reemplaza a Basic.",
+   "group": "ahora",
+   "x": 890,
+   "y": 190,
+   "w": 370,
+   "h": 84
+  },
+  {
+   "id": "stop",
+   "label": "Cero invención",
+   "caption": "si falta algo, el agente se detiene",
+   "desc": "Nada de componentes nuevos, íconos de relleno ni geometría a ojo: ante un hueco, el agente para y pregunta.",
+   "group": "ahora",
+   "x": 490,
+   "y": 300,
+   "w": 370,
+   "h": 84
+  },
+  {
+   "id": "par",
+   "label": "Paridad visual vs Figma",
+   "caption": "firmada por Harold y Adonay",
+   "desc": "Al final se compara contra Figma, estado por estado. Firman Harold y Adonay.",
+   "group": "ahora",
+   "x": 890,
+   "y": 300,
+   "w": 370,
+   "h": 84
+  }
+ ],
+ "edges": []
+}
+</script>
+</head><body>
+<div class="glow-bg" aria-hidden="true"></div>
+<div class="wrap">
+ <p class="eyebrow" id="eyebrow"></p>
+ <h1 id="title"></h1>
+ <p class="sub" id="subtitle"></p>
+ <div class="canvas" id="canvas"><svg id="links"><defs><linearGradient id="redTint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4626B" stop-opacity=".085"/><stop offset="1" stop-color="#F4626B" stop-opacity=".03"/></linearGradient></defs><g id="frames"></g><g id="wires"></g></svg></div>
+ <p class="detail" id="detail"></p>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const D=JSON.parse(document.getElementById("diagram-data").textContent);
+const DW=D.nodeW||150,DH=D.nodeH||60;
+const N={},G={};
+(D.nodes||[]).forEach(n=>{N[n.id]=Object.assign({w:DW,h:DH},n)});
+(D.groups||[]).forEach(g=>{G[g.id]=g});
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+document.title=D.title||"Diagrama";
+document.getElementById("eyebrow").textContent=D.eyebrow||"";
+document.getElementById("title").textContent=D.title||"";
+document.getElementById("subtitle").textContent=D.subtitle||"";
+const cv=document.getElementById("canvas");cv.style.width=(D.width||1360)+"px";cv.style.height=(D.height||740)+"px";
+const wires=document.getElementById("wires"),frames=document.getElementById("frames");
+const NS="http://www.w3.org/2000/svg",mk=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+const cx=n=>n.x+n.w/2,cy=n=>n.y+n.h/2;
+// port on node n facing point p (orthogonal)
+function port(n,p){const[px,py]=p;
+ if(px>=n.x&&px<=n.x+n.w)return[px,py<n.y?n.y:n.y+n.h];
+ if(py>=n.y&&py<=n.y+n.h)return[px<n.x?n.x:n.x+n.w,py];
+ return Math.abs(py-cy(n))>Math.abs(px-cx(n))?[cx(n),py<n.y?n.y:n.y+n.h]:[px<n.x?n.x:n.x+n.w,cy(n)];}
+function autoRoute(a,b){
+ if(b.y<a.y+a.h&&b.y+b.h>a.y){const y=(Math.max(a.y,b.y)+Math.min(a.y+a.h,b.y+b.h))/2;return b.x>a.x?[[a.x+a.w,y],[b.x,y]]:[[a.x,y],[b.x+b.w,y]];}
+ if(b.x<a.x+a.w&&b.x+b.w>a.x){const x=(Math.max(a.x,b.x)+Math.min(a.x+a.w,b.x+b.w))/2;return b.y>a.y?[[x,a.y+a.h],[x,b.y]]:[[x,a.y],[x,b.y+b.h]];}
+ const down=b.y>a.y,y0=down?a.y+a.h:a.y,y1=down?b.y:b.y+b.h,m=(y0+y1)/2;return[[cx(a),y0],[cx(a),m],[cx(b),m],[cx(b),y1]];}
+function pointsFor(e){const a=N[e.from],b=N[e.to];if(!e.route||!e.route.length)return autoRoute(a,b);
+ const r=e.route;return[port(a,r[0]),...r,port(b,r[r.length-1])];}
+function rpath(pts,r=10){pts=pts.filter((p,i)=>i===0||p[0]!==pts[i-1][0]||p[1]!==pts[i-1][1]);
+ const last=pts[pts.length-1],prev=pts[pts.length-2];const dx=Math.sign(last[0]-prev[0]),dy=Math.sign(last[1]-prev[1]);
+ const end=[last[0]-dx*7,last[1]-dy*7];const P=[...pts.slice(0,-1),end];let d=`M${P[0][0]},${P[0][1]}`;
+ for(let i=1;i<P.length-1;i++){const[a,b,c]=[P[i-1],P[i],P[i+1]];const l1=Math.hypot(b[0]-a[0],b[1]-a[1]),l2=Math.hypot(c[0]-b[0],c[1]-b[1]);const rr=Math.min(r,l1/2,l2/2);
+  const p1=[b[0]+(a[0]-b[0])/l1*rr,b[1]+(a[1]-b[1])/l1*rr],p2=[b[0]+(c[0]-b[0])/l2*rr,b[1]+(c[1]-b[1])/l2*rr];d+=` L${p1} Q${b} ${p2}`;}
+ d+=` L${end}`;const px=-dy,py=dx;const head=[[last[0],last[1]],[end[0]+px*4.5,end[1]+py*4.5],[end[0]-px*4.5,end[1]-py*4.5]];return[d,head.map(p=>p.join(",")).join(" ")]}
+const W_=[];
+(D.edges||[]).forEach(e=>{if(!N[e.from]||!N[e.to]){console.warn("edge with unknown node",e);return;}
+ const pts=pointsFor(e),g=mk("g",{},wires),[d,h]=rpath(pts);mk("path",{d},g);mk("polygon",{points:h},g);let lab=null;
+ if(e.label){let best=0,bi=0;for(let i=1;i<pts.length;i++){const l=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);if(l>best){best=l;bi=i}}
+  lab=document.createElement("span");lab.className="elabel";lab.textContent=e.label;lab.style.left=(pts[bi-1][0]+pts[bi][0])/2+"px";lab.style.top=(pts[bi-1][1]+pts[bi][1])/2+"px";cv.appendChild(lab);}
+ W_.push({a:e.from,b:e.to,g,lab});});
+const labels={};
+for(const k in G){const f=G[k];const lab=document.createElement("span");lab.className="frame-label"+(f.accent?" red":"");lab.textContent=f.label;lab.dataset.tip=f.tip||"";
+ lab.style.left=(f.x+26)+"px";lab.style.top=(f.y-8)+"px";cv.appendChild(lab);labels[k]=lab;}
+function drawFrames(){frames.innerHTML="";for(const k in G){const f=G[k],g=mk("g",{class:"fr"+(f.accent?" red":"")},frames),r=14;
+ mk("rect",{x:f.x,y:f.y,width:f.w,height:f.h,rx:r},g);const gx0=f.x+26,gx1=gx0+labels[k].offsetWidth;
+ mk("path",{d:`M${gx1},${f.y} H${f.x+f.w-r} Q${f.x+f.w},${f.y} ${f.x+f.w},${f.y+r} V${f.y+f.h-r} Q${f.x+f.w},${f.y+f.h} ${f.x+f.w-r},${f.y+f.h} H${f.x+r} Q${f.x},${f.y+f.h} ${f.x},${f.y+f.h-r} V${f.y+r} Q${f.x},${f.y} ${f.x+r},${f.y} H${gx0}`},g);}}
+const boxes={},tip=document.getElementById("tip"),det=document.getElementById("detail");
+let pinned=null;
+for(const k in N){const n=N[k],b=document.createElement("button");b.className="box";b.style.left=n.x+"px";b.style.top=n.y+"px";b.style.width=n.w+"px";b.style.height=n.h+"px";
+ b.innerHTML=`<span class="t">${esc(n.label)}</span>`+(n.caption?`<span class="s">${esc(n.caption)}</span>`:"");cv.appendChild(b);boxes[k]=b;
+ b.addEventListener("mouseenter",()=>{sel(k);if(n.desc)showTip(b,n.desc)});b.addEventListener("mouseleave",()=>{tip.classList.remove("show");sel(pinned)});
+ b.addEventListener("click",()=>{pinned=pinned===k?null:k;sel(pinned||k)});b.addEventListener("focus",()=>sel(k));b.addEventListener("blur",()=>sel(pinned));}
+for(const k in labels){const l=labels[k];if(!l.dataset.tip)continue;l.style.cursor="help";l.addEventListener("mouseenter",()=>showTip(l,l.dataset.tip));l.addEventListener("mouseleave",()=>tip.classList.remove("show"));}
+function showTip(el,txt){tip.textContent=txt;tip.classList.add("show");const r=el.getBoundingClientRect(),t=tip.getBoundingClientRect();
+ tip.style.left=Math.max(8,r.left+r.width/2-t.width/2)+"px";tip.style.top=Math.max(8,r.top-t.height-10)+"px";}
+function sel(k){cv.classList.toggle("dimmed",!!k);
+ const nb=new Set(k?[k]:[]);W_.forEach(e=>{if(e.a===k)nb.add(e.b);if(e.b===k)nb.add(e.a)});
+ W_.forEach(e=>{const on=!!k&&(e.a===k||e.b===k);e.g.classList.toggle("on",on);if(e.lab)e.lab.classList.toggle("on",on)});
+ for(const j in boxes)boxes[j].classList.toggle("on",nb.has(j));
+ for(const f in labels)labels[f].classList.toggle("on",!!k&&[...nb].some(j=>N[j].group===f));
+ det.innerHTML=k?`<b>${esc(N[k].label)}${N[k].caption?" · "+esc(N[k].caption):""}</b><span>${esc(N[k].desc)}</span>`:`<span style="color:var(--muted)">${esc(D.caption)}</span>`;}
+(document.fonts?document.fonts.ready:Promise.resolve()).then(drawFrames);drawFrames();sel(null);
+</script></body></html>

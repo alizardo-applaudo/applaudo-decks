@@ -1,0 +1,136 @@
+{
+ "width": 340,
+ "height": 1032,
+ "eyebrow": "Volaris PoC 2 · Fare Flex",
+ "title": "Contratos: antes vs ahora",
+ "subtitle": "Pasa el cursor o haz clic en un bloque para ver qué cubre.",
+ "caption": "Antes el contrato cubría piezas y estados. Ahora cubre también geometría, composición, datos, reglas y paridad.",
+ "groups": [
+  {
+   "id": "antes",
+   "label": "Antes · pack v1",
+   "accent": false,
+   "x": 10,
+   "y": 28,
+   "w": 320,
+   "h": 298
+  },
+  {
+   "id": "ahora",
+   "label": "Ahora · pack nuevo",
+   "accent": true,
+   "x": 10,
+   "y": 448,
+   "w": 320,
+   "h": 564
+  }
+ ],
+ "nodes": [
+  {
+   "id": "a1",
+   "label": "Componentes",
+   "caption": "qué piezas reusar",
+   "desc": "El contrato v1 decía qué componentes usar y cuáles no.",
+   "group": "antes",
+   "x": 30,
+   "y": 60,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "a2",
+   "label": "Estados",
+   "caption": "cargando · 0/2 · 1/2 · 2/2",
+   "desc": "También definía los estados de cada pieza.",
+   "group": "antes",
+   "x": 30,
+   "y": 146,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "a3",
+   "label": "Todo lo demás",
+   "caption": "sin definir: el agente decidía",
+   "desc": "Tamaños, espaciado, íconos y origen de los datos quedaban fuera del contrato.",
+   "group": "antes",
+   "x": 30,
+   "y": 232,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "geo",
+   "label": "Geometría completa",
+   "caption": "tipografía · espaciado · alturas · colores · radios · íconos",
+   "desc": "Cada parte y cada estado definen su geometría por nombre de token. El agente ya no elige tamaños a ojo.",
+   "group": "ahora",
+   "x": 30,
+   "y": 488,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "comp",
+   "label": "Contrato de composición",
+   "caption": "qué va dentro de qué, y en qué orden",
+   "desc": "Además de las piezas, el contrato fija cómo se arman: por ejemplo, el selector va dentro de la card Flex.",
+   "group": "ahora",
+   "x": 30,
+   "y": 574,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "datos",
+   "label": "Origen de cada dato",
+   "caption": "CMS · backend · carrito, o fallback sellado",
+   "desc": "Cada contenido dinámico declara de dónde viene, si existe hoy y qué pasa si falta.",
+   "group": "ahora",
+   "x": 30,
+   "y": 660,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "reglas",
+   "label": "Reglas de negocio",
+   "caption": "validadas contra Confluence antes del sello",
+   "desc": "Ningún contrato se sella sin revisar las reglas de negocio. Así se detectó que Flex reemplaza a Basic.",
+   "group": "ahora",
+   "x": 30,
+   "y": 746,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "stop",
+   "label": "Cero invención",
+   "caption": "si falta algo, el agente se detiene",
+   "desc": "Nada de componentes nuevos, íconos de relleno ni geometría a ojo: ante un hueco, el agente para y pregunta.",
+   "group": "ahora",
+   "x": 30,
+   "y": 832,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "par",
+   "label": "Paridad visual vs Figma",
+   "caption": "firmada por Harold y Adonay",
+   "desc": "Al final se compara contra Figma, estado por estado. Firman Harold y Adonay.",
+   "group": "ahora",
+   "x": 30,
+   "y": 918,
+   "w": 280,
+   "h": 70
+  }
+ ],
+ "edges": [
+  {
+   "from": "a3",
+   "to": "geo",
+   "label": "ahora"
+  }
+ ]
+}
