@@ -54,16 +54,16 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
  "height": 620,
  "eyebrow": "Volaris PoC 2 · Fare Flex",
  "title": "El nuevo flujo, en orden",
- "subtitle": "Pasa el cursor o haz clic en una etapa para ver qué pasa en ella.",
+ "subtitle": "Toca un nodo para ver qué pasa en esa etapa.",
  "caption": "Nada se construye hasta que reglas, datos y UI están sellados. Si falta algo, el agente se detiene.",
  "groups": [
   {
    "id": "sello",
    "label": "Antes del sello",
    "accent": true,
-   "x": 8,
+   "x": 6,
    "y": 28,
-   "w": 264,
+   "w": 204,
    "h": 318,
    "tip": "Se cierra antes de que el agente escriba nada"
   },
@@ -71,9 +71,9 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "id": "corrida",
    "label": "Corrida",
    "accent": false,
-   "x": 8,
+   "x": 6,
    "y": 380,
-   "w": 264,
+   "w": 204,
    "h": 224,
    "tip": "La construcción y su verificación"
   }
@@ -85,9 +85,9 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "caption": "Confluence, revisadas",
    "desc": "Se validan las reglas de negocio antes de escribir nada. Ejemplo: Flex reemplaza a Basic en Volaris.",
    "group": "sello",
-   "x": 20,
+   "x": 18,
    "y": 60,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -96,9 +96,9 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "caption": "de dónde sale cada dato",
    "desc": "Cada dato tiene fuente (CMS, backend o carrito) o un fallback sellado con su ticket.",
    "group": "sello",
-   "x": 20,
+   "x": 18,
    "y": 154,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -107,9 +107,9 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "caption": "geometría + composición",
    "desc": "Piezas, estados, geometría completa y composición. Se sella con las firmas.",
    "group": "sello",
-   "x": 20,
+   "x": 18,
    "y": 248,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -118,9 +118,9 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "caption": "el agente arma la feature",
    "desc": "El agente construye solo con el pack sellado. Si falta algo, se detiene y pregunta.",
    "group": "corrida",
-   "x": 20,
+   "x": 18,
    "y": 412,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -129,9 +129,9 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "caption": "vs Figma · Harold + Adonay",
    "desc": "Se compara estado por estado contra Figma. Firman Harold y Adonay.",
    "group": "corrida",
-   "x": 20,
+   "x": 18,
    "y": 506,
-   "w": 240,
+   "w": 180,
    "h": 70
   }
  ],
@@ -157,15 +157,15 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "to": "u",
    "route": [
     [
-     305,
+     262,
      447
     ],
     [
-     305,
+     262,
      283
     ]
    ],
-   "label": "STOP"
+   "label": "Falta algo → vuelve"
   }
  ]
 }
@@ -240,4 +240,30 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
  for(const f in labels)labels[f].classList.toggle("on",!!k&&[...nb].some(j=>N[j].group===f));
  det.innerHTML=k?`<b>${esc(N[k].label)}${N[k].caption?" · "+esc(N[k].caption):""}</b><span>${esc(N[k].desc)}</span>`:`<span style="color:var(--muted)">${esc(D.caption)}</span>`;}
 (document.fonts?document.fonts.ready:Promise.resolve()).then(drawFrames);drawFrames();sel(null);
-</script></body></html>
+</script>
+<style id="fit-viewport">
+.wrap{width:max-content;max-width:100%}
+#title,.sub,.detail{max-width:min(900px,calc(100vw - 60px));overflow-wrap:anywhere}
+.fit-host{position:relative;margin:0 auto}
+.fit-host>#canvas{position:absolute;left:0;top:0;transform-origin:0 0;margin:0}
+@media (max-width:640px){.wrap{padding:28px 16px 24px}#title,.sub,.detail{max-width:calc(100vw - 32px)}h1{font-size:24px}}
+</style>
+<script>
+(function(){
+ const cv=document.getElementById("canvas"),host=document.createElement("div");host.className="fit-host";
+ cv.parentNode.insertBefore(host,cv);host.appendChild(cv);
+ const W=D.width||1360,H=D.height||740,det=document.getElementById("detail");
+ function fit(){
+  const wrap=document.querySelector(".wrap"),cs=getComputedStyle(wrap);
+  const pad=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight);
+  let s=Math.min(1,(document.documentElement.clientWidth-pad)/W);
+  if(W>600){const top=host.getBoundingClientRect().top+window.scrollY;
+   const avH=window.innerHeight-top-det.offsetHeight-parseFloat(cs.paddingBottom)-8; s=Math.min(s,Math.max(.5,avH/H));}
+  cv.style.transform="scale("+s+")";host.style.width=W*s+"px";host.style.height=H*s+"px";
+ }
+ fit();addEventListener("resize",fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);
+ cv.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>{
+  const r=det.getBoundingClientRect();if(r.bottom>window.innerHeight||r.top<0)det.scrollIntoView({behavior:"smooth",block:"nearest"});}));
+})();
+</script>
+</body></html>

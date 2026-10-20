@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'volaris-poc2-contratos-r1-20261020';
+  var APPLAUDO_DECK_BUILD = 'volaris-poc2-contratos-r2-20261020';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',

@@ -3,16 +3,16 @@
  "height": 620,
  "eyebrow": "Volaris PoC 2 · Fare Flex",
  "title": "El nuevo flujo, en orden",
- "subtitle": "Pasa el cursor o haz clic en una etapa para ver qué pasa en ella.",
+ "subtitle": "Toca un nodo para ver qué pasa en esa etapa.",
  "caption": "Nada se construye hasta que reglas, datos y UI están sellados. Si falta algo, el agente se detiene.",
  "groups": [
   {
    "id": "sello",
    "label": "Antes del sello",
    "accent": true,
-   "x": 8,
+   "x": 6,
    "y": 28,
-   "w": 264,
+   "w": 204,
    "h": 318,
    "tip": "Se cierra antes de que el agente escriba nada"
   },
@@ -20,9 +20,9 @@
    "id": "corrida",
    "label": "Corrida",
    "accent": false,
-   "x": 8,
+   "x": 6,
    "y": 380,
-   "w": 264,
+   "w": 204,
    "h": 224,
    "tip": "La construcción y su verificación"
   }
@@ -34,9 +34,9 @@
    "caption": "Confluence, revisadas",
    "desc": "Se validan las reglas de negocio antes de escribir nada. Ejemplo: Flex reemplaza a Basic en Volaris.",
    "group": "sello",
-   "x": 20,
+   "x": 18,
    "y": 60,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -45,9 +45,9 @@
    "caption": "de dónde sale cada dato",
    "desc": "Cada dato tiene fuente (CMS, backend o carrito) o un fallback sellado con su ticket.",
    "group": "sello",
-   "x": 20,
+   "x": 18,
    "y": 154,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -56,9 +56,9 @@
    "caption": "geometría + composición",
    "desc": "Piezas, estados, geometría completa y composición. Se sella con las firmas.",
    "group": "sello",
-   "x": 20,
+   "x": 18,
    "y": 248,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -67,9 +67,9 @@
    "caption": "el agente arma la feature",
    "desc": "El agente construye solo con el pack sellado. Si falta algo, se detiene y pregunta.",
    "group": "corrida",
-   "x": 20,
+   "x": 18,
    "y": 412,
-   "w": 240,
+   "w": 180,
    "h": 70
   },
   {
@@ -78,9 +78,9 @@
    "caption": "vs Figma · Harold + Adonay",
    "desc": "Se compara estado por estado contra Figma. Firman Harold y Adonay.",
    "group": "corrida",
-   "x": 20,
+   "x": 18,
    "y": 506,
-   "w": 240,
+   "w": 180,
    "h": 70
   }
  ],
@@ -106,15 +106,15 @@
    "to": "u",
    "route": [
     [
-     305,
+     262,
      447
     ],
     [
-     305,
+     262,
      283
     ]
    ],
-   "label": "STOP"
+   "label": "Falta algo → vuelve"
   }
  ]
 }

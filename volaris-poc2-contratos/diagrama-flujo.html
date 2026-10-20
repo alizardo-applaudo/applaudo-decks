@@ -240,4 +240,30 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
  for(const f in labels)labels[f].classList.toggle("on",!!k&&[...nb].some(j=>N[j].group===f));
  det.innerHTML=k?`<b>${esc(N[k].label)}${N[k].caption?" · "+esc(N[k].caption):""}</b><span>${esc(N[k].desc)}</span>`:`<span style="color:var(--muted)">${esc(D.caption)}</span>`;}
 (document.fonts?document.fonts.ready:Promise.resolve()).then(drawFrames);drawFrames();sel(null);
-</script></body></html>
+</script>
+<style id="fit-viewport">
+.wrap{width:max-content;max-width:100%}
+#title,.sub,.detail{max-width:min(900px,calc(100vw - 60px));overflow-wrap:anywhere}
+.fit-host{position:relative;margin:0 auto}
+.fit-host>#canvas{position:absolute;left:0;top:0;transform-origin:0 0;margin:0}
+@media (max-width:640px){.wrap{padding:28px 16px 24px}#title,.sub,.detail{max-width:calc(100vw - 32px)}h1{font-size:24px}}
+</style>
+<script>
+(function(){
+ const cv=document.getElementById("canvas"),host=document.createElement("div");host.className="fit-host";
+ cv.parentNode.insertBefore(host,cv);host.appendChild(cv);
+ const W=D.width||1360,H=D.height||740,det=document.getElementById("detail");
+ function fit(){
+  const wrap=document.querySelector(".wrap"),cs=getComputedStyle(wrap);
+  const pad=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight);
+  let s=Math.min(1,(document.documentElement.clientWidth-pad)/W);
+  if(W>600){const top=host.getBoundingClientRect().top+window.scrollY;
+   const avH=window.innerHeight-top-det.offsetHeight-parseFloat(cs.paddingBottom)-8; s=Math.min(s,Math.max(.5,avH/H));}
+  cv.style.transform="scale("+s+")";host.style.width=W*s+"px";host.style.height=H*s+"px";
+ }
+ fit();addEventListener("resize",fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);
+ cv.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>{
+  const r=det.getBoundingClientRect();if(r.bottom>window.innerHeight||r.top<0)det.scrollIntoView({behavior:"smooth",block:"nearest"});}));
+})();
+</script>
+</body></html>

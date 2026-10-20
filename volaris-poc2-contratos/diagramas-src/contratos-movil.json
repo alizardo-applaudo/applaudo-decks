@@ -3,7 +3,7 @@
  "height": 1032,
  "eyebrow": "Volaris PoC 2 · Fare Flex",
  "title": "Contratos: antes vs ahora",
- "subtitle": "Pasa el cursor o haz clic en un bloque para ver qué cubre.",
+ "subtitle": "Toca un nodo para ver qué cubre.",
  "caption": "Antes el contrato cubría piezas y estados. Ahora cubre también geometría, composición, datos, reglas y paridad.",
  "groups": [
   {

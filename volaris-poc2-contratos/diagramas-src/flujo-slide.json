@@ -1,0 +1,120 @@
+{
+ "width": 1330,
+ "height": 300,
+ "eyebrow": "Volaris PoC 2 · Fare Flex",
+ "title": "El nuevo flujo, en orden",
+ "subtitle": "Pasa el cursor o haz clic en una etapa para ver qué pasa en ella.",
+ "caption": "Nada se construye hasta que reglas, datos y UI están sellados. Si falta algo, el agente se detiene.",
+ "groups": [
+  {
+   "id": "sello",
+   "label": "Antes del sello",
+   "accent": true,
+   "x": 20,
+   "y": 26,
+   "w": 780,
+   "h": 184,
+   "tip": "Se cierra antes de que el agente escriba nada"
+  },
+  {
+   "id": "corrida",
+   "label": "Corrida",
+   "accent": false,
+   "x": 830,
+   "y": 26,
+   "w": 480,
+   "h": 184,
+   "tip": "La construcción y su verificación"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "r",
+   "label": "Reglas de negocio",
+   "caption": "Confluence, revisadas",
+   "desc": "Se validan las reglas de negocio antes de escribir nada. Ejemplo: Flex reemplaza a Basic en Volaris.",
+   "group": "sello",
+   "x": 44,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "d",
+   "label": "Contrato de datos",
+   "caption": "de dónde sale cada dato",
+   "desc": "Cada dato tiene fuente (CMS, backend o carrito) o un fallback sellado con su ticket.",
+   "group": "sello",
+   "x": 300,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "u",
+   "label": "Contrato de UI",
+   "caption": "geometría + composición",
+   "desc": "Piezas, estados, geometría completa y composición. Se sella con las firmas.",
+   "group": "sello",
+   "x": 556,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "c",
+   "label": "Construcción",
+   "caption": "el agente arma la feature",
+   "desc": "El agente construye solo con el pack sellado. Si falta algo, se detiene y pregunta.",
+   "group": "corrida",
+   "x": 856,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "p",
+   "label": "Paridad",
+   "caption": "vs Figma · Harold + Adonay",
+   "desc": "Se compara estado por estado contra Figma. Firman Harold y Adonay.",
+   "group": "corrida",
+   "x": 1092,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  }
+ ],
+ "edges": [
+  {
+   "from": "r",
+   "to": "d"
+  },
+  {
+   "from": "d",
+   "to": "u"
+  },
+  {
+   "from": "u",
+   "to": "c"
+  },
+  {
+   "from": "c",
+   "to": "p"
+  },
+  {
+   "from": "c",
+   "to": "u",
+   "route": [
+    [
+     954,
+     262
+    ],
+    [
+     654,
+     262
+    ]
+   ],
+   "label": "si falta algo: se detiene y pregunta"
+  }
+ ]
+}

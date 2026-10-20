@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Volaris PoC 2 · Contratos diseño ↔ código — Applaudo</title>
-<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-poc2-contratos-r1-20261020">
-<link rel="stylesheet" href="css/volaris-poc2-contratos.css?v=volaris-poc2-contratos-r1-20261020">
-<link rel="stylesheet" href="css/responsive.css?v=volaris-poc2-contratos-r1-20261020">
+<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-poc2-contratos-r2-20261020">
+<link rel="stylesheet" href="css/volaris-poc2-contratos.css?v=volaris-poc2-contratos-r2-20261020">
+<link rel="stylesheet" href="css/responsive.css?v=volaris-poc2-contratos-r2-20261020">
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -18,8 +18,8 @@
   <div class="logo-sm" data-logo="light"></div>
   <div class="inner center">
     <p class="eyebrow">Diseño Applaudo · Volaris PoC 2 · Fare Flex Android</p>
-    <h1 class="big" style="max-width:15ch">Contratos claros, <em>menos retrabajo</em></h1>
-    <p style="margin-top:28px;font-size:clamp(1.15rem,2vw,1.55rem);max-width:46ch;color:rgba(255,255,255,.82);line-height:1.35">Qué aprendimos al pedirle a un agente de IA que construya una feature real usando solo el contrato, y qué cambiamos.</p>
+    <h1 class="big" style="max-width:16ch">Contratos claros, <em>menos retrabajo</em></h1>
+    <p style="margin-top:28px;font-size:clamp(1.15rem,2vw,1.55rem);max-width:44ch;color:rgba(255,255,255,.82);line-height:1.35">Qué aprendimos al pedirle a un agente de IA que construya una feature real usando solo el contrato, y qué cambiamos.</p>
     <div style="display:flex;gap:10px;margin-top:36px;flex-wrap:wrap">
       <span class="tag">Volaris</span><span class="tag">Fare Flex</span><span class="tag">Android</span><span class="tag draft-tag">Borrador</span><span class="tag">Oct ’26</span>
     </div>
@@ -86,7 +86,7 @@
         <div class="problema-card">
           <svg class="problema-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
           <h4>Fuera del flujo principal</h4>
-          <p>No se enfocó en el happy path de Flex.</p>
+          <p>No se enfocó en el flujo principal de Flex.</p>
         </div>
         <div class="problema-card">
           <svg class="problema-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
@@ -109,9 +109,9 @@
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
-      <p class="eyebrow">Nuestra corrida “bien hecha”</p>
+      <p class="eyebrow">Nuestra corrida «bien hecha»</p>
       <h2 class="hl">El agente respetó el <em>contrato</em></h2>
-      <p class="lead">Solo el pack de contratos, solo el happy path, sin Figma ni mockups.</p>
+      <p class="lead">Solo el pack de contratos, solo el flujo principal, sin Figma ni mockups.</p>
     </div>
     <div class="slide-body">
       <div class="p2-metrics">
@@ -127,7 +127,7 @@
         </div>
         <div class="p2-metric">
           <div class="n">~3×</div>
-          <h4>más chica que la implementación del equipo</h4>
+          <h4>más pequeña que la implementación del equipo</h4>
           <p>1,770 vs 5,779 líneas añadidas. El equipo cubrió más alcance (APIs, CMS, caché).</p>
         </div>
       </div>
@@ -139,7 +139,7 @@
 </section>
 
 <!-- 5 · 32 diferencias -->
-<section class="slide slide-fit p2-slide" aria-label="32 diferencias visuales contra Figma">
+<section class="slide slide-fit p2-slide compare-08" aria-label="32 diferencias visuales contra Figma">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -152,11 +152,11 @@
         <div class="p2-shots">
           <figure class="p2-shot">
             <figcaption><span class="tag">Agente</span></figcaption>
-            <a href="assets/p08-agente.png" target="_blank" rel="noopener"><img src="assets/p08-agente.png" alt="Selector Flex 2/2 construido por el agente: lista plana sin cajas ni íconos" style="height:calc(var(--shot-h) * .628)"></a>
+            <a href="assets/p08-agente.png" target="_blank" rel="noopener"><img src="assets/p08-agente.png" alt="Selector Flex 2/2 construido por el agente: lista plana sin cajas ni íconos" class="shot-a"></a>
           </figure>
           <figure class="p2-shot">
             <figcaption><span class="tag">Figma</span></figcaption>
-            <a href="assets/p08-figma.png" target="_blank" rel="noopener"><img src="assets/p08-figma.png" alt="Selector Flex 2/2 en Figma: cajas por bloque, íconos y tarjeta de precio" style="height:var(--shot-h)"></a>
+            <a href="assets/p08-figma.png" target="_blank" rel="noopener"><img src="assets/p08-figma.png" alt="Selector Flex 2/2 en Figma: cajas por bloque e íconos" class="shot-b"></a>
           </figure>
         </div>
         <div class="p2-reasons">
@@ -182,7 +182,7 @@
 </section>
 
 <!-- 6 · Implementación del equipo -->
-<section class="slide slide-fit p2-slide" aria-label="La implementación del equipo quedó más cerca de Figma">
+<section class="slide slide-fit p2-slide compare-15" aria-label="La implementación del equipo quedó más cerca de Figma">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -195,11 +195,11 @@
         <div class="p2-shots">
           <figure class="p2-shot">
             <figcaption><span class="tag">Agente</span></figcaption>
-            <a href="assets/p15-agente.png" target="_blank" rel="noopener"><img src="assets/p15-agente.png" alt="Hoja Zero a Flex construida por el agente: el selector queda fuera de la card" style="height:calc(var(--shot-h) * .882)"></a>
+            <a href="assets/p15-agente.png" target="_blank" rel="noopener"><img src="assets/p15-agente.png" alt="Hoja Zero a Flex construida por el agente: el selector queda fuera de la card" class="shot-a"></a>
           </figure>
           <figure class="p2-shot">
             <figcaption><span class="tag">Figma</span></figcaption>
-            <a href="assets/p15-figma.png" target="_blank" rel="noopener"><img src="assets/p15-figma.png" alt="Hoja Zero a Flex en Figma: el selector va dentro de la card Flex" style="height:var(--shot-h)"></a>
+            <a href="assets/p15-figma.png" target="_blank" rel="noopener"><img src="assets/p15-figma.png" alt="Hoja Zero a Flex en Figma: el selector va dentro de la card Flex" class="shot-b"></a>
           </figure>
         </div>
         <div class="p2-side">
@@ -214,7 +214,7 @@
           <div class="card-white">
             <h4>Agente</h4>
             <ul>
-              <li>Fiel al contrato y ~3× más chico.</li>
+              <li>Fiel al contrato y ~3× más pequeño.</li>
               <li>Sin datos reales: dejó cada hueco documentado.</li>
               <li>Armó la hoja con el selector fuera de la card.</li>
             </ul>
@@ -327,8 +327,8 @@
           <dl>
             <dt>Caja</dt><dd>Borde fino, esquinas medianas, margen interno mediano <span class="tok">radiusMd</span></dd>
             <dt>Título</dt><dd>Negrita grande, color de marca <span class="tok">paragraphLargeBold</span></dd>
-            <dt>Opciones</dt><dd>Alto fijo por fila, radio e ícono de 24</dd>
-            <dt>Textos</dt><dd>Copy exacta en español + su clave en el CMS</dd>
+            <dt>Opciones</dt><dd>Alto fijo por fila, radio e ícono de 24 px</dd>
+            <dt>Textos</dt><dd>Texto exacto en español + su clave en el CMS</dd>
             <dt>Precio</dt><dd>Viene del backend; si falta, usa el de Basic (fallback sellado)</dd>
             <dt>Composición</dt><dd>Va dentro de la card Flex, antes del precio y del botón</dd>
           </dl>
@@ -379,7 +379,7 @@
         <div class="step-card">
           <span class="num">1</span>
           <h4>Pack nuevo</h4>
-          <p>Beast armó 11 contratos, 2 de ellos de composición.</p>
+          <p>Beast (nuestro agente de design system) armó 11 contratos, 2 de ellos de composición.</p>
           <div class="tag-wrap"><span class="tag">Listo · borrador</span></div>
         </div>
         <span class="road-arrow" aria-hidden="true">→</span>
@@ -417,7 +417,7 @@
   <div class="logo-sm" data-logo="light"></div>
   <div class="inner center">
     <p class="eyebrow">Diseño Applaudo · Volaris PoC 2</p>
-    <h1 class="big" style="max-width:18ch">Si el contrato está completo, el agente <em>no adivina</em>.</h1>
+    <h1 class="big">Si el contrato está completo, el agente <em>no adivina</em>.</h1>
     <p class="cierre-thanks">Gracias · Preguntas</p>
   </div>
   <div class="foot">Applaudo</div>
@@ -433,6 +433,6 @@
   <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
 </nav>
 
-<script src="js/applaudo-deck.js?v=volaris-poc2-contratos-r1-20261020"></script>
+<script src="js/applaudo-deck.js?v=volaris-poc2-contratos-r2-20261020"></script>
 </body>
 </html>

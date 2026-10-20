@@ -9,7 +9,7 @@
   display:flex;flex-direction:column;overflow:hidden;height:100%;max-height:100%;
 }
 .p2-slide .slide-head .eyebrow{margin-bottom:18px;font-size:.9rem}
-.p2-slide .slide-head .lead{margin-top:14px;line-height:1.5;color:var(--gray);max-width:72ch}
+.p2-slide .slide-head .lead{margin-top:14px;font-size:1.0625rem;line-height:1.55;color:var(--gray);max-width:72ch}
 .p2-slide.slide-dark .slide-head .lead{color:rgba(255,255,255,.72)}
 .p2-slide .slide-body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2.4vh,24px);margin-top:clamp(14px,2.6vh,28px);overflow:visible}
 .p2-slide .hero-band{margin-top:0;flex:none}
@@ -33,14 +33,21 @@
 .p2-metric h4{font-size:clamp(1.05rem,1.6vw,1.45rem);margin:12px 0 6px;line-height:1.25}
 .p2-metric p{font-size:clamp(.875rem,1.2vw,1.1rem);line-height:1.45;max-width:none}
 
-/* Screenshot comparison */
-.p2-compare{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(16px,2.4vw,36px);align-items:center;min-height:0;flex:1 1 auto}
-.p2-shots{--shot-h:clamp(240px,52vh,540px);display:flex;justify-content:center;align-items:flex-start;gap:clamp(10px,1.4vw,20px);min-width:0}
-.p2-shot{margin:0;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
-.p2-shot figcaption{font-size:.8125rem;font-weight:600;color:var(--gray)}
+/* Screenshot comparison: crops of the relevant region, both images at the same scale (--s) */
+.p2-compare{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.2vw,32px);align-items:center;min-height:0;container-type:inline-size}
+.p2-shots{display:flex;justify-content:center;align-items:flex-start;gap:clamp(10px,1.2vw,16px);min-width:0}
+.p2-shot{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.p2-shot figcaption{font-size:.8125rem;font-weight:600;color:var(--gray);line-height:0}
 .p2-shot figcaption .tag{height:26px}
 .p2-shot a{display:block;line-height:0}
-.p2-shot img{display:block;width:auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+.p2-shot img{display:block;width:auto;max-width:none;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+/* s05 crops: agente 461x268, figma 417x392 (natural px). s06 crops: agente 460x461, figma 424x360 */
+.compare-08{--L:clamp(200px,min(100vh - var(--x08,400px),26.8cqw),470px)}
+.compare-08 .p2-shot img.shot-b{height:var(--L)}
+.compare-08 .p2-shot img.shot-a{height:calc(var(--L) * .6837)}
+.compare-15{--L:clamp(200px,min(100vh - var(--x15,430px),30.2cqw),553px)}
+.compare-15 .p2-shot img.shot-a{height:var(--L)}
+.compare-15 .p2-shot img.shot-b{height:calc(var(--L) * .7809)}
 .p2-reasons{display:flex;flex-direction:column;gap:clamp(10px,1.6vh,16px);min-width:0}
 .p2-reason{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(14px,2vh,20px) clamp(16px,1.6vw,22px)}
 .p2-reason h4{font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.3;margin:0 0 4px}
@@ -91,48 +98,63 @@
 .diagram-slide .p2-diagram-link:hover{color:#fff;border-color:var(--red-dark-mode)}
 .diagram-slide .p2-diagram-link.m{display:none}
 
-/* Cover / close */
-.cierre-slide .cierre-thanks{margin-top:28px;font-size:clamp(1.05rem,1.6vw,1.35rem);color:rgba(255,255,255,.82);font-weight:600}
+/* Cover / close: same rules as tres-caminos */
+.cierre-slide .inner.center{max-width:920px}
+.cierre-slide .big{max-width:20ch;font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:1.05}
+.cierre-slide .cierre-thanks{margin-top:36px;font-size:clamp(1.25rem,2vw,1.65rem);color:rgba(255,255,255,.88);font-weight:600}
 .slide-dark .draft-tag{border-color:rgba(244,98,107,.5);color:var(--red-dark-mode)}
 
-/* Short viewports: let content slides scroll (same convention as responsive.css) */
+/* Diagram slides: the PNG takes the free height between the header and the link */
+.diagram-slide .inner-viewport,.diagram-slide .slide-body{overflow:visible!important}
+.diagram-slide .slide-body{flex:1 1 auto;justify-content:center}
+.diagram-slide .p2-diagram{flex:0 1 auto;height:auto}
+.diagram-slide .p2-diagram picture{height:auto}
+.diagram-slide .p2-diagram img{height:auto;max-height:max(220px,calc(100vh - var(--xd,400px)))}
+.diagram-slide .p2-diagram-link{display:inline-flex;align-items:center;min-height:44px;padding:0 18px}
+
+/* Short viewports: content slides scroll like responsive.css, except the comparison and diagram slides, which fit */
 @media (max-height:800px){
   .p2-slide .slide-body{flex:none;justify-content:flex-start}
-  .p2-shots{--shot-h:clamp(240px,58vh,440px)}
-  .diagram-slide .p2-diagram{flex:none;height:auto}
-  .diagram-slide .p2-diagram picture,.diagram-slide .p2-diagram img{height:auto}
+  .compare-08 .slide-body,.compare-15 .slide-body{flex:1 1 auto;justify-content:center}
+  .diagram-slide .slide-body{flex:1 1 auto}
+}
+
+/* Comparison slides, short desktop viewports (<=900px tall): tighter side cards so the conclusion clears the pill */
+@media (max-height:900px) and (min-width:901px){
+  .compare-08 .p2-reason{padding:12px 16px}
+  .compare-15 .p2-side{gap:10px}
+  .compare-15 .p2-side .card-soft-pink,.compare-15 .p2-side .card-white{padding:12px 16px}
+  .compare-15 .p2-side h4{margin-bottom:6px}
+  .compare-15 .p2-side li{margin-bottom:3px;line-height:1.4}
+  .compare-15 .hero-band{padding:14px 18px}
+  .compare-15 .hero-band p{font-size:1.0625rem;line-height:1.4}
 }
 
 /* Tablet / narrow */
-@media (max-width:1024px){
-  .p2-compare{grid-template-columns:1fr}
-  .p2-shots{--shot-h:clamp(260px,46vh,420px)}
-}
 @media (max-width:900px){
   .p2-flow{flex-direction:column}
   .p2-flow .road-arrow{transform:rotate(90deg);display:block!important}
-  .p2-metrics,.p2-fares,.p2-excerpt{grid-template-columns:1fr}
+  .p2-metrics,.p2-fares,.p2-excerpt,.p2-compare{grid-template-columns:1fr}
+  .compare-08,.compare-15{--L:clamp(200px,46vh,420px)}
 }
 
-/* Phone: vertical diagrams, stacked content */
+/* Phone: vertical diagrams, stacked content, screenshots one per row at full width */
 @media (max-width:640px){
   .p2-slide .inner-viewport{height:auto!important;max-height:none!important;overflow:visible!important}
-  .p2-slide .slide-body{flex:none;justify-content:flex-start}
-  .p2-shots{--shot-h:300px;gap:10px}
-  .p2-shot img{border-radius:10px}
+  .p2-slide .slide-body{flex:none!important;justify-content:flex-start!important}
+  .p2-shots{flex-direction:column;align-items:stretch;gap:14px;width:100%}
+  .p2-shot{align-items:flex-start;width:100%}
+  .p2-shot a{width:100%}
+  .p2-shot img,.compare-08 .p2-shot img.shot-a,.compare-08 .p2-shot img.shot-b,.compare-15 .p2-shot img.shot-a,.compare-15 .p2-shot img.shot-b{width:100%;height:auto;max-width:100%;border-radius:10px}
   .p2-excerpt dl{grid-template-columns:1fr;gap:2px 0}
   .p2-excerpt dd{margin-bottom:8px}
-  .diagram-slide .p2-diagram,.diagram-slide .p2-diagram picture{height:auto}
-  .diagram-slide .p2-diagram img{height:auto;max-width:340px;margin:0 auto}
+  .diagram-slide .p2-diagram,.diagram-slide .p2-diagram picture{height:auto;width:100%}
+  .diagram-slide .p2-diagram img{height:auto;max-height:none;max-width:340px;margin:0 auto}
   .diagram-slide .p2-diagram-link.d{display:none}
-  .diagram-slide .p2-diagram-link.m{display:inline-block}
+  .diagram-slide .p2-diagram-link.m{display:inline-flex}
 }
-
 .p2-side .card-soft-pink li{font-size:clamp(.9375rem,1.05vw,1rem)}
-@media (max-width:640px){.diagram-slide .p2-diagram{width:100%}}
-.diagram-slide .inner-viewport,.diagram-slide .slide-body{overflow:visible!important}
-.diagram-slide .slide-body{justify-content:center}
-.diagram-slide .p2-diagram{flex:0 1 auto;height:auto}
-.diagram-slide .p2-diagram picture{height:auto}
-.diagram-slide .p2-diagram img{height:auto;max-height:max(220px,calc(100vh - 430px))}
-@media (max-width:640px){.diagram-slide .p2-diagram img{max-height:none}}
+@media (min-width:901px) and (max-width:1100px){
+  .compare-08{--L:clamp(200px,min(100vh - 400px,29cqw),470px)}
+  .compare-15{--L:clamp(200px,min(100vh - 430px,27cqw),553px)}
+}
