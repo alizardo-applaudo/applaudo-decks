@@ -13,7 +13,7 @@
     ['10','De Zero a Flex · selector a medias','«Confirmar» como en Figma. Figma muestra 5 beneficios; acordamos 4.',0],
     ['11','Éxito','Fondo verde, ícono de celebración y «Por pasajero».',0],
     ['12','Éxito · de Zero a Flex','El texto de éxito es el de Figma.',0],
-    ['13','Comparación Zero vs Flex','La fila de check-in no coincide, los textos se cortan, la ✕ sale negra y el precio trae asteriscos. Esta tabla no entraba en esta corrida.',1],
+    ['13','Comparación Zero vs Flex','La fila de check-in no coincide, los textos se cortan, la ✕ sale negra y el precio trae asteriscos. La tabla no estaba en el contrato y se armó con datos de prueba; por eso ahora se sella celda por celda.',1],
     ['14','Mejorar a Flex · 0 de 2','La barra de arriba trae ← y el título a la izquierda; Figma usa ‹ y el título centrado.',1],
     ['15','Mejorar a Flex · 1 de 2','El selector va dentro de la tarjeta, como en Figma.',0],
     ['16','Mejorar a Flex · completo','Mensaje de éxito y precio bien; la barra de arriba sigue distinta.',1]
