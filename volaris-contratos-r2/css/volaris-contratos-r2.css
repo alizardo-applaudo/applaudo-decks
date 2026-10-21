@@ -306,9 +306,36 @@
    over content, so they are hidden there; the nav pill keeps the slide counter. */
 @media (max-height:800px){ #deck .foot{display:none!important} }
 @media (max-height:700px) and (min-width:641px){
-  #deck > .slide:first-child .big{font-size:clamp(2.4rem,min(6vw,10vh),3.8rem)}
   #deck > .slide:first-child .inner.center > p:not(.eyebrow){margin-top:18px!important}
   #deck > .slide:first-child .inner.center > div{margin-top:22px!important}
 }
-@media (max-width:640px){ .r2-gal-cap{order:-1} .r2-gal-chips{order:-1} }
-@media (max-height:800px){ .r2-gal-cap{order:-1} }
+
+/* ===== r3: s06 and s07 fit the viewport on desktop (no slide scroll, nothing under the pill) ===== */
+.r2-gal-hint{font-size:.8125rem;color:var(--gray);text-align:center;max-width:none;margin:0}
+@media (min-width:641px){
+  .slide.r2-fit.active{overflow:hidden!important}
+  #deck > .slide.r2-fit > .inner.inner-viewport{height:100%!important;max-height:100%!important;min-height:0!important;overflow:hidden!important;
+    display:flex!important;flex-direction:column;padding-bottom:calc(var(--nav-safe) + 10px)!important}
+  #deck > .slide.r2-fit > .inner.inner-viewport::after{display:none!important}
+  .slide.r2-fit .slide-body{flex:1 1 auto!important;min-height:0!important;overflow:hidden!important;display:flex!important;flex-direction:column;justify-content:flex-start!important}
+  .r2-fit .r2-tri{flex:1 1 auto;min-height:0;align-items:flex-start}
+  .r2-fit .r2-gal{flex:1 1 auto;min-height:0;gap:8px}
+  .r2-fit .r2-gal-cap,.r2-fit .r2-gal-chips{order:0}
+  .r2-fit .r2-gal-stage{flex:1 1 auto;min-height:0;overflow:hidden;align-items:start;display:flex;justify-content:center}
+  .r2-fit .r2-gal-stage.tall{overflow-y:auto;overscroll-behavior:contain;border-radius:12px}
+  .r2-fit .r2-gal-stage figure{flex:none}
+  .r2-fit .r2-gal-stage a{height:auto;width:auto}
+  .r2-fit .r2-gal-stage img{max-width:none;max-height:none}
+  .r2-fit .r2-gal-cap{padding:6px 12px}
+}
+@media (max-height:700px) and (min-width:641px){
+  .r2-fit .slide-head .eyebrow{display:none}
+}
+/* Phone: 44x44 tap targets for the gallery chips */
+@media (max-width:640px){
+  .r2-gal-chips{gap:8px}
+  .r2-gal-chips button{min-width:44px;height:44px;font-size:.875rem}
+}
+@media (max-height:700px) and (min-width:641px){
+  #deck > .slide:first-child .big{font-size:clamp(2.4rem,min(6.5vw,12vh),4.5rem)}
+}

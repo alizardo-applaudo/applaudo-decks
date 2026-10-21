@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Volaris · Contratos diseño ↔ código: cómo vamos — Applaudo</title>
-<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-contratos-r2-r2-20261021">
-<link rel="stylesheet" href="css/volaris-contratos-r2.css?v=volaris-contratos-r2-r2-20261021">
-<link rel="stylesheet" href="css/responsive.css?v=volaris-contratos-r2-r2-20261021">
+<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-contratos-r2-r3-20261021">
+<link rel="stylesheet" href="css/volaris-contratos-r2.css?v=volaris-contratos-r2-r3-20261021">
+<link rel="stylesheet" href="css/responsive.css?v=volaris-contratos-r2-r3-20261021">
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -98,7 +98,7 @@
             <ol>
               <li><span class="r2-ico ok">1</span><span>Caja con borde fino, esquinas medianas y espacio interno fijo.</span></li>
               <li><span class="r2-ico ok">2</span><span>Título grande, en negrita y color de marca.</span></li>
-              <li><span class="r2-ico ok">3</span><span>Cada opción con alto fijo y su ícono real de 24 px.</span></li>
+              <li><span class="r2-ico ok">3</span><span>Cada opción con alto fijo y su ícono real, con el tamaño exacto del ícono.</span></li>
               <li><span class="r2-ico ok">4</span><span>Textos exactos y de dónde sale cada uno.</span></li>
               <li><span class="r2-ico ok">5</span><span>El precio llega del sistema; si falta, se usa el de Basic.</span></li>
               <li><span class="r2-ico ok">6</span><span>Va dentro de la tarjeta Flex, antes del precio y del botón.</span></li>
@@ -121,13 +121,13 @@
     <div class="slide-head">
       <p class="eyebrow">Cómo se arma ahora</p>
       <h2 class="hl">Primero las reglas, <em>después la pantalla</em></h2>
-      <p class="lead">Si a la construcción le falta algo, lo anota y sigue. No inventa.</p>
+      <p class="lead">Si a la construcción le falta algo, el agente lo anota y sigue. No inventa.</p>
     </div>
     <div class="slide-body">
       <figure class="p2-diagram">
         <picture>
           <source media="(max-width:640px)" srcset="assets/diagrama-orden-movil.png">
-          <img src="assets/diagrama-orden.png" alt="Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, que firman Harold y Adonay. Si falta algo en la construcción, lo anota y sigue.">
+          <img src="assets/diagrama-orden.png" alt="Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, con la firma visual de Fernando y Harold. Si falta algo en la construcción, el agente lo anota y sigue.">
         </picture>
       </figure>
       <a class="p2-diagram-link d" href="diagrama-orden.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
@@ -172,7 +172,7 @@
 </section>
 
 <!-- 6 · Tríptico -->
-<section class="slide slide-fit p2-slide r2-main" aria-label="Figma, corrida 1 y corrida 2">
+<section class="slide slide-fit p2-slide r2-main r2-fit" aria-label="Figma, corrida 1 y corrida 2">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -202,7 +202,7 @@
 </section>
 
 <!-- 7 · Galería -->
-<section class="slide slide-fit p2-slide r2-main" aria-label="Las 16 pantallas">
+<section class="slide slide-fit p2-slide r2-main r2-fit" aria-label="Las 16 pantallas">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -211,10 +211,6 @@
     </div>
     <div class="slide-body">
       <div class="r2-gal">
-        <div class="r2-gal-stage">
-          <figure><a data-g="fa" href="assets/galeria/g01-figma.png" target="_blank" rel="noopener"><img data-g="fi" src="assets/galeria/g01-figma.png" alt="Figma: Tarjeta Flex sin elegir"></a><span class="tag">Figma</span></figure>
-          <figure><a data-g="ra" href="assets/galeria/g01-r2.png" target="_blank" rel="noopener"><img data-g="ri" src="assets/galeria/g01-r2.png" alt="Corrida 2: Tarjeta Flex sin elegir"></a><span class="tag hi">Corrida 2</span></figure>
-        </div>
         <div class="r2-gal-cap">
           <button class="r2-gal-btn" type="button" data-g="prev" aria-label="Pantalla anterior">‹</button>
           <span class="n" data-g="n">01 / 16</span>
@@ -222,6 +218,11 @@
           <button class="r2-gal-btn" type="button" data-g="next" aria-label="Pantalla siguiente">›</button>
         </div>
         <div class="r2-gal-chips" data-g="chips" aria-label="Elegir pantalla (punto = todavía hay una diferencia)"></div>
+        <div class="r2-gal-stage" data-g="stage">
+          <figure><a data-g="fa" href="assets/galeria/g01-figma.png" target="_blank" rel="noopener"><img data-g="fi" src="assets/galeria/g01-figma.png" alt="Figma: Tarjeta Flex sin elegir"></a><span class="tag">Figma</span></figure>
+          <figure><a data-g="ra" href="assets/galeria/g01-r2.png" target="_blank" rel="noopener"><img data-g="ri" src="assets/galeria/g01-r2.png" alt="Corrida 2: Tarjeta Flex sin elegir"></a><span class="tag hi">Corrida 2</span></figure>
+        </div>
+        <p class="r2-gal-hint" data-g="hint" hidden>Pantalla larga: desplázate dentro de las imágenes para ver el resto ↓ · Clic para verla completa</p>
       </div>
     </div>
   </div>
@@ -286,8 +287,8 @@
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
-      <p class="eyebrow">Aviso honesto</p>
-      <h2 class="hl">Se ven bien, pero <em>falta conectarlas</em></h2>
+      <p class="eyebrow">Antes de seguir</p>
+      <h2 class="hl">Un aviso <em>honesto</em></h2>
       <p class="lead">Las pantallas se ven bien, pero falta conectarlas bien a los datos reales y probarlas en un teléfono.</p>
     </div>
     <div class="slide-body">
@@ -324,7 +325,7 @@
         <div class="r2-card hi"><span class="lab">1 · Conexión</span><h4>Un contrato de conexión</h4><p>Cada dato con respaldo se usa de verdad en la app, con una prueba que lo confirma. Y una regla clara para cuando no llega Flex.</p></div>
         <div class="r2-card"><span class="lab">2 · Detalles</span><h4>Sellar los detalles visuales</h4>
           <ul><li>La tabla de comparación, celda por celda</li><li>El check verde, junto al título</li><li>La barra de arriba</li><li>El precio sin asteriscos</li><li>La pantalla «cargando»</li><li>La tarifa Flex v.Club</li></ul></div>
-        <div class="r2-card"><span class="lab">3 · Medición</span><h4>Medir al mismo ancho que Figma</h4><p>Las capturas de prueba se toman a 360, el mismo ancho del diseño, para comparar medida por medida.</p></div>
+        <div class="r2-card"><span class="lab">3 · Medición</span><h4>Medir al mismo ancho que Figma</h4><p>Las capturas de prueba se toman al mismo ancho que Figma, para comparar medida por medida.</p></div>
       </div>
       <div class="r2-band hi"><p><strong>Ya decidido por Adonay:</strong> la tabla de comparación de Zero a Flex y el paso de Flex a Plus entran en la versión 2.1. La tabla salió distinta porque no estaba en el contrato y se armó con datos de prueba; por eso ahora se sella celda por celda.</p></div>
     </div>
@@ -370,7 +371,7 @@
         <span class="road-arrow" aria-hidden="true">→</span>
         <div class="step-card"><span class="num">2</span><h4>Contrato 2.1</h4><p>Con la tabla celda por celda, el paso a Plus, la conexión y la medición al ancho de Figma.</p></div>
         <span class="road-arrow" aria-hidden="true">→</span>
-        <div class="step-card"><span class="num">3</span><h4>Corrida 3</h4><p>La misma feature, solo con el contrato firmado.</p></div>
+        <div class="step-card"><span class="num">3</span><h4>Corrida 3</h4><p>La misma funcionalidad, solo con el contrato firmado.</p></div>
         <span class="road-arrow" aria-hidden="true">→</span>
         <div class="step-card hi"><span class="num">4</span><h4>En un teléfono</h4><p>Probar con datos reales, no solo con capturas.</p></div>
       </div>
@@ -447,7 +448,7 @@
   <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
 </nav>
 
-<script src="js/applaudo-deck.js?v=volaris-contratos-r2-r2-20261021"></script>
-<script src="js/galeria.js?v=volaris-contratos-r2-r2-20261021"></script>
+<script src="js/applaudo-deck.js?v=volaris-contratos-r2-r3-20261021"></script>
+<script src="js/galeria.js?v=volaris-contratos-r2-r3-20261021"></script>
 </body>
 </html>

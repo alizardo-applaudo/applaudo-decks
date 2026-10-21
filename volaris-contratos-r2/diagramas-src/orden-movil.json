@@ -1,18 +1,18 @@
 {
  "width": 340,
- "height": 620,
+ "height": 640,
  "eyebrow": "Volaris · Fare Flex",
  "title": "El orden nuevo",
- "subtitle": "Toca un nodo para ver qué pasa en esa etapa.",
+ "subtitle": "Toca una etapa para ver qué pasa en ella.",
  "caption": "Nada se construye hasta que reglas, datos y pantalla están definidos.",
  "groups": [
   {
    "id": "antes",
-   "label": "Primero",
+   "label": "Antes de construir",
    "accent": true,
    "x": 6,
    "y": 28,
-   "w": 204,
+   "w": 228,
    "h": 318,
    "tip": "Se cierra antes de que el agente escriba nada"
   },
@@ -22,8 +22,8 @@
    "accent": false,
    "x": 6,
    "y": 380,
-   "w": 204,
-   "h": 224,
+   "w": 228,
+   "h": 244,
    "tip": "La construcción y su comparación con Figma"
   }
  ],
@@ -75,13 +75,13 @@
   {
    "id": "p",
    "label": "Comparación con Figma",
-   "caption": "firman Harold y Adonay",
-   "desc": "Se compara cada pantalla contra Figma. Harold y Adonay firman el resultado.",
+   "caption": "firma visual: Fernando y Harold",
+   "desc": "Se compara cada pantalla contra Figma. Fernando y Harold dan la firma visual; el sello del contrato es de Adonay.",
    "group": "corrida",
    "x": 18,
    "y": 506,
    "w": 180,
-   "h": 70
+   "h": 90
   }
  ],
  "edges": [
