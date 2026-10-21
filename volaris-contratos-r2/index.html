@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Volaris · Contratos diseño ↔ código: cómo vamos — Applaudo</title>
-<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-contratos-r2-r4-20261021">
-<link rel="stylesheet" href="css/volaris-contratos-r2.css?v=volaris-contratos-r2-r4-20261021">
-<link rel="stylesheet" href="css/responsive.css?v=volaris-contratos-r2-r4-20261021">
+<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-contratos-r2-r5-20261021">
+<link rel="stylesheet" href="css/volaris-contratos-r2.css?v=volaris-contratos-r2-r5-20261021">
+<link rel="stylesheet" href="css/responsive.css?v=volaris-contratos-r2-r5-20261021">
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -114,7 +114,7 @@
 </section>
 
 <!-- 4 · Nuevo orden (diagrama) -->
-<section class="slide slide-dark slide-fit p2-slide diagram-slide" aria-label="Cómo se arma ahora">
+<section class="slide slide-dark slide-fit p2-slide diagram-slide r2-fit r2-wide" aria-label="Cómo se arma ahora">
   <div class="glow-bg alt" aria-hidden="true"></div>
   <div class="logo-sm" data-logo="light"></div>
   <div class="inner inner-viewport compact">
@@ -124,14 +124,11 @@
       <p class="lead">Si a la construcción le falta algo, el agente lo anota y sigue. No inventa.</p>
     </div>
     <div class="slide-body">
-      <figure class="p2-diagram">
-        <picture>
-          <source media="(max-width:640px)" srcset="assets/diagrama-orden-movil.png">
-          <img src="assets/diagrama-orden.png" alt="Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, con la firma visual de Fernando y Harold. Si falta algo en la construcción, el agente lo anota y sigue.">
-        </picture>
+      <figure class="p2-diagram live" data-d="orden">
+        <iframe class="p2-dg-frame" title="Diagrama interactivo: el orden nuevo" aria-describedby="dg-orden-desc" loading="eager"></iframe>
+        <p class="sr-only" id="dg-orden-desc">Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, con la firma visual de Fernando y Harold. Si falta algo en la construcción, el agente lo anota y sigue.</p>
+        <noscript><img src="assets/diagrama-orden.png" alt="Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, con la firma visual de Fernando y Harold. Si falta algo en la construcción, el agente lo anota y sigue."></noscript>
       </figure>
-      <a class="p2-diagram-link d" href="diagrama-orden.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
-      <a class="p2-diagram-link m" href="diagrama-orden-movil.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
     </div>
   </div>
   <div class="foot">Nuevo orden</div>
@@ -234,7 +231,7 @@
 </section>
 
 <!-- 8 · Cómo lo ejecutamos (diagrama) -->
-<section class="slide slide-dark slide-fit p2-slide diagram-slide" aria-label="Cómo lo ejecutamos">
+<section class="slide slide-dark slide-fit p2-slide diagram-slide r2-fit r2-wide" aria-label="Cómo lo ejecutamos">
   <div class="glow-bg alt" aria-hidden="true"></div>
   <div class="logo-sm" data-logo="light"></div>
   <div class="inner inner-viewport compact">
@@ -244,14 +241,11 @@
       <p class="lead">Una copia aparte del proyecto, el contrato congelado y, al final, la medición contra Figma.</p>
     </div>
     <div class="slide-body">
-      <figure class="p2-diagram">
-        <picture>
-          <source media="(max-width:640px)" srcset="assets/diagrama-ejecucion-movil.png">
-          <img src="assets/diagrama-ejecucion.png" alt="Preparación: copia aislada y solo el contrato. Corrida: sin preguntas de diseño; dos cortes y un relevo con un modelo más económico. Después: medición contra Figma, pantalla por pantalla.">
-        </picture>
+      <figure class="p2-diagram live" data-d="ejecucion">
+        <iframe class="p2-dg-frame" title="Diagrama interactivo: cómo lo ejecutamos" aria-describedby="dg-ejecucion-desc" loading="eager"></iframe>
+        <p class="sr-only" id="dg-ejecucion-desc">Preparación: copia aislada y solo el contrato. Corrida: sin preguntas de diseño; dos cortes y un relevo con un modelo más económico. Después: medición contra Figma, pantalla por pantalla.</p>
+        <noscript><img src="assets/diagrama-ejecucion.png" alt="Preparación: copia aislada y solo el contrato. Corrida: sin preguntas de diseño; dos cortes y un relevo con un modelo más económico. Después: medición contra Figma, pantalla por pantalla."></noscript>
       </figure>
-      <a class="p2-diagram-link d" href="diagrama-ejecucion.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
-      <a class="p2-diagram-link m" href="diagrama-ejecucion-movil.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
     </div>
   </div>
   <div class="foot">Ejecución</div>
@@ -450,7 +444,8 @@
   <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
 </nav>
 
-<script src="js/applaudo-deck.js?v=volaris-contratos-r2-r4-20261021"></script>
-<script src="js/galeria.js?v=volaris-contratos-r2-r4-20261021"></script>
+<script src="js/applaudo-deck.js?v=volaris-contratos-r2-r5-20261021"></script>
+<script src="js/galeria.js?v=volaris-contratos-r2-r5-20261021"></script>
+<script src="js/diagramas.js?v=volaris-contratos-r2-r5-20261021"></script>
 </body>
 </html>

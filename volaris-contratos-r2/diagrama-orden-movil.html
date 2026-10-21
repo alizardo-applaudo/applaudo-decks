@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="es"><head>
+<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed')</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Diagrama</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -250,6 +252,7 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
 </style>
 <script>
 (function(){
+ const EMBED=/[?&]embed=1/.test(location.search);
  const cv=document.getElementById("canvas"),host=document.createElement("div");host.className="fit-host";
  cv.parentNode.insertBefore(host,cv);host.appendChild(cv);
  const W=D.width||1360,H=D.height||740,det=document.getElementById("detail");
@@ -257,13 +260,15 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
   const wrap=document.querySelector(".wrap"),cs=getComputedStyle(wrap);
   const pad=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight);
   let s=Math.min(1,(document.documentElement.clientWidth-pad)/W);
-  if(W>600){const top=host.getBoundingClientRect().top+window.scrollY;
+  if(W>600&&!EMBED){const top=host.getBoundingClientRect().top+window.scrollY;
    const avH=window.innerHeight-top-det.offsetHeight-parseFloat(cs.paddingBottom)-8; s=Math.min(s,Math.max(.5,avH/H));}
   cv.style.transform="scale("+s+")";host.style.width=W*s+"px";host.style.height=H*s+"px";
  }
  fit();addEventListener("resize",fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);
  cv.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>{
-  const r=det.getBoundingClientRect();if(r.bottom>window.innerHeight||r.top<0)det.scrollIntoView({behavior:"smooth",block:"nearest"});}));
+  const r=det.getBoundingClientRect();
+  if(EMBED){const se=document.scrollingElement;if(r.bottom>innerHeight)se.scrollTop+=r.bottom-innerHeight+8;else if(r.top<0)se.scrollTop+=r.top-8;return;}
+  if(r.bottom>window.innerHeight||r.top<0)det.scrollIntoView({behavior:"smooth",block:"nearest"});}));
 })();
 </script>
 
@@ -277,6 +282,30 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
  addEventListener("pointerdown",function(e){if(e.pointerType&&e.pointerType!=="mouse")R.classList.add("no-tip");else if(e.pointerType==="mouse"&&!mq.matches)R.classList.remove("no-tip")},true);
  var s=document.getElementById("subtitle");
  if(s&&matchMedia("(hover: hover) and (pointer: fine)").matches){s.textContent=s.textContent.replace(/^Toca una etapa/,"Haz clic en una etapa").replace(/^Toca un paso/,"Haz clic en un paso")}
+ else if(s&&mq.matches){s.textContent=s.textContent.replace(/^Pasa el cursor o haz clic en/,"Toca")}
+})();
+</script>
+
+<style id="embed">
+.embed body{background:transparent;min-height:0;overflow-x:hidden}
+.embed .glow-bg,.embed .eyebrow,.embed #title{display:none!important}
+.embed .wrap{padding:0 4px 2px!important;width:auto}
+.embed .sub{margin:0 0 6px;text-align:center;max-width:none}
+.embed .detail{min-height:36px}
+.embed .detail{max-width:min(760px,calc(100vw - 16px))}
+.embed .elabel{font-size:11px}
+</style>
+<script>/* embedded in the deck: report height, forward slide keys, never trap navigation */
+(function(){
+ if(!/[?&]embed=1/.test(location.search))return;
+ document.documentElement.classList.add("embed");
+ const wrap=document.querySelector(".wrap"),det=document.getElementById("detail"),send=m=>{try{parent.postMessage(Object.assign({src:"r2-diagram"},m),"*")}catch(e){}};
+ const post=()=>send({type:"size",h:Math.ceil(wrap.getBoundingClientRect().height)+2});
+ if(window.ResizeObserver)new ResizeObserver(post).observe(wrap);addEventListener("load",post);post();
+ (document.fonts?document.fonts.ready:Promise.resolve()).then(post);
+ addEventListener("keydown",e=>{if(["ArrowRight","ArrowLeft","PageUp","PageDown","Home","End"].includes(e.key)){e.preventDefault();send({type:"key",key:e.key})}});
+ document.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>setTimeout(()=>{const r=det.getBoundingClientRect(),se=document.scrollingElement;
+  if(r.bottom>innerHeight)se.scrollTop+=r.bottom-innerHeight+8;send({type:"reveal",top:r.top,bottom:r.bottom})},60)));
 })();
 </script>
 </body></html>
