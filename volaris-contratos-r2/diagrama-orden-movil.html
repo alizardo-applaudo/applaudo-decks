@@ -266,4 +266,17 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
   const r=det.getBoundingClientRect();if(r.bottom>window.innerHeight||r.top<0)det.scrollIntoView({behavior:"smooth",block:"nearest"});}));
 })();
 </script>
+
+<style id="pointer-aware">.no-tip .tip{display:none!important}</style>
+<script>/* vertical version: touch shows only the detail panel (no floating tooltip over the node above);
+   a mouse keeps the tooltip and the subtitle says "Haz clic" instead of "Toca" */
+(function(){
+ var R=document.documentElement,mq=matchMedia("(hover: none), (pointer: coarse)");
+ function upd(){R.classList.toggle("no-tip",mq.matches)}upd();if(mq.addEventListener)mq.addEventListener("change",upd);
+ addEventListener("touchstart",function(){R.classList.add("no-tip")},{capture:true,passive:true});
+ addEventListener("pointerdown",function(e){if(e.pointerType&&e.pointerType!=="mouse")R.classList.add("no-tip");else if(e.pointerType==="mouse"&&!mq.matches)R.classList.remove("no-tip")},true);
+ var s=document.getElementById("subtitle");
+ if(s&&matchMedia("(hover: hover) and (pointer: fine)").matches){s.textContent=s.textContent.replace(/^Toca una etapa/,"Haz clic en una etapa").replace(/^Toca un paso/,"Haz clic en un paso")}
+})();
+</script>
 </body></html>

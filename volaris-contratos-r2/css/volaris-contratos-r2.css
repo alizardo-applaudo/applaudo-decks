@@ -339,3 +339,36 @@
 @media (max-height:700px) and (min-width:641px){
   #deck > .slide:first-child .big{font-size:clamp(2.4rem,min(6.5vw,12vh),4.5rem)}
 }
+
+/* ===== r4: s06 triptych keeps a readable scale (labels + captions above, each screen scrolls inside its frame);
+   s07 labels sit in a row above the stage so they never scroll away ===== */
+.r2-tri figcaption{order:0}
+.r2-gal-tags{display:none}
+.r2-gal-stage figure .tag{order:0}
+@media (min-width:641px){
+  .r2-fit .r2-tri{align-items:stretch;justify-content:center}
+  .r2-fit .r2-tri figure{flex:none;min-height:0;align-items:stretch;justify-content:flex-start;gap:8px}
+  .r2-fit .r2-tri figcaption{max-width:none;flex:none;justify-content:flex-start}
+  .r2-tri-view{flex:0 1 auto;min-height:0;overflow:hidden;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+  .r2-tri-view.tall{overflow-y:auto;overscroll-behavior:contain}
+  .r2-fit .r2-tri .r2-tri-view a{display:block;line-height:0}
+  .r2-fit .r2-tri img,.r2-fit .r2-tri .i-figma,.r2-fit .r2-tri .i-r1,.r2-fit .r2-tri .i-r2{height:auto;max-width:none;border:0;border-radius:0;box-shadow:none}
+  .r2-fit .r2-tri-hint{flex:none;margin-top:6px}
+  .r2-fit .r2-gal-tags{display:flex;justify-content:center;flex:none}
+  .r2-fit .r2-gal-tags > div{display:flex;justify-content:center;flex:none}
+  .r2-fit .r2-gal-stage figure .tag{display:none}
+}
+/* s06 and s07 use the eyebrow space for the screens on any short desktop window */
+@media (max-height:800px) and (min-width:641px){
+  .r2-fit .slide-head .eyebrow{display:none}
+}
+.r2-gal-tags .tag.hi{background:var(--red);border-color:var(--red);color:#fff}
+@media (min-width:641px){
+  /* s06 may use the full slide width on narrow windows (set in JS); its height is fixed by the flex layout */
+  #deck > .slide.r2-wide > .inner.inner-viewport,.slide.r2-wide .slide-body{overflow:visible!important}
+}
+/* very short windows: label and one-phrase caption side by side, to leave more height for the screens */
+@media (max-height:700px) and (min-width:641px){
+  .r2-fit .r2-tri figcaption{flex-direction:row;align-items:center;justify-content:center;gap:8px;text-align:left}
+  .r2-fit .r2-tri figcaption .tag{flex:none}
+}
