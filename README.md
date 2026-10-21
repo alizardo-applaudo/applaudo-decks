@@ -8,6 +8,7 @@ Sitio estático en **GitHub Pages** para presentaciones internas de Applaudo (HT
 
 | Deck | Descripción | Path | URL |
 |------|-------------|------|-----|
+| Contratos diseño ↔ código: cómo vamos | Volaris · Fare Flex Android · corrida 2 de contratos, resultados y decisiones. | `volaris-contratos-r2/` | [/volaris-contratos-r2/](https://alizardo-applaudo.github.io/applaudo-decks/volaris-contratos-r2/) |
 | Un método, tres caminos | Diseño-código con AI en Applaudo. | `tres-caminos/` | [/tres-caminos/](https://alizardo-applaudo.github.io/applaudo-decks/tres-caminos/) |
 | Contratos claros, menos retrabajo | Volaris PoC 2 · Fare Flex · contratos diseño→código. | `volaris-poc2-contratos/` | [/volaris-poc2-contratos/](https://alizardo-applaudo.github.io/applaudo-decks/volaris-poc2-contratos/) |
 | Volaris PoC Flex | Mapa de pruebas, señales de tiempo y roadmap del handoff sellado — para liderazgo interno. | `volaris-poc-flex/` | [/volaris-poc-flex/](https://alizardo-applaudo.github.io/applaudo-decks/volaris-poc-flex/) |

@@ -1,0 +1,120 @@
+{
+ "width": 340,
+ "height": 620,
+ "eyebrow": "Volaris · Fare Flex",
+ "title": "El orden nuevo",
+ "subtitle": "Toca un nodo para ver qué pasa en esa etapa.",
+ "caption": "Nada se construye hasta que reglas, datos y pantalla están definidos.",
+ "groups": [
+  {
+   "id": "antes",
+   "label": "Primero",
+   "accent": true,
+   "x": 6,
+   "y": 28,
+   "w": 204,
+   "h": 318,
+   "tip": "Se cierra antes de que el agente escriba nada"
+  },
+  {
+   "id": "corrida",
+   "label": "Corrida",
+   "accent": false,
+   "x": 6,
+   "y": 380,
+   "w": 204,
+   "h": 224,
+   "tip": "La construcción y su comparación con Figma"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "r",
+   "label": "Reglas de negocio",
+   "caption": "revisadas antes de sellar",
+   "desc": "Primero se revisan las reglas del negocio. Así supimos que Flex reemplaza a Basic en Volaris.",
+   "group": "antes",
+   "x": 18,
+   "y": 60,
+   "w": 180,
+   "h": 70
+  },
+  {
+   "id": "d",
+   "label": "Datos",
+   "caption": "de dónde sale cada texto y precio",
+   "desc": "Cada texto y cada precio dice de dónde viene y qué pasa si falta.",
+   "group": "antes",
+   "x": 18,
+   "y": 154,
+   "w": 180,
+   "h": 70
+  },
+  {
+   "id": "u",
+   "label": "Pantalla",
+   "caption": "medidas, textos y qué va dentro de qué",
+   "desc": "Medidas exactas de cada estado, textos exactos y el orden de las piezas.",
+   "group": "antes",
+   "x": 18,
+   "y": 248,
+   "w": 180,
+   "h": 70
+  },
+  {
+   "id": "c",
+   "label": "Construcción",
+   "caption": "el agente arma; si falta algo, lo anota",
+   "desc": "El agente construye solo con el contrato. Si falta algo, lo anota y sigue con lo demás.",
+   "group": "corrida",
+   "x": 18,
+   "y": 412,
+   "w": 180,
+   "h": 70
+  },
+  {
+   "id": "p",
+   "label": "Comparación con Figma",
+   "caption": "firman Harold y Adonay",
+   "desc": "Se compara cada pantalla contra Figma. Harold y Adonay firman el resultado.",
+   "group": "corrida",
+   "x": 18,
+   "y": 506,
+   "w": 180,
+   "h": 70
+  }
+ ],
+ "edges": [
+  {
+   "from": "r",
+   "to": "d"
+  },
+  {
+   "from": "d",
+   "to": "u"
+  },
+  {
+   "from": "u",
+   "to": "c"
+  },
+  {
+   "from": "c",
+   "to": "p"
+  },
+  {
+   "from": "c",
+   "to": "u",
+   "route": [
+    [
+     262,
+     447
+    ],
+    [
+     262,
+     283
+    ]
+   ],
+   "label": "Falta algo → lo anota"
+  }
+ ]
+}

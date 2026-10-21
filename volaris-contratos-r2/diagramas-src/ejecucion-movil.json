@@ -1,0 +1,115 @@
+{
+ "width": 340,
+ "height": 664,
+ "eyebrow": "Volaris · Fare Flex",
+ "title": "Cómo lo ejecutamos",
+ "subtitle": "Toca un nodo para ver el detalle.",
+ "caption": "Operado por Jean con la cuenta de Applaudo de Adonay.",
+ "groups": [
+  {
+   "id": "prep",
+   "label": "Preparación",
+   "accent": false,
+   "x": 10,
+   "y": 28,
+   "w": 320,
+   "h": 214,
+   "tip": "Lo que dejamos listo antes de arrancar"
+  },
+  {
+   "id": "run",
+   "label": "Corrida",
+   "accent": true,
+   "x": 10,
+   "y": 276,
+   "w": 320,
+   "h": 214,
+   "tip": "Opera Jean, con la cuenta de Applaudo de Adonay"
+  },
+  {
+   "id": "med",
+   "label": "Después",
+   "accent": false,
+   "x": 10,
+   "y": 524,
+   "w": 320,
+   "h": 120,
+   "tip": "La medición se hace aparte"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "c",
+   "label": "Copia aislada",
+   "caption": "sin conexión al proyecto real",
+   "desc": "Una copia del proyecto solo para esta prueba: sin conexión al repositorio real y sin publicar nada.",
+   "group": "prep",
+   "x": 30,
+   "y": 60,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "k",
+   "label": "Solo el contrato",
+   "caption": "congelado durante todo el trabajo",
+   "desc": "El agente recibió solo el contrato y un documento de arranque. Nadie lo cambió mientras trabajaba.",
+   "group": "prep",
+   "x": 30,
+   "y": 154,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "w",
+   "label": "Sin preguntas de diseño",
+   "caption": "si faltaba algo, lo anotaba y seguía",
+   "desc": "La regla fue anotar cada hueco y seguir con el resto, sin detenerse a preguntar.",
+   "group": "run",
+   "x": 30,
+   "y": 308,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "r",
+   "label": "Dos cortes, un relevo",
+   "caption": "se retomó con un modelo más económico",
+   "desc": "Se cortó una vez por la conexión y otra por el límite de uso. Lo terminamos con un modelo más económico.",
+   "group": "run",
+   "x": 30,
+   "y": 402,
+   "w": 280,
+   "h": 70
+  },
+  {
+   "id": "m",
+   "label": "Medición contra Figma",
+   "caption": "pantalla por pantalla",
+   "desc": "Después comparamos cada pantalla contra Figma y contra la corrida anterior.",
+   "group": "med",
+   "x": 30,
+   "y": 556,
+   "w": 280,
+   "h": 70
+  }
+ ],
+ "edges": [
+  {
+   "from": "c",
+   "to": "k"
+  },
+  {
+   "from": "k",
+   "to": "w"
+  },
+  {
+   "from": "w",
+   "to": "r"
+  },
+  {
+   "from": "r",
+   "to": "m"
+  }
+ ]
+}

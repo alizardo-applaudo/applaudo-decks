@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volaris · Contratos diseño ↔ código: cómo vamos — Applaudo</title>
+<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-contratos-r2-r1-20261021">
+<link rel="stylesheet" href="css/volaris-contratos-r2.css?v=volaris-contratos-r2-r1-20261021">
+<link rel="stylesheet" href="css/responsive.css?v=volaris-contratos-r2-r1-20261021">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+<!-- 1 · Portada -->
+<section class="slide slide-dark active" aria-label="Portada">
+  <div class="glow-bg" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner center">
+    <p class="eyebrow">Diseño Applaudo · Volaris · Fare Flex Android</p>
+    <h1 class="big" style="max-width:16ch">Contratos diseño ↔ código: <em>cómo vamos</em></h1>
+    <p style="margin-top:28px;font-size:clamp(1.15rem,2vw,1.55rem);max-width:44ch;color:rgba(255,255,255,.82);line-height:1.35">Qué cambiamos en el contrato, qué tan cerca quedó la segunda corrida del diseño y qué necesitamos de ustedes.</p>
+    <div style="display:flex;gap:10px;margin-top:36px;flex-wrap:wrap">
+      <span class="tag">Volaris</span><span class="tag">Fare Flex</span><span class="tag">Android</span><span class="tag">Corrida 2</span><span class="tag">Oct ’26</span>
+    </div>
+  </div>
+  <div class="foot">Applaudo</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>Para Fernando Martir y Harold Caceres. Corrida 2 (r2) del experimento Fare Flex Android con el pack de contratos v2 en borrador. Fuentes: experiments/fare-flex-android-r2/COMPARACION-R2.md, METRICS.md, INTERVENTIONS.md, KICKOFF-R2.md.</aside>
+</section>
+
+<!-- 2 · El contrato: antes vs ahora -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="El contrato: antes vs ahora">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">El contrato</p>
+      <h2 class="hl">De una descripción general a <em>medidas exactas</em></h2>
+      <p class="lead">Antes le dábamos al equipo una descripción general y quedaban dudas; ahora le damos medidas exactas de cada estado, de dónde sale cada texto y reglas de qué no inventar.</p>
+    </div>
+    <div class="slide-body">
+      <div class="r2-two">
+        <div class="r2-col">
+          <span class="lab lab-gray">Antes</span>
+          <h4>Una descripción general</h4>
+          <ul class="r2-list">
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Qué pantalla es y qué piezas lleva</span></li>
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Medidas y espacios: <b>sin definir</b></span></li>
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Textos y precios: <b>sin origen claro</b></span></li>
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Lo que faltaba se <b>decidía a ojo</b></span></li>
+          </ul>
+        </div>
+        <div class="r2-col now">
+          <span class="lab">Ahora</span>
+          <h4>11 contratos, uno por pieza, para no adivinar</h4>
+          <ul class="r2-list">
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>Medidas exactas</b> de cada estado de la pantalla</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>De dónde sale</b> cada texto y cada precio</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>Qué va dentro de qué</b> y en qué orden</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>Reglas de qué no inventar:</b> si falta algo, se anota</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span>Un <b>diccionario Figma ↔ código</b> para colores y tamaños</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">El contrato</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>11 contratos = pack-v2-snapshot/contracts/ (11 archivos); README del pack: P1 GREEN, P8 11/11 (L72). "Diccionario Figma ↔ código" = tokens-map.volaris.json. Pack en BORRADOR sin firmar (METRICS.md L8).</aside>
+</section>
+
+<!-- 3 · Mismo bloque, dos contratos -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Un mismo bloque, dos contratos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Ejemplo · Selector de la tarjeta Flex</p>
+      <h2 class="hl">Un mismo bloque, <em>dos contratos</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-annot">
+        <figure>
+          <img src="assets/bloque-figma.png" alt="Diseño en Figma del selector «Personaliza tu vuelo (0/2)»: bloque «Equipaje o asiento» con tres opciones, bloque «Beneficio de viaje», precio y botón Continuar." width="452" height="700">
+          <span class="r2-dot" style="left:4%;top:7%">1</span>
+          <span class="r2-dot" style="left:59%;top:13%">2</span>
+          <span class="r2-dot" style="left:76%;top:26%">3</span>
+          <span class="r2-dot" style="left:84%;top:50%">4</span>
+          <span class="r2-dot" style="left:76%;top:83%">5</span>
+          <span class="r2-dot" style="left:84%;top:93%">6</span>
+        </figure>
+        <div class="r2-side">
+          <div class="before">
+            <span class="lab lab-gray">Antes</span>
+            <p>«Un título y tres opciones para elegir». Caja, tamaños, íconos y datos: <strong>sin definir</strong>.</p>
+          </div>
+          <div class="now">
+            <span class="lab">Ahora</span>
+            <ol>
+              <li><span class="r2-ico ok">1</span><span>Caja con borde fino, esquinas medianas y espacio interno fijo.</span></li>
+              <li><span class="r2-ico ok">2</span><span>Título grande, en negrita y color de marca.</span></li>
+              <li><span class="r2-ico ok">3</span><span>Cada opción con alto fijo y su ícono real de 24 px.</span></li>
+              <li><span class="r2-ico ok">4</span><span>Textos exactos y de dónde sale cada uno.</span></li>
+              <li><span class="r2-ico ok">5</span><span>El precio llega del sistema; si falta, se usa el de Basic.</span></li>
+              <li><span class="r2-ico ok">6</span><span>Va dentro de la tarjeta Flex, antes del precio y del botón.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Ejemplo de contrato</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>Pantalla del cliente: frame Figma del selector Flex 0/2 (misma imagen que el par 06 de la galería). Antes = pack v1 («Título + 3 opciones con radio»). Ahora = contrato de composición + geometría + origen de datos con fallback sellado (perFieldFallbacks) del pack v2. 24 px = tamaño de ícono del contrato.</aside>
+</section>
+
+<!-- 4 · Nuevo orden (diagrama) -->
+<section class="slide slide-dark slide-fit p2-slide diagram-slide" aria-label="Cómo se arma ahora">
+  <div class="glow-bg alt" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Cómo se arma ahora</p>
+      <h2 class="hl">Primero las reglas, <em>después la pantalla</em></h2>
+      <p class="lead">Si a la construcción le falta algo, lo anota y sigue. No inventa.</p>
+    </div>
+    <div class="slide-body">
+      <figure class="p2-diagram">
+        <picture>
+          <source media="(max-width:640px)" srcset="assets/diagrama-orden-movil.png">
+          <img src="assets/diagrama-orden.png" alt="Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, que firman Harold y Adonay. Si falta algo en la construcción, lo anota y sigue.">
+        </picture>
+      </figure>
+      <a class="p2-diagram-link d" href="diagrama-orden.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
+      <a class="p2-diagram-link m" href="diagrama-orden-movil.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
+    </div>
+  </div>
+  <div class="foot">Nuevo orden</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>Regla 9 del KICKOFF-R2.md (L37) y la intervención #2 de INTERVENTIONS.md: si falta algo, se registra el gap (B##) y se sigue sin construir esa parte. GAPS.md: 0 inventados (METRICS.md L55).</aside>
+</section>
+
+<!-- 5 · Resultado -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Resultado">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Resultado de la corrida 2</p>
+      <h2 class="hl">De 32 diferencias con el diseño, <em>ya se cerraron 24</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-result">
+        <div class="r2-bigrow">
+          <span class="r2-big">24<small>/ 32</small></span>
+          <p>Las mismas 32 diferencias que encontramos en la primera corrida, revisadas otra vez contra Figma.</p>
+        </div>
+        <div class="r2-bar" role="img" aria-label="24 cerradas, 5 a medias, 2 abiertas, 1 ya no aplica">
+          <span class="c" style="flex:24">24 cerradas</span><span class="p" style="flex:5">5</span><span class="a" style="flex:2">2</span><span class="n" style="flex:1">1</span>
+        </div>
+        <div class="r2-legend">
+          <div><b><i style="background:var(--red)"></i>24 cerradas</b><p>Ya se ven como en Figma.</p></div>
+          <div><b><i style="background:#FFB3B3"></i>5 a medias</b><p>Mejoraron, pero falta un detalle.</p></div>
+          <div><b><i style="background:var(--ink)"></i>2 abiertas</b><p>Faltan una medida del diseño y la pantalla «cargando».</p></div>
+          <div><b><i style="background:var(--linen);border:1px solid var(--line-strong)"></i>1 ya no aplica</b><p>Lo cambiamos por decisión.</p></div>
+        </div>
+        <div class="r2-band hi"><p><strong>3 de 8 revisiones automáticas</strong> ya pasan. En la primera corrida no pasaba ninguna.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Resultado</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>COMPARACION-R2.md L52: 24 cerradas · 5 parciales (#14, #25, #31, #32, #34) · 2 abiertas (#22, #23) · 1 no aplica (#28). Las 32 vienen de 36 observaciones de run 1 menos 4 coincidencias (L13). Las 32 son contra Figma, no contra la implementación del equipo. #22 = línea de 15 kg por ancho del dispositivo de prueba; #23 = sin estado loading (falta sizeSkeletonBar). #28 = 4 filas en vez de 5, por decisión. Revisiones = P1–P8 de la SPEC §5.2 (L380–398): run 2 pasan P1, P6, P7; run 1 pasaban 0 (COMPARACION-R2.md L93). P8 pasa en el pack pero el código no cumple (L91).</aside>
+</section>
+
+<!-- 6 · Tríptico -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Figma, corrida 1 y corrida 2">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Una pantalla, tres versiones</p>
+      <h2 class="hl">La tarjeta Flex, <em>antes y ahora</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-tri">
+        <figure>
+          <a href="assets/t-figma.png" target="_blank" rel="noopener"><img class="i-figma" src="assets/t-figma.png" alt="Figma: tarjeta Flex con las dos opciones elegidas" width="712" height="1366"></a>
+          <figcaption><span class="tag">Figma</span><span class="d">El diseño.</span></figcaption>
+        </figure>
+        <figure>
+          <a href="assets/t-r1.png" target="_blank" rel="noopener"><img class="i-r1" src="assets/t-r1.png" alt="Corrida 1: misma tarjeta" width="785" height="1274"></a>
+          <figcaption><span class="tag">Corrida 1</span><span class="d">Íconos de relleno, sin cajas y el precio fuera de lugar.</span></figcaption>
+        </figure>
+        <figure>
+          <a href="assets/t-r2.png" target="_blank" rel="noopener"><img class="i-r2" src="assets/t-r2.png" alt="Corrida 2: misma tarjeta" width="785" height="1374"></a>
+          <figcaption><span class="tag hi">Corrida 2</span><span class="d">Cajas, íconos y precio como en Figma. El check sale negro en vez de verde.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Antes y ahora</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>Pantallas del cliente. Estado card picker 2/2 (Figma 1137:255618) a la misma escala (2 px por dp). Corrida 1 = snapshot de experiments/fare-flex-android/snapshots; corrida 2 = fare-flex-android-r2/snapshots. Check negro = desviación #14 (parcial), N6; el contrato no da tinte (B11).</aside>
+</section>
+
+<!-- 7 · Galería -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Las 16 pantallas">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Todas las pantallas</p>
+      <h2 class="hl">16 pantallas, <em>lado a lado</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-gal">
+        <div class="r2-gal-stage">
+          <figure><a data-g="fa" href="assets/galeria/g01-figma.png" target="_blank" rel="noopener"><img data-g="fi" src="assets/galeria/g01-figma.png" alt="Figma: Tarjeta Flex sin elegir"></a><span class="tag">Figma</span></figure>
+          <figure><a data-g="ra" href="assets/galeria/g01-r2.png" target="_blank" rel="noopener"><img data-g="ri" src="assets/galeria/g01-r2.png" alt="Corrida 2: Tarjeta Flex sin elegir"></a><span class="tag hi">Corrida 2</span></figure>
+        </div>
+        <div class="r2-gal-cap">
+          <button class="r2-gal-btn" type="button" data-g="prev" aria-label="Pantalla anterior">‹</button>
+          <span class="n" data-g="n">01 / 16</span>
+          <div class="t" aria-live="polite"><b data-g="t">Tarjeta Flex sin elegir</b><span data-g="d">Íconos reales y textos correctos, sin borde de color.</span></div>
+          <button class="r2-gal-btn" type="button" data-g="next" aria-label="Pantalla siguiente">›</button>
+        </div>
+        <div class="r2-gal-chips" data-g="chips" aria-label="Elegir pantalla (punto = todavía hay una diferencia)"></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Galería</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>Pantallas del cliente. Pares de compare-r2/gallery/.parts (01–16), sin etiquetas técnicas. Punto negro en el número = pantalla con diferencia todavía visible (#14 check negro en 04, 08, 09; #22 línea de 15 kg en 06; #32/#33/#34 tabla en 13; #25 barra en 14 y 16). No hay pantalla «cargando» (#23). 10: Figma muestra 5 beneficios, se acordó 4 (#28). 13: la tabla 1331:191036 estaba fuera de alcance en esta corrida.</aside>
+</section>
+
+<!-- 8 · Cómo lo ejecutamos (diagrama) -->
+<section class="slide slide-dark slide-fit p2-slide diagram-slide" aria-label="Cómo lo ejecutamos">
+  <div class="glow-bg alt" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Cómo lo ejecutamos</p>
+      <h2 class="hl">Solo con el contrato, <em>sin preguntas de diseño</em></h2>
+      <p class="lead">Una copia aparte del proyecto, el contrato congelado y, al final, la medición contra Figma.</p>
+    </div>
+    <div class="slide-body">
+      <figure class="p2-diagram">
+        <picture>
+          <source media="(max-width:640px)" srcset="assets/diagrama-ejecucion-movil.png">
+          <img src="assets/diagrama-ejecucion.png" alt="Preparación: copia aislada y solo el contrato. Corrida: sin preguntas de diseño; dos cortes y un relevo con un modelo más económico. Después: medición contra Figma, pantalla por pantalla.">
+        </picture>
+      </figure>
+      <a class="p2-diagram-link d" href="diagrama-ejecucion.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
+      <a class="p2-diagram-link m" href="diagrama-ejecucion-movil.html" target="_blank" rel="noopener">Ver diagrama interactivo ↗</a>
+    </div>
+  </div>
+  <div class="foot">Ejecución</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>KICKOFF-R2.md: Claude Code en la cuenta de Applaudo de Adonay, operado por Jean (L4); copia aislada sin remoto (L12); sin push (L20). Cortes: error de API 21:46:55 y límite de sesión 22:30:30; retoma con Sonnet 02:20:17, hora de Caracas (COMPARACION-R2.md L119; INTERVENTIONS #5–#8).</aside>
+</section>
+
+<!-- 9 · Tiempo y costo -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Tiempo y costo">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Tiempo y costo</p>
+      <h2 class="hl">Hora y media de agente, <em>cero preguntas de diseño</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-cards4">
+        <div class="r2-card"><span class="r2-num">91<small>min</small></span><p>de trabajo del agente, en tres tramos.</p></div>
+        <div class="r2-card"><span class="r2-num">48,95<small>USD</small></span><p>costo de referencia que reporta la herramienta; lo cubre la suscripción.</p></div>
+        <div class="r2-card"><span class="r2-num">9</span><p>intervenciones humanas: arranque, cortes y cambio de modelo.</p></div>
+        <div class="r2-card hi"><span class="r2-num">0</span><p>preguntas de diseño a mitad de camino. En la corrida 1 fueron 3.</p></div>
+      </div>
+      <div class="r2-band">
+        <p><strong>Corrida 1:</strong> unos 108 min y al menos 20,79 USD, pero sin costo medido en 3 de sus 5 tramos, así que los totales no se comparan directamente. El último tramo de la corrida 2, con un modelo más económico, costó 6,61 USD.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Tiempo y costo</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>COMPARACION-R2.md L121: 91 min 15 s = 37:10 + 39:17 + 14:48; run 1 ≈108 min. L123: 48,95 USD nocional (18,82 + 23,52 Opus + 6,61 Sonnet); run 1 20,79 conocido, 3 de 5 corridas sin medir. L117: 9 intervenciones (#0–#8); METRICS.md L58 dice 8 porque se escribió antes de #8. L118: 0 decisiones de diseño a mitad de corrida vs 3 en run 1. L129: tramo Sonnet 6,61 en 14:48.</aside>
+</section>
+
+<!-- 10 · Aviso honesto -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Aviso honesto">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Aviso honesto</p>
+      <h2 class="hl">Se ven bien, pero <em>falta conectarlas</em></h2>
+      <p class="lead">Las pantallas se ven bien, pero falta conectarlas bien a los datos reales y probarlas en un teléfono.</p>
+    </div>
+    <div class="slide-body">
+      <div class="r2-cards3">
+        <div class="r2-card"><span class="lab">Datos</span><h4>La tarjeta Flex muestra datos de Basic</h4><p>En la app real, la tarjeta del medio todavía recibe la información de Basic.</p></div>
+        <div class="r2-card"><span class="lab">Conexión</span><h4>Dos piezas aún sueltas</h4><p>El selector y el paso de Zero a Flex no están conectados a ninguna pantalla.</p></div>
+        <div class="r2-card"><span class="lab">Prueba</span><h4>No se probó en un teléfono</h4><p>Comparamos capturas de pantalla; la app instalada quedó fuera de esta corrida.</p></div>
+      </div>
+      <div class="r2-band">
+        <span class="lab lab-gray">Riesgos abiertos</span>
+        <ul>
+          <li>Algunas suposiciones siguen provisionales hasta que el equipo de desarrollo confirme las claves de contenido.</li>
+          <li>La corrida 3 espera a la versión 2.1 del contrato.</li>
+          <li>Todo depende de la firma de Harold y Adonay.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Aviso</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>COMPARACION-R2.md §2: N1 card del medio con datos de Basic en runtime (L64); N2 picker y modo Z2F sin conectar (L65); conclusión 2 (L157). KICKOFF-R2.md L68: APK/runtime fuera de alcance. Riesgos: AM PROVISIONAL (AM-16 claves CMS de la implementación del equipo; AM-16…19, 23, 24, 29, 30) pendientes de firma (METRICS.md L8; pack README L66). Redacción: el brief decía «claves CMS»; en la diapositiva va «claves de contenido» por la regla de no usar siglas.</aside>
+</section>
+
+<!-- 11 · Lo que decidimos para la 2.1 -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Versión 2.1 del contrato">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Lo que decidimos para la versión 2.1</p>
+      <h2 class="hl">Tres cambios para <em>cerrar lo que falta</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-cards3">
+        <div class="r2-card hi"><span class="lab">1 · Conexión</span><h4>Un contrato de conexión</h4><p>Cada dato con respaldo se usa de verdad en la app, con una prueba que lo confirma. Y una regla clara para cuando no llega Flex.</p></div>
+        <div class="r2-card"><span class="lab">2 · Detalles</span><h4>Sellar los detalles visuales</h4>
+          <ul><li>La tabla de comparación, celda por celda</li><li>El check verde, junto al título</li><li>La barra de arriba</li><li>El precio sin asteriscos</li><li>La pantalla «cargando»</li><li>La tarifa Flex v.Club</li></ul></div>
+        <div class="r2-card"><span class="lab">3 · Medición</span><h4>Medir al mismo ancho que Figma</h4><p>Las capturas de prueba se toman a 360, el mismo ancho del diseño, para comparar medida por medida.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Versión 2.1</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>COMPARACION-R2.md §7 cambios al pack (L163–167): 1 sellar tabla 1331:191036 + Flex→Plus 1439:160278 (cierra #31, #32, #33, N5); 2 fijar dispositivo de snapshot a 360 dp en PARITY-CHECKS.md (cierra #22; vuelve medibles P3 y P4); 3 tintes del tierHeader + sizeSkeletonBar (cierra #14, #23, N6); 4 P8 de código: test por perFieldFallbacks y regla para cuando falta flex (cierra N1, hace visible N2); 5 remoteConfigId de FLEX_VCLUB (N3), fixture BOLD_MARK (N4/#34), firma de la barra (#25).</aside>
+</section>
+
+<!-- 12 · Qué les pedimos -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Qué les pedimos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Qué les pedimos</p>
+      <h2 class="hl">Dos decisiones de alcance y <em>una firma visual</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-cards3">
+        <div class="r2-card hi"><span class="lab">Alcance</span><span class="who">Harold y Adonay</span>
+          <ul><li>¿Entra la tabla de comparación en la versión 2.1?</li><li>¿Entra el paso de Flex a Plus?</li></ul></div>
+        <div class="r2-card"><span class="lab">Firma visual</span><span class="who">Harold</span>
+          <ul><li>La franja de arriba de la tarjeta Flex: aceptar la del código, crear una medida nueva o fijarla en Figma.</li><li>La sombra del botón del lápiz, como en Figma.</li></ul></div>
+        <div class="r2-card"><span class="lab">Sello</span><span class="who">Adonay</span>
+          <ul><li>Sellar el contrato y sus reglas.</li><li>Confirmar o cambiar las suposiciones provisionales.</li></ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Qué les pedimos</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>Alcance: tabla 1331:191036 (OUT_OF_SCOPE pendiente de firma, METRICS.md L8) y Flex→Plus 1439:160278 (#31, COMPARACION-R2.md L163). Firma visual: D-17 (DISAGREEMENTS.md L31; opciones a/b/c) y D-19 (L33; elevation.xs desde el picker sin cambiar el componente). Sello: AM PROVISIONAL AM-16…19, 23, 24, 29, 30.</aside>
+</section>
+
+<!-- 13 · Próximos pasos -->
+<section class="slide slide-fit p2-slide" aria-label="Próximos pasos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Próximos pasos</p>
+      <h2 class="hl">Firmar, ajustar y <em>medir otra vez</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="p2-flow">
+        <div class="step-card"><span class="num">1</span><h4>Firmar</h4><p>Alcance, franja de la tarjeta, sombra del lápiz y suposiciones.</p></div>
+        <span class="road-arrow" aria-hidden="true">→</span>
+        <div class="step-card"><span class="num">2</span><h4>Contrato 2.1</h4><p>Conexión, detalles visuales y medición al ancho de Figma.</p></div>
+        <span class="road-arrow" aria-hidden="true">→</span>
+        <div class="step-card"><span class="num">3</span><h4>Corrida 3</h4><p>La misma feature, solo con el contrato firmado.</p></div>
+        <span class="road-arrow" aria-hidden="true">→</span>
+        <div class="step-card hi"><span class="num">4</span><h4>En un teléfono</h4><p>Probar con datos reales, no solo con capturas.</p></div>
+      </div>
+      <div class="hero-band">
+        <span class="lab">Meta</span>
+        <p>Cerrar las 7 diferencias que siguen abiertas o a medias.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Próximos pasos</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+  <aside class="notes" hidden>7 = 5 parciales + 2 abiertas (COMPARACION-R2.md L52). El orden de pasos sigue la conclusión §7 y la advertencia de borrador de METRICS.md L8.</aside>
+</section>
+
+<!-- 14 · Cierre -->
+<section class="slide slide-dark cierre-slide" aria-label="Cierre">
+  <div class="glow-bg" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner center">
+    <p class="eyebrow">Diseño Applaudo · Volaris</p>
+    <h1 class="big">Ya se parece al diseño. <em>Ahora, a conectarlo.</em></h1>
+    <p class="cierre-thanks">Gracias · Preguntas</p>
+  </div>
+  <div class="foot">Applaudo</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+</section>
+
+<!-- 15 · Anexo -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Anexo: términos y fuentes">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Anexo</p>
+      <h2 class="hl">Términos técnicos y <em>fuentes</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-apx">
+        <div class="r2-card">
+          <span class="lab">Glosario</span>
+          <dl>
+            <dt>Revisiones P1–P8</dt><dd>Las 8 revisiones de la corrida: contrato completo, colores y medidas con nombre, geometría, captura contra Figma, textos, íconos, qué va dentro de qué y datos.</dd>
+            <dt>Paparazzi</dt><dd>Herramienta que toma las capturas de pantalla automáticas.</dd>
+            <dt>Pulsar</dt><dd>Revisor de nombres del design system; quedó fuera de esta corrida.</dd>
+            <dt>Tokens</dt><dd>Nombres fijos para colores, tamaños y espacios: el «diccionario Figma ↔ código».</dd>
+            <dt>CMS</dt><dd>Sistema de donde salen los textos de la app («claves de contenido»).</dd>
+            <dt>D-17 · D-19</dt><dd>Desacuerdos para firma de Harold: franja de la tarjeta Flex y sombra del lápiz.</dd>
+            <dt>AM provisionales</dt><dd>Suposiciones AM-16…19, 23, 24, 29 y 30, pendientes de firma.</dd>
+          </dl>
+        </div>
+        <div class="r2-card">
+          <span class="lab">Fuentes</span>
+          <dl>
+            <dt>Resultado</dt><dd><code>COMPARACION-R2.md</code> §1 (32 diferencias), §3 (P1–P8), §5 (tiempo y costo), §7 (cambios al contrato)</dd>
+            <dt>Métricas</dt><dd><code>METRICS.md</code> (estado de borrador, capturas)</dd>
+            <dt>Intervenciones</dt><dd><code>INTERVENTIONS.md</code> (#0–#8)</dd>
+            <dt>Reglas de la corrida</dt><dd><code>KICKOFF-R2.md</code></dd>
+            <dt>Desacuerdos</dt><dd><code>pack-v2-snapshot/DISAGREEMENTS.md</code></dd>
+            <dt>Pantallas</dt><dd>Figma de Volaris y capturas de las corridas 1 y 2</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Anexo</div>
+  <div class="foot foot-right">Contratos · Corrida 2 · Oct ’26</div>
+</section>
+
+</div>
+
+<nav class="nav" aria-label="Navegación de diapositivas">
+  <button class="nav-btn" id="prev" aria-label="Diapositiva anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">1 / 15</span>
+  <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
+</nav>
+
+<script src="js/applaudo-deck.js?v=volaris-contratos-r2-r1-20261021"></script>
+<script src="js/galeria.js?v=volaris-contratos-r2-r1-20261021"></script>
+</body>
+</html>
