@@ -69,7 +69,7 @@
   </div>
   <div class="foot">Las pruebas</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Bain (web): sistema de diseño de Bain + página de inicio + PRISM – Instruments. MagicPath: páginas de prueba aprobadas por Sentinel (informe MagicPath §5, «Test pages built with the library (approved by Sentinel)»). Paper: Sentinel ronda 3, «APROBADO con issues conocidos» (informe Paper, estado). Volaris (Android): sistema de diseño + 3 pantallas de Flex Fare (selección de tarifa, oferta de Zero a Flex, equipaje); Sentinel ronda 1 APROBADO en las dos (informe Volaris, estado y §8). Pulsar: proyecto nuevo desde cero, sistema de diseño + pantallas, en claro y oscuro, por separado en MagicPath y en Paper; ninguna pasó la ronda 1 de Sentinel y las dos están en la ronda 2 (contexto de Adonay; todavía no hay informe en Notion). Pulsar es privado: no se muestran pantallas.</aside>
+  <aside class="notes" hidden>Bain (web): sistema de diseño de Bain + página de inicio + PRISM – Instruments. MagicPath: páginas de prueba aprobadas en la revisión de calidad (informe MagicPath §5, «Test pages built with the library»). Paper: aprobada en la ronda 3 de revisión, «con issues conocidos» (informe Paper, estado). Volaris (Android): sistema de diseño + 3 pantallas de Flex Fare (selección de tarifa, oferta de Zero a Flex, equipaje); aprobada en la primera revisión en las dos (informe Volaris, estado y §8). Pulsar: proyecto nuevo desde cero, sistema de diseño + pantallas, en claro y oscuro, por separado en MagicPath y en Paper; ninguna pasó la primera revisión y las dos están en la segunda ronda (contexto de Adonay; todavía no hay informe en Notion). Pulsar es privado: no se muestran pantallas.</aside>
 </section>
 
 <!-- 3 · Cómo las probamos (diagrama) -->
@@ -85,14 +85,14 @@
     <div class="slide-body">
       <figure class="p2-diagram live" data-d="prueba">
         <iframe class="p2-dg-frame" title="Diagrama interactivo: cómo las probamos" aria-describedby="dg-prueba-desc" loading="eager"></iframe>
-        <p class="sr-only" id="dg-prueba-desc">Punto de partida: el código del sistema de diseño y Figma. Desde ahí, MagicPath y Paper construyen cada una por su cuenta. Sentinel revisa cada resultado. Resultado: sistema de diseño y pantallas. Ninguna herramienta recibió el trabajo de la otra.</p>
-        <noscript><img src="assets/diagrama-prueba.png" alt="Punto de partida, MagicPath y Paper por separado, revisión de Sentinel y resultado."></noscript>
+        <p class="sr-only" id="dg-prueba-desc">Punto de partida: el código del sistema de diseño y Figma. Desde ahí, MagicPath y Paper construyen cada una por su cuenta. Cada resultado pasa por una revisión de calidad. Resultado: sistema de diseño y pantallas. Ninguna herramienta recibió el trabajo de la otra.</p>
+        <noscript><img src="assets/diagrama-prueba.png" alt="Punto de partida, MagicPath y Paper por separado, revisión de calidad y resultado."></noscript>
       </figure>
     </div>
   </div>
   <div class="foot">Método</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Informe Volaris §1: las dos herramientas partieron de los mismos archivos de preparación y ninguna recibió el resultado de la otra (Sentinel lo verificó). Bain: la ronda 1 de Paper usó pantallas tomadas de MagicPath, se invalidó y se rehízo por separado desde el código del sistema de diseño y los frames de Figma (informe Paper, nota de la ronda 1). Informe Paper §10: cada herramienta se puede usar sola; las dos toman el sistema de diseño por su cuenta.</aside>
+  <aside class="notes" hidden>Informe Volaris §1: las dos herramientas partieron de los mismos archivos de preparación y ninguna recibió el resultado de la otra (se verificó en la revisión). Bain: la ronda 1 de Paper usó pantallas tomadas de MagicPath, se invalidó y se rehízo por separado desde el código del sistema de diseño y los frames de Figma (informe Paper, nota de la ronda 1). Informe Paper §10: cada herramienta se puede usar sola; las dos toman el sistema de diseño por su cuenta.</aside>
 </section>
 
 <!-- 4 · Qué logramos: Bain -->
@@ -117,7 +117,7 @@
   </div>
   <div class="foot">Bain</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Capturas: MagicPath, página de inicio y PRISM – Instruments (páginas de prueba aprobadas por Sentinel, informe MagicPath §5). Paper: página de inicio R3 y PRISM R3 (informe Paper §2). Se muestra la parte de arriba de cada pantalla; al tocarla se amplía completa. «Ganó el sistema de diseño»: informe MagicPath §5 (PRISM) e informe Paper §7 (11 desviaciones). Paper también armó la librería: 277 tokens y 36 componentes (informe Paper §2).</aside>
+  <aside class="notes" hidden>Capturas: MagicPath, página de inicio y PRISM – Instruments (páginas de prueba aprobadas en la revisión, informe MagicPath §5). Paper: página de inicio R3 y PRISM R3 (informe Paper §2). Se muestra la parte de arriba de cada pantalla; al tocarla se amplía completa. «Ganó el sistema de diseño»: informe MagicPath §5 (PRISM) e informe Paper §7 (11 desviaciones). Paper también armó la librería: 277 tokens y 36 componentes (informe Paper §2).</aside>
 </section>
 
 <!-- 5 · Qué logramos: Volaris -->
@@ -146,7 +146,7 @@
   </div>
   <div class="foot">Volaris</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Informe Volaris §2 (comparación Figma | MagicPath | Paper, a 360 px) y §0: «Most of the gap against Figma is deliberate: where Figma and the code disagree, the code wins.» Desviaciones documentadas: 19 en MagicPath y 35 en Paper (informe Volaris §5). Sentinel ronda 1 APROBADO en las dos, sin Bloqueantes ni Altos (§8). Es una traducción web a 360 px: ninguna herramienta corre Compose (§0).</aside>
+  <aside class="notes" hidden>Informe Volaris §2 (comparación Figma | MagicPath | Paper, a 360 px) y §0: «Most of the gap against Figma is deliberate: where Figma and the code disagree, the code wins.» Desviaciones documentadas: 19 en MagicPath y 35 en Paper (informe Volaris §5). Aprobadas en la primera revisión en las dos, sin problemas bloqueantes ni altos (§8). Es una traducción web a 360 px: ninguna herramienta corre Compose (§0).</aside>
 </section>
 
 <!-- 6 · En números -->
@@ -168,7 +168,7 @@
   </div>
   <div class="foot">En números</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>36: informe Paper §2, «36 component masters», con la misma lista de 36 componentes del sistema de diseño de Bain; además, 277 tokens en 7 grupos. 3 + 3: informe Volaris §0 (3 pantallas de Flex Fare en cada herramienta) y §8 (Sentinel ronda 1 APROBADO en las dos). US$7: informe MagicPath §1, plan Builder, US$7 al mes con facturación anual, sin créditos de IA dentro de la app. US$16–20: informe Paper §1, plan Pro, US$20 por editor al mes (US$16 con facturación anual), con 1M de llamadas por semana; la prueba de Bain usó unas 2,320 (≈0.23 % del límite semanal, §8).</aside>
+  <aside class="notes" hidden>36: informe Paper §2, «36 component masters», con la misma lista de 36 componentes del sistema de diseño de Bain; además, 277 tokens en 7 grupos. 3 + 3: informe Volaris §0 (3 pantallas de Flex Fare en cada herramienta) y §8 (aprobadas en la primera revisión en las dos). US$7: informe MagicPath §1, plan Builder, US$7 al mes con facturación anual, sin créditos de IA dentro de la app. US$16–20: informe Paper §1, plan Pro, US$20 por editor al mes (US$16 con facturación anual), con 1M de llamadas por semana; la prueba de Bain usó unas 2,320 (≈0.23 % del límite semanal, §8).</aside>
 </section>
 
 <!-- 7 · Hallazgo: los cambios no viajan -->
@@ -192,7 +192,7 @@
   </div>
   <div class="foot">Hallazgos</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Imagen: Paper, prueba 3 entre archivos, «library after the token change vs the consumer file at the same moment (unchanged)» (informe Paper §3). Paper: «The library changed by 68,004 pixels and the consumer by 0» (§3). MagicPath: «Resultado: 0/3 consumidores se actualizaron» con librerías reales, 22 de octubre (informe MagicPath, sección «Propagación con librerías reales (2026-10-22)»). En Volaris, antes de la librería real: 0 de 4 (informe Volaris §4). Dentro de un mismo archivo, Paper sí lleva un cambio de token a la pieza original y a sus copias (informe Paper §3, prueba 1). Por eso la regla es la misma en las dos: un dueño, el código primero y volver a colocar los componentes después de cada versión (informe Paper §10).</aside>
+  <aside class="notes" hidden>Imagen: Paper, prueba 3 entre archivos, «library after the token change vs the consumer file at the same moment (unchanged)» (informe Paper §3). Paper: la librería cambió 68,004 píxeles y el otro archivo, 0 (§3). MagicPath: «Resultado: 0/3 consumidores se actualizaron» con librerías reales, 22 de octubre (informe MagicPath, sección «Propagación con librerías reales (2026-10-22)»). En Volaris, antes de la librería real: 0 de 4 (informe Volaris §4). Dentro de un mismo archivo, Paper sí lleva un cambio de token a la pieza original y a sus copias (informe Paper §3, prueba 1). Por eso la regla es la misma en las dos: un dueño, el código primero y volver a colocar los componentes después de cada versión (informe Paper §10).</aside>
 </section>
 
 <!-- 8 · Hallazgo del 22 de octubre: copia fija (diagrama) -->
@@ -251,7 +251,7 @@
   </div>
   <div class="foot">Hallazgos</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>MagicPath: sus componentes son código real e interactivo (informe Paper §10, «MagicPath is stronger as the component source»); en Volaris, páginas «pixel-identical to the local React render», con estados reales (informe Volaris §0 y §5). Visibilidad: los enlaces de vista abren sin iniciar sesión y las imágenes subidas quedan en un espacio público de Google Cloud; revisar la política del cliente antes de usarla con él (informe Volaris §6 y §11). Tema: solo desde el chat de la app, que pide créditos del plan Pro; el agente no puede aplicarlo (informe MagicPath §4). Paper: un cambio dentro del archivo llega a la pieza original y a sus copias (informe Paper §3, prueba 1; informe Volaris §4); fidelidad alta en Bain (§6) y en Volaris (§0). No tiene componentes ni instancias; cada arreglo implica borrar y rehacer la pantalla (informe Paper §4; informe Volaris §7). Bain: con escritura intensa la app se cerró una vez y hubo que reiniciar Paper Desktop (informe Paper §4 y §10); en Volaris no hubo caídas (informe Volaris §6).</aside>
+  <aside class="notes" hidden>MagicPath: sus componentes son código real e interactivo (informe Paper §10, «MagicPath is stronger as the component source»); en Volaris, páginas idénticas píxel a píxel a su versión local en React, con estados reales (informe Volaris §0 y §5). Visibilidad: los enlaces de vista abren sin iniciar sesión y las imágenes subidas quedan en un espacio público de Google Cloud; revisar la política del cliente antes de usarla con él (informe Volaris §6 y §11). Tema: solo desde el chat de la app, que pide créditos del plan Pro; no se puede aplicar desde una conexión externa (informe MagicPath §4). Paper: un cambio dentro del archivo llega a la pieza original y a sus copias (informe Paper §3, prueba 1; informe Volaris §4); fidelidad alta en Bain (§6) y en Volaris (§0). No tiene componentes ni instancias; cada arreglo implica borrar y rehacer la pantalla (informe Paper §4; informe Volaris §7). Bain: con escritura intensa la app se cerró una vez y hubo que reiniciar Paper Desktop (informe Paper §4 y §10); en Volaris no hubo caídas (informe Volaris §6).</aside>
 </section>
 
 <!-- 10 · Recomendaciones por tipo de proyecto -->
@@ -360,7 +360,7 @@
   </div>
   <div class="foot">Anexo</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Fuentes en Notion: informe MagicPath (con la sección «Propagación con librerías reales (2026-10-22)»), informe Paper (Sentinel ronda 3) e informe Volaris. Pulsar todavía no tiene informe.</aside>
+  <aside class="notes" hidden>Fuentes en Notion: informe MagicPath (con la sección «Propagación con librerías reales (2026-10-22)»), informe Paper (aprobado en la ronda 3) e informe Volaris. Pulsar todavía no tiene informe.</aside>
 </section>
 
 </div>
