@@ -74,19 +74,19 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
   {
    "id": "inicio",
    "label": "Punto de partida",
-   "caption": "el código del sistema de diseño + Figma",
-   "desc": "Las dos herramientas arrancan del mismo lugar: el código del sistema de diseño y el Figma del cliente.",
+   "caption": "Bain y Volaris: código + Figma · Pulsar: un concepto",
+   "desc": "Bain y Volaris arrancan del código de su sistema de diseño y del Figma del cliente. Pulsar arranca de un concepto y de una web hecha sin diseño: no había sistema de diseño, así que cada herramienta lo creó desde cero.",
    "group": null,
    "x": 60,
    "y": 20,
    "w": 220,
-   "h": 76
+   "h": 92
   },
   {
    "id": "mp",
    "label": "MagicPath",
    "caption": "construye por su cuenta",
-   "desc": "MagicPath arma el sistema de diseño y las pantallas sin ver lo que hizo Paper.",
+   "desc": "MagicPath arma el sistema de diseño y las pantallas sin ver lo que hizo Paper. La maneja un agente que orquesta el trabajo: Claude o uno de los bots de Grok Bot de Adonay.",
    "group": "cada",
    "x": 16,
    "y": 166,
@@ -97,7 +97,7 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "id": "pp",
    "label": "Paper",
    "caption": "construye por su cuenta",
-   "desc": "Paper arma el sistema de diseño y las pantallas sin ver lo que hizo MagicPath.",
+   "desc": "Paper arma el sistema de diseño y las pantallas sin ver lo que hizo MagicPath. La maneja un agente que orquesta el trabajo: Claude o uno de los bots de Grok Bot de Adonay.",
    "group": "cada",
    "x": 176,
    "y": 166,
@@ -107,8 +107,8 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
   {
    "id": "sent",
    "label": "Revisión de calidad",
-   "caption": "Sentinel",
-   "desc": "Sentinel, nuestro revisor de calidad, compara cada resultado con el código y con Figma, y lo aprueba o lo devuelve.",
+   "caption": "Sentinel (automática) + pasada manual",
+   "desc": "Sentinel revisa cada resultado de forma automatizada, por rondas, y lo aprueba o lo devuelve (contra el código y Figma; en Pulsar, contra el brief). Después, Adonay le da otra pasada, más manual.",
    "group": null,
    "x": 60,
    "y": 318,
@@ -119,7 +119,7 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "id": "res",
    "label": "Resultado",
    "caption": "sistema de diseño + pantallas",
-   "desc": "Bain: sistema de diseño, página de inicio y PRISM. Volaris: sistema de diseño y 3 pantallas de Flex.",
+   "desc": "Bain: sistema de diseño, página de inicio y PRISM. Volaris: sistema de diseño y 3 pantallas de Flex. Pulsar: sistema de diseño y pantallas, en claro y oscuro.",
    "group": null,
    "x": 60,
    "y": 450,
@@ -235,14 +235,32 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
  const cv=document.getElementById("canvas"),host=document.createElement("div");host.className="fit-host";
  cv.parentNode.insertBefore(host,cv);host.appendChild(cv);
  const W=D.width||1360,H=D.height||740,det=document.getElementById("detail");
+ const R=document.documentElement;
+ /* embedded: the detail panel never sits over the nodes.
+    - "ext": the deck shows the detail in the slide's own text column (vertical layout on tablets/laptops, or a
+      short wide screen); the frame holds only the diagram, scaled to the frame height.
+    - otherwise the panel keeps a reserved height (the longest text) below the diagram, so nothing grows on
+      hover/tap and the frame never needs to scroll. */
+ window.__hidAll=()=>Object.keys(N).filter(k=>N[k].desc).map(k=>`<b>${esc(N[k].label)}${N[k].caption?" · "+esc(N[k].caption):""}</b><span>${esc(N[k].desc)}</span>`);
+ function reserve(){det.style.minHeight="";if(R.classList.contains("ext"))return;let m=0;const cur=det.innerHTML;
+  window.__hidAll().forEach(h=>{det.innerHTML=h;m=Math.max(m,det.offsetHeight)});det.innerHTML=cur;det.style.minHeight=m+"px";}
  function fit(){
   const wrap=document.querySelector(".wrap"),cs=getComputedStyle(wrap);
   const pad=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight);
   let s=Math.min(1,(document.documentElement.clientWidth-pad)/W);
   if(W>600&&!EMBED){const top=host.getBoundingClientRect().top+window.scrollY;
    const avH=window.innerHeight-top-det.offsetHeight-parseFloat(cs.paddingBottom)-8; s=Math.min(s,Math.max(.5,avH/H));}
+  if(EMBED){const ext=R.classList.contains("ext");
+   /* natural heights at width-fit scale: with the panel below (h) and without it (hx) */
+   R.classList.remove("ext");reserve();cv.style.transform="scale("+s+")";host.style.width=W*s+"px";host.style.height=H*s+"px";
+   window.__hidNat=Math.ceil(wrap.getBoundingClientRect().height)+2;
+   R.classList.add("ext");window.__hidNatX=Math.ceil(wrap.getBoundingClientRect().height)+2;
+   R.classList.toggle("ext",ext);reserve();
+   const other=wrap.getBoundingClientRect().height-H*s,avail=window.innerHeight-other-2;
+   if(window.__hidSized&&avail<H*s-1)s=Math.max(.5,avail/H);}
   cv.style.transform="scale("+s+")";host.style.width=W*s+"px";host.style.height=H*s+"px";
  }
+ window.__hidFit=fit;
  fit();addEventListener("resize",fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);
  cv.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>{
   const r=det.getBoundingClientRect();
@@ -272,8 +290,8 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
 .embed .sub{margin:0 0 6px;text-align:center;max-width:none}
 .embed .detail{min-height:36px}
 .embed .detail{max-width:min(760px,calc(100vw - 16px))}
-/* the detail stays pinned to the bottom of the frame, so a tap never needs to scroll the diagram */
-.embed.fscroll .detail{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:6px 0 4px;margin-top:0;box-shadow:0 -10px 14px -6px var(--bg)}
+.embed .detail{box-sizing:border-box}
+.embed.ext .detail,.embed.ext .sub,.embed.ext .tip{display:none!important}
 .embed .elabel{font-size:11px}
 </style>
 <script>/* deselect: second tap/click on the selected node, tap/click on empty background, or Escape */
@@ -290,7 +308,12 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
  document.documentElement.classList.add("embed");
  const wrap=document.querySelector(".wrap"),det=document.getElementById("detail"),send=m=>{try{parent.postMessage(Object.assign({src:"hid-diagram"},m),"*")}catch(e){}};
  const flag=()=>document.documentElement.classList.toggle("fscroll",document.documentElement.scrollHeight>innerHeight+2);
- const post=()=>{send({type:"size",h:Math.ceil(wrap.getBoundingClientRect().height)+2});requestAnimationFrame(flag)};addEventListener("resize",flag);
+ const post=()=>{const h=window.__hidNat||Math.ceil(wrap.getBoundingClientRect().height)+2,hx=window.__hidNatX||h;if(h!==post.h||hx!==post.hx){post.h=h;post.hx=hx;send({type:"size",h,hx})}requestAnimationFrame(flag)};window.__hidSized=1;
+ const relay=()=>{if(document.documentElement.classList.contains("ext"))send({type:"detail",html:det.innerHTML,sub:(document.getElementById("subtitle")||{}).textContent||""})};
+ new MutationObserver(relay).observe(det,{childList:true,subtree:true,characterData:true});
+ addEventListener("message",e=>{const d=e.data;if(e.source!==parent||!d||d.src!=="hid-deck"||d.type!=="ext")return;
+  document.documentElement.classList.toggle("ext",!!d.on);if(window.__hidFit)window.__hidFit();
+  if(d.on){send({type:"details",all:window.__hidAll(),sub:(document.getElementById("subtitle")||{}).textContent||""});relay()}});addEventListener("resize",flag);
  if(window.ResizeObserver)new ResizeObserver(post).observe(wrap);addEventListener("load",post);post();
  (document.fonts?document.fonts.ready:Promise.resolve()).then(post);
  addEventListener("keydown",e=>{if(["ArrowRight","ArrowLeft","PageUp","PageDown","Home","End"].includes(e.key)){e.preventDefault();send({type:"key",key:e.key})}});

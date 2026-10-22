@@ -1,13 +1,17 @@
-/* Deck helpers: screen tabs (slide 5) and in-deck image zoom (slides 2, 4, 5, 7). */
+/* Deck helpers: screen tabs (slides 5 and 6) and in-deck image zoom. */
 (function(){
   /* ---- tabs: click/tap, and ←/→/Home/End when a tab has focus; every tab is reachable with Tab ---- */
   document.querySelectorAll('[data-hid-tabs]').forEach(function(root){
     var img=root.querySelector('[data-v="img"]'),a=root.querySelector('[data-v="a"]'),cap=root.querySelector('[data-v="cap"]'),
-        tabs=[].slice.call(root.querySelectorAll('[role="tab"]'));
+        tabs=[].slice.call(root.querySelectorAll('[role="tab"]')),pane=root.querySelector('[role="tabpanel"]');
+    /* tablist semantics: each tab controls the shared panel; the panel is labelled by the selected tab */
+    tabs.forEach(function(b,i){if(!b.id)b.id=(pane?pane.id:'tabs')+'-tab'+(i+1);if(pane)b.setAttribute('aria-controls',pane.id)});
     function show(k,focus){var t=tabs[k];
       tabs.forEach(function(b,i){b.setAttribute('aria-selected',i===k?'true':'false');b.tabIndex=0});
+      if(pane)pane.setAttribute('aria-labelledby',t.id);
       img.src=t.dataset.src;img.alt=t.dataset.alt;a.href=t.dataset.full;a.dataset.cap=t.dataset.alt;cap.textContent=t.dataset.cap;
       if(focus)t.focus();}
+    if(pane){var k0=tabs.findIndex(function(b){return b.getAttribute('aria-selected')==='true'});pane.setAttribute('aria-labelledby',tabs[Math.max(0,k0)].id)}
     tabs.forEach(function(b,k){
       b.tabIndex=0;
       b.addEventListener('click',function(e){e.stopPropagation();show(k)});
