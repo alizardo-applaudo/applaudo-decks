@@ -600,7 +600,7 @@ html #deck > .slide:not(:first-child):not(.cierre-slide):not(.dos-slide) .slide-
   .slide.dg-ext:not(.dg-m) .hid-dg-det{font-size:.875rem;line-height:1.4}
 }
 @media (min-width:641px){
-  .slide.dg-ext:not(.dg-m) .hid-dg-hint{display:none}
+  .slide.dg-ext:not(.dg-m) .hid-dg-hint{margin:0 0 2px;font-size:.75rem}
   .slide.dg-ext:not(.dg-m) .hid-dg-det b{display:inline;margin-right:6px}
 }
 /* tab panels wrap the screenshot link */
@@ -634,4 +634,10 @@ html #deck > .slide:not(:first-child):not(.cierre-slide):not(.dos-slide) .slide-
   .hid-fill .hid-nums .p2-metric.hid-own .n{grid-row:1;grid-column:1;font-size:clamp(2.2rem,min(3.6vw,7vh),3.9rem)}
   .hid-fill .hid-nums .p2-metric.hid-own h4{grid-row:1;grid-column:2;margin:0;align-self:center}
   .hid-fill .hid-nums .p2-metric.hid-own p{grid-row:2;grid-column:1 / -1;font-size:clamp(.9rem,min(1.15vw,2.2vh),1.05rem)}
+}
+@media (min-width:641px){
+  .slide.dg-ext:not(.dg-m) .hid-dg-det{font-size:.8125rem;line-height:1.35}
+  .slide.dg-ext:not(.dg-m) .hid-dg-panel{padding:8px 14px}
+  .slide.dg-ext:not(.dg-m) .slide-body{margin-top:4px!important;padding-top:0!important}
+  .slide.dg-ext:not(.dg-m) .slide-head{margin-bottom:0!important;padding-bottom:0!important}
 }

@@ -292,11 +292,14 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
 .embed .detail{max-width:min(760px,calc(100vw - 16px))}
 .embed .detail{box-sizing:border-box}
 .embed.ext .detail,.embed.ext .sub,.embed.ext .tip{display:none!important}
+/* the detail panel is always visible when embedded, so the floating tooltip (same text) is off: it covered neighbour nodes */
+.embed .tip{display:none!important}
 .embed .elabel{font-size:11px}
 </style>
 <script>/* deselect: second tap/click on the selected node, tap/click on empty background, or Escape */
 (function(){
  function clear(){pinned=null;sel(null);const a=document.activeElement;if(a&&a.classList&&a.classList.contains("box"))a.blur();tip.classList.remove("show");}
+ window.__hidClear=()=>{if(pinned)clear()};
  cv.querySelectorAll(".box").forEach(b=>b.addEventListener("click",e=>{if(!pinned){b.blur();sel(null);tip.classList.remove("show")}}));
  document.addEventListener("click",e=>{if(!e.target.closest(".box")&&pinned)clear()});
  addEventListener("keydown",e=>{if(e.key==="Escape"&&(pinned||document.activeElement&&document.activeElement.classList.contains("box"))){e.preventDefault();clear()}});
@@ -311,7 +314,8 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
  const post=()=>{const h=window.__hidNat||Math.ceil(wrap.getBoundingClientRect().height)+2,hx=window.__hidNatX||h;if(h!==post.h||hx!==post.hx){post.h=h;post.hx=hx;send({type:"size",h,hx})}requestAnimationFrame(flag)};window.__hidSized=1;
  const relay=()=>{if(document.documentElement.classList.contains("ext"))send({type:"detail",html:det.innerHTML,sub:(document.getElementById("subtitle")||{}).textContent||""})};
  new MutationObserver(relay).observe(det,{childList:true,subtree:true,characterData:true});
- addEventListener("message",e=>{const d=e.data;if(e.source!==parent||!d||d.src!=="hid-deck"||d.type!=="ext")return;
+ addEventListener("message",e=>{const d=e.data;if(e.source===parent&&d&&d.src==="hid-deck"&&d.type==="clear"&&window.__hidClear){window.__hidClear();return}
+  if(e.source!==parent||!d||d.src!=="hid-deck"||d.type!=="ext")return;
   document.documentElement.classList.toggle("ext",!!d.on);if(window.__hidFit)window.__hidFit();
   if(d.on){send({type:"details",all:window.__hidAll(),sub:(document.getElementById("subtitle")||{}).textContent||""});relay()}});addEventListener("resize",flag);
  if(window.ResizeObserver)new ResizeObserver(post).observe(wrap);addEventListener("load",post);post();

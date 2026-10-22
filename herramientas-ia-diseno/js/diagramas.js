@@ -72,6 +72,11 @@
   addEventListener('hashchange',function(){setTimeout(function(){figs.forEach(function(f){reserve(f._p)})},60)});
   document.addEventListener('click',function(){figs.forEach(function(f){reserve(f._p)})},true);
   if(coarse.addEventListener)coarse.addEventListener('change',apply);
+  /* a tap or click anywhere outside the diagram (title, empty slide area) closes its detail, like Esc */
+  document.addEventListener('click',function(e){
+    if(e.target.closest&&e.target.closest('.hid-dg-panel'))return;
+    figs.forEach(function(f){var sl=f.closest('.slide');if(sl.classList.contains('active'))try{frameOf(f).contentWindow.postMessage({src:'hid-deck',type:'clear'},'*')}catch(x){}});
+  });
   apply();
   if(window.MutationObserver)figs.forEach(function(f){var sl=f.closest('.slide');
     new MutationObserver(function(){if(sl.classList.contains('active'))setTimeout(function(){size(f);reserve(f._p)},30)}).observe(sl,{attributes:true,attributeFilter:['class']});});

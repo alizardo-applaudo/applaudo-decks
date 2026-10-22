@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MagicPath y Paper: lo que encontramos — Applaudo</title>
-<link rel="stylesheet" href="css/applaudo-deck.css?v=herramientas-ia-diseno-r4b-20261022">
-<link rel="stylesheet" href="css/herramientas-ia-diseno.css?v=herramientas-ia-diseno-r4b-20261022">
-<link rel="stylesheet" href="css/responsive.css?v=herramientas-ia-diseno-r4b-20261022">
+<link rel="stylesheet" href="css/applaudo-deck.css?v=herramientas-ia-diseno-r4c-20261022">
+<link rel="stylesheet" href="css/herramientas-ia-diseno.css?v=herramientas-ia-diseno-r4c-20261022">
+<link rel="stylesheet" href="css/responsive.css?v=herramientas-ia-diseno-r4c-20261022">
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -63,7 +63,7 @@
             <span class="lab">Pulsar (proyecto privado) · web</span>
             <h4>Todo desde cero: sistema de diseño + pantallas</h4>
             <p class="hid-from">Partió de un concepto y una web sin diseño</p>
-            <div class="hid-st-row"><span class="hid-state ok">Aprobada</span><span class="hid-res">Paper en la ronda 2 · MagicPath en la ronda 3, con issues conocidos</span></div>
+            <div class="hid-st-row"><span class="hid-state ok">Aprobada</span><span class="hid-res">Paper en la ronda 2 · MagicPath en la ronda 3, con problemas conocidos</span></div>
           </div>
         </article>
       </div>
@@ -72,7 +72,7 @@
   </div>
   <div class="foot">Las pruebas</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>«Aprobada a medias» en Bain y Volaris: pasaron la revisión de calidad, pero no cumplieron del todo lo que esperábamos al empezar (criterio de Adonay). Bain (web): sistema de diseño de Bain + página de inicio + PRISM – Instruments. MagicPath: páginas de prueba aprobadas en la revisión de calidad (informe MagicPath §5, «Test pages built with the library»). Paper: aprobada en la ronda 3 de revisión, «con issues conocidos» (informe Paper, estado). Volaris (Android): sistema de diseño + 3 pantallas de Flex Fare (selección de tarifa, oferta de Zero a Flex, equipaje); aprobada en la primera revisión en las dos (informe Volaris, estado y §8). Pulsar (proyecto privado): partió de un concepto y de una web hecha sin diseño; cada herramienta creó desde cero un sistema de diseño y las pantallas, en claro y oscuro, y se juzgó solo contra el brief, no contra la app ya codificada (informe Pulsar, introducción y §1). Paper: aprobada en la ronda 2 de revisión; MagicPath: aprobada en la ronda 3, con issues conocidos que se corrigieron después (informe Pulsar §3). La captura no muestra nombres del cliente ni enlaces.</aside>
+  <aside class="notes" hidden>«Aprobada a medias» en Bain y Volaris: pasaron la revisión de calidad, pero no cumplieron del todo lo que esperábamos al empezar (criterio de Adonay). Bain (web): sistema de diseño de Bain + página de inicio + PRISM – Instruments. MagicPath: páginas de prueba aprobadas en la revisión de calidad (informe MagicPath §5, «Test pages built with the library»). Paper: aprobada en la ronda 3 de revisión, «con problemas conocidos» (informe Paper, estado). Volaris (Android): sistema de diseño + 3 pantallas de Flex Fare (selección de tarifa, oferta de Zero a Flex, equipaje); aprobada en la primera revisión en las dos (informe Volaris, estado y §8). Pulsar (proyecto privado): partió de un concepto y de una web hecha sin diseño; cada herramienta creó desde cero un sistema de diseño y las pantallas, en claro y oscuro, y se juzgó solo contra el brief, no contra la app ya codificada (informe Pulsar, introducción y §1). Paper: aprobada en la ronda 2 de revisión; MagicPath: aprobada en la ronda 3, con problemas conocidos que se corrigieron después (informe Pulsar §3). La captura no muestra nombres del cliente ni enlaces.</aside>
 </section>
 
 <!-- 3 · Cómo las probamos (diagrama) -->
@@ -201,11 +201,11 @@
           </ul>
         </div>
         <div class="r2-col">
-          <span class="lab">MagicPath</span><p class="hid-pst">Aprobada en la ronda 3 de revisión, con issues conocidos</p>
+          <span class="lab">MagicPath</span><p class="hid-pst">Aprobada en la ronda 3 de revisión, con problemas conocidos</p>
           <ul class="hid-kv">
             <li><b>62</b><span>tokens en código, para claro y oscuro</span></li>
             <li><b>22</b><span>componentes: 8 del sistema + 14 de pantallas</span></li>
-            <li><b>66</b><span>ciclos manuales de start/upload/submit en una ronda: re-subidas a mano a los 22 componentes, en 3 pasadas, porque no se vinculan</span></li>
+            <li><b>66</b><span>ciclos manuales de start/upload/submit en una ronda: resubidas a mano a los 22 componentes, en 3 pasadas, porque no se vinculan</span></li>
           </ul>
         </div>
       </div>
@@ -215,7 +215,7 @@
   </div>
   <div class="foot">Pulsar</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Informe Pulsar §2 (qué se construyó): Paper, 109 variables por archivo (16 colores semánticos y 2 de sombra por modo, sets paralelos claro/oscuro; 10 de espaciado, 7 de tipografía, 4 de radio); 18 tableros de sistema de diseño, cuyos masters son tableros y no componentes; 18 pantallas (9 vistas × claro y oscuro). MagicPath: 62 tokens CSS (13 colores semánticos y 4 tintes por modo, espaciado, radio, tipo, densidad y toque de 44); 8 componentes de sistema + 14 de pantalla = 22; claro y oscuro con el mismo código, responsive a 1440, 1280, 1100 y 375 con un solo enlace e interactiva. §3: Paper no aprobada en r1 y aprobada en r2; MagicPath no aprobada en r1 y r2, aprobada en r3 con issues conocidos (1 medio y 1 bajo), corregidos después y pendientes de una nueva revisión. En r1 las dos fallaron por tamaños de toque. §4: toque ≥ 44 px en todo; contraste mínimo 5.36/6.37 (Paper) y 5.25/6.29 (MagicPath), claro/oscuro, sin fallos; tokens al 100 %; diferencia entre exports y versión viva 0.00–0.45 % en Paper y 0.00 % en MagicPath; Paper hizo unas 1,362 llamadas al conector. §7: el conector de MagicPath no vincula componentes; en r2 fueron 3 pasadas = 66 ciclos sobre 22 componentes. Límites de Paper: sin componentes, sin modos de tokens, sin librería entre archivos, sin responsive ni interacción, el texto mixto se aplana. §8: datasets distintos (21 contra 23 checks), cifras no comparables uno a uno.</aside>
+  <aside class="notes" hidden>Informe Pulsar §2 (qué se construyó): Paper, 109 variables por archivo (16 colores semánticos y 2 de sombra por modo, sets paralelos claro/oscuro; 10 de espaciado, 7 de tipografía, 4 de radio); 18 tableros de sistema de diseño, cuyos masters son tableros y no componentes; 18 pantallas (9 vistas × claro y oscuro). MagicPath: 62 tokens CSS (13 colores semánticos y 4 tintes por modo, espaciado, radio, tipo, densidad y toque de 44); 8 componentes de sistema + 14 de pantalla = 22; claro y oscuro con el mismo código, responsive a 1440, 1280, 1100 y 375 con un solo enlace e interactiva. §3: Paper no aprobada en r1 y aprobada en r2; MagicPath no aprobada en r1 y r2, aprobada en r3 con problemas conocidos (1 medio y 1 bajo), corregidos después y pendientes de una nueva revisión. En r1 las dos fallaron por tamaños de toque. §4: toque ≥ 44 px en todo; contraste mínimo 5.36/6.37 (Paper) y 5.25/6.29 (MagicPath), claro/oscuro, sin fallos; tokens al 100 %; diferencia entre exports y versión viva 0.00–0.45 % en Paper y 0.00 % en MagicPath; Paper hizo unas 1,362 llamadas al conector. §7: el conector de MagicPath no vincula componentes; en r2 fueron 3 pasadas = 66 ciclos sobre 22 componentes. Límites de Paper: sin componentes, sin modos de tokens, sin librería entre archivos, sin responsive ni interacción, el texto mixto se aplana. §8: datasets distintos (21 contra 23 checks), cifras no comparables uno a uno.</aside>
 </section>
 
 <!-- 8 · En números -->
@@ -497,8 +497,8 @@
   <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
 </nav>
 
-<script src="js/applaudo-deck.js?v=herramientas-ia-diseno-r4b-20261022"></script>
-<script src="js/diagramas.js?v=herramientas-ia-diseno-r4b-20261022"></script>
-<script src="js/hid.js?v=herramientas-ia-diseno-r4b-20261022"></script>
+<script src="js/applaudo-deck.js?v=herramientas-ia-diseno-r4c-20261022"></script>
+<script src="js/diagramas.js?v=herramientas-ia-diseno-r4c-20261022"></script>
+<script src="js/hid.js?v=herramientas-ia-diseno-r4c-20261022"></script>
 </body>
 </html>
