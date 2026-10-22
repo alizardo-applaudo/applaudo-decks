@@ -1,0 +1,120 @@
+{
+ "width": 340,
+ "height": 600,
+ "eyebrow": "MagicPath",
+ "title": "Arrastrar crea una copia fija",
+ "subtitle": "Toca un paso para ver el detalle.",
+ "caption": "Mismo resultado el 15 y el 22 de octubre: la librería reparte copias, no componentes conectados.",
+ "groups": [
+  {
+   "id": "hoy",
+   "label": "Al usar un componente",
+   "accent": false,
+   "x": 6,
+   "y": 24,
+   "w": 328,
+   "h": 272,
+   "tip": "Lo que pasa al traer un componente de la librería"
+  },
+  {
+   "id": "cambio",
+   "label": "Cuando la librería cambia",
+   "accent": true,
+   "x": 6,
+   "y": 310,
+   "w": 328,
+   "h": 272,
+   "tip": "Lo que probamos el 22 de octubre"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "lib",
+   "label": "Librería",
+   "caption": "el componente original",
+   "desc": "El componente vive en una librería de MagicPath.",
+   "group": "hoy",
+   "x": 50,
+   "y": 44,
+   "w": 240,
+   "h": 64
+  },
+  {
+   "id": "drag",
+   "label": "Lo arrastras",
+   "caption": "a otro archivo",
+   "desc": "Lo arrastras desde el panel de librerías a un archivo que lo usa.",
+   "group": "hoy",
+   "x": 50,
+   "y": 128,
+   "w": 240,
+   "h": 64
+  },
+  {
+   "id": "copy",
+   "label": "Copia fija",
+   "caption": "sin vínculo con el original",
+   "desc": "Se crea un componente nuevo: una copia exacta de ese momento, sin conexión con la librería.",
+   "group": "hoy",
+   "x": 50,
+   "y": 212,
+   "w": 240,
+   "h": 64
+  },
+  {
+   "id": "change",
+   "label": "Cambias la librería",
+   "caption": "por ejemplo, un color",
+   "desc": "Cambias el componente en la librería, por ejemplo su color principal.",
+   "group": "cambio",
+   "x": 50,
+   "y": 330,
+   "w": 240,
+   "h": 64
+  },
+  {
+   "id": "no",
+   "label": "Tu archivo no cambia",
+   "caption": "ni solo, ni con Refresh",
+   "desc": "0 de 3 archivos que lo usaban se actualizaron. Refresh no lo cambia y no hay opción para actualizar.",
+   "group": "cambio",
+   "x": 50,
+   "y": 414,
+   "w": 240,
+   "h": 64
+  },
+  {
+   "id": "redo",
+   "label": "Vuelves a arrastrar",
+   "caption": "la única forma de recibirlo",
+   "desc": "Para recibir el cambio hay que volver a arrastrar el componente.",
+   "group": "cambio",
+   "x": 50,
+   "y": 498,
+   "w": 240,
+   "h": 64
+  }
+ ],
+ "edges": [
+  {
+   "from": "lib",
+   "to": "drag"
+  },
+  {
+   "from": "drag",
+   "to": "copy"
+  },
+  {
+   "from": "copy",
+   "to": "change"
+  },
+  {
+   "from": "change",
+   "to": "no"
+  },
+  {
+   "from": "no",
+   "to": "redo"
+  }
+ ]
+}

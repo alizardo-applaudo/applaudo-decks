@@ -1,0 +1,493 @@
+/* Herramientas de diseño con IA — deck-specific styles (base copied from volaris-contratos-r2; tokens from applaudo-deck.css only) */
+
+/* Unified main titles (same rule as tres-caminos; fluid size lives in responsive.css) */
+#deck > .slide:not(:first-child):not(.cierre-slide):not(.dos-slide) .slide-head h2.hl{
+  letter-spacing:-.015em;line-height:1.02;font-weight:600;margin:0;
+}
+.p2-slide .inner-viewport{
+  padding-top:58px;padding-bottom:calc(var(--nav-safe) + 12px);
+  display:flex;flex-direction:column;overflow:hidden;height:100%;max-height:100%;
+}
+.p2-slide .slide-head .eyebrow{margin-bottom:18px;font-size:.9rem}
+.p2-slide .slide-head .lead{margin-top:14px;font-size:1.0625rem;line-height:1.55;color:var(--gray);max-width:72ch}
+.p2-slide.slide-dark .slide-head .lead{color:rgba(255,255,255,.72)}
+.p2-slide .slide-body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2.4vh,24px);margin-top:clamp(14px,2.6vh,28px);overflow:visible}
+.p2-slide .hero-band{margin-top:0;flex:none}
+.p2-slide .hero-band p{font-size:clamp(1rem,1.6vw,1.3rem)}
+.p2-slide .note{margin-top:0}
+
+/* Horizontal flow of cards (hypothesis, next steps) */
+.p2-flow{display:flex;align-items:stretch;gap:clamp(10px,1.4vw,18px)}
+.p2-flow .step-card{flex:1 1 0;min-width:0;background:#fff;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.03);padding:clamp(18px,2.6vh,28px) clamp(16px,1.8vw,24px);display:flex;flex-direction:column}
+.p2-flow .step-card.hi{background:var(--tint);border-color:rgba(255,64,64,.2)}
+.p2-flow .step-card h4{font-size:clamp(1.05rem,1.6vw,1.5rem);margin:10px 0 6px;line-height:1.25}
+.p2-flow .step-card p{font-size:clamp(.9375rem,1.25vw,1.15rem);line-height:1.45;max-width:none}
+.p2-flow .step-card .tag{align-self:flex-start;margin-top:auto;padding-top:0}
+.p2-flow .step-card .tag-wrap{margin-top:auto;padding-top:12px}
+.p2-flow .road-arrow{flex:none;align-self:center}
+
+/* Big numbers */
+.p2-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.p2-metric{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(18px,2.8vh,30px) clamp(18px,2vw,28px);box-shadow:0 6px 18px rgba(18,18,18,.03);min-width:0}
+.p2-metric .n{font-size:clamp(2.8rem,min(6vw,9vh),5.4rem);line-height:1;font-weight:600;color:var(--red);letter-spacing:-.02em}
+.p2-metric h4{font-size:clamp(1.05rem,1.6vw,1.45rem);margin:12px 0 6px;line-height:1.25}
+.p2-metric p{font-size:clamp(.875rem,1.2vw,1.1rem);line-height:1.45;max-width:none}
+
+/* Screenshot comparison: crops of the relevant region, both images at the same scale (--s) */
+.p2-compare{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.2vw,32px);align-items:center;min-height:0;container-type:inline-size}
+.p2-shots{display:flex;justify-content:center;align-items:flex-start;gap:clamp(10px,1.2vw,16px);min-width:0}
+.p2-shot{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.p2-shot figcaption{font-size:.8125rem;font-weight:600;color:var(--gray);line-height:0}
+.p2-shot figcaption .tag{height:26px}
+.p2-shot a{display:block;line-height:0}
+.p2-shot img{display:block;width:auto;max-width:none;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+/* s05 crops: agente 461x268, figma 417x392 (natural px). s06 crops: agente 460x461, figma 424x360 */
+.compare-08{--L:clamp(200px,min(100vh - var(--x08,400px),26.8cqw),470px)}
+.compare-08 .p2-shot img.shot-b{height:var(--L)}
+.compare-08 .p2-shot img.shot-a{height:calc(var(--L) * .6837)}
+.compare-15{--L:clamp(200px,min(100vh - var(--x15,430px),30.2cqw),553px)}
+.compare-15 .p2-shot img.shot-a{height:var(--L)}
+.compare-15 .p2-shot img.shot-b{height:calc(var(--L) * .7809)}
+.p2-reasons{display:flex;flex-direction:column;gap:clamp(10px,1.6vh,16px);min-width:0}
+.p2-reason{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(14px,2vh,20px) clamp(16px,1.6vw,22px)}
+.p2-reason h4{font-size:clamp(1rem,1.4vw,1.25rem);line-height:1.3;margin:0 0 4px}
+.p2-reason p{font-size:clamp(.875rem,1.1vw,1.05rem);line-height:1.45;max-width:none}
+.p2-reason .num{color:var(--red);font-weight:600;margin-right:6px}
+.p2-side{display:grid;grid-template-columns:1fr;gap:clamp(10px,1.6vh,16px)}
+.p2-side .card-soft-pink,.p2-side .card-soft-green{padding:clamp(14px,2vh,20px) clamp(16px,1.6vw,22px)}
+.p2-side .card-white{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(14px,2vh,20px) clamp(16px,1.6vw,22px)}
+.p2-side .card-white h4{font-size:1rem;margin-bottom:10px;color:var(--ink)}
+.p2-side .card-white ul{list-style:none}
+.p2-side .card-white li{font-size:clamp(.9375rem,1.05vw,1rem);color:var(--gray);margin-bottom:6px;padding-left:14px;position:relative}
+.p2-side .card-white li::before{content:'•';position:absolute;left:0;color:var(--red)}
+.p2-foot-note{font-size:clamp(.8125rem,.95vw,.875rem);color:var(--gray);max-width:none}
+
+/* Fare diagram (contract vs Confluence) */
+.p2-fares{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(14px,2vw,28px);align-items:stretch}
+.p2-fare-col{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(18px,2.6vh,28px) clamp(18px,2vw,28px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.p2-fare-col.ok{background:var(--tint);border-color:rgba(255,64,64,.2)}
+.p2-fare-col h4{font-size:clamp(1.05rem,1.4vw,1.25rem);line-height:1.25}
+.p2-fare-row{display:flex;flex-direction:column;gap:8px}
+.p2-fare-row .who{font-size:.8125rem;font-weight:600;color:var(--gray)}
+.p2-chips{display:flex;flex-wrap:wrap;gap:8px}
+.p2-chip{display:inline-flex;align-items:center;height:clamp(34px,4.2vh,44px);padding:0 clamp(14px,1.4vw,20px);border-radius:var(--pill);border:1px solid var(--line-strong);background:#fff;font-weight:600;font-size:clamp(.9375rem,1.1vw,1.05rem);color:var(--ink)}
+.p2-chip.flex{background:var(--red);border-color:var(--red);color:#fff}
+.p2-chip.gone{color:var(--gray);text-decoration:line-through;background:var(--linen)}
+.p2-verdict{display:inline-flex;align-self:flex-start;align-items:center;padding:6px 12px;border-radius:var(--pill);font-size:.75rem;font-weight:700;letter-spacing:.02em}
+.p2-verdict.no{background:var(--linen);color:var(--gray);border:1px solid var(--line)}
+.p2-verdict.yes{background:#fff;color:var(--red-dark);border:1px solid rgba(255,64,64,.25)}
+.p2-fare-col p{font-size:clamp(.875rem,1.1vw,1.05rem);line-height:1.45;max-width:none}
+
+/* Contract excerpt (before/after, plain language) */
+.p2-excerpt{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(14px,2vw,28px);align-items:stretch}
+.p2-excerpt .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(18px,2.4vh,26px) clamp(18px,2vw,26px);min-width:0}
+.p2-excerpt .panel.now{border-color:rgba(255,64,64,.25);box-shadow:0 10px 30px rgba(255,64,64,.06)}
+.p2-excerpt .panel h4{font-size:1.05rem;margin:4px 0 12px}
+.p2-excerpt dl{display:grid;grid-template-columns:minmax(7.5rem,auto) 1fr;gap:10px 16px;margin:0}
+.p2-excerpt dt{font-size:clamp(.875rem,1vw,.95rem);font-weight:600;color:var(--ink)}
+.p2-excerpt dd{margin:0;font-size:clamp(.9375rem,1.1vw,1.05rem);color:var(--gray);line-height:1.4}
+.p2-excerpt dd.empty{color:rgba(83,88,98,.6)}
+.p2-excerpt .tok{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:var(--pill);background:var(--linen);border:1px solid var(--line);color:var(--ink);margin-left:6px;white-space:nowrap}
+
+/* Diagram slides (dark): PNG from the diagramas-interactivos skill + interactive version */
+.diagram-slide .slide-body{justify-content:flex-start;align-items:center;gap:10px}
+.diagram-slide .p2-diagram{margin:0;width:min(calc(100vw - 96px),1640px);max-width:none;flex:1 1 auto;min-height:0;display:flex;align-items:flex-start;justify-content:center}
+.diagram-slide .p2-diagram picture{display:block;width:100%;height:100%;min-height:0}
+.diagram-slide .p2-diagram img{display:block;width:100%;height:100%;max-height:100%;object-fit:contain;object-position:center top}
+.diagram-slide .p2-diagram-link{flex:none;font-size:max(13px,.8125rem);font-weight:600;color:rgba(255,255,255,.72);text-decoration:none;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);border-radius:var(--pill);padding:6px 14px}
+.diagram-slide .p2-diagram-link:hover{color:#fff;border-color:var(--red-dark-mode)}
+.diagram-slide .p2-diagram-link.m{display:none}
+
+/* Cover / close: same rules as tres-caminos */
+.cierre-slide .inner.center{max-width:920px}
+.cierre-slide .big{max-width:20ch;font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:1.05}
+.cierre-slide .cierre-thanks{margin-top:36px;font-size:clamp(1.25rem,2vw,1.65rem);color:rgba(255,255,255,.88);font-weight:600}
+.slide-dark .draft-tag{border-color:rgba(244,98,107,.5);color:var(--red-dark-mode)}
+
+/* Diagram slides: the PNG takes the free height between the header and the link */
+.diagram-slide .inner-viewport,.diagram-slide .slide-body{overflow:visible!important}
+.diagram-slide .slide-body{flex:1 1 auto;justify-content:center}
+.diagram-slide .p2-diagram{flex:0 1 auto;height:auto}
+.diagram-slide .p2-diagram picture{height:auto}
+.diagram-slide .p2-diagram img{height:auto;max-height:max(220px,calc(100vh - var(--xd,400px)))}
+.diagram-slide .p2-diagram-link{display:inline-flex;align-items:center;min-height:44px;padding:0 18px}
+
+/* Short viewports: content slides scroll like responsive.css, except the comparison and diagram slides, which fit */
+@media (max-height:800px){
+  .p2-slide .slide-body{flex:none;justify-content:flex-start}
+  .compare-08 .slide-body,.compare-15 .slide-body{flex:1 1 auto;justify-content:center}
+  .diagram-slide .slide-body{flex:1 1 auto}
+}
+
+/* Comparison slides, short desktop viewports (<=900px tall): tighter side cards so the conclusion clears the pill */
+@media (max-height:900px) and (min-width:901px){
+  .compare-08 .p2-reason{padding:12px 16px}
+  .compare-15 .p2-side{gap:10px}
+  .compare-15 .p2-side .card-soft-pink,.compare-15 .p2-side .card-white{padding:12px 16px}
+  .compare-15 .p2-side h4{margin-bottom:6px}
+  .compare-15 .p2-side li{margin-bottom:3px;line-height:1.4}
+  .compare-15 .hero-band{padding:14px 18px}
+  .compare-15 .hero-band p{font-size:1.0625rem;line-height:1.4}
+}
+
+/* Tablet / narrow */
+@media (max-width:900px){
+  .p2-flow{flex-direction:column}
+  .p2-flow .road-arrow{transform:rotate(90deg);display:block!important}
+  .p2-metrics,.p2-fares,.p2-excerpt,.p2-compare{grid-template-columns:1fr}
+  .compare-08,.compare-15{--L:clamp(200px,46vh,420px)}
+}
+
+/* Phone: vertical diagrams, stacked content, screenshots one per row at full width */
+@media (max-width:640px){
+  .p2-slide .inner-viewport{height:auto!important;max-height:none!important;overflow:visible!important}
+  .p2-slide .slide-body{flex:none!important;justify-content:flex-start!important}
+  .p2-shots{flex-direction:column;align-items:stretch;gap:14px;width:100%}
+  .p2-shot{align-items:flex-start;width:100%}
+  .p2-shot a{width:100%}
+  .p2-shot img,.compare-08 .p2-shot img.shot-a,.compare-08 .p2-shot img.shot-b,.compare-15 .p2-shot img.shot-a,.compare-15 .p2-shot img.shot-b{width:100%;height:auto;max-width:100%;border-radius:10px}
+  .p2-excerpt dl{grid-template-columns:1fr;gap:2px 0}
+  .p2-excerpt dd{margin-bottom:8px}
+  .diagram-slide .p2-diagram,.diagram-slide .p2-diagram picture{height:auto;width:100%}
+  .diagram-slide .p2-diagram img{height:auto;max-height:none;max-width:340px;margin:0 auto}
+  .diagram-slide .p2-diagram-link.d{display:none}
+  .diagram-slide .p2-diagram-link.m{display:inline-flex}
+}
+.p2-side .card-soft-pink li{font-size:clamp(.9375rem,1.05vw,1rem)}
+@media (min-width:901px) and (max-width:1100px){
+  .compare-08{--L:clamp(200px,min(100vh - 400px,29cqw),470px)}
+  .compare-15{--L:clamp(200px,min(100vh - 430px,27cqw),553px)}
+}
+
+/* ===== Contratos r2: new pieces (same palette and type scale as tres-caminos) ===== */
+/* Antes vs ahora */
+.r2-two{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(14px,2vw,28px);align-items:stretch}
+.r2-col{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(18px,2.6vh,28px) clamp(18px,2vw,28px);min-width:0;display:flex;flex-direction:column;gap:12px}
+.r2-col.now{background:var(--tint);border-color:rgba(255,64,64,.2)}
+.r2-col h4{font-size:clamp(1.05rem,1.5vw,1.35rem);line-height:1.25}
+.r2-col .r2-say{font-size:clamp(.9375rem,1.15vw,1.1rem);color:var(--ink);line-height:1.45;max-width:none}
+.r2-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin:0;padding:0}
+.r2-list li{display:flex;gap:10px;align-items:flex-start;font-size:clamp(.9375rem,1.1vw,1.05rem);line-height:1.4;color:var(--gray)}
+.r2-list li b{color:var(--ink);font-weight:600}
+.r2-ico{flex:none;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8125rem;font-weight:700;line-height:1}
+.r2-ico.q{background:var(--linen);border:1px solid var(--line-strong);color:var(--gray)}
+.r2-ico.ok{background:var(--red);color:#fff}
+.r2-ico.n{background:#fff;border:1px solid rgba(255,64,64,.35);color:var(--red-dark)}
+
+/* Annotated Figma frame */
+.r2-annot{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.4vw,36px);align-items:center;container-type:inline-size}
+.r2-annot figure{margin:0;position:relative;line-height:0}
+.r2-annot figure img{display:block;height:clamp(240px,calc(100vh - 370px),600px);width:auto;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+.r2-dot{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-size:.8125rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 0 0 3px #fff}
+.r2-annot .r2-side{display:grid;grid-template-columns:1fr;gap:12px;min-width:0}
+.r2-annot .before{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:14px 18px}
+.r2-annot .before p{font-size:clamp(.9375rem,1.1vw,1.05rem);max-width:none}
+.r2-annot .now{background:var(--tint);border:1px solid rgba(255,64,64,.2);border-radius:var(--radius-item);padding:14px 18px}
+.r2-annot ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.r2-annot ol li{display:flex;gap:10px;align-items:flex-start;font-size:clamp(.9375rem,1.1vw,1.05rem);line-height:1.38;color:var(--gray)}
+.r2-annot ol li .r2-ico{width:22px;height:22px;font-size:.75rem}
+
+/* Result bar */
+.r2-result{display:flex;flex-direction:column;gap:clamp(14px,2.4vh,24px)}
+.r2-bigrow{display:flex;align-items:flex-end;gap:clamp(16px,3vw,40px);flex-wrap:wrap}
+.r2-big{font-size:clamp(4rem,min(11vw,16vh),9rem);line-height:.9;font-weight:600;color:var(--red);letter-spacing:-.03em}
+.r2-big small{font-size:.38em;color:var(--gray);font-weight:600;letter-spacing:0;margin-left:.15em}
+.r2-bigrow p{font-size:clamp(1.05rem,1.6vw,1.4rem);color:var(--ink);max-width:28ch;line-height:1.3;margin-bottom:.4em}
+.r2-bar{display:flex;height:clamp(40px,6vh,56px);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.r2-bar span{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:clamp(.875rem,1.1vw,1rem);min-width:0;white-space:nowrap}
+.r2-bar .c{background:var(--red);color:#fff}
+.r2-bar .p{background:#FFB3B3;color:var(--ink)}
+.r2-bar .a{background:var(--ink);color:#fff}
+.r2-bar .n{background:var(--linen);color:var(--gray)}
+.r2-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,18px)}
+.r2-legend div{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:12px 16px;min-width:0}
+.r2-legend b{display:flex;align-items:center;gap:8px;font-size:clamp(1rem,1.3vw,1.2rem);color:var(--ink)}
+.r2-legend b i{width:12px;height:12px;border-radius:3px;flex:none}
+.r2-legend p{font-size:clamp(.875rem,1vw,.95rem);line-height:1.4;max-width:none;margin-top:4px}
+
+/* Figma | corrida 1 | corrida 2 */
+.r2-tri{display:flex;justify-content:center;align-items:flex-start;gap:clamp(12px,2vw,32px);--T:clamp(260px,calc(100vh - 400px),640px)}
+.r2-tri figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.r2-tri figure a{display:block;line-height:0}
+.r2-tri img{display:block;width:auto;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+.r2-tri .i-figma{height:calc(var(--T) * .9942)}
+.r2-tri .i-r1{height:calc(var(--T) * .9272)}
+.r2-tri .i-r2{height:var(--T)}
+.r2-tri figcaption{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;max-width:24ch}
+.r2-tri figcaption .tag{height:26px}
+.r2-tri figcaption .tag.hi{background:var(--red);border-color:var(--red);color:#fff}
+.r2-tri figcaption span.d{font-size:clamp(.875rem,1vw,.95rem);line-height:1.35;color:var(--gray)}
+
+/* Gallery viewer */
+.r2-gal{display:flex;flex-direction:column;gap:clamp(8px,1.4vh,14px);--gh:clamp(240px,calc(100vh - 440px),620px)}
+.r2-gal-stage{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,28px);align-items:start}
+.r2-gal-stage figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.r2-gal-stage a{display:flex;justify-content:center;width:100%;height:var(--gh);line-height:0}
+.r2-gal-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+.r2-gal-stage .tag.hi{background:var(--red);border-color:var(--red);color:#fff}
+.r2-gal-cap{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:10px 14px}
+.r2-gal-cap .n{flex:none;font-weight:700;color:var(--red);font-size:1rem;min-width:3.2em}
+.r2-gal-cap .t{flex:1;min-width:0}
+.r2-gal-cap .t b{display:block;font-size:clamp(.9375rem,1.1vw,1.05rem);color:var(--ink)}
+.r2-gal-cap .t span{display:block;font-size:clamp(.9375rem,1.1vw,1.05rem);color:var(--gray);line-height:1.4}
+.r2-gal-btn{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:#fff;color:var(--ink);font-size:1.25rem;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.r2-gal-btn:hover{border-color:var(--red);color:var(--red)}
+.r2-gal-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.r2-gal-chips button{min-width:32px;height:32px;padding:0 8px;border-radius:var(--pill);border:1px solid var(--line);background:#fff;font-family:inherit;font-size:.8125rem;font-weight:600;color:var(--gray);cursor:pointer}
+.r2-gal-chips button[aria-current="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.r2-gal-chips button.diff::after{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink);margin-left:5px;vertical-align:middle}
+.r2-gal-chips button[aria-current="true"].diff::after{background:#fff}
+
+/* Generic small grids */
+.r2-cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.r2-cards2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.r2-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(16px,2.4vh,24px) clamp(16px,1.8vw,24px);min-width:0;display:flex;flex-direction:column;gap:8px}
+.r2-card.hi{background:var(--tint);border-color:rgba(255,64,64,.2)}
+.r2-card h4{font-size:clamp(1.05rem,1.45vw,1.3rem);line-height:1.25}
+.r2-card p{font-size:clamp(.9375rem,1.1vw,1.05rem);line-height:1.45;max-width:none}
+.r2-card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.r2-card li{font-size:clamp(.9375rem,1.05vw,1rem);line-height:1.4;color:var(--gray);padding-left:14px;position:relative}
+.r2-card li::before{content:'•';position:absolute;left:0;color:var(--red)}
+.r2-card .lab{margin-bottom:0}
+.r2-card .who{font-size:.8125rem;font-weight:600;color:var(--red-dark)}
+
+/* Appendix */
+.r2-apx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.r2-apx dl{display:grid;grid-template-columns:minmax(8.5rem,auto) 1fr;gap:6px 14px;margin:0}
+.r2-apx dt{font-size:.875rem;font-weight:600;color:var(--ink)}
+.r2-apx dd{margin:0;font-size:.875rem;color:var(--gray);line-height:1.4}
+.r2-apx .r2-card{gap:10px}
+.r2-apx code{font-family:inherit;font-size:.8125rem;background:var(--linen);border:1px solid var(--line);border-radius:6px;padding:0 5px}
+
+/* Short desktop viewports: the deck engine switches to a scrolling slide at <=800px height,
+   so screenshots keep a fixed readable size instead of shrinking with the viewport. */
+@media (max-height:800px) and (min-width:641px){
+  .r2-card{padding:12px 16px;gap:6px}
+  .r2-col{padding:14px 18px;gap:8px}
+  .r2-list{gap:6px}
+  .r2-legend div{padding:8px 12px}
+  .r2-gal{--gh:440px}
+  .r2-gal-cap{padding:8px 12px}
+  .r2-tri{--T:480px}
+  .r2-annot figure img{height:440px}
+  .r2-apx dd,.r2-apx dt{font-size:.8125rem}
+}
+@media (max-width:900px){
+  .r2-two,.r2-cards3,.r2-cards2,.r2-apx{grid-template-columns:1fr}
+  .r2-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .r2-annot{grid-template-columns:1fr}
+  .r2-annot figure{justify-self:center}
+}
+@media (max-width:640px){
+  .r2-annot figure img{height:auto;width:100%;max-width:340px}
+  .r2-tri{flex-direction:column;align-items:stretch;--T:auto}
+  .r2-tri figure{width:100%}
+  .r2-tri figure a{width:100%}
+  .r2-tri img,.r2-tri .i-figma,.r2-tri .i-r1,.r2-tri .i-r2{width:100%;height:auto}
+  .r2-tri figcaption{max-width:none}
+  .r2-gal-stage{grid-template-columns:1fr}
+  .r2-gal-stage a{height:auto}
+  .r2-gal-stage img{width:100%;max-height:none}
+  .r2-bar span{font-size:.8125rem}
+  .r2-apx dl{grid-template-columns:1fr;gap:2px 0}
+  .r2-apx dd{margin-bottom:6px}
+}
+.r2-num{font-size:clamp(2.2rem,min(4.6vw,8vh),3.6rem);font-weight:600;color:var(--red);line-height:1;letter-spacing:-.02em}
+.r2-num small{font-size:.42em;color:var(--gray);font-weight:600;letter-spacing:0;margin-left:.2em}
+.r2-cards4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.r2-band{background:var(--linen);border:1px solid var(--line);border-radius:var(--radius-item);padding:14px 18px}
+.r2-band.hi{background:var(--tint);border-color:rgba(255,64,64,.2)}
+.r2-band p{font-size:clamp(.9375rem,1.1vw,1.05rem);max-width:none;line-height:1.45}
+.r2-band ul{margin:6px 0 0;padding-left:1.1rem;color:var(--gray);font-size:clamp(.9375rem,1.05vw,1rem);line-height:1.45}
+.r2-stack{display:flex;flex-direction:column;gap:clamp(12px,2vh,20px)}
+@media (max-width:1100px){.r2-cards4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.r2-cards4{grid-template-columns:1fr 1fr}.r2-cards4 .r2-card{padding:12px 14px}}
+/* Scroll mode (<=800px tall): the corner labels are absolute inside the scrolling slide and would ride
+   over content, so they are hidden there; the nav pill keeps the slide counter. */
+@media (max-height:800px){ #deck .foot{display:none!important} }
+@media (max-height:700px) and (min-width:641px){
+  #deck > .slide:first-child .inner.center > p:not(.eyebrow){margin-top:18px!important}
+  #deck > .slide:first-child .inner.center > div{margin-top:22px!important}
+}
+
+/* ===== r3: s06 and s07 fit the viewport on desktop (no slide scroll, nothing under the pill) ===== */
+.r2-gal-hint{font-size:.8125rem;color:var(--gray);text-align:center;max-width:none;margin:0}
+@media (min-width:641px){
+  .slide.r2-fit.active{overflow:hidden!important}
+  #deck > .slide.r2-fit > .inner.inner-viewport{height:100%!important;max-height:100%!important;min-height:0!important;overflow:hidden!important;
+    display:flex!important;flex-direction:column;padding-bottom:calc(var(--nav-safe) + 10px)!important}
+  #deck > .slide.r2-fit > .inner.inner-viewport::after{display:none!important}
+  .slide.r2-fit .slide-body{flex:1 1 auto!important;min-height:0!important;overflow:hidden!important;display:flex!important;flex-direction:column;justify-content:flex-start!important}
+  .r2-fit .r2-tri{flex:1 1 auto;min-height:0;align-items:flex-start}
+  .r2-fit .r2-gal{flex:1 1 auto;min-height:0;gap:8px}
+  .r2-fit .r2-gal-cap,.r2-fit .r2-gal-chips{order:0}
+  .r2-fit .r2-gal-stage{flex:1 1 auto;min-height:0;overflow:hidden;align-items:start;display:flex;justify-content:center}
+  .r2-fit .r2-gal-stage.tall{overflow-y:auto;overscroll-behavior:contain;border-radius:12px}
+  .r2-fit .r2-gal-stage figure{flex:none}
+  .r2-fit .r2-gal-stage a{height:auto;width:auto}
+  .r2-fit .r2-gal-stage img{max-width:none;max-height:none}
+  .r2-fit .r2-gal-cap{padding:6px 12px}
+}
+@media (max-height:700px) and (min-width:641px){
+  .r2-fit .slide-head .eyebrow{display:none}
+}
+/* Phone: 44x44 tap targets for the gallery chips */
+@media (max-width:640px){
+  .r2-gal-chips{gap:8px}
+  .r2-gal-chips button{min-width:44px;height:44px;font-size:.875rem}
+}
+@media (max-height:700px) and (min-width:641px){
+  #deck > .slide:first-child .big{font-size:clamp(2.4rem,min(6.5vw,12vh),4.5rem)}
+}
+
+/* ===== r4: s06 triptych keeps a readable scale (labels + captions above, each screen scrolls inside its frame);
+   s07 labels sit in a row above the stage so they never scroll away ===== */
+.r2-tri figcaption{order:0}
+.r2-gal-tags{display:none}
+.r2-gal-stage figure .tag{order:0}
+@media (min-width:641px){
+  .r2-fit .r2-tri{align-items:stretch;justify-content:center}
+  .r2-fit .r2-tri figure{flex:none;min-height:0;align-items:stretch;justify-content:flex-start;gap:8px}
+  .r2-fit .r2-tri figcaption{max-width:none;flex:none;justify-content:flex-start}
+  .r2-tri-view{flex:0 1 auto;min-height:0;overflow:hidden;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.06);background:#fff}
+  .r2-tri-view.tall{overflow-y:auto;overscroll-behavior:contain}
+  .r2-fit .r2-tri .r2-tri-view a{display:block;line-height:0}
+  .r2-fit .r2-tri img,.r2-fit .r2-tri .i-figma,.r2-fit .r2-tri .i-r1,.r2-fit .r2-tri .i-r2{height:auto;max-width:none;border:0;border-radius:0;box-shadow:none}
+  .r2-fit .r2-tri-hint{flex:none;margin-top:6px}
+  .r2-fit .r2-gal-tags{display:flex;justify-content:center;flex:none}
+  .r2-fit .r2-gal-tags > div{display:flex;justify-content:center;flex:none}
+  .r2-fit .r2-gal-stage figure .tag{display:none}
+}
+/* s06 and s07 use the eyebrow space for the screens on any short desktop window */
+@media (max-height:800px) and (min-width:641px){
+  .r2-fit .slide-head .eyebrow{display:none}
+}
+.r2-gal-tags .tag.hi{background:var(--red);border-color:var(--red);color:#fff}
+@media (min-width:641px){
+  /* s06 may use the full slide width on narrow windows (set in JS); its height is fixed by the flex layout */
+  #deck > .slide.r2-wide > .inner.inner-viewport,.slide.r2-wide .slide-body{overflow:visible!important}
+}
+/* very short windows: label and one-phrase caption side by side, to leave more height for the screens */
+@media (max-height:700px) and (min-width:641px){
+  .r2-fit .r2-tri figcaption{flex-direction:row;align-items:center;justify-content:center;gap:8px;text-align:left}
+  .r2-fit .r2-tri figcaption .tag{flex:none}
+}
+
+/* ===== r5: live interactive diagrams inside slides 4 and 8 (iframe ?embed=1, js/diagramas.js) ===== */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.diagram-slide .p2-diagram.live{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;flex:0 1 auto;min-height:0;height:auto;
+  width:min(calc(100vw - 32px),1400px);align-self:center;margin:0}
+.p2-dg-frame{display:block;width:100%;height:340px;border:0;background:transparent;flex:0 1 auto;min-height:0}
+@media (min-width:641px){
+  .diagram-slide.r2-fit .slide-body{align-items:center}
+  /* 641–1099 px or touch: vertical diagram in a column next to the slide title */
+  #deck > .slide.r2-fit.dg-m > .inner.inner-viewport{display:grid!important;grid-template-columns:minmax(0,1fr) 360px;grid-template-rows:minmax(0,1fr);column-gap:clamp(20px,3vw,40px);align-items:center}
+  .slide.dg-m .slide-head{align-self:center}
+  .slide.dg-m .slide-body{height:100%;justify-content:center!important}
+  .slide.dg-m .p2-diagram.live{width:100%;align-self:stretch;max-height:100%}
+}
+@media (max-width:640px){
+  .diagram-slide .p2-diagram.live{width:100%;max-width:360px;margin:0 auto}
+}
+
+/* ===== Herramientas IA (hid-*): pieces for this deck ===== */
+.hid-cover-sub{margin-top:26px;font-size:clamp(1.05rem,1.6vw,1.4rem);color:rgba(255,255,255,.78);max-width:40ch}
+.hid-cover-tags{margin-top:30px;display:flex;flex-wrap:wrap;gap:8px}
+.hid-note{font-size:clamp(.9375rem,1.1vw,1.05rem);color:var(--gray);max-width:none;margin:clamp(10px,1.8vh,18px) 0 0;flex:none}
+.hid-note b{color:var(--ink)}
+.hid-shot{margin:0;min-width:0;min-height:0;display:flex;flex-direction:column;gap:6px}
+.hid-shot a{display:block;flex:1 1 auto;min-height:0;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.05);background:#fff;line-height:0}
+.hid-shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+.hid-shot figcaption{flex:none;font-size:.875rem;font-weight:600;color:var(--gray);line-height:1.3}
+.hid-shot figcaption.no{color:var(--red-dark)}
+/* s02 tests */
+.hid-tests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.hid-test{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);overflow:hidden;display:flex;flex-direction:column;min-width:0;min-height:0}
+.hid-test-img{display:block;aspect-ratio:16/10;overflow:hidden;background:var(--linen);border-bottom:1px solid var(--line);line-height:0}
+.hid-test-img img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.hid-test-empty{display:flex;align-items:center;justify-content:center;line-height:1.4;text-align:center;
+  background:repeating-linear-gradient(135deg,var(--linen) 0 12px,#fff 12px 24px)}
+.hid-test-empty span{font-size:.875rem;font-weight:600;color:var(--gray);background:#fff;padding:8px 14px;border-radius:var(--pill);border:1px solid var(--line)}
+.hid-test-txt{padding:clamp(12px,2vh,20px) clamp(14px,1.6vw,22px);display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.hid-test-txt h4{font-size:clamp(1rem,1.35vw,1.25rem);line-height:1.25}
+.hid-state{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 12px;border-radius:var(--pill);font-size:.8125rem;font-weight:700;margin-top:4px}
+.hid-state::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.hid-state.ok{background:var(--tint);color:var(--red-dark)}
+.hid-state.run{background:var(--linen);color:var(--ink);border:1px solid var(--line-strong)}
+/* s04 Bain 2x2 */
+.hid-grid{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);gap:clamp(8px,1.4vh,14px) clamp(10px,1.4vw,18px);align-items:stretch}
+.hid-row-lab{writing-mode:vertical-rl;transform:rotate(180deg);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--red);text-align:center;align-self:center}
+.hid-grid .hid-shot a{aspect-ratio:16/10}
+/* s05 Volaris tabs */
+.hid-vol{display:grid;grid-template-columns:auto minmax(260px,1fr);gap:clamp(16px,2.6vw,40px);align-items:start}
+.hid-vol-img{display:block;line-height:0;border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 6px 18px rgba(18,18,18,.05);background:#fff}
+.hid-vol-img img{display:block;width:min(100%,640px);height:auto}
+.hid-vol-side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.hid-vol-order{font-size:.9375rem;color:var(--gray);max-width:none;margin:0}
+.hid-vol-order b{color:var(--ink)}
+.hid-tabs{display:flex;flex-direction:column;gap:8px}
+.hid-tabs button{font:inherit;font-size:clamp(.9375rem,1.1vw,1.05rem);font-weight:600;text-align:left;padding:10px 16px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.hid-tabs button[aria-selected="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.hid-tabs button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.hid-vol-cap{font-size:.9375rem;color:var(--gray);max-width:none;margin:0}
+.hid-vol-key{font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.4;color:var(--ink);max-width:none;margin:0;padding:14px 18px;background:var(--tint);border:1px solid rgba(255,64,64,.2);border-radius:var(--radius-item)}
+.hid-vol-key b{color:var(--red-dark)}
+/* s06 numbers */
+.hid-nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.hid-nums .p2-metric .n{font-size:clamp(2rem,min(3.3vw,8vh),3.6rem);white-space:nowrap}
+/* s07 propagation */
+.hid-prop{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,22px)}
+.hid-prop .hid-shot a{aspect-ratio:1200/510}
+.hid-prop .hid-shot img{object-fit:contain}
+.hid-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,22px);margin-top:clamp(10px,2vh,20px);flex:none}
+.hid-pair p{max-width:none;margin:0;font-size:clamp(1rem,1.4vw,1.3rem);font-weight:600;color:var(--ink);line-height:1.35;padding:14px 18px;background:var(--tint);border:1px solid rgba(255,64,64,.2);border-radius:var(--radius-item)}
+.hid-pair .lab{display:block}
+/* s09 */
+.hid-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.r2-ico.warn{background:#fff;border:1px solid var(--line-strong);color:var(--ink)}
+/* s10 */
+.hid-fit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.hid-fit-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(16px,2.4vh,26px) clamp(16px,1.8vw,24px);display:flex;flex-direction:column;gap:10px;min-width:0}
+.hid-fit-card.best{background:var(--tint);border-color:rgba(255,64,64,.25)}
+.hid-fit-card h4{font-size:clamp(1.05rem,1.5vw,1.35rem);line-height:1.25}
+.hid-fit-card p{font-size:clamp(.9375rem,1.05vw,1.02rem);line-height:1.45;color:var(--gray);max-width:none;margin:0}
+.hid-fit-card p b{color:var(--ink)}
+.hid-fit-tag{align-self:flex-start;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:4px 10px;border-radius:var(--pill);background:var(--red);color:#fff}
+.hid-fit-card:not(.best) .hid-fit-tag{background:var(--linen);color:var(--ink);border:1px solid var(--line-strong)}
+.hid-fit-card.low .hid-fit-tag{background:#fff;color:var(--gray)}
+.hid-band{margin-top:clamp(12px,2.2vh,22px);font-size:clamp(1.05rem,1.6vw,1.4rem);color:#fff;background:var(--ink);border-radius:var(--radius-item);padding:clamp(12px,2vh,18px) clamp(16px,2vw,24px);max-width:none}
+.hid-band b{color:var(--red-dark-mode)}
+/* s11 rows */
+.hid-rows{display:flex;flex-direction:column;gap:clamp(10px,1.8vh,16px);max-width:1000px}
+.hid-row{display:grid;grid-template-columns:minmax(120px,180px) minmax(0,1fr);gap:clamp(12px,2vw,28px);align-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius-item);padding:clamp(14px,2.4vh,24px) clamp(16px,2vw,28px)}
+.hid-row.hi{background:var(--tint);border-color:rgba(255,64,64,.25)}
+.hid-row-k{font-size:clamp(1.05rem,1.5vw,1.35rem);font-weight:700;color:var(--red)}
+.hid-row p{font-size:clamp(1rem,1.5vw,1.3rem);line-height:1.4;color:var(--gray);max-width:none;margin:0}
+.hid-row p b{color:var(--ink)}
+
+/* desktop fit mode: images shrink to the space that is left */
+@media (min-width:641px){
+  .r2-fit .hid-tests{flex:1 1 auto;min-height:0;grid-template-rows:minmax(0,1fr)}
+  .r2-fit .hid-test-img{aspect-ratio:auto;flex:1 1 auto;min-height:0}
+  .r2-fit .hid-grid{flex:1 1 auto;min-height:0;grid-template-rows:repeat(2,minmax(0,1fr))}
+  .r2-fit .hid-grid .hid-shot a{aspect-ratio:auto}
+  .r2-fit .hid-prop{flex:0 1 auto;min-height:0}
+  .r2-fit .hid-prop .hid-shot{min-height:0}
+  .r2-fit .hid-vol{flex:1 1 auto;min-height:0;grid-template-rows:minmax(0,1fr);align-items:stretch}
+  .r2-fit .hid-vol-img{height:100%;width:auto;justify-self:start;align-self:start;max-height:100%}
+  .r2-fit .hid-vol-img img{height:100%;width:auto;max-width:none}
+  .r2-fit .hid-vol-side{overflow:hidden}
+}
+@media (max-width:1100px) and (min-width:641px){
+  .hid-nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .hid-tests,.hid-prop,.hid-pair,.hid-two,.hid-fit,.hid-nums,.hid-vol{grid-template-columns:1fr}
+  .hid-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .hid-row-lab{grid-column:1/-1;writing-mode:horizontal-tb;transform:none;text-align:left;align-self:start;margin-top:4px}
+  .hid-vol-img img{width:100%}
+  .hid-row{grid-template-columns:1fr;gap:6px}
+  .hid-nums .p2-metric .n{font-size:2.6rem}
+}
+/* Next steps: title only, the rest stays empty */
+.hid-next .slide-body{min-height:40vh}

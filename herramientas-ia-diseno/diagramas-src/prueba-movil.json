@@ -1,0 +1,99 @@
+{
+ "width": 340,
+ "height": 560,
+ "eyebrow": "Pruebas con IA",
+ "title": "Cómo las probamos",
+ "subtitle": "Toca una etapa para ver qué pasa en ella.",
+ "caption": "Ninguna herramienta recibió el trabajo de la otra.",
+ "groups": [
+  {
+   "id": "cada",
+   "label": "Cada una por su cuenta",
+   "accent": true,
+   "x": 4,
+   "y": 124,
+   "w": 332,
+   "h": 146,
+   "tip": "Dos pruebas separadas, sin compartir resultados"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "inicio",
+   "label": "Punto de partida",
+   "caption": "repo del sistema de diseño + Figma",
+   "desc": "Las dos herramientas arrancan del mismo lugar: el código del sistema de diseño y el Figma del cliente.",
+   "group": null,
+   "x": 60,
+   "y": 20,
+   "w": 220,
+   "h": 76
+  },
+  {
+   "id": "mp",
+   "label": "MagicPath",
+   "caption": "construye por su cuenta",
+   "desc": "MagicPath arma el sistema de diseño y las pantallas sin ver lo que hizo Paper.",
+   "group": "cada",
+   "x": 16,
+   "y": 166,
+   "w": 148,
+   "h": 84
+  },
+  {
+   "id": "pp",
+   "label": "Paper",
+   "caption": "construye por su cuenta",
+   "desc": "Paper arma el sistema de diseño y las pantallas sin ver lo que hizo MagicPath.",
+   "group": "cada",
+   "x": 176,
+   "y": 166,
+   "w": 148,
+   "h": 84
+  },
+  {
+   "id": "sent",
+   "label": "Revisión de calidad",
+   "caption": "Sentinel",
+   "desc": "Sentinel, nuestro revisor de calidad, compara cada resultado con el código y con Figma, y lo aprueba o lo devuelve.",
+   "group": null,
+   "x": 60,
+   "y": 318,
+   "w": 220,
+   "h": 76
+  },
+  {
+   "id": "res",
+   "label": "Resultado",
+   "caption": "sistema de diseño + pantallas",
+   "desc": "Bain: sistema de diseño, landing y PRISM. Volaris: sistema de diseño y 3 pantallas de Flex.",
+   "group": null,
+   "x": 60,
+   "y": 450,
+   "w": 220,
+   "h": 76
+  }
+ ],
+ "edges": [
+  {
+   "from": "inicio",
+   "to": "mp"
+  },
+  {
+   "from": "inicio",
+   "to": "pp"
+  },
+  {
+   "from": "mp",
+   "to": "sent"
+  },
+  {
+   "from": "pp",
+   "to": "sent"
+  },
+  {
+   "from": "sent",
+   "to": "res"
+  }
+ ]
+}
