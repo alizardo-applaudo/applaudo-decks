@@ -1,6 +1,6 @@
 /* Applaudo deck engine — keyboard, pill nav, logos, optional diagram iframe */
 (function (global) {
-  var APPLAUDO_DECK_BUILD = 'herramientas-ia-diseno-r1-20261022';
+  var APPLAUDO_DECK_BUILD = 'herramientas-ia-diseno-r2-20261022';
   global.APPLAUDO_DECK_BUILD = APPLAUDO_DECK_BUILD;
   var LOGO_L = [
     'M207.2,105.3l-6.1-15.4h-30.4l-5.8,15.4h-20.6l32.9-78.6h18.4l32.6,78.6h-21.1,0ZM186.1,47.7l-10,27h19.7l-9.8-27Z',
@@ -269,8 +269,11 @@
       goTo(cur + 1);
     };
 
+    function blocked() { return document.documentElement.classList.contains('lb-open'); }
     document.addEventListener('keydown', function (e) {
       if (e.target.isContentEditable || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+      if (blocked() || e.defaultPrevented) return;
+      if (e.target.closest && e.target.closest('[role="tablist"]')) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown') goTo(cur + 1);
       if (e.key === 'ArrowLeft' || e.key === 'PageUp') goTo(cur - 1);
       if (e.key === 'Home') goTo(0);
@@ -281,8 +284,34 @@
     if (prog) prog.style.width = (1 / N) * 100 + '%';
     if (prev) prev.disabled = true;
 
-    var h = parseInt((location.hash || '').slice(1), 10);
-    if (h > 1 && h <= N) goTo(h - 1);
+    function fromHash() {
+      var raw = (location.hash || '').slice(1);
+      if (!raw) return;
+      var h = /^\d+$/.test(raw) ? parseInt(raw, 10) : NaN;
+      if (h >= 1 && h <= N) { if (h - 1 !== cur) goTo(h - 1); }
+      else goTo(isNaN(h) || h < 1 ? 0 : N - 1);
+      try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) {}
+    }
+    fromHash();
+    window.addEventListener('hashchange', fromHash);
+
+    /* swipe left/right on touch screens; vertical scrolling is left alone */
+    function bindSwipe(win) {
+      var x0 = null, y0 = 0, t0 = 0;
+      win.addEventListener('touchstart', function (e) {
+        if (e.touches.length !== 1 || blocked()) { x0 = null; return; }
+        x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now();
+      }, { passive: true });
+      win.addEventListener('touchend', function (e) {
+        if (x0 === null || blocked()) return;
+        var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+        x0 = null;
+        if (Date.now() - t0 > 900 || Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        goTo(dx < 0 ? cur + 1 : cur - 1);
+      }, { passive: true });
+      win.addEventListener('touchcancel', function () { x0 = null; }, { passive: true });
+    }
+    bindSwipe(window);
 
     function bindFrameKeys(fr) {
       try {
@@ -315,6 +344,7 @@
       getCurrent: function () { return cur; },
       build: APPLAUDO_DECK_BUILD,
       refitDiagrams: scheduleActiveDiagramFit,
+      bindSwipe: bindSwipe,
     };
     return goTo;
   }

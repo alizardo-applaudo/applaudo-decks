@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MagicPath y Paper: lo que encontramos — Applaudo</title>
-<link rel="stylesheet" href="css/applaudo-deck.css?v=herramientas-ia-diseno-r1-20261022">
-<link rel="stylesheet" href="css/herramientas-ia-diseno.css?v=herramientas-ia-diseno-r1-20261022">
-<link rel="stylesheet" href="css/responsive.css?v=herramientas-ia-diseno-r1-20261022">
+<link rel="stylesheet" href="css/applaudo-deck.css?v=herramientas-ia-diseno-r2-20261022">
+<link rel="stylesheet" href="css/herramientas-ia-diseno.css?v=herramientas-ia-diseno-r2-20261022">
+<link rel="stylesheet" href="css/responsive.css?v=herramientas-ia-diseno-r2-20261022">
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -26,7 +26,7 @@
   </div>
   <div class="foot">Applaudo</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Para Fernando Martir y Tatiana. Pruebas corridas por Adonay. Fuentes (Notion): «MagicPath — Bain DS testing: plan, limitations, workarounds» (3faa44cb54fa81a7af7ad531c29be62a), «Paper — Bain DS testing: results and comparison with MagicPath» (401a44cb54fa8135830ddefb40da9f9e), «Volaris Android — Mobile test: MagicPath vs Paper (vs Figma)» (401a44cb54fa81899a54e8edffc172ef).</aside>
+  <aside class="notes" hidden>Para Fernando Martir y Tatiana. Pruebas corridas por Adonay. Fuentes (Notion): «MagicPath — Bain DS testing: plan, limitations, workarounds», «Paper — Bain DS testing: results and comparison with MagicPath» y «Volaris Android — Mobile test: MagicPath vs Paper (vs Figma)».</aside>
 </section>
 
 <!-- 2 · Qué pruebas corrimos -->
@@ -40,7 +40,7 @@
     <div class="slide-body">
       <div class="hid-tests">
         <article class="hid-test">
-          <a class="hid-test-img" href="assets/bain-pp-prism-full.jpg" target="_blank" rel="noopener"><img src="assets/bain-pp-prism.jpg" alt="Pantalla PRISM de Bain armada en Paper" loading="lazy" style="object-position:left top"></a>
+          <a class="hid-test-img" href="assets/bain-pp-prism-full.jpg" data-zoom><img src="assets/bain-pp-prism.jpg" alt="Pantalla PRISM de Bain armada en Paper" loading="lazy" style="object-position:left top"></a>
           <div class="hid-test-txt">
             <span class="lab">Bain · web</span>
             <h4>Sistema de diseño + 2 pantallas</h4>
@@ -48,7 +48,7 @@
           </div>
         </article>
         <article class="hid-test">
-          <a class="hid-test-img" href="assets/volaris-s1-full.jpg" target="_blank" rel="noopener"><img src="assets/volaris-s1.jpg" alt="Pantalla de tarifas de Volaris: Figma, MagicPath y Paper" loading="lazy" style="object-position:center 12%"></a>
+          <a class="hid-test-img" href="assets/volaris-s1-full.jpg" data-zoom><img src="assets/volaris-s1.jpg" alt="Pantalla de tarifas de Volaris: Figma, MagicPath y Paper" loading="lazy" style="object-position:center 12%"></a>
           <div class="hid-test-txt">
             <span class="lab">Volaris · Android</span>
             <h4>Sistema de diseño + 3 pantallas</h4>
@@ -56,7 +56,7 @@
           </div>
         </article>
         <article class="hid-test">
-          <div class="hid-test-img hid-test-empty" role="img" aria-label="Proyecto privado: sin capturas"><span>Proyecto privado<br>· sin capturas ·</span></div>
+          <div class="hid-test-img hid-test-empty" role="img" aria-label="Proyecto privado: sin capturas"><span>Proyecto privado:<br>sin capturas</span></div>
           <div class="hid-test-txt">
             <span class="lab">Pulsar · herramienta interna</span>
             <h4>Desde cero, en modo claro y oscuro</h4>
@@ -69,7 +69,7 @@
   </div>
   <div class="foot">Las pruebas</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Bain (web): DS de Bain (repo Bain/design-system) + landing + PRISM – Instruments. MagicPath: páginas de prueba aprobadas por Sentinel (reporte MagicPath §5 «Test pages built with the library (approved by Sentinel)»). Paper: Sentinel QA ronda 3 «APROBADO con issues conocidos» (reporte Paper, estado). Volaris (Android): DS + 3 pantallas Flex Fare (S1 selección de tarifa, S2 upsell Zero→Flex, S3 equipaje); Sentinel ronda 1 APROBADO en las dos (reporte Volaris, estado y §8). Pulsar: proyecto nuevo desde cero, DS + pantallas, claro y oscuro, por separado en MagicPath y en Paper; ninguna pasó la ronda 1 de Sentinel, las dos están en ronda 2 (contexto de Adonay, no está en los reportes). Pulsar es privado: no se muestran pantallas.</aside>
+  <aside class="notes" hidden>Bain (web): sistema de diseño de Bain + página de inicio + PRISM – Instruments. MagicPath: páginas de prueba aprobadas por Sentinel (informe MagicPath §5, «Test pages built with the library (approved by Sentinel)»). Paper: Sentinel ronda 3, «APROBADO con issues conocidos» (informe Paper, estado). Volaris (Android): sistema de diseño + 3 pantallas de Flex Fare (selección de tarifa, oferta de Zero a Flex, equipaje); Sentinel ronda 1 APROBADO en las dos (informe Volaris, estado y §8). Pulsar: proyecto nuevo desde cero, sistema de diseño + pantallas, en claro y oscuro, por separado en MagicPath y en Paper; ninguna pasó la ronda 1 de Sentinel y las dos están en la ronda 2 (contexto de Adonay; todavía no hay informe en Notion). Pulsar es privado: no se muestran pantallas.</aside>
 </section>
 
 <!-- 3 · Cómo las probamos (diagrama) -->
@@ -92,7 +92,7 @@
   </div>
   <div class="foot">Método</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Volaris §1: las dos herramientas partieron solo de los mismos archivos de preparación; ninguna recibió el resultado de la otra (Sentinel lo verificó). Bain: la ronda 1 de Paper usó pantallas serializadas desde MagicPath y se invalidó; se rehízo de forma independiente desde el repo del DS y los frames de Figma (reporte Paper, nota de la ronda 1). Reporte Paper §10: «Each tool can be used on its own; both consume the DS repo independently.»</aside>
+  <aside class="notes" hidden>Informe Volaris §1: las dos herramientas partieron de los mismos archivos de preparación y ninguna recibió el resultado de la otra (Sentinel lo verificó). Bain: la ronda 1 de Paper usó pantallas tomadas de MagicPath, se invalidó y se rehízo por separado desde el código del sistema de diseño y los frames de Figma (informe Paper, nota de la ronda 1). Informe Paper §10: cada herramienta se puede usar sola; las dos toman el sistema de diseño por su cuenta.</aside>
 </section>
 
 <!-- 4 · Qué logramos: Bain -->
@@ -106,18 +106,18 @@
     <div class="slide-body">
       <div class="hid-grid">
         <span class="hid-row-lab">MagicPath</span>
-        <figure class="hid-shot"><a href="assets/bain-mp-landing-full.jpg" target="_blank" rel="noopener"><img src="assets/bain-mp-landing.jpg" alt="Landing de Bain en MagicPath" loading="lazy"></a><figcaption>Landing</figcaption></figure>
-        <figure class="hid-shot"><a href="assets/bain-mp-prism-full.jpg" target="_blank" rel="noopener"><img src="assets/bain-mp-prism.jpg" alt="PRISM – Instruments de Bain en MagicPath" loading="lazy"></a><figcaption>PRISM</figcaption></figure>
+        <figure class="hid-shot"><a href="assets/bain-mp-landing-full.jpg" data-zoom><img src="assets/bain-mp-landing.jpg" alt="Página de inicio de Bain en MagicPath" loading="lazy"></a><figcaption>Página de inicio</figcaption></figure>
+        <figure class="hid-shot"><a href="assets/bain-mp-prism-full.jpg" data-zoom><img src="assets/bain-mp-prism.jpg" alt="PRISM – Instruments de Bain en MagicPath" loading="lazy"></a><figcaption>PRISM</figcaption></figure>
         <span class="hid-row-lab">Paper</span>
-        <figure class="hid-shot"><a href="assets/bain-pp-landing-full.jpg" target="_blank" rel="noopener"><img src="assets/bain-pp-landing.jpg" alt="Landing de Bain en Paper" loading="lazy"></a><figcaption>Landing</figcaption></figure>
-        <figure class="hid-shot"><a href="assets/bain-pp-prism-full.jpg" target="_blank" rel="noopener"><img src="assets/bain-pp-prism.jpg" alt="PRISM – Instruments de Bain en Paper" loading="lazy"></a><figcaption>PRISM</figcaption></figure>
+        <figure class="hid-shot"><a href="assets/bain-pp-landing-full.jpg" data-zoom><img src="assets/bain-pp-landing.jpg" alt="Página de inicio de Bain en Paper" loading="lazy"></a><figcaption>Página de inicio</figcaption></figure>
+        <figure class="hid-shot"><a href="assets/bain-pp-prism-full.jpg" data-zoom><img src="assets/bain-pp-prism.jpg" alt="PRISM – Instruments de Bain en Paper" loading="lazy"></a><figcaption>PRISM</figcaption></figure>
       </div>
       <p class="hid-note">Donde Figma y el sistema de diseño no coincidían, ganó el sistema de diseño.</p>
     </div>
   </div>
   <div class="foot">Bain</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Capturas: MagicPath Landing y PRISM – Instruments (páginas de prueba aprobadas por Sentinel, reporte MagicPath §5; capturas de /workspace/paper-bain/landing y /prism, referencias MagicPath). Paper: Landing R3 · Desktop 1440 y PRISM R3 · Instruments (reporte Paper §2, evidencia /workspace/paper-bain/r3). Recorte: parte superior de cada pantalla; clic para verla completa. «El DS ganó»: MagicPath §5 (PRISM: header blanco, aviso amarillo, modal de 960px, tag magenta) y Paper §7 (11 desviaciones). Paper también armó la librería: 277 tokens y 36 componentes (§2).</aside>
+  <aside class="notes" hidden>Capturas: MagicPath, página de inicio y PRISM – Instruments (páginas de prueba aprobadas por Sentinel, informe MagicPath §5). Paper: página de inicio R3 y PRISM R3 (informe Paper §2). Se muestra la parte de arriba de cada pantalla; al tocarla se amplía completa. «Ganó el sistema de diseño»: informe MagicPath §5 (PRISM) e informe Paper §7 (11 desviaciones). Paper también armó la librería: 277 tokens y 36 componentes (informe Paper §2).</aside>
 </section>
 
 <!-- 5 · Qué logramos: Volaris -->
@@ -130,13 +130,13 @@
     </div>
     <div class="slide-body">
       <div class="hid-vol" data-hid-tabs>
-        <a class="hid-vol-img" data-v="a" href="assets/volaris-s1-full.jpg" target="_blank" rel="noopener"><img data-v="img" src="assets/volaris-s1.jpg" alt="Selección de tarifa: Figma, MagicPath y Paper, lado a lado"></a>
+        <a class="hid-vol-img" data-v="a" href="assets/volaris-s1-full.jpg" data-zoom><img data-v="img" src="assets/volaris-s1.jpg" alt="Selección de tarifa: Figma, MagicPath y Paper, lado a lado"></a>
         <div class="hid-vol-side">
           <p class="hid-vol-order"><b>De izquierda a derecha:</b> Figma · MagicPath · Paper</p>
           <div class="hid-tabs" role="tablist" aria-label="Elegir pantalla">
             <button type="button" role="tab" aria-selected="true" data-src="assets/volaris-s1.jpg" data-full="assets/volaris-s1-full.jpg" data-alt="Selección de tarifa: Figma, MagicPath y Paper, lado a lado" data-cap="La tarjeta Flex con sus dos opciones elegidas.">Selección de tarifa</button>
-            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-src="assets/volaris-s2.jpg" data-full="assets/volaris-s2-full.jpg" data-alt="Oferta de Zero a Flex: Figma, MagicPath y Paper, lado a lado" data-cap="La hoja que ofrece pasar de Zero a Flex.">Oferta de Zero a Flex</button>
-            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-src="assets/volaris-s3.jpg" data-full="assets/volaris-s3-full.jpg" data-alt="Equipaje: Figma, MagicPath y Paper, lado a lado" data-cap="La pestaña de equipaje, con el de mano incluido.">Equipaje</button>
+            <button type="button" role="tab" aria-selected="false" data-src="assets/volaris-s2.jpg" data-full="assets/volaris-s2-full.jpg" data-alt="Oferta de Zero a Flex: Figma, MagicPath y Paper, lado a lado" data-cap="La hoja que ofrece pasar de Zero a Flex.">Oferta de Zero a Flex</button>
+            <button type="button" role="tab" aria-selected="false" data-src="assets/volaris-s3.jpg" data-full="assets/volaris-s3-full.jpg" data-alt="Equipaje: Figma, MagicPath y Paper, lado a lado" data-cap="La pestaña de equipaje, con el de mano incluido.">Equipaje</button>
           </div>
           <p class="hid-vol-cap" data-v="cap" aria-live="polite">La tarjeta Flex con sus dos opciones elegidas.</p>
           <p class="hid-vol-key">Lo que cambia frente a Figma es casi todo a propósito: <b>cuando no coinciden, gana el código.</b></p>
@@ -146,11 +146,11 @@
   </div>
   <div class="foot">Volaris</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Reporte Volaris §2 (imágenes de comparación Figma | MagicPath | Paper, 360 px, sRGB; /workspace/volaris-tooltest/compare/s1–s3.png) y §0: «Most of the gap against Figma is deliberate: where Figma and the code disagree, the code wins.» Desviaciones documentadas: 19 (MagicPath) y 35 (Paper) (§5). Sentinel ronda 1 APROBADO en las dos, sin Bloqueantes ni Altos (§8). Es una traducción web a 360 px: ninguna herramienta corre Compose (§0).</aside>
+  <aside class="notes" hidden>Informe Volaris §2 (comparación Figma | MagicPath | Paper, a 360 px) y §0: «Most of the gap against Figma is deliberate: where Figma and the code disagree, the code wins.» Desviaciones documentadas: 19 en MagicPath y 35 en Paper (informe Volaris §5). Sentinel ronda 1 APROBADO en las dos, sin Bloqueantes ni Altos (§8). Es una traducción web a 360 px: ninguna herramienta corre Compose (§0).</aside>
 </section>
 
 <!-- 6 · En números -->
-<section class="slide slide-fit p2-slide r2-main" aria-label="Lo que logramos en números">
+<section class="slide slide-fit p2-slide r2-main r2-fit hid-fill" aria-label="Lo que logramos en números">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -161,14 +161,14 @@
       <div class="hid-nums">
         <div class="p2-metric"><div class="n">36</div><h4>componentes de Bain</h4><p>recreados en Paper</p></div>
         <div class="p2-metric"><div class="n">3 + 3</div><h4>pantallas de Volaris</h4><p>una tanda en cada herramienta, aprobadas a la primera</p></div>
-        <div class="p2-metric"><div class="n">US$7</div><h4>al mes</h4><p>el plan de MagicPath que usamos</p></div>
+        <div class="p2-metric"><div class="n">US$7</div><h4>al mes, con facturación anual</h4><p>el plan de MagicPath que usamos</p></div>
         <div class="p2-metric"><div class="n">US$16–20</div><h4>por editor, al mes</h4><p>el plan de Paper que usamos</p></div>
       </div>
     </div>
   </div>
   <div class="foot">En números</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>36: Paper §2, «36 component masters (the same 36-component list as the DS repo)», más 277 tokens en 7 grupos. 3 + 3: Volaris §0 (3 pantallas Flex Fare en cada herramienta) y §8 (Sentinel ronda 1 APROBADO en las dos). US$7: MagicPath §1, plan Builder, US$7/mes facturado anual, sin créditos de IA dentro de la app. US$16–20: Paper §1, Pro US$20 por editor/mes (US$16 anual), 1M llamadas MCP por semana; la prueba de Bain usó unas 2,320 llamadas (≈0.23 % del límite semanal, §8).</aside>
+  <aside class="notes" hidden>36: informe Paper §2, «36 component masters», con la misma lista de 36 componentes del sistema de diseño de Bain; además, 277 tokens en 7 grupos. 3 + 3: informe Volaris §0 (3 pantallas de Flex Fare en cada herramienta) y §8 (Sentinel ronda 1 APROBADO en las dos). US$7: informe MagicPath §1, plan Builder, US$7 al mes con facturación anual, sin créditos de IA dentro de la app. US$16–20: informe Paper §1, plan Pro, US$20 por editor al mes (US$16 con facturación anual), con 1M de llamadas por semana; la prueba de Bain usó unas 2,320 (≈0.23 % del límite semanal, §8).</aside>
 </section>
 
 <!-- 7 · Hallazgo: los cambios no viajan -->
@@ -181,8 +181,8 @@
     </div>
     <div class="slide-body">
       <div class="hid-prop">
-        <figure class="hid-shot"><a href="assets/prop-paper-full.jpg" target="_blank" rel="noopener"><img src="assets/prop-lib.jpg" alt="Paper: el botón de la librería ya con el color nuevo" loading="lazy"></a><figcaption>Librería, con el color nuevo</figcaption></figure>
-        <figure class="hid-shot"><a href="assets/prop-paper-full.jpg" target="_blank" rel="noopener"><img src="assets/prop-consumer.jpg" alt="Paper: el mismo botón en otro archivo, sin cambios" loading="lazy"></a><figcaption class="no">Otro archivo, al mismo tiempo: sin cambios</figcaption></figure>
+        <figure class="hid-shot"><a href="assets/prop-paper-full.jpg" data-zoom data-cap="Paper, prueba 3: a la izquierda, la librería con el color nuevo; a la derecha, el otro archivo en el mismo momento, sin cambios"><img src="assets/prop-lib.jpg" alt="Paper: el botón de la librería ya con el color nuevo" loading="lazy"></a><figcaption>Librería, con el color nuevo</figcaption></figure>
+        <figure class="hid-shot"><a href="assets/prop-paper-full.jpg" data-zoom data-cap="Paper, prueba 3: a la izquierda, la librería con el color nuevo; a la derecha, el otro archivo en el mismo momento, sin cambios"><img src="assets/prop-consumer.jpg" alt="Paper: el mismo botón en otro archivo, sin cambios" loading="lazy"></a><figcaption class="no">Otro archivo, al mismo tiempo: sin cambios</figcaption></figure>
       </div>
       <div class="hid-pair">
         <p><span class="lab">MagicPath</span> 0 de 3 archivos se actualizaron.</p>
@@ -192,16 +192,16 @@
   </div>
   <div class="foot">Hallazgos</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Imagen: Paper, prueba 3 (cross-file), «Test 3: library after the token change vs the consumer file at the same moment (unchanged)» (reporte Paper §3; /workspace/paper-bain/notion-img/04-t3-cross-file.png). Paper: «The library changed by 68,004 pixels and the consumer by 0» (§3). MagicPath: «Resultado: 0/3 consumidores se actualizaron» con librerías reales, 22/10 (reporte MagicPath, sección «Propagación con librerías reales»). En Volaris (antes de la librería real): 0/4 consumidores (reporte Volaris §4). Dentro de un mismo archivo, Paper sí propaga un cambio de token a la pieza original y sus copias (§3, prueba 1). Por eso aplica la misma regla en las dos: un dueño, el repo primero y volver a colocar los componentes después de cada versión (Paper §10).</aside>
+  <aside class="notes" hidden>Imagen: Paper, prueba 3 entre archivos, «library after the token change vs the consumer file at the same moment (unchanged)» (informe Paper §3). Paper: «The library changed by 68,004 pixels and the consumer by 0» (§3). MagicPath: «Resultado: 0/3 consumidores se actualizaron» con librerías reales, 22 de octubre (informe MagicPath, sección «Propagación con librerías reales (2026-10-22)»). En Volaris, antes de la librería real: 0 de 4 (informe Volaris §4). Dentro de un mismo archivo, Paper sí lleva un cambio de token a la pieza original y a sus copias (informe Paper §3, prueba 1). Por eso la regla es la misma en las dos: un dueño, el código primero y volver a colocar los componentes después de cada versión (informe Paper §10).</aside>
 </section>
 
-<!-- 8 · Hallazgo de hoy: copia fija (diagrama) -->
-<section class="slide slide-dark slide-fit p2-slide diagram-slide r2-fit r2-wide" aria-label="Hallazgo de hoy en MagicPath">
+<!-- 8 · Hallazgo del 22 de octubre: copia fija (diagrama) -->
+<section class="slide slide-dark slide-fit p2-slide diagram-slide r2-fit r2-wide" aria-label="Hallazgo del 22 de octubre en MagicPath">
   <div class="glow-bg alt" aria-hidden="true"></div>
   <div class="logo-sm" data-logo="light"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
-      <p class="eyebrow">Hallazgo de hoy · MagicPath</p>
+      <p class="eyebrow">Hallazgo del 22 de octubre · MagicPath</p>
       <h2 class="hl">Arrastrar un componente <em>crea una copia fija</em></h2>
       <p class="lead">No se actualiza sola, ni con Refresh. Tampoco hay opción para actualizarla.</p>
     </div>
@@ -215,11 +215,11 @@
   </div>
   <div class="foot">Hallazgos</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Reporte MagicPath, sección «Propagación con librerías reales (2026-10-22)»: dos proyectos convertidos con «Turn into a library»; se arrastraron Button y VolarisButton · showcase a dos archivos consumidores; cambio de color en la librería; 0/3 consumidores se actualizaron (inmediato y a los 2 min). El componente arrastrado es nuevo, con id propio y una sola revisión, idéntico byte a byte a la librería en ese momento; sin campos de vínculo. Sin UI de actualización: el selector «v1» solo muestra «Version 1», el menú ⋮ no tiene «actualizar desde librería», «Refresh» no cambia el color, la pestaña Libraries no avisa. Mismo resultado que la prueba de Tag del 15/10. Regla 7 de gobernanza: volver a arrastrar después de cada versión.</aside>
+  <aside class="notes" hidden>Informe MagicPath, sección «Propagación con librerías reales (2026-10-22)»: dos proyectos convertidos con «Turn into a library»; se arrastraron Button y VolarisButton a dos archivos consumidores; se cambió el color en la librería; 0 de 3 consumidores se actualizaron (al momento y a los 2 minutos). El componente arrastrado es nuevo, con identificador propio y una sola versión, idéntico a la librería en ese momento y sin vínculo. No hay opción de actualizar: el selector solo muestra «Version 1», el menú ⋮ no tiene «actualizar desde librería», «Refresh» no cambia el color y la pestaña Libraries no avisa. Mismo resultado que la prueba de Tag del 15 de octubre. Regla 7 de gobernanza: volver a arrastrar después de cada versión.</aside>
 </section>
 
 <!-- 9 · En qué es buena cada una -->
-<section class="slide slide-fit p2-slide r2-main" aria-label="En qué es buena cada una">
+<section class="slide slide-fit p2-slide r2-main r2-fit hid-fill" aria-label="En qué es buena cada una">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -232,8 +232,8 @@
           <span class="lab">MagicPath</span>
           <ul class="r2-list">
             <li><span class="r2-ico ok" aria-hidden="true">✓</span><span>Sus componentes <b>son código</b> y se pueden usar con clics</span></li>
-            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span>En Volaris, <b>idéntica</b> a su versión en código</span></li>
-            <li><span class="r2-ico warn" aria-hidden="true">!</span><span>Sus links y sus imágenes <b>se ven sin iniciar sesión</b></span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span>En Volaris, sus pantallas quedaron <b>idénticas, píxel a píxel,</b> a su versión web en código</span></li>
+            <li><span class="r2-ico warn" aria-hidden="true">!</span><span>Sus enlaces y sus imágenes <b>se ven sin iniciar sesión</b></span></li>
             <li><span class="r2-ico warn" aria-hidden="true">!</span><span>Aplicar el tema de colores pide el <b>plan Pro</b></span></li>
           </ul>
         </div>
@@ -251,11 +251,11 @@
   </div>
   <div class="foot">Hallazgos</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>MagicPath: componentes = código real e interactivo (Paper §10, «MagicPath is stronger as the component source»); en Volaris, páginas «pixel-identical to the local React render» con estados pressed reales (Volaris §0 y §5). Visibilidad: los links de vista designs.magicpath.ai responden sin login y las imágenes subidas quedan en un bucket público de Google Cloud Storage; revisar la política del cliente antes de usarla con él (Volaris §6 y §11). Tema: solo desde el chat dentro de la app, que pide créditos del plan Pro; el conector no puede aplicarlo (MagicPath §4). Paper: tokens nativos, un cambio dentro del archivo llega a la pieza original y a sus copias (Paper §3 prueba 1; Volaris §4); fidelidad alta (Bain: diferencia media 2.71 en los 36 componentes contra el render del repo, §6; Volaris: 93–98 % de uso de tokens, §0). Sin componentes ni instancias; cada arreglo implica borrar y rehacer el artboard (Paper §4; Volaris §7). Bain: con escritura intensa el renderer se cerró una vez y hubo que reiniciar Paper Desktop (Paper §4); en Volaris no hubo caídas: 2 llamadas fallidas de 1,372 (Volaris §6).</aside>
+  <aside class="notes" hidden>MagicPath: sus componentes son código real e interactivo (informe Paper §10, «MagicPath is stronger as the component source»); en Volaris, páginas «pixel-identical to the local React render», con estados reales (informe Volaris §0 y §5). Visibilidad: los enlaces de vista abren sin iniciar sesión y las imágenes subidas quedan en un espacio público de Google Cloud; revisar la política del cliente antes de usarla con él (informe Volaris §6 y §11). Tema: solo desde el chat de la app, que pide créditos del plan Pro; el agente no puede aplicarlo (informe MagicPath §4). Paper: un cambio dentro del archivo llega a la pieza original y a sus copias (informe Paper §3, prueba 1; informe Volaris §4); fidelidad alta en Bain (§6) y en Volaris (§0). No tiene componentes ni instancias; cada arreglo implica borrar y rehacer la pantalla (informe Paper §4; informe Volaris §7). Bain: con escritura intensa la app se cerró una vez y hubo que reiniciar Paper Desktop (informe Paper §4 y §10); en Volaris no hubo caídas (informe Volaris §6).</aside>
 </section>
 
 <!-- 10 · Recomendaciones por tipo de proyecto -->
-<section class="slide slide-fit p2-slide r2-main" aria-label="Recomendaciones según el tipo de proyecto">
+<section class="slide slide-fit p2-slide r2-main r2-fit hid-fill" aria-label="Recomendaciones según el tipo de proyecto">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -274,7 +274,7 @@
           <span class="hid-fit-tag">Buen encaje</span>
           <h4>Proyecto con una base existente</h4>
           <p><b>MagicPath:</b> trae los componentes que ya existen y suma flujos nuevos.</p>
-          <p><b>Paper:</b> prueba un cambio de estilo en minutos.</p>
+          <p><b>Paper:</b> prueba rápido un cambio de estilo.</p>
         </div>
         <div class="hid-fit-card low">
           <span class="hid-fit-tag">Encaje limitado</span>
@@ -288,11 +288,11 @@
   </div>
   <div class="foot">Recomendaciones</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Reporte Paper §11 «Use cases at Applaudo Studios, by project type» (recomendación acordada con Adonay, no resultado de prueba). Ranking greenfield (Best) > greyfield (Good) > brownfield (Limited). Greenfield: MagicPath lleva de la idea a pantallas en código con el repo como fuente de verdad desde el día 1; Paper fija la dirección visual (paletas, tipo, temas vía tokens) antes de fijar el DS; riesgo: decidir pronto dónde vive el DS oficial. Greyfield: MagicPath trae componentes del repo (flujo de repo de GitHub) y construye flujos nuevos encima; Paper carga los tokens actuales para probar reskins rápido; riesgo: deriva si repo y tokens de Paper se desincronizan. Brownfield: exploraciones aisladas de una funcionalidad o rediseño antes de pasar al Figma o repo oficial; riesgo: una segunda fuente de verdad que nadie mantiene, porque ninguna enlaza entre archivos. «If Applaudo picks one tool: MagicPath, because its output is code tied to a repo.» No usar para librerías compartidas entre equipos ni para gobernar el DS (eso vive en el repo).</aside>
+  <aside class="notes" hidden>Informe Paper §11, «Use cases at Applaudo Studios, by project type» (recomendación, no resultado de prueba). Orden: greenfield (mejor) > greyfield (bueno) > brownfield (limitado). Proyecto nuevo: MagicPath lleva de la idea a pantallas en código, con el código como fuente de verdad desde el día 1; Paper fija la dirección visual antes de fijar el sistema de diseño; riesgo: decidir pronto dónde vive el sistema oficial. Proyecto con base: MagicPath trae los componentes existentes y suma flujos nuevos; Paper carga los tokens actuales para probar cambios de estilo rápido («test reskins quickly»); riesgo: que se desincronicen. Producto maduro: solo exploraciones aisladas; riesgo: una segunda fuente de verdad que nadie mantiene, porque ninguna enlaza entre archivos. Si Applaudo elige una sola: MagicPath, porque lo que entrega es código (informe Paper §11). No usar para librerías compartidas entre equipos ni para gobernar el sistema de diseño.</aside>
 </section>
 
 <!-- 11 · En móvil -->
-<section class="slide slide-fit p2-slide r2-main" aria-label="Recomendaciones para móvil">
+<section class="slide slide-fit p2-slide r2-main r2-fit hid-fill" aria-label="Recomendaciones para móvil">
   <div class="logo-sm" data-logo="dark"></div>
   <div class="inner inner-viewport compact">
     <div class="slide-head">
@@ -301,7 +301,7 @@
     </div>
     <div class="slide-body">
       <div class="hid-rows">
-        <div class="hid-row"><span class="hid-row-k">MagicPath</span><p>Para <b>demos clickeables</b> de flujos. Antes, confirma la política del cliente.</p></div>
+        <div class="hid-row"><span class="hid-row-k">MagicPath</span><p>Para <b>demos de flujos que se pueden abrir</b>. Antes, confirma la política del cliente.</p></div>
         <div class="hid-row"><span class="hid-row-k">Paper</span><p>Para <b>explorar estilos</b> en muchas pantallas de un mismo archivo.</p></div>
         <div class="hid-row hi"><span class="hid-row-k">Siempre</span><p>Son aproximaciones web: <b>revisa el resultado final en el teléfono.</b></p></div>
       </div>
@@ -309,7 +309,7 @@
   </div>
   <div class="foot">Recomendaciones</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>Reporte Volaris §11 «Recommendation for mobile projects at Applaudo» (recomendación, no resultado de prueba). La fuente de verdad sigue siendo el repo de Compose, más Figma donde el cliente trabaja ahí. MagicPath: espejo web interactivo para revisiones, flujos y demos; revisar la política del cliente porque los links de vista abren sin login y las imágenes quedan en un bucket público; no subir material del cliente sin aprobación. Paper: exploración visual guiada por tokens dentro de un archivo (reskins, variantes de tema o marca); necesita las fuentes del cliente instaladas en la máquina, y cada arreglo es una reconstrucción. Siempre declarar el límite de fidelidad: son aproximaciones web a ancho de teléfono; verificar en Compose (Paparazzi o un dispositivo): barras del sistema, hojas, líneas base del texto, escala de fuente y sombras. Si se elige una para móvil: MagicPath, si la visibilidad es aceptable para el cliente.</aside>
+  <aside class="notes" hidden>Informe Volaris §11, «Recommendation for mobile projects at Applaudo» (recomendación, no resultado de prueba). La fuente de verdad sigue siendo el código de Compose, más Figma donde el cliente trabaja ahí. MagicPath: espejo web interactivo para revisiones, flujos y demos; revisar antes la política del cliente, porque los enlaces de vista abren sin iniciar sesión y las imágenes quedan en un espacio público; no subir material del cliente sin aprobación. Paper: exploración visual dentro de un archivo (cambios de estilo, variantes de tema o marca); necesita las fuentes del cliente instaladas y cada arreglo es rehacer. Siempre decir el límite de fidelidad: son aproximaciones web a ancho de teléfono; verificar en el teléfono. Si se elige una para móvil: MagicPath, si la visibilidad es aceptable para el cliente.</aside>
 </section>
 
 <!-- 12 · Next steps (vacío a propósito) -->
@@ -340,7 +340,6 @@
           <span class="lab">Términos</span>
           <dl>
             <dt>Sistema de diseño</dt><dd>Los componentes, colores, tipografías y medidas de un producto.</dd>
-            <dt>Tokens</dt><dd>Nombres fijos para colores, tamaños y espacios.</dd>
             <dt>Librería</dt><dd>El archivo donde viven los componentes que otros archivos usan.</dd>
             <dt>Sentinel</dt><dd>Nuestro revisor de calidad: aprueba o devuelve cada entrega.</dd>
             <dt>Proyecto nuevo / con base / maduro</dt><dd>Greenfield, greyfield y brownfield.</dd>
@@ -353,7 +352,7 @@
             <dt>MagicPath</dt><dd>MagicPath — Bain DS testing: plan, limitations, workarounds, con «Propagación con librerías reales (2026-10-22)»</dd>
             <dt>Paper</dt><dd>Paper — Bain DS testing: results and comparison with MagicPath (Sentinel ronda 3, aprobado)</dd>
             <dt>Volaris</dt><dd>Volaris Android — Mobile test: MagicPath vs Paper (vs Figma)</dd>
-            <dt>Pulsar</dt><dd>Prueba en curso: todavía sin reporte</dd>
+            <dt>Pulsar</dt><dd>Prueba en curso: todavía sin informe</dd>
           </dl>
         </div>
       </div>
@@ -361,7 +360,7 @@
   </div>
   <div class="foot">Anexo</div>
   <div class="foot foot-right">Herramientas de diseño con IA · Oct ’26</div>
-  <aside class="notes" hidden>URLs: https://app.notion.com/p/3faa44cb54fa81a7af7ad531c29be62a · https://app.notion.com/p/401a44cb54fa8135830ddefb40da9f9e · https://app.notion.com/p/401a44cb54fa81899a54e8edffc172ef · subpágina de contraste: https://app.notion.com/p/3faa44cb54fa81ff9a5cea0107517f09 (no usada en slides).</aside>
+  <aside class="notes" hidden>Fuentes en Notion: informe MagicPath (con la sección «Propagación con librerías reales (2026-10-22)»), informe Paper (Sentinel ronda 3) e informe Volaris. Pulsar todavía no tiene informe.</aside>
 </section>
 
 </div>
@@ -373,8 +372,8 @@
   <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
 </nav>
 
-<script src="js/applaudo-deck.js?v=herramientas-ia-diseno-r1-20261022"></script>
-<script src="js/diagramas.js?v=herramientas-ia-diseno-r1-20261022"></script>
-<script src="js/hid.js?v=herramientas-ia-diseno-r1-20261022"></script>
+<script src="js/applaudo-deck.js?v=herramientas-ia-diseno-r2-20261022"></script>
+<script src="js/diagramas.js?v=herramientas-ia-diseno-r2-20261022"></script>
+<script src="js/hid.js?v=herramientas-ia-diseno-r2-20261022"></script>
 </body>
 </html>

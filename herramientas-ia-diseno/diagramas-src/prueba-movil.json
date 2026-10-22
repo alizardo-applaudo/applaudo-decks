@@ -21,7 +21,7 @@
   {
    "id": "inicio",
    "label": "Punto de partida",
-   "caption": "repo del sistema de diseño + Figma",
+   "caption": "el código del sistema de diseño + Figma",
    "desc": "Las dos herramientas arrancan del mismo lugar: el código del sistema de diseño y el Figma del cliente.",
    "group": null,
    "x": 60,
@@ -66,7 +66,7 @@
    "id": "res",
    "label": "Resultado",
    "caption": "sistema de diseño + pantallas",
-   "desc": "Bain: sistema de diseño, landing y PRISM. Volaris: sistema de diseño y 3 pantallas de Flex.",
+   "desc": "Bain: sistema de diseño, página de inicio y PRISM. Volaris: sistema de diseño y 3 pantallas de Flex.",
    "group": null,
    "x": 60,
    "y": 450,

@@ -74,7 +74,7 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
   {
    "id": "inicio",
    "label": "Punto de partida",
-   "caption": "repo del sistema de diseño + Figma",
+   "caption": "el código del sistema de diseño + Figma",
    "desc": "Las dos herramientas arrancan del mismo lugar: el código del sistema de diseño y el Figma del cliente.",
    "group": null,
    "x": 60,
@@ -119,7 +119,7 @@ svg#links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;poin
    "id": "res",
    "label": "Resultado",
    "caption": "sistema de diseño + pantallas",
-   "desc": "Bain: sistema de diseño, landing y PRISM. Volaris: sistema de diseño y 3 pantallas de Flex.",
+   "desc": "Bain: sistema de diseño, página de inicio y PRISM. Volaris: sistema de diseño y 3 pantallas de Flex.",
    "group": null,
    "x": 60,
    "y": 450,
@@ -246,7 +246,7 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
  fit();addEventListener("resize",fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);
  cv.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>{
   const r=det.getBoundingClientRect();
-  if(EMBED){const se=document.scrollingElement;if(r.bottom>innerHeight)se.scrollTop+=r.bottom-innerHeight+8;else if(r.top<0)se.scrollTop+=r.top-8;return;}
+  if(EMBED)return;
   if(r.bottom>window.innerHeight||r.top<0)det.scrollIntoView({behavior:"smooth",block:"nearest"});}));
 })();
 </script>
@@ -272,19 +272,42 @@ function sel(k){cv.classList.toggle("dimmed",!!k);
 .embed .sub{margin:0 0 6px;text-align:center;max-width:none}
 .embed .detail{min-height:36px}
 .embed .detail{max-width:min(760px,calc(100vw - 16px))}
+/* the detail stays pinned to the bottom of the frame, so a tap never needs to scroll the diagram */
+.embed.fscroll .detail{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:6px 0 4px;margin-top:0;box-shadow:0 -10px 14px -6px var(--bg)}
 .embed .elabel{font-size:11px}
 </style>
-<script>/* embedded in the deck: report height, forward slide keys, never trap navigation */
+<script>/* deselect: second tap/click on the selected node, tap/click on empty background, or Escape */
+(function(){
+ function clear(){pinned=null;sel(null);const a=document.activeElement;if(a&&a.classList&&a.classList.contains("box"))a.blur();tip.classList.remove("show");}
+ cv.querySelectorAll(".box").forEach(b=>b.addEventListener("click",e=>{if(!pinned){b.blur();sel(null);tip.classList.remove("show")}}));
+ document.addEventListener("click",e=>{if(!e.target.closest(".box")&&pinned)clear()});
+ addEventListener("keydown",e=>{if(e.key==="Escape"&&(pinned||document.activeElement&&document.activeElement.classList.contains("box"))){e.preventDefault();clear()}});
+})();
+</script>
+<script>/* embedded in the deck: send height, forward slide keys, never trap navigation */
 (function(){
  if(!/[?&]embed=1/.test(location.search))return;
  document.documentElement.classList.add("embed");
- const wrap=document.querySelector(".wrap"),det=document.getElementById("detail"),send=m=>{try{parent.postMessage(Object.assign({src:"r2-diagram"},m),"*")}catch(e){}};
- const post=()=>send({type:"size",h:Math.ceil(wrap.getBoundingClientRect().height)+2});
+ const wrap=document.querySelector(".wrap"),det=document.getElementById("detail"),send=m=>{try{parent.postMessage(Object.assign({src:"hid-diagram"},m),"*")}catch(e){}};
+ const flag=()=>document.documentElement.classList.toggle("fscroll",document.documentElement.scrollHeight>innerHeight+2);
+ const post=()=>{send({type:"size",h:Math.ceil(wrap.getBoundingClientRect().height)+2});requestAnimationFrame(flag)};addEventListener("resize",flag);
  if(window.ResizeObserver)new ResizeObserver(post).observe(wrap);addEventListener("load",post);post();
  (document.fonts?document.fonts.ready:Promise.resolve()).then(post);
  addEventListener("keydown",e=>{if(["ArrowRight","ArrowLeft","PageUp","PageDown","Home","End"].includes(e.key)){e.preventDefault();send({type:"key",key:e.key})}});
- document.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>setTimeout(()=>{const r=det.getBoundingClientRect(),se=document.scrollingElement;
-  if(r.bottom>innerHeight)se.scrollTop+=r.bottom-innerHeight+8;send({type:"reveal",top:r.top,bottom:r.bottom})},60)));
+ /* horizontal swipe inside the diagram changes slide (vertical scrolling is left alone) */
+ let sx=null,sy=0,st=0;
+ addEventListener("touchstart",e=>{if(e.touches.length!==1){sx=null;return}sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now()},{passive:true});
+ addEventListener("touchend",e=>{if(sx===null)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;
+  if(Date.now()-st>900||Math.abs(dx)<50||Math.abs(dx)<Math.abs(dy)*1.5)return;send({type:"swipe",dir:dx<0?1:-1})},{passive:true});
+ document.querySelectorAll(".box").forEach(b=>b.addEventListener("click",()=>setTimeout(()=>{const r=det.getBoundingClientRect(),nb=b.getBoundingClientRect(),se=document.scrollingElement;
+  /* bring the detail into view, but never push the tapped node out of view */
+  const over=r.bottom-innerHeight;if(over>1)se.scrollTop+=Math.min(over+8,Math.max(0,nb.top-36));
+  const r2=det.getBoundingClientRect(),n2=b.getBoundingClientRect();send({type:"reveal",top:r2.top,bottom:r2.bottom,nodeTop:n2.top})},60)));
 })();
 </script>
+
+<style id="movil-type">/* vertical version: node subtitles and group labels stay >=12px on phones */
+.box .s{font-size:12.5px;line-height:1.3}.frame-label{font-size:12.5px;letter-spacing:.08em}.embed .elabel{font-size:12px}
+.no-tip .tip,.embed .tip{display:none!important}
+</style>
 </body></html>
