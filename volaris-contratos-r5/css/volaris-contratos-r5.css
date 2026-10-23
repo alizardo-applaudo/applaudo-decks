@@ -526,3 +526,8 @@
   .slide-body:has(> .s9-warn){display:flex;flex-direction:column}
   .slide-body > .s9-warn{order:-1;margin:0 0 14px}
 }
+/* ===== r5d ===== s8 with three runs: one row of three cards on wide screens */
+.runs.runs3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.runs.runs3 .run dl{grid-template-columns:1fr;gap:0}
+.runs.runs3 .run dd{margin-bottom:8px}
+@media (max-width:900px){.runs.runs3{grid-template-columns:1fr}}
