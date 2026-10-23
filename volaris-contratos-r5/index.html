@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volaris · Contratos diseño ↔ código: corridas 2 a 5 — Applaudo</title>
+<link rel="stylesheet" href="css/applaudo-deck.css?v=volaris-contratos-r5c-20261023">
+<link rel="stylesheet" href="css/volaris-contratos-r5.css?v=volaris-contratos-r5c-20261023">
+<link rel="stylesheet" href="css/responsive.css?v=volaris-contratos-r5c-20261023">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+<!-- 1 · Portada -->
+<section class="slide slide-dark active" aria-label="Portada">
+  <div class="glow-bg" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner center">
+    <p class="eyebrow">Diseño Applaudo · Volaris · Fare Flex Android</p>
+    <h1 class="big" style="max-width:16ch">Contratos diseño ↔ código: <em>corridas 2 a 5</em></h1>
+    <p style="margin-top:28px;font-size:clamp(1.15rem,2vw,1.55rem);max-width:46ch;color:rgba(255,255,255,.82);line-height:1.35">Cómo evolucionó el contrato en cuatro corridas, qué tan cerca está hoy la app del diseño y qué necesitamos de ustedes.</p>
+    <div style="display:flex;gap:10px;margin-top:36px;flex-wrap:wrap">
+      <span class="tag">Volaris</span><span class="tag">Fare Flex</span><span class="tag">Android</span><span class="tag">Corridas 2–5</span><span class="tag">Oct ’26</span>
+    </div>
+  </div>
+  <div class="foot">Applaudo</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Para Fernando Martir y Harold Caceres. Corridas 2 a 5 del experimento Fare Flex Android con los packs de contratos v2, v2.1, v2.2 y v2.3, todos en borrador. Fuentes: informe de comparación de la corrida 2; informe de medición y conclusiones de la corrida 3; bitácora de intervenciones y medición en emulador de la corrida 4; métricas, conclusiones y medición a ciegas de la corrida 5, y el pack v2.3 congelado; borrador de cambios del contrato v2.3; página del plan de la corrida 6.</aside>
+</section>
+
+<!-- 2 · El contrato: antes vs ahora -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="El contrato: antes vs ahora">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">El contrato</p>
+      <h2 class="hl">De una descripción general a <em>medidas exactas</em></h2>
+      <p class="lead">Antes le dábamos al equipo una descripción general y quedaban dudas; ahora le damos medidas exactas de cada estado, de dónde sale cada texto y reglas de qué no inventar.</p>
+    </div>
+    <div class="slide-body">
+      <div class="r2-two">
+        <div class="r2-col">
+          <span class="lab lab-gray">Antes</span>
+          <h4>Una descripción general</h4>
+          <ul class="r2-list">
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Qué pantalla es y qué piezas lleva</span></li>
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Medidas y espacios: <b>sin definir</b></span></li>
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Textos y precios: <b>sin origen claro</b></span></li>
+            <li><span class="r2-ico q" aria-hidden="true">?</span><span>Lo que faltaba se <b>decidía a ojo</b></span></li>
+          </ul>
+        </div>
+        <div class="r2-col now">
+          <span class="lab">Ahora</span>
+          <h4>13 contratos, uno por pieza, para no adivinar</h4>
+          <ul class="r2-list">
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>Medidas exactas</b> de cada estado de la pantalla</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>De dónde sale</b> cada texto y cada precio</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>Qué va dentro de qué</b> y en qué orden</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span><b>Reglas de qué no inventar:</b> si falta algo, se anota</span></li>
+            <li><span class="r2-ico ok" aria-hidden="true">✓</span><span>Un <b>diccionario Figma ↔ código</b> para colores y tamaños</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="r2-band hi rule"><p><strong>Desde el 22 de octubre: primero Christian, luego Figma, nunca iPhone.</strong> Si hay dudas, prevalece lo que ya construyó Christian, del equipo de desarrollo; si él no lo cubre, prevalece Figma; nunca se copia la app de iPhone.</p></div>
+    </div>
+  </div>
+  <div class="foot">El contrato</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>En la corrida 2 eran 11 contratos (carpeta de contratos del pack v2). Desde v2.1 son 13 (se sumaron flex-wiring y flex-to-plus-sheet): las carpetas de contratos de los packs v2.1, v2.2 y v2.3 tienen 13 archivos cada uno. «Diccionario Figma ↔ código» = el mapa de tokens de Volaris. Regla de desempate: documento de cambios del pack v2.3 frente a v2.2 L3 («Christian &gt; Figma &gt; nunca iPhone») y registro de desacuerdos §v2.3 (Adonay, 2026-10-22; Christian = su rama de desarrollo de Fare Flex). Todos los packs siguen en borrador.</aside>
+</section>
+
+<!-- 3 · Mismo bloque, dos contratos -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Un mismo bloque, dos contratos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Ejemplo · Selector de la tarjeta Flex</p>
+      <h2 class="hl">Un mismo bloque, <em>dos contratos</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-annot">
+        <figure>
+          <img src="assets/bloque-figma.png" alt="Diseño en Figma del selector «Personaliza tu vuelo (0/2)»: bloque «Equipaje o asiento» con tres opciones, bloque «Beneficio de viaje», precio y botón Continuar." width="452" height="700">
+          <span class="r2-dot" style="left:4%;top:7%">1</span>
+          <span class="r2-dot" style="left:59%;top:13%">2</span>
+          <span class="r2-dot" style="left:76%;top:26%">3</span>
+          <span class="r2-dot" style="left:84%;top:50%">4</span>
+          <span class="r2-dot" style="left:76%;top:83%">5</span>
+          <span class="r2-dot" style="left:84%;top:93%">6</span>
+        </figure>
+        <div class="r2-side">
+          <div class="before">
+            <span class="lab lab-gray">Antes</span>
+            <p>«Un título y tres opciones para elegir». Caja, tamaños, íconos y datos: <strong>sin definir</strong>.</p>
+          </div>
+          <div class="now">
+            <span class="lab">Ahora</span>
+            <ol>
+              <li><span class="r2-ico ok">1</span><span>Caja con borde fino, esquinas medianas y espacio interno fijo.</span></li>
+              <li><span class="r2-ico ok">2</span><span>Título grande, en negrita y color de marca.</span></li>
+              <li><span class="r2-ico ok">3</span><span>Cada opción con alto fijo y su ícono real, con el tamaño exacto.</span></li>
+              <li><span class="r2-ico ok">4</span><span>Textos exactos y de dónde sale cada uno.</span></li>
+              <li><span class="r2-ico ok">5</span><span>El precio llega del sistema; si falta, se usa el de Basic.</span></li>
+              <li><span class="r2-ico ok">6</span><span>Va dentro de la tarjeta Flex, antes del precio y del botón.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Ejemplo de contrato</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Pantalla del cliente: frame Figma del selector Flex 0/2 (misma imagen que el par 06 de la galería). Antes = pack v1 («Título + 3 opciones con radio»). Ahora = contrato de composición + geometría + origen de datos con fallback sellado (perFieldFallbacks) del pack v2. 24 px = tamaño de ícono del contrato.</aside>
+</section>
+
+<!-- 4 · Nuevo orden (diagrama) -->
+<section class="slide slide-dark slide-fit p2-slide diagram-slide r2-fit r2-wide" aria-label="Cómo se arma ahora">
+  <div class="glow-bg alt" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Cómo se arma ahora</p>
+      <h2 class="hl">Primero las reglas, <em>después la pantalla</em></h2>
+      <p class="lead">Si a la construcción le falta algo, la IA lo anota y sigue. No inventa.</p>
+    </div>
+    <div class="slide-body">
+      <figure class="p2-diagram live" data-d="orden">
+        <iframe class="p2-dg-frame" title="Diagrama interactivo: el orden nuevo" aria-describedby="dg-orden-desc" loading="eager"></iframe>
+        <p class="sr-only" id="dg-orden-desc">Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, con la firma visual de Fernando y Harold. Si falta algo en la construcción, la IA lo anota y sigue.</p>
+        <noscript><img src="assets/diagrama-orden.png" alt="Antes de construir: reglas de negocio, datos y pantalla. Luego, en la corrida: construcción y comparación con Figma, con la firma visual de Fernando y Harold. Si falta algo en la construcción, la IA lo anota y sigue."></noscript>
+      </figure>
+    </div>
+  </div>
+  <div class="foot">Nuevo orden</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Regla 9 del documento de arranque de la corrida 2 (L37) y la intervención #2 de bitácora de intervenciones: si falta algo, se registra el gap (B##) y se sigue sin construir esa parte. registro de faltantes: 0 inventados (métricas L55).</aside>
+</section>
+
+<!-- 5 · Resultado -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Resultado">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Resultado · solo corrida 2</p>
+      <h2 class="hl">De 32 diferencias con el diseño, <em>en la corrida 2 se cerraron 24</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-result">
+        <div class="r2-bigrow">
+          <span class="r2-big">24<small>/ 32</small></span>
+          <p>Las mismas 32 diferencias que encontramos en la primera corrida, revisadas otra vez contra Figma.</p>
+        </div>
+        <div class="r2-bar" role="img" aria-label="24 cerradas, 5 a medias, 2 abiertas, 1 ya no aplica">
+          <span class="c" style="flex:24">24 cerradas</span><span class="p" style="flex:5">5</span><span class="a" style="flex:2">2</span><span class="n" style="flex:1">1</span>
+        </div>
+        <div class="r2-legend">
+          <div><b><i style="background:var(--red)"></i>24 cerradas</b><p>Ya se ven como en Figma.</p></div>
+          <div><b><i style="background:#FFB3B3"></i>5 a medias</b><p>Mejoraron, pero falta un detalle.</p></div>
+          <div><b><i style="background:var(--ink)"></i>2 abiertas</b><p>Faltan una medida del diseño y la pantalla «cargando».</p></div>
+          <div><b><i style="background:var(--linen);border:1px solid var(--line-strong)"></i>1 ya no aplica</b><p>Lo cambiamos por decisión.</p></div>
+        </div>
+        <div class="r2-band hi"><p>En la corrida 2 pasaron <strong>3 de 8 revisiones automáticas</strong>. En la primera corrida no pasaba ninguna.</p></div>
+        <div class="r2-band"><p><strong>Solo corrida 2.</strong> Estas 32 diferencias no se volvieron a medir así en las corridas 3 a 5: cada una se midió de otra forma.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Resultado</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>comparación de r2 L52: 24 cerradas · 5 parciales (#14, #25, #31, #32, #34) · 2 abiertas (#22, #23) · 1 no aplica (#28). Las 32 vienen de 36 observaciones de run 1 menos 4 coincidencias (L13). Las 32 son contra Figma, no contra la implementación del equipo. #22 = línea de 15 kg por ancho del dispositivo de prueba; #23 = sin estado loading (falta sizeSkeletonBar). #28 = 4 filas en vez de 5, por decisión. Revisiones = P1–P8 de la SPEC §5.2 (L380–398): run 2 pasan P1, P6, P7; run 1 pasaban 0 (comparación de r2 L93). P8 pasa en el pack pero el código no cumple (L91). No se re-midieron las 32 en r3–r5: r3 informe de medición de r3 mide P1–P8; r4 medición de r4 en emulador mide E/T en emulador; r5 medición a ciegas de r5 mide 63 filas a ciegas.</aside>
+</section>
+
+<!-- 6 · Figma vs app, corrida 5 -->
+<section class="slide slide-fit p2-slide r2-main r2-fit r2-wide cmp-slide" aria-label="Figma y la app en la corrida 5">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Ejemplo · Corrida 5 en el emulador</p>
+      <h2 class="hl">Casi igual, <em>pero no todavía</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="cmp-wrap">
+        <div class="r2-tri cmp-tri" data-min="0.3">
+          <figure data-c="0">
+            <figcaption><span class="tag">Figma</span><span class="d">El diseño.</span></figcaption>
+            <div class="r2-tri-view"><a href="assets/cmp-figma.png" target="_blank" rel="noopener"><img src="assets/cmp-figma.png" alt="Figma: tarjeta Flex con «Personaliza tu vuelo (0/2)» y el grupo «Equipaje o asiento» abierto. Del título a la línea: 312 px. Alto del grupo abierto: 744 px." width="1068" height="1320"></a></div>
+          </figure>
+          <figure data-c="0">
+            <figcaption><span class="tag hi">App · corrida 5</span><span class="d">Emulador: un Android simulado, mismo ancho que Figma.</span></figcaption>
+            <div class="r2-tri-view"><a href="assets/cmp-app.png" target="_blank" rel="noopener"><img src="assets/cmp-app.png" alt="App de la corrida 5: la misma tarjeta. Del título a la línea: 288 px. Alto del grupo abierto: 822 px." width="1080" height="1320"></a></div>
+          </figure>
+        </div>
+        <ol class="cmp-notes">
+          <li><span class="r2-ico ok">1</span><div><b>Falta un espacio antes de la línea</b><p>Figma deja un pequeño espacio entre «Check-in…» y la línea; la app casi nada. Todo lo de abajo sube.</p><p class="m">Figma 312 px · app 288 px</p></div></li>
+          <li><span class="r2-ico ok">2</span><div><b>El grupo abierto es más alto</b><p>Las opciones ocupan más espacio que en Figma.</p><p class="m">Figma 744 px · app 822 px</p></div></li>
+          <li class="cmp-foot"><p>Las dos diferencias se repiten en varias pantallas.</p></li>
+          <li class="cmp-unit"><p>Medidas en píxeles de las capturas, a la misma escala en las dos.</p></li>
+        </ol>
+      </div>
+      <p class="r2-gal-hint r2-tri-hint" hidden>Desplázate dentro de una pantalla y las dos se mueven juntas ↓ · Clic: abre la imagen completa en otra pestaña</p>
+    </div>
+  </div>
+  <div class="foot">Figma vs app</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Pantallas del cliente. Mismas fuentes y coordenadas que las dos capturas anotadas del plan de la corrida 6, regeneradas sin códigos en los rótulos. Figma 1137:255986 (export 1x del MCP ampliado ×3) frente a la app r5 en el emulador Android (API 36) a 360 dp, 3x (captura de evidencia de la medición de r5: paso «Continuar» con 0 de 2). Medidas en px a 3x (1 dp = 3 px). 312 vs 288 (Δ −24) = divisor, medición a ciegas de r5 L99 (V3) y L97 (V1: lo de abajo sube 21–24 px; falta el gap {gapXs}). 744 vs 822 = tier 1 abierto, medición a ciegas de r5 L99, L100, L102, L104, L105 (V3, V4, V6, V8, V9). Estas dos causas explican V1, V3–V6, V8–V10.</aside>
+</section>
+
+<!-- 7 · Cómo lo ejecutamos (diagrama) -->
+<section class="slide slide-dark slide-fit p2-slide diagram-slide r2-fit r2-wide" aria-label="Cómo lo ejecutamos">
+  <div class="glow-bg alt" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Cómo lo ejecutamos</p>
+      <h2 class="hl">Solo con el contrato, <em>sin preguntas de diseño</em></h2>
+      <p class="lead">Una copia aparte del proyecto, el contrato congelado y, al final, una medición aparte: contra Figma y en emulador.</p>
+    </div>
+    <div class="slide-body">
+      <figure class="p2-diagram live" data-d="ejecucion">
+        <iframe class="p2-dg-frame" title="Diagrama interactivo: cómo lo ejecutamos" aria-describedby="dg-ejecucion-desc" loading="eager"></iframe>
+        <p class="sr-only" id="dg-ejecucion-desc">Preparación: copia aislada y solo el contrato. Corrida: sin preguntas de diseño; cortes y relevos, retomando donde quedó. Después: medición aparte, contra Figma y en emulador.</p>
+        <noscript><img src="assets/diagrama-ejecucion.png" alt="Preparación: copia aislada y solo el contrato. Corrida: sin preguntas de diseño; cortes y relevos, retomando donde quedó. Después: medición aparte, contra Figma y en emulador."></noscript>
+      </figure>
+    </div>
+  </div>
+  <div class="foot">Ejecución</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Mismo método en r2–r5: copia aislada sin remoto, pack congelado, con la cuenta Applaudo de Adonay (documento de arranque de r2 L4; bitácora de intervenciones de r4 #1–#2). Cortes: r2 error de API + límite de sesión (comparación de r2 L119); r3 corte de conexión y 2 por cuota (informe de medición de r3 L138); r5 dos cortes de conexión y uno por límite de sesión (métricas de r5 L137–139), y el tramo 5b lo terminó otro modelo (métricas de r5 L131). Medición en emulador desde r4 (medición de r4 en emulador) y a ciegas en r5 (medición a ciegas de r5 L3).</aside>
+</section>
+
+<!-- 8 · Cada corrida, medida a su manera -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Cada corrida, medida a su manera">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Corridas 2 a 5 · cada una con su propia regla</p>
+      <h2 class="hl">Cada corrida, <em>medida a su manera</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="runs">
+        <div class="run"><h4>Corrida 2 <small>contrato 2</small></h4><dl>
+          <dt>Qué se midió</dt><dd>Las 32 diferencias con Figma que dejó la corrida 1.</dd>
+          <dt>Resultado</dt><dd><b>24 de 32 cerradas.</b></dd>
+          <dt>Tiempo y costo</dt><dd>91 min y 48,95 USD, tal como los reporta la herramienta.</dd></dl></div>
+        <div class="run"><h4>Corrida 3 <small>contrato 2.1</small></h4><dl>
+          <dt>Qué se midió</dt><dd>8 revisiones automáticas, sin emulador ni Figma.</dd>
+          <dt>Resultado</dt><dd><b>4 de 8 pasan.</b></dd>
+          <dt>Tiempo y costo</dt><dd>201 min y 78,35 USD, tal como los reporta la herramienta.</dd></dl></div>
+        <div class="run"><h4>Corrida 4 <small>contrato 2.2</small></h4><dl>
+          <dt>Qué se midió</dt><dd>13 pasos de uso en el emulador.</dd>
+          <dt>Resultado</dt><dd><b>11 de 13 salen bien.</b></dd>
+          <dt>Tiempo y costo</dt><dd>46 min y 15,63 USD: suma nuestra de dos tramos.</dd></dl></div>
+        <div class="run"><h4>Corrida 5 <small>contrato 2.3</small> <span class="verdict">NO APROBADO · sin revisión de QA</span></h4><dl>
+          <dt>Qué se midió</dt><dd>63 revisiones a ciegas en el emulador, visuales y de uso.</dd>
+          <dt>Resultado</dt><dd><b>25 fallidas</b>, 35 bien y 3 sin medir.</dd>
+          <dt>Tiempo y costo</dt><dd>Parciales: 105 min y 32,24 USD, solo de los tramos del modelo principal (el modelo de IA con el que se hizo casi toda la corrida). El último tramo lo hizo otro modelo, distinto y con otra suscripción, y no se midió.</dd></dl></div>
+      </div>
+      <div class="r2-band hi"><p><strong>No sirven para comparar corridas.</strong> Cada una se midió con una regla distinta, y el tiempo y el costo se registraron de forma distinta. No muestran una tendencia.</p></div>
+    </div>
+  </div>
+  <div class="foot">Cada corrida</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>r2: comparación de r2 L121 (91 min 15 s), L123 (48,95 USD), L52 (24 de 32). r3: informe de medición de r3 L125 (78,35 USD), L126 (201,3 min de reloj), L138 (§7 conclusión 5: 78,35 USD y 201 min en 6 corridas); L24: pasan P1, P2 (script), P6, P7 (estático) = 4 de 8; P8 pasa el gate pero el código no cumple completo; fallan P4 y P5; P3 no medible. Las 32 diferencias no se re-midieron. r4: bitácora de intervenciones L16 (11,610451 USD, duración en ms 2440619) y L18 (4,0235004 USD, duración en ms 311160); 15,63 USD y 46 min (45,9) son sumas nuestras; medición de r4 en emulador L53: coinciden 11 de 13 transiciones (fallan T2 sin carga y T7 sin mensaje W-14). r5: métricas L137–139 (2,457 + 27,962 + 1,821 USD; duración en ms 771114 + 5064511 + 434366 = 104,5 min, suma nuestra; run3 cortado por límite de sesión 429), L140 acumulado 32,24; L131: el tramo 5b corrió con otra suscripción, costo en tokens, no USD comparable; tiempo de 5b no medido. medición a ciegas de r5 L3 (medidor independiente, sin acceso a los reportes del constructor), L10 NO APROBADO; conteo de la tabla de resultados: 35 PASS, 25 FAIL, 3 NO MEDIDO = 63 filas. No revisado por QA.</aside>
+</section>
+
+<!-- 9 · Qué cambió -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Qué cambió">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Qué cambió desde la corrida 2</p>
+      <h2 class="hl">Conectada a datos reales; <em>la corrida 5 no aprobó</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-cards4 chg">
+        <div class="r2-card"><span class="lab">Datos</span><h4>Conectada a los datos de Flex</h4><p>La tarjeta del medio ya no recibe los datos de Basic.</p></div>
+        <div class="r2-card"><span class="lab">Conexión</span><h4>Las piezas ya están unidas</h4><p>El selector abre desde la tarjeta y lleva al paso de Flex a Plus.</p></div>
+        <div class="r2-card"><span class="lab">Contenido</span><h4>Textos reales y asientos</h4><p>Los textos llegan del sistema de contenido y la disponibilidad de asientos, del servicio que hizo Christian.</p></div>
+        <div class="r2-card"><span class="lab">Prueba</span><h4>Solo en emulador</h4><p>La corrida 5 se midió a ciegas en el emulador; Adonay revisó en persona la corrida 4. Nunca en un teléfono físico.</p></div>
+      </div>
+      <div class="r2-band hi s9-warn"><span class="lab">Aviso honesto</span><p>La medición a ciegas de la corrida 5 <strong>no aprobó</strong>: 25 de 63 revisiones fallaron, en lo visual y en el uso. Todavía no la revisó QA.</p>
+        <div class="warn2"><div><b>Visual</b><p>Las 12 pantallas comparadas con Figma tienen diferencias.</p></div>
+        <div><b>Uso</b><p>El aviso «Elige tus beneficios» no se ve, lo elegido se pierde al volver atrás, los grupos no se abren como se espera y el paso de Flex a Plus sale con textos distintos a Figma. Tres de estos fallos salían bien en la corrida 4.</p></div></div></div>
+    </div>
+  </div>
+  <div class="foot">Qué cambió</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Datos Flex: conclusiones de r3 L7 (Flex reemplaza a Basic cuando el CMS trae datos Flex) y port de DTOs/CMS de Christian antes de la corrida (bitácora de intervenciones de r3 #2, AM-46). Conexión: medición de r4 en emulador T1 y T8 pasan (B06 cerrado; Flex→Plus desde 2/2). Textos: medición de r4 en emulador L81 y L93 (copy del CMS de staging en el emulador). Asientos: conclusiones de r5 L7 (AM-72, API de asientos portada de la rama de desarrollo de Christian = Christian; bitácora de intervenciones de r5 #0d). Emulador: corrida 4 medida por agentes (medición de r4 en emulador) y revisada en persona por Adonay (L82, 2026-10-22); corrida 5 medida a ciegas por un agente independiente (medición a ciegas de r5 L3). Nunca en teléfono físico. Aviso: medición a ciegas de r5 L10 NO APROBADO; 25 FAIL de 63; V1–V12 FAIL (L97–L108); fallos de uso E2, E3 (W-14 no visible), E6 (se pierde la elección al volver), E9, T7, T8, T11 (L12); regresiones frente a r4: E2, T8, T11 (L91). No revisado por QA: no presentar como validado.</aside>
+</section>
+
+<!-- 10 · Versiones del contrato -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Versiones del contrato">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">El contrato, versión a versión</p>
+      <h2 class="hl">Tres versiones nuevas, <em>todas en borrador</em></h2>
+    </div>
+    <div class="slide-body">
+      <ol class="tl">
+        <li><span class="tl-v">2.1</span><span class="tl-d">21 oct · corrida 3</span><h4>Conexión</h4><p>Cada dato se usa de verdad en la app. La tabla de comparación, celda por celda, y el paso de Flex a Plus.</p></li>
+        <li><span class="tl-v">2.2</span><span class="tl-d">22 oct · corrida 4</span><h4>Interacción</h4><p>Reglas de qué pasa al tocar y pruebas en emulador. Adonay decidió el botón «Continuar»: siempre activo y, si falta elegir, avisa.</p></li>
+        <li class="hi"><span class="tl-v">2.3</span><span class="tl-d">22 oct · corrida 5</span><h4>Detalles visuales</h4><p>El círculo de la tarjeta, un ícono por opción, la carga de asientos, la tabla de Flex a Plus y el check junto al título.</p></li>
+      </ol>
+      <div class="r2-band"><p><strong>Cada versión se congeló para su corrida, pero ninguna está sellada.</strong> Siguen en borrador hasta las firmas pendientes.</p></div>
+    </div>
+  </div>
+  <div class="foot">Versiones</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>v2.1: documento de cambios del pack v2.1 frente a v2 (2026-10-21, DRAFT): flex-wiring nuevo (contrato de conexión), tabla sellada (AM-35), flex-to-plus-sheet (AM-37). v2.2: documento de cambios del pack v2.2 frente a v2.1 (BORRADOR, 2026-10-22): reglas W-23…W-25, W-36, W-54 y EMULADOR-CHECKS E1–E5; D-28 = opción B, decidida por Adonay el 22-oct (bitácora de intervenciones de r4 L7: Continuar habilitado; incompleto → mensaje W-14 «Elige tus beneficios»). v2.3: documento de cambios del pack v2.3 frente a v2.2 L3 (pendiente de la firma de Harold; regla Christian &gt; Figma &gt; nunca iPhone) y tabla AM-70…AM-74 (radio, varitas, loader con API de asientos, tabla F→P, check del tier). Ninguna sellada: registro de desacuerdos L3 (draft, nada firmado); README de v2.3 L10.</aside>
+</section>
+
+<!-- 11 · Qué les pedimos -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Qué les pedimos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Qué les pedimos</p>
+      <h2 class="hl">Sus decisiones <em>de diseño</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-cards2 ask">
+        <div class="r2-card hi"><span class="lab">Lo que les pedimos</span><span class="who">Harold, con Fernando</span><h4>Firmar o cambiar</h4>
+          <ul>
+            <li><b>Cómo se abren los grupos:</b> ¿uno solo abierto, o los dos como en Figma?</li>
+            <li><b>Pendientes desde la corrida 2:</b> la franja de arriba de la tarjeta Flex y la sombra del botón del lápiz.</li>
+            <li><b>Título y tabla de comparación:</b> título en una línea como Figma, ancho de la columna de etiquetas y detalles de la tabla.</li>
+            <li><b>Cinco decisiones provisionales:</b> cuándo se marca el círculo de cada tarjeta, el check junto al título, la carga de asientos y el contenido de la tabla de Flex a Plus.</li>
+            <li><b>Siete detalles en Figma:</b> pantallas que faltan, círculos que no aparecen, nombres de capas, el ancho de una columna y un ícono dentro de la carga.</li>
+          </ul></div>
+        <div class="r2-card"><span class="lab lab-gray">Ya decidido</span><span class="who">Adonay</span><h4>No hace falta su firma</h4>
+          <ul><li>El botón «Continuar» siempre activo; si falta elegir, avisa.</li><li>Primero Christian, luego Figma, nunca iPhone.</li><li>El plan en dos fases de la siguiente página.</li></ul>
+          <span class="lab lab-gray" style="margin-top:10px">Lo resuelve Adonay</span>
+          <ul><li>Qué hacer con 8 avisos de la revisión automática de código (la meta era 4), que aparecieron al conectar la disponibilidad de asientos.</li><li>Dejar los datos de prueba fuera del código de la app.</li></ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Qué les pedimos</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Pendientes con Harold (registro de desacuerdos del pack v2.3, nada firmado, L3): regla de apertura = D-27 (acordeón, resuelto por defecto A, pendiente de Harold, L262–268) frente a Figma V4 con los dos abiertos (plan de la corrida 6, fase 2); D-17 franja/inset superior Flex (L32) y D-19 sombra del icon button (L34); AM-48 título F→P en 1 línea (enmendada por AM-60) y AM-49 tabla: columna 71, gap 6, MXN Bold 14 (L97, L121–135, OQ-07/OQ-08); D-29 radio en 2/2 y revisita, D-30 radio Zero/Plus en la ida, D-31 check junto al título, D-32 loader sin mínimo + API de asientos, D-33 tabla F→P (borrador de cambios del contrato v2.3 L276–280); FG-01…FG-07 (borrador de cambios L85–88, L283–286): FG-01/02 radios que Figma no pinta, FG-03/04 frames que faltan, FG-05 nombres de capa, FG-06 columna de 66, FG-07 ícono dentro del skeleton. También siguen pendientes de firma de Harold D-26 (✕ gris por defecto) y AM-63. Ya decidido por Adonay: D-28 (22-oct, bitácora de intervenciones de r4 L7), regla de desempate (22-oct), plan en 2 fases (23-oct). Lo resuelve Adonay: B25 = umbral de detekt por el port AM-72 (registro de faltantes de r5 L89; conclusiones: 8 frente a meta 4) y AM-45 = fixtures fuera del código de producción (registro de desacuerdos OQ-10, sin firmar).</aside>
+</section>
+
+<!-- 12 · Próximos pasos -->
+<section class="slide slide-fit p2-slide" aria-label="Próximos pasos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Próximos pasos</p>
+      <h2 class="hl">Dos fases: <em>verse igual, luego comportarse igual</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="phases">
+        <div class="phase hi">
+          <span class="lab">Fase 1 · Que se vea igual</span>
+          <h4>Contrato 2.4 y una corrida 6 corta, solo visual</h4>
+          <ul>
+            <li>El espacio antes de la línea divisoria</li>
+            <li>El alto de los grupos, abiertos y cargando</li>
+            <li>Botones grandes que deben ser medianos</li>
+            <li>El título de Flex a Plus, de Figma y no del sistema de contenido</li>
+            <li>El tamaño de las capturas automáticas</li>
+          </ul>
+          <p class="exit"><b>Se mide a ciegas contra Figma, al mismo ancho, y lo revisa QA.</b> Termina cuando las 12 pantallas no tengan más diferencias que las ya conocidas y aceptadas de antemano.</p>
+        </div>
+        <span class="road-arrow" aria-hidden="true">→</span>
+        <div class="phase">
+          <span class="lab lab-gray">Fase 2 · Que se comporte igual</span>
+          <h4>Contrato escrito como escenarios paso a paso y corrida 7</h4>
+          <ul>
+            <li><b>Antes, Harold decide</b> cómo se abren los grupos: Figma hoy muestra los dos abiertos.</li>
+            <li>El aviso «Elige tus beneficios» tiene que verse.</li>
+            <li>Lo elegido no se pierde al volver atrás.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Próximos pasos</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Decidido por Adonay el 23-oct (página del plan de la corrida 6: «Plan: primero UI, después interactividad»). Fase 1: contrato v2.4-UI + corrida 6 solo UI + medición ciega A-13 a 360 dp + revisión de QA; salida = V1–V12 sin diferencias fuera de las pre-declaradas (exclusiones conocidas, medición a ciegas de r5 L111). Arreglos = las 6 causas del plan: ① gap {gapXs} antes del divisor (V1, V3–V6, V10), ② alto del tier abierto (V3, V4, V6, V8, V9), ③ skeleton de carga (V2, V7), ④ CTAs LARGE en vez de MEDIUM (V11, V12; medición a ciegas de r5 L107–108), ⑤ título/subtítulo F→P del CMS (V12, E9, T8; L86), ⑥ snapshots de pantalla completa guardados a 450×1000 (A-08). ②+③ van juntos como «alto de los grupos». Fase 2: contrato en escenarios + corrida 7; antes Harold decide la apertura de los tiers (E2/T11 frente a Figma V4); W-14 visible (E3/T7) y no perder la elección al volver (E6).</aside>
+</section>
+
+<!-- 13 · Qué aprendimos -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Qué aprendimos">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Qué aprendimos</p>
+      <h2 class="hl">Lo visual, creemos, se puede cerrar; <em>lo difícil es la interacción</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-cards3 learn">
+        <div class="r2-card"><span class="r2-num">1</span><h4>Creemos que lo visual se cierra con un contrato preciso</h4><p>Las diferencias de la corrida 5 vienen de pocas causas repetidas. Si el contrato da cada medida, esperamos corregirlas juntas. La corrida 6 lo va a comprobar.</p></div>
+        <div class="r2-card"><span class="r2-num">2</span><h4>Lo difícil es la interacción</h4><p>Qué pasa al tocar, al volver atrás o mientras carga. Por eso va en su propia fase, escrito paso a paso.</p></div>
+        <div class="r2-card hi"><span class="r2-num">3</span><h4>Los choques los decide Harold</h4><p>Cuando el contrato y Figma no coinciden, la IA no elige: lo anota y lo decide Harold.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Aprendizajes</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>1 (hipótesis, se comprueba en la corrida 6): plan de la corrida 6 (§1: «casi todo se explica con 5 causas repetidas»); medición a ciegas de r5 L97–108. 2: fallos interactivos r5 E2, E3, E6, E9, T7, T8, T11 (L12, L91); r3 CONCLUSIONES: el gate mide nombres, no el cableado. 3: registro de desacuerdos (Harold firma paridad visual y composición, L3); FG-01…FG-07 sin cambios en Figma.</aside>
+</section>
+
+<!-- 14 · Cierre -->
+<section class="slide slide-dark cierre-slide" aria-label="Cierre">
+  <div class="glow-bg" aria-hidden="true"></div>
+  <div class="logo-sm" data-logo="light"></div>
+  <div class="inner center">
+    <p class="eyebrow">Diseño Applaudo · Volaris</p>
+    <h1 class="big">Primero que se vea igual; <em>luego que se comporte igual.</em></h1>
+    <p class="cierre-thanks">Gracias · Preguntas</p>
+  </div>
+  <div class="foot">Applaudo</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+</section>
+
+<!-- 15 · Anexo -->
+<section class="slide slide-fit p2-slide r2-main" aria-label="Anexo: términos y fuentes">
+  <div class="logo-sm" data-logo="dark"></div>
+  <div class="inner inner-viewport compact">
+    <div class="slide-head">
+      <p class="eyebrow">Anexo</p>
+      <h2 class="hl">Términos técnicos y <em>fuentes</em></h2>
+    </div>
+    <div class="slide-body">
+      <div class="r2-apx">
+        <div class="r2-card">
+          <span class="lab">Glosario</span>
+          <dl>
+            <dt>IA · agente</dt><dd>Programa de inteligencia artificial que construye o mide siguiendo instrucciones.</dd>
+            <dt>Medición a ciegas</dt><dd>La hace una IA que no vio el trabajo ni los reportes de quien construyó.</dd>
+            <dt>Emulador · dp</dt><dd>Un teléfono Android simulado en la computadora, a 360 dp de ancho como Figma. El dp es la unidad de medida de Android; en estas capturas, 1 dp = 3 píxeles.</dd>
+            <dt>Chequeos E</dt><dd>Pruebas de uso en el emulador: qué se ve y qué pasa en cada caso.</dd>
+            <dt>Pasos T</dt><dd>Cada paso de uso (tocar, elegir, continuar) comparado con lo esperado.</dd>
+            <dt>Comparaciones V</dt><dd>Cada pantalla de la app medida contra su pantalla de Figma, medida por medida.</dd>
+            <dt>Revisiones P1–P8</dt><dd>Las 8 revisiones automáticas: contrato completo, colores y medidas, geometría, captura contra Figma, textos, íconos, qué va dentro de qué y datos.</dd>
+            <dt>Tokens · CMS</dt><dd>Nombres fijos de colores y tamaños · sistema de donde salen los textos.</dd>
+            <dt>Paparazzi</dt><dd>Herramienta que toma las capturas automáticas.</dd>
+          </dl>
+        </div>
+        <div class="r2-card">
+          <span class="lab">Códigos de las decisiones</span>
+          <dl>
+            <dt>D-17 · D-19</dt><dd>Franja de la tarjeta Flex · sombra del botón del lápiz.</dd>
+            <dt>D-28</dt><dd>Botón «Continuar» (decidido por Adonay).</dd>
+            <dt>D-29 a D-33</dt><dd>Decisiones provisionales de la versión 2.3.</dd>
+            <dt>AM-48 · AM-49</dt><dd>Título y tabla de comparación.</dd>
+            <dt>FG-01 a FG-07</dt><dd>Detalles por revisar en Figma.</dd>
+            <dt>B25 · AM-45</dt><dd>Avisos de la revisión de código · datos de prueba (Adonay).</dd>
+          </dl>
+          <span class="lab" style="margin-top:6px">Fuentes</span>
+          <p class="src">Informes de medición de cada corrida, sus métricas y bitácoras, los cambios del contrato 2.3 y el plan de la corrida 6. Pantallas: Figma de Volaris y capturas del emulador.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Anexo</div>
+  <div class="foot foot-right">Contratos · Corridas 2–5 · Oct ’26</div>
+  <aside class="notes" hidden>Fuentes: informe de comparación de la corrida 2; métricas, informe de medición, bitácora de intervenciones y conclusiones de la corrida 3; bitácora de intervenciones y medición en emulador de la corrida 4; métricas, conclusiones, registro de faltantes, medición a ciegas, cambios del pack v2.3 y registro de desacuerdos de la corrida 5, y el plan de la corrida 6; borrador de cambios del contrato v2.3; página del plan de la corrida 6. Se quitó «Pulsar» del glosario: no aparece en r3–r5.</aside>
+</section>
+
+</div>
+
+<nav class="nav" aria-label="Navegación de diapositivas">
+  <button class="nav-btn" id="prev" aria-label="Diapositiva anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">1 / 15</span>
+  <button class="nav-btn" id="next" aria-label="Diapositiva siguiente">›</button>
+</nav>
+
+<script src="js/applaudo-deck.js?v=volaris-contratos-r5c-20261023"></script>
+<script src="js/comparacion.js?v=volaris-contratos-r5c-20261023"></script>
+<script src="js/diagramas.js?v=volaris-contratos-r5c-20261023"></script>
+</body>
+</html>

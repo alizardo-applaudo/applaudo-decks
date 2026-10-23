@@ -1,0 +1,115 @@
+{
+ "width": 1330,
+ "height": 240,
+ "eyebrow": "Volaris · Fare Flex",
+ "title": "Cómo lo ejecutamos",
+ "subtitle": "Pasa el cursor o haz clic en un paso para ver el detalle.",
+ "caption": "La IA corrió con la cuenta de Applaudo de Adonay.",
+ "groups": [
+  {
+   "id": "prep",
+   "label": "Preparación",
+   "accent": false,
+   "x": 20,
+   "y": 26,
+   "w": 480,
+   "h": 184,
+   "tip": "Lo que dejamos listo antes de arrancar"
+  },
+  {
+   "id": "run",
+   "label": "Corrida",
+   "accent": true,
+   "x": 540,
+   "y": 26,
+   "w": 480,
+   "h": 184,
+   "tip": "La IA corrió con la cuenta de Applaudo de Adonay."
+  },
+  {
+   "id": "med",
+   "label": "Después",
+   "accent": false,
+   "x": 1060,
+   "y": 26,
+   "w": 250,
+   "h": 184,
+   "tip": "La medición se hace aparte"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "c",
+   "label": "Copia aislada",
+   "caption": "sin conexión al proyecto real",
+   "desc": "Una copia del proyecto solo para esta prueba: sin conexión al proyecto real y sin publicar nada.",
+   "group": "prep",
+   "x": 44,
+   "y": 68,
+   "w": 200,
+   "h": 96
+  },
+  {
+   "id": "k",
+   "label": "Solo el contrato",
+   "caption": "congelado durante todo el trabajo",
+   "desc": "La IA recibió solo el contrato y un documento de arranque. Nadie lo cambió mientras trabajaba.",
+   "group": "prep",
+   "x": 276,
+   "y": 68,
+   "w": 200,
+   "h": 96
+  },
+  {
+   "id": "w",
+   "label": "Sin preguntas de diseño",
+   "caption": "si faltaba algo, lo anotaba y seguía",
+   "desc": "La regla fue anotar cada hueco y seguir con el resto, sin detenerse a preguntar.",
+   "group": "run",
+   "x": 564,
+   "y": 68,
+   "w": 200,
+   "h": 96
+  },
+  {
+   "id": "r",
+   "label": "Cortes y relevos",
+   "caption": "se retoma donde quedó",
+   "desc": "Hubo cortes por la conexión y por el límite de uso. Cada vez se retomó desde donde quedó; a veces lo terminó otro modelo.",
+   "group": "run",
+   "x": 796,
+   "y": 68,
+   "w": 200,
+   "h": 96
+  },
+  {
+   "id": "m",
+   "label": "Medición aparte",
+   "caption": "contra Figma y en emulador",
+   "desc": "Después se mide aparte: contra Figma y, desde la corrida 4, en un emulador de Android. En la corrida 5 la midió una IA independiente que no vio el trabajo (a ciegas).",
+   "group": "med",
+   "x": 1085,
+   "y": 68,
+   "w": 200,
+   "h": 96
+  }
+ ],
+ "edges": [
+  {
+   "from": "c",
+   "to": "k"
+  },
+  {
+   "from": "k",
+   "to": "w"
+  },
+  {
+   "from": "w",
+   "to": "r"
+  },
+  {
+   "from": "r",
+   "to": "m"
+  }
+ ]
+}

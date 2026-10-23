@@ -1,0 +1,120 @@
+{
+ "width": 1330,
+ "height": 300,
+ "eyebrow": "Volaris · Fare Flex",
+ "title": "El orden nuevo",
+ "subtitle": "Pasa el cursor o haz clic en una etapa para ver qué pasa en ella.",
+ "caption": "Nada se construye hasta que reglas, datos y pantalla están definidos.",
+ "groups": [
+  {
+   "id": "antes",
+   "label": "Antes de construir",
+   "accent": true,
+   "x": 20,
+   "y": 26,
+   "w": 780,
+   "h": 184,
+   "tip": "Se cierra antes de que la IA escriba nada"
+  },
+  {
+   "id": "corrida",
+   "label": "Corrida",
+   "accent": false,
+   "x": 830,
+   "y": 26,
+   "w": 480,
+   "h": 184,
+   "tip": "La construcción y su comparación con Figma"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "r",
+   "label": "Reglas de negocio",
+   "caption": "revisadas antes de sellar",
+   "desc": "Primero se revisan las reglas del negocio. Así supimos que Flex reemplaza a Basic en Volaris.",
+   "group": "antes",
+   "x": 44,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "d",
+   "label": "Datos",
+   "caption": "de dónde sale cada texto y precio",
+   "desc": "Cada texto y cada precio dice de dónde viene y qué pasa si falta.",
+   "group": "antes",
+   "x": 300,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "u",
+   "label": "Pantalla",
+   "caption": "medidas, textos y qué va dentro de qué",
+   "desc": "Medidas exactas de cada estado, textos exactos y el orden de las piezas.",
+   "group": "antes",
+   "x": 556,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "c",
+   "label": "Construcción",
+   "caption": "la IA arma; si falta algo, lo anota",
+   "desc": "La IA construye solo con el contrato. Si falta algo, lo anota y sigue con lo demás.",
+   "group": "corrida",
+   "x": 856,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  },
+  {
+   "id": "p",
+   "label": "Comparación con Figma",
+   "caption": "firma visual: Fernando y Harold",
+   "desc": "Se compara cada pantalla contra Figma. Fernando y Harold dan la firma visual; el sello del contrato es de Adonay.",
+   "group": "corrida",
+   "x": 1092,
+   "y": 68,
+   "w": 196,
+   "h": 96
+  }
+ ],
+ "edges": [
+  {
+   "from": "r",
+   "to": "d"
+  },
+  {
+   "from": "d",
+   "to": "u"
+  },
+  {
+   "from": "u",
+   "to": "c"
+  },
+  {
+   "from": "c",
+   "to": "p"
+  },
+  {
+   "from": "c",
+   "to": "u",
+   "route": [
+    [
+     954,
+     262
+    ],
+    [
+     654,
+     262
+    ]
+   ],
+   "label": "si falta algo: lo anota y sigue"
+  }
+ ]
+}
